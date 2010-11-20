@@ -1,6 +1,5 @@
 #!/bin/sh
 # Copyright (C) The IETF Trust (2007-2008)
-# $Id: spit_types.sh,v 1.48 2008/05/10 03:29:50 mre Exp $
 
 for i in $* ;
 do

@@ -1,15 +1,14 @@
-<!--  $Id: dotx_middle_body.xml,v 1.8 2008/08/21 14:48:22 mre Exp $       -->
 <!-- Copyright (C) The IETF Trust (2007) -->
 <!-- Copyright (C) The Internet Society (2006) -->
-<section anchor="xdr_desc" title="XDR Description of NFSv4.1 " >
+<section anchor="xdr_desc" title="XDR Description of NFSv4.2 " >
 <t>
 
  This document contains the XDR (<xref target="RFC4506" />)
- description of NFSv4.1 protocol (<xref
+ description of NFSv4.2 protocol (<xref
  target="I-D.ietf-nfsv4-minorversion1" />). In order to
- facilitate implementations that support both NFSv4.0 and
- NFSv4.1, the description includes operations, and other
- features of NFSv4.0 that do not apply to NFSv4.1.
+ facilitate implementations that support all of NFSv4.0,
+ NFSv4.1, and NFSv4.2, the description includes operations, and other
+ features of NFSv4.0 and NFSv4.1 that do not apply to NFSv4.2.
 
 
 </t>
@@ -18,7 +17,7 @@
  that makes it simple for the reader to extract into ready
  to compile form. The reader can feed this document in the
  following shell script to produce the machine readable XDR
- description of NFSv4.1:
+ description of NFSv4.2:
 </t>
 <figure>
 <artwork>

@@ -2,11 +2,10 @@
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd">
 <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
-<!-- 	$Id: dotx_rfc_start.xml,v 1.1 2007/11/07 01:23:19 mre Exp $	 -->
 <!-- Copyright (C) The IETF Trust (2007) -->
 <!-- Copyright (C) The Internet Society (2006) -->
 
-<!-- XML source for the NFSv4 minor version 1 internet draft document -->
+<!-- XML source for the NFSv4 minor version 2 internet draft document -->
 
 <!-- To generate text with the xml2rfc tool tclsh8.3 xml2rfc.tcl 
      xml2rfc this_file.xml that_file.txt which puts the formatted 
@@ -51,5 +50,5 @@
 <rfc
     category="std"
     ipr="full3978"
-    docName="draft-ietf-nfsv4-minorversion1-dot-x-VERSIONVAR.txt" >
+    docName="draft-ietf-nfsv4-minorversion2-dot-x-VERSIONVAR.txt" >
 

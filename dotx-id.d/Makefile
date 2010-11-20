@@ -1,32 +1,31 @@
 # Copyright (C) The IETF Trust (2007)
 # Manage the .xml for the NFSv4 minor version document.
 #
-#	$Id: Makefile,v 1.23 2008/08/18 22:30:46 mre Exp $
 
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=07
-VERS=08
+PREVVERS=00
+VERS=00
 VPATH = ../../dotx.d
 
 all: txt filelist
 
-txt: draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).txt
+txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt
 
 dotx:
 	cd ../dotx.d ; VERS=$(SPECVERS) make all
 
-xml: draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml
+xml: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 
 clobber:
-	$(RM) draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).txt \
-		draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).nr
+	$(RM) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt \
+		draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).nr
 
 clean:
 	rm -f $(AUTOGEN)
 	rm -rf autogen
-	rm -f draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml
+	rm -f draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 	rm -rf draft-$(VERS)
 	rm -f draft-$(VERS).tar.gz
 	rm -rf testx.d
@@ -45,12 +44,12 @@ tmp.x:	tmp.txt
 	grep -w grep tmp.txt | grep -w sed | grep /// | tr -d "\r" > tmp.sh
 	sh tmp.sh < tmp.txt > tmp.x
 
-tmp.txt: draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml
+tmp.txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 	rm -f tmp.txt tmp2.txt
-	XML2RFCDOT="." sh ../xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml tmp2.txt
+	XML2RFCDOT="." sh ../xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml tmp2.txt
 	mv -f tmp2.txt tmp.txt
 
-draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).txt: tmp.txt tmp.x
+draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
 	rm -f tmp.out
 	diff ../dotx.d/nfsv41.x tmp.x > tmp.out
 	@if [ -s tmp.out ] ; then \
@@ -63,8 +62,8 @@ draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).txt: tmp.txt tmp.x
 
 	cp tmp.txt $@
 
-draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).nr: draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml
-	XML2RFCDOT="." sh ../xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml $@
+draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).nr: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
+	XML2RFCDOT="." sh ../xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml $@
 
 dotx_front_autogen.xml: dotx_front.xml Makefile
 	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < dotx_front.xml > dotx_front_autogen.xml
@@ -112,7 +111,7 @@ IDCONTENTS = dotx_front_autogen.xml $(IDXMLSRC_BASE)
 
 IDXMLSRC = dotx_front.xml $(IDXMLSRC_BASE)
 
-draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml: Makefile $(START) $(IDCONTENTS) $(END) $(AUTOGEN)
+draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml: Makefile $(START) $(IDCONTENTS) $(END) $(AUTOGEN)
 		rm -f $@ $@.tmp
 		cp $(START) $@.tmp
 		chmod +w $@.tmp
@@ -132,8 +131,8 @@ AUXFILES = \
 	../xml2rfc
 
 DRAFTFILES = \
-	draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).txt \
-	draft-ietf-nfsv4-minorversion1-dot-x-$(VERS).xml
+	draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt \
+	draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 
 draft-$(VERS).tar: $(IDCONTENTS) $(START_PREGEN) $(FRONT_PREGEN) $(AUXFILES) $(DRAFTFILES) dotx
 	rm -f draft-$(VERS).tar.gz

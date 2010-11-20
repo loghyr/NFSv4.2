@@ -1,5 +1,4 @@
 # Copyright (C) The IETF Trust (2007-2008)
-# $Id: Makefile,v 1.45 2008/05/10 03:29:50 mre Exp $
 
 FORE_OPS_AS_IS1 = \
 		access_args.x \
