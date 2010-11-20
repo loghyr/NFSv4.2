@@ -1,0 +1,49 @@
+<!-- Copyright (C) The IETF Trust (2009-2010) -->
+<!-- Copyright (C) The Internet Society (2010) -->
+
+<front>
+    <title abbrev="NFSv4">
+    NFSv4 Minor Version 2 Protocol
+    External Data Representation Standard (XDR) Description
+    </title>
+
+    <author fullname="Thomas Haynes" 
+            initials="T." 
+            surname="Haynes">
+        <organization abbrev="Editors">NetApp</organization>
+        <address>
+            <postal>
+                <street>9110 E 66th St</street>
+                <city>Tulsa</city>
+                <region>OK</region>
+                <code>74133</code>
+                <country>USA</country>
+            </postal>
+            <phone>+1-918-307-1415</phone>
+            <email>thomas@netapp.com</email>
+        </address>
+    </author>
+
+    <date year="YEARVAR" month="MONTHVAR" day="DAYVAR"/>
+
+    <area>Transport</area>
+    <workgroup>NFSv4</workgroup>
+
+    <abstract>
+      <t>
+      This Internet-Draft provides the XDR description for
+      NFSv4 minor version two.
+      </t>
+    </abstract>
+
+    <note title="Requirements Language">
+<t>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;,
+&quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
+&quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;,
+&quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+interpreted as described in <xref target="RFC2119">RFC 2119</xref>.
+</t>
+
+    </note>
+
+</front>

@@ -1,0 +1,11 @@
+The editor for the NFSv4 minor version 2 internet draft uses this site as a method of distributing content and issue tracking. The latest version of the NFSv4.2 I-D is always found on the IETF site. The NFSv4 WG page will have pointers to all of this and includes a pointer to the email archive as well.
+
+http://www.ietf.org/html.charters/nfsv4-charter.html
+http://www.ietf.org/mail-archive/web/nfsv4/index.html
+
+NOTE:
+-----
+
+For right now, we can only generate the xdr document:
+
+make dotx dotx-txt

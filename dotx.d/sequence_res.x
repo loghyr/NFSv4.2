@@ -1,0 +1,30 @@
+const SEQ4_STATUS_CB_PATH_DOWN			= 0x00000001;
+const SEQ4_STATUS_CB_GSS_CONTEXTS_EXPIRING	= 0x00000002;
+const SEQ4_STATUS_CB_GSS_CONTEXTS_EXPIRED	= 0x00000004;
+const SEQ4_STATUS_EXPIRED_ALL_STATE_REVOKED	= 0x00000008;
+const SEQ4_STATUS_EXPIRED_SOME_STATE_REVOKED	= 0x00000010;
+const SEQ4_STATUS_ADMIN_STATE_REVOKED		= 0x00000020;
+const SEQ4_STATUS_RECALLABLE_STATE_REVOKED	= 0x00000040;
+const SEQ4_STATUS_LEASE_MOVED                   = 0x00000080;
+const SEQ4_STATUS_RESTART_RECLAIM_NEEDED	= 0x00000100;
+const SEQ4_STATUS_CB_PATH_DOWN_SESSION  	= 0x00000200;
+const SEQ4_STATUS_BACKCHANNEL_FAULT     	= 0x00000400;
+const SEQ4_STATUS_DEVID_CHANGED			= 0x00000800;
+const SEQ4_STATUS_DEVID_DELETED			= 0x00001000;
+
+struct SEQUENCE4resok {
+	sessionid4	sr_sessionid;
+	sequenceid4	sr_sequenceid;
+	slotid4		sr_slotid;
+	slotid4		sr_highest_slotid;
+	slotid4		sr_target_highest_slotid;
+	uint32_t	sr_status_flags;
+};
+
+union SEQUENCE4res switch (nfsstat4 sr_status) {
+case NFS4_OK:
+	SEQUENCE4resok	sr_resok4;
+default:
+	void;
+};
+

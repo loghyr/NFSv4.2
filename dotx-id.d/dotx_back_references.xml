@@ -1,0 +1,67 @@
+<!-- 	$Id: dotx_back_references.xml,v 1.5 2008/08/21 14:48:22 mre Exp $	 -->
+<!-- Copyright (C) The IETF Trust (2007) -->
+<!-- Copyright (C) The Internet Society (2006) -->
+  <references title="Normative References">
+
+    <reference anchor='RFC2119'>
+      <front>
+	<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
+	<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
+	  <organization>Harvard University</organization>
+	  <address>
+	    <postal>
+	      <street>1350 Mass. Ave.</street>
+	      <street>Cambridge</street>
+	    <street>MA 02138</street></postal>
+	    <phone>- +1 617 495 3864</phone>
+	<email>sob@harvard.edu</email></address></author>
+	<date year='1997' month='March' />
+      </front>
+    </reference>
+
+
+    <reference anchor='RFC4506'>
+
+      <front>
+      <title>XDR: External Data Representation Standard</title>
+      <author initials='M.' surname='Eisler' fullname='Mike Eisler'>
+      <organization>NetApp</organization></author>
+      <date year='2006' month='May' />
+      <abstract>
+      <t>&lt;p>This document describes the External Data
+      Representation Standard (XDR) protocol as it is currently
+      deployed and accepted. This document obsoletes RFC
+      1832. [STANDARDS TRACK]&lt;/p></t></abstract></front>
+      <seriesInfo name='STD' value='67' />
+      <seriesInfo name='RFC' value='4506' />
+      <format type='TXT' octets='55477' target='ftp://ftp.isi.edu/in-notes/rfc4506.txt' />
+    </reference>
+
+<reference anchor='I-D.ietf-nfsv4-minorversion1'>
+<front>
+<title>NFS Version 4 Minor Version 1</title>
+
+<author initials='S' surname='Shepler' fullname='Spencer Shepler'>
+    <organization />
+</author>
+
+<author initials='M' surname='Eisler' fullname='Mike Eisler'>
+    <organization />
+</author>
+
+<author initials='D' surname='Noveck' fullname='David Noveck'>
+    <organization />
+</author>
+
+<date month='Aug' day='20' year='2008' />
+
+<abstract><t>This Internet-Draft describes NFS version 4 minor version one, including features retained from the base protocol and protocol extensions made subsequently.  Major extensions introduced in NFS version 4 minor version one include: Sessions, Directory Delegations, and parallel NFS (pNFS).</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-ietf-nfsv4-minorversion1-25' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-minorversion1-25.txt' />
+</reference>
+
+  </references>

@@ -1,0 +1,10 @@
+<!-- 	$Id: dotx_middle_security_considerations.xml,v 1.3 2008/08/21 14:48:22 mre Exp $	 -->
+<!-- Copyright (C) The IETF Trust (2007-2008) -->
+<!-- Copyright (C) The Internet Society (2006) -->
+<section anchor="securityconsider" title="Security Considerations">
+<t>
+      See the Security Considerations section of <xref
+      target="I-D.ietf-nfsv4-minorversion1"/>.
+
+</t>
+</section>

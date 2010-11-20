@@ -1,0 +1,2 @@
+typedef CB_RECALL_ANY4args CB_RECALLABLE_OBJ_AVAIL4args;
+
