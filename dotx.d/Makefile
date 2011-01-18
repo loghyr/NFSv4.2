@@ -222,7 +222,7 @@ hand_edit_warning.x: Makefile ../Makefile head.x $(FORE_OPS) fore_prog.x $(BACK_
 	( \
 		echo "/*" ; \
 		echo " * This file was machine generated for" ; \
-                echo " *  draft-ietf-nfsv4-minorversion1-$(VERS)" ; \
+                echo " *  draft-haynes-nfsv4-minorversion2-$(VERS)" ; \
 		echo " * Last updated `date`" ; \
 		echo " */" ; \
 	)  > hand_edit_warning.x

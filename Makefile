@@ -28,11 +28,11 @@ all: html txt dotx dotx-txt
 # Build the stuff needed to ensure integrity of document.
 common: testx dotx html dotx-txt
 
-txt: draft-ietf-nfsv4-minorversion2-$(VERS).txt
+txt: draft-haynes-nfsv4-minorversion2-$(VERS).txt
 
-html: draft-ietf-nfsv4-minorversion2-$(VERS).html
+html: draft-haynes-nfsv4-minorversion2-$(VERS).html
 
-nr: draft-ietf-nfsv4-minorversion2-$(VERS).nr
+nr: draft-haynes-nfsv4-minorversion2-$(VERS).nr
 
 dotx:
 	cd dotx.d ; VERS=$(VERS) $(MAKE) all
@@ -43,12 +43,12 @@ dotx:
 dotx-txt:
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) all
 
-xml: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+xml: draft-haynes-nfsv4-minorversion2-$(VERS).xml
 
 clobber:
-	$(RM) draft-ietf-nfsv4-minorversion2-$(VERS).txt \
-		draft-ietf-nfsv4-minorversion2-$(VERS).html \
-		draft-ietf-nfsv4-minorversion2-$(VERS).nr
+	$(RM) draft-haynes-nfsv4-minorversion2-$(VERS).txt \
+		draft-haynes-nfsv4-minorversion2-$(VERS).html \
+		draft-haynes-nfsv4-minorversion2-$(VERS).nr
 	export SPECVERS := $(VERS)
 	export VERS := $(VERS)
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) clobber
@@ -57,7 +57,7 @@ clobber:
 clean:
 	rm -f $(AUTOGEN)
 	rm -rf autogen
-	rm -f draft-ietf-nfsv4-minorversion2-$(VERS).xml
+	rm -f draft-haynes-nfsv4-minorversion2-$(VERS).xml
 	rm -rf draft-$(VERS)
 	rm -f draft-$(VERS).tar.gz
 	rm -rf testx.d
@@ -72,19 +72,19 @@ pall:
 	( $(MAKE) html ; echo .html done ) & \
 	wait
 
-draft-ietf-nfsv4-minorversion2-$(VERS).txt: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+draft-haynes-nfsv4-minorversion2-$(VERS).txt: draft-haynes-nfsv4-minorversion2-$(VERS).xml
 	rm -f $@ draft-tmp.txt
-	sh xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-$(VERS).xml draft-tmp.txt
+	sh xml2rfc_wrapper.sh draft-haynes-nfsv4-minorversion2-$(VERS).xml draft-tmp.txt
 	mv draft-tmp.txt $@
 
-draft-ietf-nfsv4-minorversion2-$(VERS).html: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+draft-haynes-nfsv4-minorversion2-$(VERS).html: draft-haynes-nfsv4-minorversion2-$(VERS).xml
 	rm -f $@ draft-tmp.html
-	sh xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-$(VERS).xml draft-tmp.html
+	sh xml2rfc_wrapper.sh draft-haynes-nfsv4-minorversion2-$(VERS).xml draft-tmp.html
 	mv draft-tmp.html $@
 
-draft-ietf-nfsv4-minorversion2-$(VERS).nr: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+draft-haynes-nfsv4-minorversion2-$(VERS).nr: draft-haynes-nfsv4-minorversion2-$(VERS).xml
 	rm -f $@ draft-tmp.nr
-	sh xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-$(VERS).xml $@.tmp
+	sh xml2rfc_wrapper.sh draft-haynes-nfsv4-minorversion2-$(VERS).xml $@.tmp
 	mv draft-tmp.nr $@
 
 nfsv4_middle_errortoop_autogen.xml: nfsv4_middle_errors.xml
@@ -322,19 +322,19 @@ draft-tmp.xml: $(START) Makefile $(END)
 		cat $(END) >> $@.tmp
 		mv $@.tmp $@
 
-draft-ietf-nfsv4-minorversion2-$(VERS).xml: draft-tmp.xml $(IDCONTENTS) $(AUTOGEN)
+draft-haynes-nfsv4-minorversion2-$(VERS).xml: draft-tmp.xml $(IDCONTENTS) $(AUTOGEN)
 		rm -f $@
 		cp draft-tmp.xml $@
 
 genhtml: Makefile gendraft html txt dotx dotx-txt draft-$(VERS).tar
 	./gendraft draft-$(PREVVERS) \
-		draft-ietf-nfsv4-minorversion2-$(PREVVERS).txt \
+		draft-haynes-nfsv4-minorversion2-$(PREVVERS).txt \
 		draft-$(VERS) \
-		draft-ietf-nfsv4-minorversion2-$(VERS).txt \
-		draft-ietf-nfsv4-minorversion2-$(VERS).html \
+		draft-haynes-nfsv4-minorversion2-$(VERS).txt \
+		draft-haynes-nfsv4-minorversion2-$(VERS).html \
 		dotx.d/nfsv4.x \
-		draft-ietf-nfsv4-minorversion2-dot-x-04.txt \
-		draft-ietf-nfsv4-minorversion2-dot-x-05.txt \
+		draft-haynes-nfsv4-minorversion2-dot-x-04.txt \
+		draft-haynes-nfsv4-minorversion2-dot-x-05.txt \
 		draft-$(VERS).tar.gz
 
 testx: 
@@ -360,9 +360,9 @@ AUXFILES = \
 	xml2rfc
 
 DRAFTFILES = \
-	draft-ietf-nfsv4-minorversion2-$(VERS).txt \
-	draft-ietf-nfsv4-minorversion2-$(VERS).html \
-	draft-ietf-nfsv4-minorversion2-$(VERS).xml
+	draft-haynes-nfsv4-minorversion2-$(VERS).txt \
+	draft-haynes-nfsv4-minorversion2-$(VERS).html \
+	draft-haynes-nfsv4-minorversion2-$(VERS).xml
 
 draft-$(VERS).tar: $(IDCONTENTS) $(START_PREGEN) $(FRONT_PREGEN) $(AUXFILES) $(DRAFTFILES) dotx.d/nfsv4.x
 	rm -f draft-$(VERS).tar.gz
