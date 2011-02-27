@@ -1,7 +1,7 @@
 /*
  * This file was machine generated for
- *  draft-ietf-nfsv4-minorversion1-00
- * Last updated Fri Nov 19 22:12:38 PST 2010
+ *  draft-haynes-nfsv4-minorversion2-
+ * Last updated Sun Feb 27 12:17:22 CST 2011
  */
 /*
  *  Copyright (C) The IETF Trust (2007-2008)
