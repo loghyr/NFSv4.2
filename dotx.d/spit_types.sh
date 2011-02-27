@@ -42,6 +42,7 @@ typedef :utf8str_cs:component4:Represents path name components.
 typedef :utf8str_cs:linktext4:Symbolic link contents.
 typedef :component4:pathname4<>:Represents path name for fs_locations.
 typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operations (COMMIT, CREATE, EXCHANGE_ID, OPEN, READDIR, WRITE) NFS4_VERIFIER_SIZE is defined as 8.
+:enum:netloc_type4:Specifies network locations.
 EOF
 
 	fi
@@ -763,21 +764,23 @@ EOF
 cat << EOF > $i
 %
 enum nfs_cb_opnum4 {
-	OP_CB_GETATTR		= 3,
-	OP_CB_RECALL		= 4,
+	OP_CB_GETATTR			= 3,
+	OP_CB_RECALL			= 4,
 %/* Callback operations new to NFSv4.1 */
-	OP_CB_LAYOUTRECALL	= 5,
-	OP_CB_NOTIFY		= 6,
-	OP_CB_PUSH_DELEG	= 7,
-	OP_CB_RECALL_ANY	= 8,
-	OP_CB_RECALLABLE_OBJ_AVAIL = 9,
-	OP_CB_RECALL_SLOT	= 10,
-	OP_CB_SEQUENCE		= 11,
-	OP_CB_WANTS_CANCELLED	= 12,
-        OP_CB_NOTIFY_LOCK       = 13,
-        OP_CB_NOTIFY_DEVICEID   = 14,
+	OP_CB_LAYOUTRECALL		= 5,
+	OP_CB_NOTIFY			= 6,
+	OP_CB_PUSH_DELEG		= 7,
+	OP_CB_RECALL_ANY		= 8,
+	OP_CB_RECALLABLE_OBJ_AVAIL	= 9,
+	OP_CB_RECALL_SLOT		= 10,
+	OP_CB_SEQUENCE			= 11,
+	OP_CB_WANTS_CANCELLED		= 12,
+	OP_CB_NOTIFY_LOCK		= 13,
+	OP_CB_NOTIFY_DEVICEID		= 14,
+%/* Callback operations new to NFSv4.2 */
+	OP_CB_COPY			= 15,
 
-	OP_CB_ILLEGAL		= 10044
+	OP_CB_ILLEGAL			= 10044
 };
 EOF
         ;;
@@ -788,6 +791,8 @@ cat << EOF > $i
 union nfs_cb_argop4 switch (unsigned argop) {
  case OP_CB_GETATTR:
       CB_GETATTR4args           opcbgetattr;
+
+ /* new NFSv4.1 operations */
  case OP_CB_RECALL:
       CB_RECALL4args            opcbrecall;
  case OP_CB_LAYOUTRECALL:
@@ -810,6 +815,11 @@ union nfs_cb_argop4 switch (unsigned argop) {
       CB_NOTIFY_LOCK4args       opcbnotify_lock;
  case OP_CB_NOTIFY_DEVICEID:
       CB_NOTIFY_DEVICEID4args   opcbnotify_deviceid;
+
+ /* new NFSv4.2 operations */
+ case OP_CB_COPY:
+      CB_COPY4args   		opcbcopy;
+
  case OP_CB_ILLEGAL:            void;
 };
 EOF
@@ -868,6 +878,9 @@ union nfs_cb_resop4 switch (unsigned resop) {
  case OP_CB_NOTIFY_DEVICEID:
 			CB_NOTIFY_DEVICEID4res
 					opcbnotify_deviceid;
+
+ /* new NFSv4.2 operations */
+ case OP_CB_COPY:	CB_COPY4res	opcbcopy;
 
  /* Not new operation */
  case OP_CB_ILLEGAL:	CB_ILLEGAL4res	opcbillegal;
@@ -949,6 +962,14 @@ enum nfs_opnum4 {
  OP_WANT_DELEGATION	= 56,
  OP_DESTROY_CLIENTID	= 57,
  OP_RECLAIM_COMPLETE	= 58,
+%
+%/* new operations for NFSv4.2 */
+%
+ OP_COPY_NOTIFY		= 59,
+ OP_COPY_REVOKE		= 60,
+ OP_COPY		= 61,
+ OP_COPY_ABORT		= 62,
+ OP_COPY_STATUS		= 63,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1058,6 +1079,13 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_RECLAIM_COMPLETE:
 			RECLAIM_COMPLETE4args
 				opreclaim_complete;
+
+ /* Operations new to NFSv4.2 */
+ case OP_COPY_NOTIFY:	COPY_NOTIFY4args opcopy_notify;
+ case OP_COPY_REVOKE:	COPY_REVOKE4args opcopy_revoke;
+ case OP_COPY:		COPY4args opcopy;
+ case OP_COPY_ABORT:	COPY_ABORT4args opcopy_abort;
+ case OP_COPY_STATUS:	COPY_STATUS4args opcopy_status;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	void;
@@ -1178,6 +1206,13 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
 			RECLAIM_COMPLETE4res
 				opreclaim_complete;
 
+ /* Operations new to NFSv4.1 */
+ case OP_COPY_NOTIFY:	COPY_NOTIFY4res opcopy_notify;
+ case OP_COPY_REVOKE:	COPY_REVOKE4res opcopy_revoke;
+ case OP_COPY:		COPY4res opcopy;
+ case OP_COPY_ABORT:	COPY_ABORT4res opcopy_abort;
+ case OP_COPY_STATUS:	COPY_STATUS4res opcopy_status;
+
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	ILLEGAL4res opillegal;
 };
@@ -1202,6 +1237,22 @@ struct COMPOUND4res {
 	nfsstat4	status;
 	utf8str_cs	tag;
 	nfs_resop4	resarray<>;
+};
+EOF
+	;;
+
+	type_netloc_type4.x )
+
+cat << EOF > $i
+enum netloc_type4 {
+	NL4_NAME	= 0,
+	NL4_URL		= 1,
+	NL4_NETADDR	= 2
+};
+union netloc4 switch (netloc_type4 nl_type) {
+	case NL4_NAME:		utf8str_cis nl_name;
+	case NL4_URL:		utf8str_cis nl_url;
+	case NL4_NETADDR:	netaddr4    nl_addr;
 };
 EOF
 	;;

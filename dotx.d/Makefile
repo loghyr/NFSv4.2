@@ -107,7 +107,17 @@ FORE_OPS_AS_IS2 = \
 		destroy_clientid_args.x \
 		destroy_clientid_res.x \
                 reclaim_complete_args.x \
-                reclaim_complete_res.x
+                reclaim_complete_res.x \
+                copy_notify_args.x \
+                copy_notify_res.x \
+                copy_revoke_args.x \
+                copy_revoke_res.x \
+                copy_args.x \
+                copy_res.x \
+                copy_abort_args.x \
+                copy_abort_res.x \
+                copy_status_args.x \
+                copy_status_res.x
 
 FORE_OPS = $(FORE_OPS_AS_IS1) open_args_gen.x $(FORE_OPS_AS_IS2)
 
@@ -137,7 +147,9 @@ BACK_OPS =	cb_getattr_args.x \
 		cb_notify_lock_args.x \
 		cb_notify_lock_res.x \
 		cb_notify_deviceid_args.x \
-		cb_notify_deviceid_res.x
+		cb_notify_deviceid_res.x \
+		cb_copy_args.x \
+		cb_copy_res.x
 
 SPITGEN =	basic_types.x \
 		type_nfstime4.x \
@@ -203,7 +215,8 @@ SPITGEN =	basic_types.x \
                 type_nfs_argop4.x \
 		type_nfs_resop4.x \
 		type_COMPOUND4args.x \
-		type_COMPOUND4res.x
+		type_COMPOUND4res.x \
+		type_netloc_type4.x
 
 AUTOGEN =	hand_edit_warning.x \
 		fore_ops.x \

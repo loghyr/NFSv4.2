@@ -164,7 +164,11 @@ enum nfsstat4 {
  NFS4ERR_DIRDELEG_UNAVAIL=10084,/* delegation not avail.   */
  NFS4ERR_REJECT_DELEG   = 10085,/* cb rejected delegation  */
  NFS4ERR_RETURNCONFLICT = 10086,/* layout get before return*/
- NFS4ERR_DELEG_REVOKED  = 10087
+ NFS4ERR_DELEG_REVOKED  = 10087,
+ NFS4ERR_PARTNER_NOTSUPP= 10088,/* s2s not supported       */
+ NFS4ERR_PARTNER_NO_AUTH= 10089,/* s2s not authorized      */
+ NFS4ERR_METADATA_NOTSUPP=10090,/* dest metadata diff sourc*/
+ NFS4ERR_COMPLETE_ALREADY=10091 /* abort failed, use cb    */
 };
 
 /*
@@ -324,6 +328,7 @@ const	FH4_VOL_RENAME		= 0x00000008;
 
 
 include(type_netaddr4.x)
+
 /*
  * data structures new to NFSv4.1
  */
@@ -372,6 +377,12 @@ include(type_mdsthreshold4.x)
 include(type_retention_get4.x)
 include(type_retention_set4.x)
 include(type_fs_charset_cap4.x)
+
+/*
+ * data structures new to NFSv4.2
+ */
+
+include(type_netloc_type4.x)
 
 /*
  * NFSv4.1 attributes

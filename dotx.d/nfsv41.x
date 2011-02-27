@@ -1,7 +1,7 @@
 /*
  * This file was machine generated for
  *  draft-haynes-nfsv4-minorversion2-
- * Last updated Sun Feb 27 12:17:22 CST 2011
+ * Last updated Sun Feb 27 14:07:44 CST 2011
  */
 /*
  *  Copyright (C) The IETF Trust (2007-2008)
@@ -181,7 +181,11 @@ enum nfsstat4 {
  NFS4ERR_DIRDELEG_UNAVAIL=10084,/* delegation not avail.   */
  NFS4ERR_REJECT_DELEG   = 10085,/* cb rejected delegation  */
  NFS4ERR_RETURNCONFLICT = 10086,/* layout get before return*/
- NFS4ERR_DELEG_REVOKED  = 10087
+ NFS4ERR_DELEG_REVOKED  = 10087,
+ NFS4ERR_PARTNER_NOTSUPP= 10088,/* s2s not supported       */
+ NFS4ERR_PARTNER_NO_AUTH= 10089,/* s2s not authorized      */
+ NFS4ERR_METADATA_NOTSUPP=10090,/* dest metadata diff sourc*/
+ NFS4ERR_COMPLETE_ALREADY=10091 /* abort failed, use cb    */
 };
 
 /*
@@ -468,6 +472,7 @@ struct netaddr4 {
         string na_r_addr<>;     /* universal address */
 };
 
+
 /*
  * data structures new to NFSv4.1
  */
@@ -623,6 +628,22 @@ const FSCHARSET_CAP4_CONTAINS_NON_UTF8  = 0x1;
 const FSCHARSET_CAP4_ALLOWS_ONLY_UTF8   = 0x2;
 
 typedef uint32_t        fs_charset_cap4;
+
+
+/*
+ * data structures new to NFSv4.2
+ */
+
+enum netloc_type4 {
+        NL4_NAME        = 0,
+        NL4_URL         = 1,
+        NL4_NETADDR     = 2
+};
+union netloc4 switch (netloc_type4 nl_type) {
+        case NL4_NAME:          utf8str_cis nl_name;
+        case NL4_URL:           utf8str_cis nl_url;
+        case NL4_NETADDR:       netaddr4    nl_addr;
+};
 
 
 /*
@@ -2503,6 +2524,73 @@ struct RECLAIM_COMPLETE4res {
         nfsstat4        rcr_status;
 };
 
+struct COPY_NOTIFY4args {
+        /* CURRENT_FH: source file */
+        netloc4         cna_destination_server;
+};
+
+union COPY_NOTIFY4res switch (nfsstat4 cnr_status) {
+        case NFS4_OK:
+                nfstime4        cnr_lease_time;
+                netloc4         cnr_source_server<>;
+        default:
+                void;
+};
+
+struct COPY_REVOKE4args {
+        /* CURRENT_FH: source file */
+        netloc4         cra_destination_server;
+};
+
+struct COPY_REVOKE4res {
+        nfsstat4        crr_status;
+};
+
+const COPY4_GUARDED     = 0x00000001;
+const COPY4_METADATA    = 0x00000002;
+
+struct COPY4args {
+        /* SAVED_FH: source file */
+        /* CURRENT_FH: destination file or */
+        /*             directory           */
+        offset4         ca_src_offset;
+        offset4         ca_dst_offset;
+        length4         ca_count;
+        uint32_t        ca_flags;
+        component4      ca_destination;
+        netloc4         ca_source_server<>;
+};
+
+union COPY4res switch (nfsstat4 cr_status) {
+        /* CURRENT_FH: destination file */
+
+        case NFS4_OK:
+                stateid4        cr_callback_id<1>;
+        default:
+                length4         cr_bytes_copied;
+};
+
+struct COPY_ABORT4args {
+        /* CURRENT_FH: desination file */
+        stateid4        caa_stateid;
+};
+
+struct COPY_ABORT4res {
+        nfsstat4        car_status;
+};
+struct COPY_STATUS4args {
+        /* CURRENT_FH: destination file */
+        stateid4        csa_stateid;
+};
+
+union COPY_STATUS4res switch (nfsstat4 csr_status) {
+        case NFS4_OK:
+                length4         csr_bytes_copied;
+                nfsstat4        csr_complete<1>;
+        default:
+                void;
+};
+
 /*
  * Operation arrays
  */
@@ -2567,6 +2655,14 @@ enum nfs_opnum4 {
  OP_WANT_DELEGATION     = 56,
  OP_DESTROY_CLIENTID    = 57,
  OP_RECLAIM_COMPLETE    = 58,
+%
+%/* new operations for NFSv4.2 */
+%
+ OP_COPY_NOTIFY         = 59,
+ OP_COPY_REVOKE         = 60,
+ OP_COPY                = 61,
+ OP_COPY_ABORT          = 62,
+ OP_COPY_STATUS         = 63,
  OP_ILLEGAL             = 10044
 };
 
@@ -2671,6 +2767,13 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_RECLAIM_COMPLETE:
                         RECLAIM_COMPLETE4args
                                 opreclaim_complete;
+
+ /* Operations new to NFSv4.2 */
+ case OP_COPY_NOTIFY:   COPY_NOTIFY4args opcopy_notify;
+ case OP_COPY_REVOKE:   COPY_REVOKE4args opcopy_revoke;
+ case OP_COPY:          COPY4args opcopy;
+ case OP_COPY_ABORT:    COPY_ABORT4args opcopy_abort;
+ case OP_COPY_STATUS:   COPY_STATUS4args opcopy_status;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:       void;
@@ -2785,6 +2888,13 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_RECLAIM_COMPLETE:
                         RECLAIM_COMPLETE4res
                                 opreclaim_complete;
+
+ /* Operations new to NFSv4.1 */
+ case OP_COPY_NOTIFY:   COPY_NOTIFY4res opcopy_notify;
+ case OP_COPY_REVOKE:   COPY_REVOKE4res opcopy_revoke;
+ case OP_COPY:          COPY4res opcopy;
+ case OP_COPY_ABORT:    COPY_ABORT4res opcopy_abort;
+ case OP_COPY_STATUS:   COPY_STATUS4res opcopy_status;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:       ILLEGAL4res opillegal;
@@ -3092,31 +3202,50 @@ struct CB_NOTIFY_DEVICEID4res {
         nfsstat4        cndr_status;
 };
 
+union copy_info4 switch (nfsstat4 cca_status) {
+        case NFS4_OK:
+                void;
+        default:
+                length4         cca_bytes_copied;
+};
+
+struct CB_COPY4args {
+        nfs_fh4         cca_fh;
+        stateid4        cca_stateid;
+        copy_info4      cca_copy_info;
+};
+struct CB_COPY4res {
+        nfsstat4        ccr_status;
+};
 /*
  * Various definitions for CB_COMPOUND
  */
 %
 enum nfs_cb_opnum4 {
-        OP_CB_GETATTR           = 3,
-        OP_CB_RECALL            = 4,
+        OP_CB_GETATTR                   = 3,
+        OP_CB_RECALL                    = 4,
 %/* Callback operations new to NFSv4.1 */
-        OP_CB_LAYOUTRECALL      = 5,
-        OP_CB_NOTIFY            = 6,
-        OP_CB_PUSH_DELEG        = 7,
-        OP_CB_RECALL_ANY        = 8,
-        OP_CB_RECALLABLE_OBJ_AVAIL = 9,
-        OP_CB_RECALL_SLOT       = 10,
-        OP_CB_SEQUENCE          = 11,
-        OP_CB_WANTS_CANCELLED   = 12,
-        OP_CB_NOTIFY_LOCK       = 13,
-        OP_CB_NOTIFY_DEVICEID   = 14,
+        OP_CB_LAYOUTRECALL              = 5,
+        OP_CB_NOTIFY                    = 6,
+        OP_CB_PUSH_DELEG                = 7,
+        OP_CB_RECALL_ANY                = 8,
+        OP_CB_RECALLABLE_OBJ_AVAIL      = 9,
+        OP_CB_RECALL_SLOT               = 10,
+        OP_CB_SEQUENCE                  = 11,
+        OP_CB_WANTS_CANCELLED           = 12,
+        OP_CB_NOTIFY_LOCK               = 13,
+        OP_CB_NOTIFY_DEVICEID           = 14,
+%/* Callback operations new to NFSv4.2 */
+        OP_CB_COPY                      = 15,
 
-        OP_CB_ILLEGAL           = 10044
+        OP_CB_ILLEGAL                   = 10044
 };
 
 union nfs_cb_argop4 switch (unsigned argop) {
  case OP_CB_GETATTR:
       CB_GETATTR4args           opcbgetattr;
+
+ /* new NFSv4.1 operations */
  case OP_CB_RECALL:
       CB_RECALL4args            opcbrecall;
  case OP_CB_LAYOUTRECALL:
@@ -3139,6 +3268,11 @@ union nfs_cb_argop4 switch (unsigned argop) {
       CB_NOTIFY_LOCK4args       opcbnotify_lock;
  case OP_CB_NOTIFY_DEVICEID:
       CB_NOTIFY_DEVICEID4args   opcbnotify_deviceid;
+
+ /* new NFSv4.2 operations */
+ case OP_CB_COPY:
+      CB_COPY4args              opcbcopy;
+
  case OP_CB_ILLEGAL:            void;
 };
 
@@ -3180,6 +3314,9 @@ union nfs_cb_resop4 switch (unsigned resop) {
  case OP_CB_NOTIFY_DEVICEID:
                         CB_NOTIFY_DEVICEID4res
                                         opcbnotify_deviceid;
+
+ /* new NFSv4.2 operations */
+ case OP_CB_COPY:       CB_COPY4res     opcbcopy;
 
  /* Not new operation */
  case OP_CB_ILLEGAL:    CB_ILLEGAL4res  opcbillegal;
