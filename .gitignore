@@ -1,0 +1,6 @@
+*autogen*
+*.x
+tmp.*
+draft*.xml
+draft*.html
+*.m4
