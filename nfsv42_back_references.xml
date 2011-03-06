@@ -1,0 +1,1024 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+  <references title="Normative References">
+
+    <reference anchor='I-D.ietf-nfsv4-rfc3530bis-dot-x'>
+      <front>
+        <title>NFSv4 Version 0 XDR Description</title>
+        <author initials='T' surname='Haynes' fullname='Thomas Haynes'>
+          <organization abbrev='Editors' />
+        </author>
+        <author initials='D' surname='Noveck' fullname='David Noveck'>
+          <organization abbrev='Editors' />
+        </author>
+
+        <date month='Feb' day='03' year='2011' />
+
+        <abstract><t>This Internet-Draft provides the XDR description for NFSv4.</t></abstract>
+
+      </front>
+
+      <seriesInfo name='Internet-Draft' value='draft-ietf-nfsv4-rfc3530bis-dot-x-02' />
+      <format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-rfc3530-dot-x-02.txt' />
+    </reference>
+
+      
+    <reference anchor="ISO.10646-1.1993">
+      <front>
+     <title>Information Technology - Universal Multiple-octet coded
+     Character Set (UCS) - Part 1: Architecture and Basic Multilingual
+     Plane</title>
+	<author>
+	  <organization>International Organization for Standardization
+	  </organization>
+	</author>
+	<date month="May" year="1993" />
+      </front>
+
+      <seriesInfo name="ISO" value="Standard 10646-1" />
+    </reference>
+
+    <reference anchor='RFC1831'>
+      <front>
+	<title abbrev='Remote Procedure Call Protocol Version 2'>RPC:
+	Remote Procedure Call Protocol Specification Version 2</title>
+	<author initials='R.' surname='Srinivasan' fullname='Raj Srinivasan'>
+	  <organization>Sun Microsystems, Inc., ONC Technologies</organization>
+	  <address>
+	    <postal>
+	      <street>2550 Garcia Avenue</street>
+	      <street>M/S MTV-5-40</street>
+	      <city>Mountain View</city>
+	      <region>CA</region>
+	      <code>94043</code>
+	    <country>US</country></postal>
+	    <phone>+1 415 336 2478</phone>
+	    <facsimile>+1 415 336 6015</facsimile>
+	<email>raj@eng.sun.com</email></address></author>
+	<date year='1995' month='August' />
+	<abstract>
+      <t>This document describes the ONC Remote Procedure Call (ONC
+      RPC Version 2) protocol as it is currently deployed and
+      accepted.  "ONC" stands for "Open Network
+      Computing".</t></abstract></front>
+
+      <seriesInfo name='RFC' value='1831' />
+      <format type='TXT' octets='37798' target='ftp://ftp.isi.edu/in-notes/rfc1831.txt' />
+    </reference>
+
+    <reference anchor='RFC2119'>
+      <front>
+	<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
+	<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
+	  <organization>Harvard University</organization>
+	  <address>
+	    <postal>
+	      <street>1350 Mass. Ave.</street>
+	      <street>Cambridge</street>
+	    <street>MA 02138</street></postal>
+	    <phone>- +1 617 495 3864</phone>
+	<email>sob@harvard.edu</email></address></author>
+	<date year='1997' month='March' />
+      </front>
+    </reference>
+
+    <reference anchor='RFC2203'>
+    
+      <front>
+      <title>RPCSEC_GSS Protocol Specification</title>
+
+        <author initials='M.' surname='Eisler' fullname='Michael Eisler'>
+        <organization>Sun Microsystems, Inc.</organization>
+        <address>
+        <postal>
+        <street>M/S UCOS03</street>
+        <street>2550 Garcia Avenue</street>
+        <street>Mountain View</street>
+        <street>CA 94043</street></postal>
+        <phone>+1 (719) 599-9026</phone>
+        <email>mre@eng.sun.com</email></address></author>
+  
+        <author initials='A.' surname='Chiu' fullname='Alex Chiu'>
+        <organization>Sun Microsystems, Inc.</organization>
+        <address>
+        <postal>
+        <street>M/S UMPK17-203</street>
+        <street>2550 Garcia Avenue</street>
+        <street>Mountain View</street>
+        <street>CA 94043</street></postal>
+        <phone>+1 (415) 786-6465</phone>
+        <email>hacker@eng.sun.com</email></address></author>
+  
+        <author initials='L.' surname='Ling' fullname='Lin Ling'>
+        <organization>Sun Microsystems, Inc.</organization>
+        <address>
+        <postal>
+        <street>M/S UMPK17-201</street>
+        <street>2550 Garcia Avenue</street>
+        <street>Mountain View</street>
+        <street>CA 94043</street></postal>
+        <phone>+1 (415) 786-5084</phone>
+        <email>lling@eng.sun.com</email></address></author>
+
+      <date year='1997' month='September' />
+      <area>Security</area>
+      <keyword>generic security service</keyword>
+      <keyword>remote procedure call</keyword>
+      <keyword>security</keyword>
+      <abstract>
+      <t>
+         This memo describes an ONC/RPC security flavor that allows RPC
+         protocols to access the Generic Security Services Application
+         Programming Interface (referred to henceforth as GSS-API).
+      </t></abstract></front>
+      
+      <seriesInfo name='RFC' value='2203' />
+      <format type='TXT' octets='50937' target='ftp://ftp.isi.edu/in-notes/rfc2203.txt' />
+      <format type='HTML' octets='64234' target='http://xml.resource.org/public/rfc/html/rfc2203.html' />
+      <format type='XML' octets='50069' target='http://xml.resource.org/public/rfc/xml/rfc2203.xml' />
+    </reference>
+
+    <reference anchor='RFC2277'>
+
+      <front>
+	<title abbrev='Charset Policy'>
+	IETF Policy on Character Sets and Languages</title>
+	<author initials='H.T.' surname='Alvestrand' 
+		fullname='Harald Tveit Alvestrand'>
+	  <organization>UNINETT</organization>
+	  <address>
+	    <postal>
+	      <street>P.O.Box 6883 Elgeseter</street>
+	      <street>N-7002 TRONDHEIM</street>
+	    <country>NORWAY</country></postal>
+	    <phone>+47 73 59 70 94</phone>
+	<email>Harald.T.Alvestrand@uninett.no</email></address></author>
+	<date year='1998' month='January' />
+	<area>Applications</area>
+	<keyword>Internet Engineering Task Force</keyword>
+      <keyword>character encoding</keyword></front>
+
+      <seriesInfo name='BCP' value='18' />
+      <seriesInfo name='RFC' value='2277' />
+      <format type='TXT' octets='16622' 
+	      target='ftp://ftp.isi.edu/in-notes/rfc2277.txt' />
+      <format type='HTML' octets='26556' 
+	      target='http://xml.resource.org/public/rfc/html/rfc2277.html' />
+      <format type='XML' octets='15544' 
+	      target='http://xml.resource.org/public/rfc/xml/rfc2277.xml' />
+    </reference>
+
+    <reference anchor='RFC2743'>
+
+      <front>
+	<title abbrev='GSS-API'>Generic Security Service Application
+	Program Interface Version 2, Update 1</title>
+	<author initials='J.' surname='Linn' fullname='John Linn'>
+	  <organization>RSA Laboratories</organization>
+	  <address>
+	    <postal>
+	      <street>20 Crosby Drive</street>
+	      <city>Bedford</city>
+	      <region>MA</region>
+	      <code>01730</code>
+	    <country>US</country></postal>
+	    <phone>+1 781 687 7817</phone>
+	<email>jlinn@rsasecurity.com</email></address></author>
+	<date year='2000' month='January' />
+	<abstract>
+	  <t>The Generic Security Service Application Program
+	  Interface (GSS-API), Version 2, as defined in, provides
+	  security services to callers in a generic fashion,
+	  supportable with a range of underlying mechanisms and
+	  technologies and hence allowing source-level portability of
+	  applications to different environments. This specification
+	  defines GSS-API services and primitives at a level
+	  independent of underlying mechanism and programming language
+	  environment, and is to be complemented by other, related
+	  specifications:</t>
+	  <t>documents defining specific parameter bindings for
+	  particular language environments</t>
+	  <t>documents defining token formats, protocols, and
+	  procedures to be implemented in order to realize GSS-API
+	  services atop particular security mechanisms</t> <t>This
+	  memo obsoletes making specific, incremental changes in
+	  response to implementation experience and liaison
+	  requests. It is intended, therefore, that this memo or a
+	  successor version thereto will become the basis for
+	  subsequent progression of the GSS-API specification on the
+	  standards track.</t></abstract></front>
+
+      <seriesInfo name='RFC' value='2743' />
+      <format type='TXT' octets='229418' 
+	      target='ftp://ftp.isi.edu/in-notes/rfc2743.txt' />
+    </reference>
+
+
+    <reference anchor='RFC2847'>
+    
+      <front>
+      <title>LIPKEY - A Low Infrastructure Public Key Mechanism Using SPKM</title>
+        <author initials='M.' surname='Eisler' fullname='M. Eisler'>
+        <organization /></author>
+        <date year='2000' month='June' />
+
+        <abstract>
+          <t>&lt;p>This memorandum describes a method whereby one can
+          use GSS-API (Generic Security Service Application Program
+          Interface) to supply a secure channel between a client and
+          server, authenticating the client with a password, and a
+          server with a public key certificate. [STANDARDS TRACK]
+          &lt;/p></t>
+	</abstract>
+      </front>
+        
+      <seriesInfo name='RFC' value='2847' />
+      <format type='TXT' octets='50045' target='ftp://ftp.isi.edu/in-notes/rfc2847.txt' />
+    </reference>
+
+    <reference anchor='RFC3454'>
+
+      <front>
+	<title>Preparation of Internationalized Strings ("stringprep")</title>
+	<author initials='P.' surname='Hoffman' fullname='P. Hoffman'>
+	  <organization /></author>
+	<author initials='M.' surname='Blanchet' fullname='M. Blanchet'>
+	  <organization /></author>
+	<date year='2002' month='December' />
+	<abstract>
+	  <t>
+	    &lt;p>This document describes a framework for preparing
+	    Unicode text strings in order to increase the likelihood
+	    that string input and string comparison work in ways that
+	    make sense for typical users throughout the world. The
+	    stringprep protocol is useful for protocol identifier
+	    values, company and personal names, internationalized
+	    domain names, and other text strings. This document does
+	    not specify how protocols should prepare text
+	    strings. Protocols must create profiles of stringprep in
+	    order to fully specify the processing options. [STANDARDS
+	    TRACK] &lt;/p>
+          </t>
+        </abstract>
+      </front>
+
+      <seriesInfo name='RFC' value='3454' />
+      <format type='TXT' octets='138684' target='ftp://ftp.isi.edu/in-notes/rfc3454.txt' />
+    </reference>
+
+    <reference anchor='I-D.draft-ietf-idna'>
+      <front>
+        <title>Internationalized Domain Names in Applications (IDNA): Protocol</title>
+        <author initials='J' surname='Klensin' fullname='John C. Klensin'>
+          <organization />
+        </author>
+        <date month='January' year='2010' />
+      </front>
+      <seriesInfo name='Internet-Draft' value='draft-ietf-idnabis-protocol-18' />
+      <format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-idnabis-protocol-18.txt' />
+    </reference>
+  </references>
+
+  <references title="Informative References">
+
+   <reference anchor='RFC5226'>
+
+   <front>
+   <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>
+   <author initials='T.' surname='Narten' fullname='T. Narten'>
+   <organization /></author>
+   <author initials='H.' surname='Alvestrand' fullname='H. Alvestrand'>
+   <organization /></author>
+   <date year='2008' month='May' />
+   <abstract>
+   <t>Many protocols make use of identifiers consisting of constants and other well-known values. Even after a protocol has been defined and deployment has begun, new values may need to be assigned (e.g., for a new option type in DHCP, or a new encryption or authentication transform for IPsec). To ensure that such quantities have consistent values and interpretations across all implementations, their assignment must be administered by a central authority. For IETF protocols, that role is provided by the Internet Assigned Numbers Authority (IANA).&lt;/t>&lt;t> In order for IANA to manage a given namespace prudently, it needs guidelines describing the conditions under which new values can be assigned or when modifications to existing values can be made. If IANA is expected to play a role in the management of a namespace, IANA must be given clear and concise instructions describing that role. This document discusses issues that should be considered in formulating a policy for assigning values to a namespace and provides guidelines for authors on the specific text that must be included in documents that place demands on IANA.&lt;/t>&lt;t> This document obsoletes RFC 2434. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract></front>
+
+   <seriesInfo name='BCP' value='26' />
+   <seriesInfo name='RFC' value='5226' />
+   <format type='TXT' octets='66160' target='ftp://ftp.isi.edu/in-notes/rfc5226.txt' />
+   </reference>
+
+<reference anchor='RFC1094'>
+
+<front>
+<title abbrev='NFS: Network File System'>NFS: Network File System Protocol specification</title>
+<author initials='B.' surname='Nowicki' fullname='Bill Nowicki'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>2550 Garcia Avenue</street>
+<street>Mail Stop 1-40</street>
+<city>Mountain View</city>
+<region>CA</region>
+<code>94043</code>
+<country>US</country></postal>
+<phone>+1 415 336 7278</phone>
+<email>nowicki@SUN.COM</email></address></author>
+<date year='1989' day='1' month='March' /></front>
+
+<seriesInfo name='RFC' value='1094' />
+<format type='TXT' octets='51454' target='ftp://ftp.isi.edu/in-notes/rfc1094.txt' />
+</reference>
+
+<reference anchor='RFC1345'>
+
+<front>
+<title>Character Mnemonics and Character Sets</title>
+<author initials='K.' surname='Simonsen' fullname='Keld Simonsen'>
+<organization>Rationel Almen Planlaegning</organization>
+<address>
+<postal>
+<street>Sankt Joergens Alle 8</street>
+<city>Koebenhavn V</city>
+<region />
+<code>DK-1615</code>
+<country>DK</country></postal>
+<phone>+45 31 226543</phone>
+<facsimile>+45 33 158516</facsimile>
+<email>Keld.Simonsen@dkuug.dk</email></address></author>
+<date year='1992' month='June' /></front>
+
+<seriesInfo name='RFC' value='1345' />
+<format type='TXT' octets='249737' target='ftp://ftp.isi.edu/in-notes/rfc1345.txt' />
+</reference>
+
+<reference anchor='RFC1813'>
+
+<front>
+<title abbrev='NFSv3 Protocol'>NFS Version 3 Protocol Specification</title>
+<author initials='B.' surname='Callaghan' fullname='Brent Callaghan'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>2550 Garcia Avenue</street>
+<street>Mailstop UMTV05-44</street>
+<city>Mountain View</city>
+<region>CA</region>
+<code>94043-1100</code>
+<country>US</country></postal>
+<phone>+1 415 336 1051</phone>
+<facsimile>+1 415 336 6015</facsimile>
+<email>brent.callaghan@eng.sun.com</email></address></author>
+<author initials='B.' surname='Pawlowski' fullname='Brian Pawlowski'>
+<organization>NetApp</organization>
+<address>
+<postal>
+<street>319 North Bernardo Ave.</street>
+<city>Mountain View</city>
+<region>CA</region>
+<code>94043</code>
+<country>US</country></postal>
+<phone>+1 415 428 5136</phone>
+<facsimile>+1 415 428 5151</facsimile>
+<email>beepy@netapp.com</email></address></author>
+<author initials='P.' surname='Staubach' fullname='Peter Staubach'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>2550 Garcia Avenue</street>
+<street>Mailstop UMTV05-44</street>
+<city>Mountain View</city>
+<region>CA</region>
+<code>94043-1100</code>
+<country>US</country></postal>
+<phone>+1 415 336 5615</phone>
+<facsimile>+1 415 336 6015</facsimile>
+<email>peter.staubach@eng.sun.com</email></address></author>
+<date year='1995' month='June' />
+<abstract>
+<t>This paper describes the NFSv3 protocol.  This paper is provided so that people can write compatible implementations.</t></abstract></front>
+
+<seriesInfo name='RFC' value='1813' />
+<format type='TXT' octets='229793' target='ftp://ftp.isi.edu/in-notes/rfc1813.txt' />
+</reference>
+
+    <reference anchor='RFC1833'>
+
+      <front>
+	<title>Binding Protocols for ONC RPC Version 2</title>
+	<author initials='R.' surname='Srinivasan' fullname='Raj Srinivasan'>
+	  <organization>Sun Microsystems, Inc., ONC Technologies</organization>
+	  <address>
+	    <postal>
+	      <street>2550 Garcia Avenue</street>
+	      <street>M/S MTV-5-40</street>
+	      <city>Mountain View</city>
+	      <region>CA</region>
+	      <code>94043</code>
+	    <country>US</country></postal>
+	    <phone>+1 415 336 2478</phone>
+	    <facsimile>+1 415 336 6015</facsimile>
+	<email>raj@eng.sun.com</email></address></author>
+	<date year='1995' month='August' />
+	<abstract>
+      <t>This document describes the binding protocols used in
+      conjunction with the ONC Remote Procedure Call (ONC RPC Version
+      2) protocols.</t></abstract></front>
+
+      <seriesInfo name='RFC' value='1833' />
+      <format type='TXT' octets='24449' target='ftp://ftp.isi.edu/in-notes/rfc1833.txt' />
+    </reference>
+
+
+    <reference anchor='RFC2054'>
+
+      <front>
+	<title>WebNFS Client Specification</title>
+	<author initials='B.' surname='Callaghan' fullname='Brent Callaghan'>
+	  <organization>Sun Microsystems, Inc.</organization>
+	  <address>
+	    <postal>
+	      <street>2550 Garcia Avenue</street>
+	      <street>Mailstop Mpk17-201</street>
+	      <city>Mountain View</city>
+	      <region>CA</region>
+	      <code>94043-1100</code>
+	      <country>US</country></postal>
+	    <phone>+1 415 786 5067</phone>
+	    <facsimile>+1 415 786 5896</facsimile>
+	    <email>brent.callaghan@eng.sun.com</email></address></author>
+	<date year='1996' month='October' />
+	<abstract>
+	  <t>This document describes a lightweight binding mechanism that allows
+	    NFS clients to obtain service from WebNFS-enabled servers with a
+	    minimum of protocol overhead.  In removing this overhead, WebNFS
+	    clients see benefits in faster response to requests, easy transit of
+	    packet filter firewalls and TCP-based proxies, and better server
+	    scalability.</t></abstract></front>
+
+      <seriesInfo name='RFC' value='2054' />
+      <format type='TXT' octets='36354' target='ftp://ftp.isi.edu/in-notes/rfc2054.txt' />
+    </reference>
+
+    <reference anchor='RFC2055'>
+
+      <front>
+	<title>WebNFS Server Specification</title>
+	<author initials='B.' surname='Callaghan' fullname='Brent Callaghan'>
+	  <organization>Sun Microsystems, Inc.</organization>
+	  <address>
+	    <postal>
+	      <street>2550 Garcia Avenue</street>
+	      <street>Mailstop Mpk17-201</street>
+	      <city>Mountain View</city>
+	      <region>CA</region>
+	      <code>94043-1100</code>
+	      <country>US</country></postal>
+	    <phone>+1 415 786 5067</phone>
+	    <facsimile>+1 415 786 5896</facsimile>
+	    <email>brent.callaghan@eng.sun.com</email></address></author>
+	<date year='1996' month='October' />
+	<abstract>
+	  <t>This document describes the specifications for a server of WebNFS
+	    clients.  WebNFS extends the semantics of the NFSv3
+	    protocol to allow clients to obtain filehandles more easily, without
+	    recourse to the portmap or MOUNT protocols.  In removing the need for
+	    these protocols, WebNFS clients see benefits in faster response to
+	    requests, easy transit of firewalls and better server scalability This
+	    description is provided to facilitate compatible implementations of
+	    WebNFS servers.</t></abstract></front>
+
+      <seriesInfo name='RFC' value='2055' />
+      <format type='TXT' octets='20498' target='ftp://ftp.isi.edu/in-notes/rfc2055.txt' />
+    </reference>
+
+    <reference anchor='RFC2623'>
+    
+      <front>
+      <title abbrev='NFS Security, RPCSEC_GSS, and Kerberos V5'>NFS Version 2 and Version 3 Security Issues and the NFS Protocol's Use of RPCSEC_GSS and Kerberos V5</title>
+
+        <author initials='M.' surname='Eisler' fullname='Mike Eisler'>
+        <organization>Sun Microsystems, Inc.</organization>
+        <address>
+        <postal>
+        <street>5565 Wilson Road</street>
+        <city>Colorado Springs</city>
+        <region>CO</region>
+        <code>80919</code>
+        <country>US</country></postal>
+        <phone>+1 719 599 9026</phone>
+        <email>mre@eng.sun.com</email></address></author>
+
+      <date year='1999' month='June' />
+
+      <abstract>
+
+        <t>This memorandum clarifies various security issues involving
+        the NFSv2 and NFSv3 protocols and then
+        describes how the NFS protocol
+        use the RPCSEC_GSS security flavor protocol and Kerberos V5.
+        This memorandum is provided so that people can write compatible
+        implementations.</t>
+      </abstract>
+      </front>
+      
+      <seriesInfo name='RFC' value='2623' />
+      <format type='TXT' octets='42521' target='ftp://ftp.isi.edu/in-notes/rfc2623.txt' />
+    </reference>
+
+<reference anchor='RFC2224'>
+
+<front>
+<title>NFS URL Scheme</title>
+<author initials='B.' surname='Callaghan' fullname='Brent Callaghan'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>Mailstop Mpk17-201</street>
+<street>901 San Antonio Road</street>
+<street>Palo Alto</street>
+<street>California 94303</street></postal>
+<phone>1-415-786-5067</phone>
+<facsimile>1-415-786-5896</facsimile>
+<email>brent.callaghan@eng.sun.com</email></address></author>
+<date year='1997' month='October' />
+<area>Applications</area>
+<keyword>NFS</keyword>
+<keyword>network file system</keyword>
+<keyword>uniform resource</keyword>
+<abstract>
+<t>
+   A new URL scheme, &apos;nfs&apos; is defined.  It is used to refer to files and
+   directories on NFS servers using the general URL syntax defined in
+   RFC 1738, &quot;Uniform Resource Locators (URL)&quot;.
+</t>
+<t>
+   This scheme uses the public filehandle and multi-component lookup
+   [RFC2054, RFC2055] to access server data with a minimum of protocol
+   overhead.
+</t>
+<t>
+   The NFS protocol provides access to shared file systems across
+   networks.  It is designed to be machine, operating system, network
+   architecture, and transport protocol independent.
+</t></abstract></front>
+
+<seriesInfo name='RFC' value='2224' />
+<format type='TXT' octets='22726' target='ftp://ftp.isi.edu/in-notes/rfc2224.txt' />
+<format type='HTML' octets='35259' target='http://xml.resource.org/public/rfc/html/rfc2224.html' />
+<format type='XML' octets='24805' target='http://xml.resource.org/public/rfc/xml/rfc2224.xml' />
+</reference>
+
+<reference anchor='RFC2624'>
+
+<front>
+<title abbrev='NFSv4 Design Considerations'>NFS Version 4 Design Considerations</title>
+<author initials='S.' surname='Shepler' fullname='Spencer Shepler'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>7808 Moonflower Drive</street>
+<city>Austin</city>
+<region>TX</region>
+<code>78750</code>
+<country>US</country></postal>
+<phone>+1 512 349 9376</phone>
+<email>spencer.shepler@eng.sun.com</email></address></author>
+<date year='1999' month='June' />
+<abstract>
+<t>The main task of the NFSv4 working group is to create a
+protocol definition for a distributed file system that focuses on the
+following items: improved access and good performance on the Internet,
+strong security with negotiation built into the protocol, better
+cross-platform interoperability, and designed for protocol extensions.
+NFSv4 will owe its general design to the previous versions of
+NFS.  It is expected, however, that many features will be quite
+different in NFSv4 than previous versions to facilitate the
+goals of the working group and to address areas that NFSv2 and
+NFSv3 have not.</t>
+<t>This design considerations document is meant to present more detail
+than the working group charter.  Specifically, it presents the areas
+that the working group will investigate and consider while developing
+a protocol specification for NFSv4.  Based on this
+investigation the working group will decide the features of the new
+protocol based on the cost and benefits within the specific feature
+areas.</t></abstract> <note title='Key Words'>
+<t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in RFC
+2119.</t></note></front>
+
+<seriesInfo name='RFC' value='2624' />
+<format type='TXT' octets='52891' target='ftp://ftp.isi.edu/in-notes/rfc2624.txt' />
+</reference>
+
+<reference anchor='RFC2755'>
+
+<front>
+<title>Security Negotiation for WebNFS</title>
+<author initials='A.' surname='Chiu' fullname='Alex Chiu'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>901 San Antonio Road</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94303</code>
+<country>US</country></postal>
+<phone>+1 650 786 6465</phone>
+<email>alex.chiu@Eng.sun.com</email></address></author>
+<author initials='M.' surname='Eisler' fullname='Mike Eisler'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>901 San Antonio Road</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94303</code>
+<country>US</country></postal>
+<phone>+1 719 599 9026</phone>
+<email>michael.eisler@Eng.sun.com</email></address></author>
+<author initials='B.' surname='Callaghan' fullname='Brent Callaghan'>
+<organization>Sun Microsystems, Inc.</organization>
+<address>
+<postal>
+<street>901 San Antonio Road</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94303</code>
+<country>US</country></postal>
+<phone>+1 650 786 5067</phone>
+<email>brent.callaghan@Eng.sun.com</email></address></author>
+<date year='2000' month='January' />
+<abstract>
+<t>This document describes a protocol for a WebNFS client to negotiate the desired security mechanism with a WebNFS server before the WebNFS client falls back to the MOUNT v3 protocol. This document is provided so that people can write compatible implementations.</t></abstract></front>
+
+<seriesInfo name='RFC' value='2755' />
+<format type='TXT' octets='23493' target='ftp://ftp.isi.edu/in-notes/rfc2755.txt' />
+</reference>
+
+    <reference anchor='RFC3232'>
+    
+      <front>
+        <title>Assigned Numbers: RFC 1700 is Replaced by an On-line Database</title>
+        <author initials='J.' surname='Reynolds' fullname='J. Reynolds'>
+        <organization /></author>
+        <date year='2002' month='January' />
+        <abstract>
+          <t>&lt;p>This memo obsoletes RFC 1700 (STD 2) "Assigned
+          Numbers", which contained an October 1994 snapshot of assigned
+          Internet protocol parameters. This memo provides information
+          for the Internet community. &lt;/p></t>
+	</abstract></front>
+    
+      <seriesInfo name='RFC' value='3232' />
+      <format type='TXT' octets='3849' target='ftp://ftp.isi.edu/in-notes/rfc3232.txt' />
+    </reference>
+
+  <reference anchor='RFC4506'>
+    <front>
+      <title>XDR: External Data Representation Standard</title>
+      <author initials='M.' surname='Eisler' fullname='Michael Eisler'>
+        <organization>NetApp</organization>
+      </author>
+      <date year="2006" month="May" />
+    </front>
+    <seriesInfo name="RFC" value="4506" />
+    <format type="TXT"
+      target="ftp://ftp.isi.edu/in-notes/rfc4506.txt"/>
+  </reference>
+
+    <reference anchor='RFC1964'>
+      <front>
+	<title>The Kerberos Version 5 GSS-API Mechanism</title>
+	<author initials="J." surname="Linn" fullname="J. Linn">
+	  <organization>OpenVision Technologies</organization>
+	</author>
+	<date year="1996" month="June"/>
+      </front>
+      <seriesInfo name="RFC" value="1964"/>
+      <format type="TXT" octets="600988" 
+	      target="ftp://ftp.isi.edu/in-notes/rfc1964.txt"/>
+    </reference>
+
+    <reference anchor='RFC3010'>
+      <front>
+	<title>Network File System (NFS) version 4 Protocol</title>
+	<author initials="S." surname="Shepler" fullname="S. Shepler">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="B." surname="Callaghan" fullname="B. Callaghan">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="D." surname="Robinson" fullname="D. Robinson">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="R." surname="Thurlow" fullname="R. Thurlow">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="C." surname="Beame" fullname="C. Beame">
+	  <organization>Hummingbird, Ltd.</organization>
+	</author>
+	<author initials="M." surname="Eisler" fullname="M. Eisler">
+	  <organization>NetApp</organization>
+	</author>
+	<author initials="D." surname="Noveck" fullname="D. Noveck">
+	  <organization>NetApp</organization>
+	</author>
+	<date year="2000" month="December"/>
+      </front>
+      <seriesInfo name="RFC" value="3010"/>
+      <format type="TXT" octets="600988" 
+	      target="ftp://ftp.isi.edu/in-notes/rfc3010.txt"/>
+    </reference>
+
+    <reference anchor='RFC3530'>
+      <front>
+	<title>Network File System (NFS) version 4 Protocol</title>
+	<author initials="S." surname="Shepler" fullname="S. Shepler">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="B." surname="Callaghan" fullname="B. Callaghan">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="D." surname="Robinson" fullname="D. Robinson">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="R." surname="Thurlow" fullname="R. Thurlow">
+	  <organization>Sun Microsystems, Inc.</organization>
+	</author>
+	<author initials="C." surname="Beame" fullname="C. Beame">
+	  <organization>Hummingbird, Ltd.</organization>
+	</author>
+	<author initials="M." surname="Eisler" fullname="M. Eisler">
+	  <organization>NetApp</organization>
+	</author>
+	<author initials="D." surname="Noveck" fullname="D. Noveck">
+	  <organization>NetApp</organization>
+	</author>
+	<date year="2003" month="April"/>
+      </front>
+      <seriesInfo name="RFC" value="3530"/>
+      <format type="TXT" octets="600988" 
+	      target="ftp://ftp.isi.edu/in-notes/rfc3530.txt"/>
+    </reference>
+
+    <reference anchor='RFC5661'>
+      <front>
+	<title>Network File System (NFS) Version 4 Minor Version 1 Protocol</title>
+	<author initials="S." surname="Shepler" fullname="S. Shepler">
+	  <organization>Storspeed, Inc.</organization>
+	</author>
+	<author initials="M." surname="Eisler" fullname="M. Eisler">
+	  <organization>NetApp</organization>
+	</author>
+	<author initials="D." surname="Noveck" fullname="D. Noveck">
+	  <organization>NetApp</organization>
+	</author>
+	<date year="2010" month="January"/>
+      </front>
+      <seriesInfo name="RFC" value="5661"/>
+      <format type="TXT" octets="600988" 
+	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
+    </reference>
+
+    <reference anchor="Floyd">
+        <front>
+	    <title> The Synchronization of Periodic Routing Messages </title>
+
+	    <author initials="S." surname="Floyd" >
+	    <organization></organization>
+            </author>
+	    <author initials="V." surname="Jacobson">
+	    <organization></organization>
+            </author>
+	    <date month="April" year="1994"/>
+        </front>
+
+        <seriesInfo name="IEEE/ACM Transactions on Networking" value="2(2), pp. 122-136" />
+
+    </reference>
+
+    <reference anchor="Chet">
+        <front>
+	    <title>Improving the Performance
+		    and Correctness of an NFS Server</title>
+
+	    <author initials="C." surname="Juszczak" fullname="Chet Juszczak">
+	      <organization>Digital Equipment Corporation</organization>
+	    </author>
+	    <date month="June" year="1990"/>
+	    <abstract>
+	    <t>
+		Describes reply cache implementation that
+		avoids work in the server by handling
+		duplicate requests. More important, though
+		listed as a side-effect, the reply cache
+		aids in the avoidance of destructive non-idempotent
+		operation re-application -- improving correctness.
+
+	    </t>
+	    </abstract>
+        </front>
+        <seriesInfo name="USENIX Conference Proceedings" value="" />
+      </reference>
+
+
+    <reference anchor="xnfs">
+        <front>
+	    <title> Protocols for Interworking: XNFS, Version 3W, ISBN 1-85912-184-5 </title>
+
+	    <author>
+	      <organization>The Open Group </organization>
+	    </author>
+	    <date month="February" year="1998"/>
+        </front>
+      </reference>
+
+<reference anchor='RFC2373'>
+<front>
+<title abbrev='IPv6 Addressing'>IP Version 6 Addressing Architecture</title>
+<author initials='R.M.' surname='Hinden' fullname='Robert M. Hinden'>
+<organization>Nokia</organization>
+<address>
+<postal>
+<street>232 Java Drive</street>
+<street>Sunnyvale</street>
+<street>CA 94089</street>
+<country>USA</country></postal>
+<phone>+1 408 990-2004</phone>
+<facsimile>+1 408 743-5677</facsimile>
+<email>hinden@iprg.nokia.com</email></address></author>
+<author initials='S.E.' surname='Deering' fullname='Stephen E. Deering'>
+<organization>Cisco Systems, Inc.</organization>
+<address>
+<postal>
+<street>170 West Tasman Drive</street>
+<street>San Jose</street>
+<street>CA 95134-1706</street>
+<country>USA</country></postal>
+<phone>+1 408 527-8213</phone>
+<facsimile>+1 408 527-8254</facsimile>
+<email>deering@cisco.com</email></address></author>
+<date year='1998' month='July' />
+<area>Internet</area>
+<keyword>internet protocol version 6</keyword>
+<keyword>IPv6</keyword>
+<keyword>addressing</keyword>
+<keyword>multicast</keyword>
+<abstract>
+<t>
+   This specification defines the addressing architecture of the IP
+   Version 6 protocol .  The document includes the IPv6 addressing
+   model, text representations of IPv6 addresses, definition of IPv6
+   unicast addresses, anycast addresses, and multicast addresses, and an
+   IPv6 node&apos;s required addresses.
+</t></abstract></front>
+
+<seriesInfo name='RFC' value='2373' />
+<format type='TXT' octets='52526' target='ftp://ftp.isi.edu/in-notes/rfc2373.txt' />
+<format type='HTML' octets='67709' target='http://xml.resource.org/public/rfc/html/rfc2373.html' />
+<format type='XML' octets='54927' target='http://xml.resource.org/public/rfc/xml/rfc2373.xml' />
+</reference>
+
+
+<reference anchor='RFC0793'>
+
+<front>
+<title abbrev='Transmission Control Protocol'>Transmission Control Protocol</title>
+<author initials='J.' surname='Postel' fullname='Jon Postel'>
+<organization>University of Southern California (USC)/Information Sciences Institute</organization>
+<address>
+<postal>
+<street>4676 Admiralty Way</street>
+<city>Marina del Rey</city>
+<region>CA</region>
+<code>90291</code>
+<country>US</country></postal></address></author>
+<date year='1981' day='1' month='September' /></front>
+
+<seriesInfo name='STD' value='7' />
+<seriesInfo name='RFC' value='793' />
+<format type='TXT' octets='172710' target='ftp://ftp.isi.edu/in-notes/rfc793.txt' />
+</reference>
+
+<reference anchor='RFC2025'>
+
+<front>
+<title abbrev='SPKM'>The Simple Public-Key GSS-API Mechanism (SPKM)</title>
+<author initials='C.' surname='Adams' fullname='Carlisle Adams'>
+<organization>Bell-Northern Research</organization>
+<address>
+<postal>
+<street>P.O.Box 3511</street>
+<street>Station C</street>
+<city>Ottawa</city>
+<region>Ontario</region>
+<code>K1Y 4H7</code>
+<country>CA</country></postal>
+<phone>+1 613 763 9008</phone>
+<email>cadams@bnr.ca</email></address></author>
+<date year='1996' month='October' />
+<abstract>
+<t>This specification defines protocols, procedures, and conventions to be employed by peers implementing the Generic Security Service  Application Program Interface (as specified in RFCs 1508 and 1509) when using the Simple Public-Key Mechanism.</t></abstract></front>
+
+<seriesInfo name='RFC' value='2025' />
+<format type='TXT' octets='101692' target='ftp://ftp.isi.edu/in-notes/rfc2025.txt' />
+</reference>
+
+<reference anchor='ISEG_errata'>
+<front>
+<title>IESG Processing of RFC Errata for the IETF Stream</title>
+	<author>
+<organization>IESG</organization>
+	</author>
+<date year='2008' month='July' />
+</front>
+</reference>
+
+    <reference anchor="read_api">
+      <front>
+     <title>Section 'read()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
+     </title>
+	<author>
+	  <organization>The Open Group
+	  </organization>
+	</author>
+	<date year="2004" />
+      </front>
+    </reference>
+
+    <reference anchor="readdir_api">
+      <front>
+     <title>Section 'readdir()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
+     </title>
+	<author>
+	  <organization>The Open Group
+	  </organization>
+	</author>
+	<date year="2004" />
+      </front>
+    </reference>
+
+    <reference anchor="write_api">
+      <front>
+     <title>Section 'write()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
+     </title>
+	<author>
+	  <organization>The Open Group
+	  </organization>
+	</author>
+	<date year="2004" />
+      </front>
+    </reference>
+
+    <reference anchor="fcntl">
+      <front>
+  	    <title>
+          Section 'fcntl()' of System Interfaces of The
+          Open Group Base Specifications Issue 6 IEEE Std 1003.1, 2004
+          Edition, HTML Version (www.opengroup.org), ISBN 1931624232
+        </title>
+	      <author>
+	        <organization>The Open Group </organization>
+	      </author>
+	      <date  year="2004"/>
+      </front>
+    </reference>
+
+    <reference anchor="fsync">
+      <front>
+  	    <title>
+         Section 'fsync()' of System Interfaces of The
+         Open Group Base Specifications Issue 6 IEEE Std 1003.1, 2004
+         Edition, HTML Version (www.opengroup.org), ISBN 1931624232
+        </title>
+	      <author>
+	        <organization>The Open Group </organization>
+	      </author>
+	      <date  year="2004"/>
+      </front>
+    </reference>
+
+    <reference anchor="getpwnam">
+      <front>
+  	    <title>
+         Section 'getpwnam()' of System Interfaces of
+         The Open Group Base Specifications Issue 6 IEEE Std 1003.1,
+         2004 Edition, HTML Version (www.opengroup.org), ISBN
+         1931624232
+        </title>
+	      <author>
+	        <organization>The Open Group </organization>
+	      </author>
+	      <date  year="2004"/>
+      </front>
+    </reference>
+
+    <reference anchor="unlink">
+      <front>
+  	    <title>
+         Section 'unlink()' of System Interfaces of The
+         Open Group Base Specifications Issue 6 IEEE Std 1003.1, 2004
+         Edition, HTML Version (www.opengroup.org), ISBN 1931624232
+        </title>
+	      <author>
+	        <organization>The Open Group </organization>
+	      </author>
+	      <date  year="2004"/>
+      </front>
+    </reference>
+
+</references>

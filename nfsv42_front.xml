@@ -1,0 +1,50 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
+<front>
+    <title abbrev="NFSv4.2">
+    NFS Version 4 Minor Version 2
+    </title>
+
+    <author fullname="Thomas Haynes" 
+            initials="T." 
+            surname="Haynes">
+        <organization abbrev="Editor">NetApp</organization>
+        <address>
+            <postal>
+                <street>9110 E 66th St</street>
+                <city>Tulsa</city>
+                <region>OK</region>
+                <code>74133</code>
+                <country>USA</country>
+            </postal>
+            <phone>+1 918 307 1415</phone>
+            <email>thomas@netapp.com</email>
+        </address>
+    </author>
+
+    <date year="YEARVAR" month="MONTHVAR" day="DAYVAR"/>
+
+    <area>Transport</area>
+    <workgroup>NFSv4</workgroup>
+
+    <abstract>
+      <t>
+        This Internet-Draft describes NFS version 4 minor version two,
+        including features retained from the base protocol and protocol
+        extensions made subsequently.  Major extensions introduced in
+        NFS version 4 minor version two include: XXX
+      </t>
+    </abstract>
+
+    <note title="Requirements Language">
+<t>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;,
+&quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
+&quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;,
+&quot;MAY&quot;, and &quot;OPTIONAL&quot; in this document are to be
+interpreted as described in <xref target="RFC2119">RFC 2119</xref>.
+</t>
+
+    </note>
+
+</front>

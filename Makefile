@@ -1,6 +1,6 @@
-# Copyright (C) The IETF Trust (2009-2010)
+# Copyright (C) The IETF Trust (2011)
 #
-# Manage the .xml for the NFSv4 3530bis document.
+# Manage the .xml for the NFSv4 minorversion 2 document.
 #
 
 YEAR=`date +%Y`
@@ -87,14 +87,14 @@ draft-haynes-nfsv4-minorversion2-$(VERS).nr: draft-haynes-nfsv4-minorversion2-$(
 	sh xml2rfc_wrapper.sh draft-haynes-nfsv4-minorversion2-$(VERS).xml $@.tmp
 	mv draft-tmp.nr $@
 
-nfsv4_middle_errortoop_autogen.xml: nfsv4_middle_errors.xml
-	./errortbl < nfsv4_middle_errors.xml > nfsv4_middle_errortoop_autogen.xml
+nfsv42_middle_errortoop_autogen.xml: nfsv42_middle_errors.xml
+	./errortbl < nfsv42_middle_errors.xml > nfsv42_middle_errortoop_autogen.xml
 
-nfsv4_front_autogen.xml: nfsv4_front.xml Makefile
-	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < nfsv4_front.xml > nfsv4_front_autogen.xml
+nfsv42_front_autogen.xml: nfsv42_front.xml Makefile
+	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < nfsv42_front.xml > nfsv42_front_autogen.xml
 
-nfsv4_rfc_start_autogen.xml: nfsv4_rfc_start.xml Makefile
-	sed -e s/VERSIONVAR/${VERS}/g < nfsv4_rfc_start.xml > nfsv4_rfc_start_autogen.xml
+nfsv42_rfc_start_autogen.xml: nfsv42_rfc_start.xml Makefile
+	sed -e s/VERSIONVAR/${VERS}/g < nfsv42_rfc_start.xml > nfsv42_rfc_start_autogen.xml
 
 autogen/basic_types.xml: dotx.d/spit_types.sh
 	sh dotx.d/spit_types.sh $@
@@ -257,62 +257,34 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 $(SPITGEN): dotx.d/spit_types.sh
 	cd dotx.d ; sh spit_types.sh `basename $@`
 
-
 dotx.d/open_args_gen.x: dotx.d/open_args.x dotx.d/const_access_deny.x
 	cd dotx.d ; VERS=$(VERS) $(MAKE) `basename $@`
 
 AUTOGEN =	\
-		nfsv4_front_autogen.xml \
-		nfsv4_rfc_start_autogen.xml \
-		nfsv4_middle_errortoop_autogen.xml \
-		autogen/basic_types.xml \
-		$(SPITGEN) \
-		$(SPITGENXML) \
-		autogen/write_args.xml \
-		autogen/write_res.xml
+		nfsv42_front_autogen.xml \
+		nfsv42_rfc_start_autogen.xml
 
-VESTIGIAL = \
-	nfsv4_middle_op_open_confirm.xml \
-	nfsv4_middle_op_renew.xml \
-	nfsv4_middle_op_setclientid.xml \
-	nfsv4_middle_op_setclientid_confirm.xml \
-	nfsv4_middle_op_release_lockowner.xml
+START_PREGEN = nfsv42_rfc_start.xml
+START=	nfsv42_rfc_start_autogen.xml
+END=	nfsv42_rfc_end.xml
 
-START_PREGEN = nfsv4_rfc_start.xml
-START=	nfsv4_rfc_start_autogen.xml
-END=	nfsv4_rfc_end.xml
-
-FRONT_PREGEN = nfsv4_front.xml
+FRONT_PREGEN = nfsv42_front.xml
 
 IDXMLSRC_BASE = \
-	nfsv4_middle_start.xml \
-	nfsv4_middle_introduction.xml \
-	nfsv4_middle_data_types.xml \
-	nfsv4_middle_rpc_sec.xml \
-	nfsv4_middle_filehandles.xml \
-	nfsv4_middle_fileattributes.xml \
-	nfsv4_middle_fileattributes_acls.xml \
-        nfsv4_middle_mars.xml \
-	nfsv4_middle_server_name.xml \
-        nfsv4_middle_file_locking.xml \
-	nfsv4_middle_client_cache.xml \
-	nfsv4_middle_minor.xml \
-	nfsv4_middle_i18n.xml \
-	nfsv4_middle_errors.xml \
-	nfsv4_middle_requests.xml \
-	nfsv4_middle_procedures.xml \
-	nfsv4_middle_cbs.xml \
-        nfsv4_middle_security.xml \
-	nfsv4_middle_iana.xml \
-	nfsv4_middle_end.xml \
-	nfsv4_back_front.xml \
-	nfsv4_back_references.xml \
-	nfsv4_back_acks.xml \
-	nfsv4_back_back.xml
+	nfsv42_middle_start.xml \
+	nfsv42_middle_introduction.xml \
+	nfsv42_middle_minor.xml \
+        nfsv42_middle_security.xml \
+	nfsv42_middle_iana.xml \
+	nfsv42_middle_end.xml \
+	nfsv42_back_front.xml \
+	nfsv42_back_references.xml \
+	nfsv42_back_acks.xml \
+	nfsv42_back_back.xml
 
-IDCONTENTS = nfsv4_front_autogen.xml $(IDXMLSRC_BASE)
+IDCONTENTS = nfsv42_front_autogen.xml $(IDXMLSRC_BASE)
 
-IDXMLSRC = nfsv4_front.xml $(IDXMLSRC_BASE)
+IDXMLSRC = nfsv42_front.xml $(IDXMLSRC_BASE)
 
 draft-tmp.xml: $(START) Makefile $(END)
 		rm -f $@ $@.tmp
@@ -333,8 +305,6 @@ genhtml: Makefile gendraft html txt dotx dotx-txt draft-$(VERS).tar
 		draft-haynes-nfsv4-minorversion2-$(VERS).txt \
 		draft-haynes-nfsv4-minorversion2-$(VERS).html \
 		dotx.d/nfsv4.x \
-		draft-haynes-nfsv4-minorversion2-dot-x-04.txt \
-		draft-haynes-nfsv4-minorversion2-dot-x-05.txt \
 		draft-$(VERS).tar.gz
 
 testx: 
