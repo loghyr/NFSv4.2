@@ -352,6 +352,8 @@ AUTOGEN =	\
 		autogen/putrootfh_res.xml \
 		autogen/read_args.xml \
 		autogen/read_res.xml \
+		autogen/readplus_args.xml \
+		autogen/readplus_res.xml \
 		autogen/readdir_args.xml \
 		autogen/readdir_res.xml \
 		autogen/readlink_res.xml \
@@ -395,6 +397,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_access.xml \
 	nfsv42_middle_copy.xml \
 	nfsv42_middle_space.xml \
+	nfsv42_middle_sparse.xml \
         nfsv42_middle_security.xml \
 	nfsv42_middle_iana.xml \
 	nfsv42_middle_end.xml \

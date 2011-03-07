@@ -1000,6 +1000,7 @@ enum nfs_opnum4 {
  OP_COPY_REVOKE		= 62,
  OP_COPY_STATUS		= 63,
  OP_HOLE_PUNCH		= 64,
+ OP_READPLUS		= 65,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1117,6 +1118,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY_ABORT:	COPY_ABORT4args opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4args opcopy_status;
  case OP_HOLE_PUNCH:	HOLE_PUNCH4args ophole_punch;
+ case OP_READPLUS:	READPLUS4args opreadplus;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	void;
@@ -1244,6 +1246,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_COPY_ABORT:	COPY_ABORT4res opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4res opcopy_status;
  case OP_HOLE_PUNCH:	HOLE_PUNCH4res ophole_punch;
+ case OP_READPLUS:	READPLUS4res opreadplus;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	ILLEGAL4res opillegal;

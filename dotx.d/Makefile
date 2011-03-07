@@ -119,7 +119,9 @@ FORE_OPS_AS_IS2 = \
                 copy_status_args.x \
                 copy_status_res.x \
 		hole_punch_args.x \
-		hole_punch_res.x
+		hole_punch_res.x \
+		readplus_args.x \
+		readplus_res.x
 
 FORE_OPS = $(FORE_OPS_AS_IS1) open_args_gen.x $(FORE_OPS_AS_IS2)
 
