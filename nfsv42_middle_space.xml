@@ -75,14 +75,14 @@
           deleted, taking block sharing into consideration.
         </t>
 
-        <t hangText="HOLE_PUNCH">
-          This operation zeroes and/or deallocates the blocks
-          backing a region of the file.
-        </t>
-
         <t hangText="max_hole_punch">
           This attribute specifies the maximum sized hole that
           can be punched on the filesystem.
+        </t>
+
+        <t hangText="HOLE_PUNCH">
+          This operation zeroes and/or deallocates the blocks
+          backing a region of the file.
         </t>
       </list>
     </t>
@@ -190,7 +190,7 @@
       </t>
     </section>
 
-    <section anchor="ss:space:ops:sr" title="Attribute X: space_reserve">
+    <section anchor="ss:space:ops:sr" title="Attribute 77: space_reserve">
       <t>
         The space_reserve attribute is a read/write attribute of type
         boolean.  It is a per file attribute.  When the space_reserved
@@ -229,7 +229,7 @@
       </t>
     </section>
 
-    <section anchor="ss:space:ops:sf" title="Attribute Y: space_freed">
+    <section anchor="ss:space:ops:sf" title="Attribute 78: space_freed">
 
       <t>
         space_freed gives the number of bytes freed if the file is deleted.
@@ -238,7 +238,7 @@
       </t>
     </section>
 
-    <section anchor="ss:space:ops:mhp" title="Attribute Z: max_hole_punch">
+    <section anchor="ss:space:ops:mhp" title="Attribute 79: max_hole_punch">
       <t>
         max_hole_punch specifies the maximum size of a hole that the
         HOLE_PUNCH operation can handle.  This attribute is read only and of
