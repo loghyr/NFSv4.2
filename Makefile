@@ -318,6 +318,8 @@ AUTOGEN =	\
 		autogen/getdevicelist_args.xml \
 		autogen/getdevicelist_res.xml \
 		autogen/getfh_res.xml \
+		autogen/hole_punch_args.xml \
+		autogen/hole_punch_res.xml \
 		autogen/illegal_res.xml \
 		autogen/layoutcommit_args.xml \
 		autogen/layoutcommit_res.xml \
@@ -392,6 +394,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_minor.xml \
 	nfsv42_middle_access.xml \
 	nfsv42_middle_copy.xml \
+	nfsv42_middle_space.xml \
         nfsv42_middle_security.xml \
 	nfsv42_middle_iana.xml \
 	nfsv42_middle_end.xml \

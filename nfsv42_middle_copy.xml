@@ -492,7 +492,7 @@
       </t>
     </section>
 
-    <section title="Operation U: COPY_NOTIFY - Notify a source server of a future copy">
+    <section title="Operation 61: COPY_NOTIFY - Notify a source server of a future copy">
 
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_notify_args.xml'?>
@@ -633,7 +633,7 @@
       </section>
     </section>
 
-    <section title="Operation V: COPY_REVOKE - Revoke a destination server's copy privileges">
+    <section title="Operation 62: COPY_REVOKE - Revoke a destination server's copy privileges">
 
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_revoke_args.xml'?>
@@ -702,7 +702,7 @@
       </section>
     </section>
 
-    <section title="Operation W: COPY - Initiate a server-side copy">
+    <section title="Operation 59: COPY - Initiate a server-side copy">
 
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_args.xml'?>
@@ -1148,7 +1148,7 @@
       </section>
     </section>
 
-    <section title="Operation X: COPY_ABORT - Cancel a server-side copy">
+    <section title="Operation 60: COPY_ABORT - Cancel a server-side copy">
 
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_abort_args.xml'?>
@@ -1222,7 +1222,7 @@
       </section>
     </section>
   
-    <section title="Operation Y: COPY_STATUS - Poll for status of a server-side copy">
+    <section title="Operation 63: COPY_STATUS - Poll for status of a server-side copy">
 
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_status_args.xml'?>
@@ -1291,7 +1291,7 @@
       </section>
     </section>
   
-    <section title="Operation Z: CB_COPY - Report results of a server-side copy">
+    <section title="Operation 15: CB_COPY - Report results of a server-side copy">
 
       <section title="ARGUMENT">
         <?rfc include='autogen/cb_copy_args.xml'?>

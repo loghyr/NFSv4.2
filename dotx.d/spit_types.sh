@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) The IETF Trust (2007-2008)
+# Copyright (C) The IETF Trust (2007-2011)
 
 for i in $* ;
 do
@@ -994,11 +994,12 @@ enum nfs_opnum4 {
 %
 %/* new operations for NFSv4.2 */
 %
- OP_COPY_NOTIFY		= 59,
- OP_COPY_REVOKE		= 60,
- OP_COPY		= 61,
- OP_COPY_ABORT		= 62,
+ OP_COPY		= 59,
+ OP_COPY_ABORT		= 60,
+ OP_COPY_NOTIFY		= 61,
+ OP_COPY_REVOKE		= 62,
  OP_COPY_STATUS		= 63,
+ OP_HOLE_PUNCH		= 64,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1115,6 +1116,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY:		COPY4args opcopy;
  case OP_COPY_ABORT:	COPY_ABORT4args opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4args opcopy_status;
+ case OP_HOLE_PUNCH:	HOLE_PUNCH4args ophole_punch;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	void;
@@ -1241,6 +1243,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_COPY:		COPY4res opcopy;
  case OP_COPY_ABORT:	COPY_ABORT4res opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4res opcopy_status;
+ case OP_HOLE_PUNCH:	HOLE_PUNCH4res ophole_punch;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	ILLEGAL4res opillegal;

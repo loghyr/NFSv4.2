@@ -108,16 +108,18 @@ FORE_OPS_AS_IS2 = \
 		destroy_clientid_res.x \
                 reclaim_complete_args.x \
                 reclaim_complete_res.x \
-                copy_notify_args.x \
-                copy_notify_res.x \
-                copy_revoke_args.x \
-                copy_revoke_res.x \
                 copy_args.x \
                 copy_res.x \
                 copy_abort_args.x \
                 copy_abort_res.x \
+                copy_notify_args.x \
+                copy_notify_res.x \
+                copy_revoke_args.x \
+                copy_revoke_res.x \
                 copy_status_args.x \
-                copy_status_res.x
+                copy_status_res.x \
+		hole_punch_args.x \
+		hole_punch_res.x
 
 FORE_OPS = $(FORE_OPS_AS_IS1) open_args_gen.x $(FORE_OPS_AS_IS2)
 
@@ -224,12 +226,12 @@ AUTOGEN =	hand_edit_warning.x \
 		$(SPITGEN) \
 		open_args_gen.x
 
-all:	nfsv41.x filelist
+all:	nfsv42.x filelist
 
-nfsv41.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x \
+nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x \
 		back_ops.x back_prog.x
-	m4 hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x back_ops.x back_prog.x | expand | tr -d "\r" > nfsv41.tmp
-	mv nfsv41.tmp nfsv41.x
+	m4 hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x back_ops.x back_prog.x | expand | tr -d "\r" > nfsv42.tmp
+	mv nfsv42.tmp nfsv42.x
 
 hand_edit_warning.x: Makefile ../Makefile head.x $(FORE_OPS) fore_prog.x $(BACK_OPS) back_prog.x
 	( \
@@ -258,7 +260,7 @@ clean:
 	$(RM) $(AUTOGEN) tmp.filelist
 
 clobber:
-	$(RM) nfsv41.x
+	$(RM) nfsv42.x
 
 filelist: Makefile
 	echo "" > tmp.filelist ; \
