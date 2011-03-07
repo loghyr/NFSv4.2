@@ -51,10 +51,10 @@ tmp.txt: draft-haynes-nfsv4-minorversion2-dot-x-$(VERS).xml
 
 draft-haynes-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
 	rm -f tmp.out
-	diff ../dotx.d/nfsv41.x tmp.x > tmp.out
+	diff ../dotx.d/nfsv42.x tmp.x > tmp.out
 	@if [ -s tmp.out ] ; then \
 	  echo ; \
-	  echo .x file in i-d differs from ../dotx.d/nfsv41.x. Aborting. ; \
+	  echo .x file in i-d differs from ../dotx.d/nfsv42.x. Aborting. ; \
 	  echo ; \
 	  exit 1 ; \
 	fi
@@ -79,11 +79,11 @@ AUTOGEN =	\
 		dotx_rfc_start_autogen.xml \
 		dotx_autogen.xml
 
-../dotx.d/nfsv41.x: dotx
+../dotx.d/nfsv42.x: dotx
 
-dotx_autogen.xml: Makefile ../dotx.d/nfsv41.x
+dotx_autogen.xml: Makefile ../dotx.d/nfsv42.x
 	@rm -f $@.tmp $@
-	@cat ../dotx.d/nfsv41.x | sed 's?^?   /// ?' | sed 's/</\&lt;/g'| \
+	@cat ../dotx.d/nfsv42.x | sed 's?^?   /// ?' | sed 's/</\&lt;/g'| \
 	awk ' \
 		BEGIN	{ print "<figure>"; print" <artwork>"; } \
 			{ print $0 ; } \

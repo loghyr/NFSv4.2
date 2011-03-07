@@ -1,0 +1,76 @@
+#!/usr/bin/perl
+#
+# A quick script to take the error section of the I-D and build the
+# Errors to operations table
+#
+use strict;
+
+use vars qw($opname);
+use vars qw($errcode);
+use vars qw(%errop);
+use vars qw($cnt);
+use vars qw($inerrortable);
+
+$inerrortable = 0;
+
+while (my $inline = <>) {
+    $_ = $inline;
+    if (/STARTOFTHEERRORTABLE/) {
+	$inerrortable = 1;
+	next;
+    }
+    if (/ENDOFTHEERRORTABLE/) {
+	$inerrortable = 0;
+	next;
+    }
+    if ($inerrortable == 0) {
+	next;
+    }
+
+    chomp ($inline);
+    next if ( $inline eq '' );		# skip blank lines
+    next if ( $inline eq /^\<!--/ );	# skip comments
+    $_ = $inline;
+    if (/\<c\>(.*)\<\/c\>/) {
+	$opname = $1;
+	next;
+    }
+    $_ = $inline;
+    # Skip the odd formatting cruft
+    next if /\<c\>/;
+    next if /\<\/c\>/;
+    next if /\<c \/\>/;
+
+    if (/(.*),$/) {
+	$_ = $1;
+    }
+    ($errcode) = split;
+
+    $errop{$errcode}{$opname} = 1;
+}
+
+printf("<section title=\"Errors and the operations that use them\">\n");
+printf("  <texttable anchor=\'error_op_returns\'>\n");
+printf("    <ttcol align=\'left\'>Error</ttcol>\n");
+printf("    <ttcol align=\'left\'>Operations</ttcol>\n");
+printf("\n");
+
+foreach my $e (sort keys %errop) {
+    printf ("    <c>%s</c>\n", $e);
+    printf ("    <c>\n");
+    $cnt = 1;
+    foreach my $o (sort keys %{$errop{$e}}) {
+	if ($cnt == 1) {
+	    printf("\t%s", $o);
+	    $cnt = 2;
+	} else {
+	    printf(",\n\t%s", $o);
+	}
+    }
+    printf ("\n    </c>\n");
+    printf ("    <c />\n");
+    printf ("    <c />\n\n");
+}
+
+printf("  </texttable>\n");
+printf("</section>\n");

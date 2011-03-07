@@ -345,6 +345,92 @@
       <format type='TXT'
         target='http://www.ietf.org/internet-drafts/draft-ietf-idnabis-protocol-18.txt' />
     </reference>
+
+<reference anchor='RFC3986'>
+
+<front>
+<title abbrev='URI Generic Syntax'>Uniform Resource Identifier (URI): Generic Syntax</title>
+<author initials='T.' surname='Berners-Lee' fullname='Tim Berners-Lee'>
+<organization abbrev='W3C/MIT'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>Massachusetts Institute of Technology</street>
+<street>77 Massachusetts Avenue</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code>
+<country>USA</country></postal>
+<phone>+1-617-253-5702</phone>
+<facsimile>+1-617-258-5999</facsimile>
+<email>timbl@w3.org</email>
+<uri>http://www.w3.org/People/Berners-Lee/</uri></address></author>
+<author initials='R.' surname='Fielding' fullname='Roy T. Fielding'>
+<organization abbrev='Day Software'>Day Software</organization>
+<address>
+<postal>
+<street>5251 California Ave., Suite 110</street>
+<city>Irvine</city>
+<region>CA</region>
+<code>92617</code>
+<country>USA</country></postal>
+<phone>+1-949-679-2960</phone>
+<facsimile>+1-949-679-2972</facsimile>
+<email>fielding@gbiv.com</email>
+<uri>http://roy.gbiv.com/</uri></address></author>
+<author initials='L.' surname='Masinter' fullname='Larry Masinter'>
+<organization abbrev='Adobe Systems'>Adobe Systems Incorporated</organization>
+<address>
+<postal>
+<street>345 Park Ave</street>
+<city>San Jose</city>
+<region>CA</region>
+<code>95110</code>
+<country>USA</country></postal>
+<phone>+1-408-536-3024</phone>
+<email>LMM@acm.org</email>
+<uri>http://larry.masinter.net/</uri></address></author>
+<date year='2005' month='January' />
+<area>Applications</area>
+<keyword>uniform resource identifier</keyword>
+<keyword>URI</keyword>
+<keyword>URL</keyword>
+<keyword>URN</keyword>
+<keyword>WWW</keyword>
+<keyword>resource</keyword>
+<abstract>
+<t>
+A Uniform Resource Identifier (URI) is a compact sequence of characters
+that identifies an abstract or physical resource.  This specification
+defines the generic URI syntax and a process for resolving URI references
+that might be in relative form, along with guidelines and security
+considerations for the use of URIs on the Internet.
+The URI syntax defines a grammar that is a superset of all valid URIs,
+allowing an implementation to parse the common components of a URI
+reference without knowing the scheme-specific requirements of every
+possible identifier.  This specification does not define a generative
+grammar for URIs; that task is performed by the individual
+specifications of each URI scheme.
+</t></abstract></front>
+
+<seriesInfo name='STD' value='66' />
+<seriesInfo name='RFC' value='3986' />
+<format type='TXT' octets='141811' target='ftp://ftp.isi.edu/in-notes/rfc3986.txt' />
+<format type='HTML' octets='213584' target='http://xml.resource.org/public/rfc/html/rfc3986.html' />
+<format type='XML' octets='163534' target='http://xml.resource.org/public/rfc/xml/rfc3986.xml' />
+</reference>
+
+
+<reference anchor="RPCSEC_GSSv3">
+        <front>
+                <title>Remote Procedure Call (RPC) Security Version 3</title>
+                <author initials="N." surname="Williams">
+                        <organization />
+                </author>
+                <date year="2008" />
+        </front>
+        <seriesInfo name="draft-williams-rpcsecgssv3" value="(work in progress)"/>
+</reference>
+
   </references>
 
   <references title="Informative References">
@@ -1067,5 +1153,192 @@ document are to be interpreted as described in RFC
 	      <date  year="2004"/>
       </front>
     </reference>
+
+<reference anchor='RFC0959'>
+
+<front>
+<title abbrev='File Transfer Protocol'>File Transfer Protocol</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>Information Sciences Institute (ISI)</organization></author>
+<author initials='J.' surname='Reynolds' fullname='J. Reynolds'>
+<organization /></author>
+<date year='1985' day='1' month='October' /></front>
+
+<seriesInfo name='STD' value='9' />
+<seriesInfo name='RFC' value='959' />
+<format type='TXT' octets='147316' target='ftp://ftp.isi.edu/in-notes/rfc959.txt' />
+</reference>
+
+
+<reference anchor='RFC2616'>
+
+<front>
+<title abbrev='HTTP/1.1'>Hypertext Transfer Protocol -- HTTP/1.1</title>
+<author initials='R.' surname='Fielding' fullname='Roy T. Fielding'>
+<organization abbrev='UC Irvine'>Department of Information and Computer Science</organization>
+<address>
+<postal>
+<street>University of California, Irvine</street>
+<city>Irvine</city>
+<region>CA</region>
+<code>92697-3425</code></postal>
+<facsimile>+1(949)824-1715</facsimile>
+<email>fielding@ics.uci.edu</email></address></author>
+<author initials='J.' surname='Gettys' fullname='James Gettys'>
+<organization abbrev='Compaq/W3C'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>jg@w3.org</email></address></author>
+<author initials='J.' surname='Mogul' fullname='Jeffrey C. Mogul'>
+<organization abbrev='Compaq'>Compaq Computer Corporation</organization>
+<address>
+<postal>
+<street>Western Research Laboratory</street>
+<street>250 University Avenue</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94305</code></postal>
+<email>mogul@wrl.dec.com</email></address></author>
+<author initials='H.' surname='Frystyk' fullname='Henrik Frystyk Nielsen'>
+<organization abbrev='W3C/MIT'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>frystyk@w3.org</email></address></author>
+<author initials='L.' surname='Masinter' fullname='Larry Masinter'>
+<organization abbrev='Xerox'>Xerox Corporation</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>3333 Coyote Hill Road</street>
+<city>Palo Alto</city>
+<region>CA</region>
+<code>94034</code></postal>
+<email>masinter@parc.xerox.com</email></address></author>
+<author initials='P.' surname='Leach' fullname='Paul J. Leach'>
+<organization abbrev='Microsoft'>Microsoft Corporation</organization>
+<address>
+<postal>
+<street>1 Microsoft Way</street>
+<city>Redmond</city>
+<region>WA</region>
+<code>98052</code></postal>
+<email>paulle@microsoft.com</email></address></author>
+<author initials='T.' surname='Berners-Lee' fullname='Tim Berners-Lee'>
+<organization abbrev='W3C/MIT'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>MIT Laboratory for Computer Science, NE43-356</street>
+<street>545 Technology Square</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code></postal>
+<facsimile>+1(617)258-8682</facsimile>
+<email>timbl@w3.org</email></address></author>
+<date year='1999' month='June' />
+<abstract>
+<t>
+   The Hypertext Transfer Protocol (HTTP) is an application-level
+   protocol for distributed, collaborative, hypermedia information
+   systems. It is a generic, stateless, protocol which can be used for
+   many tasks beyond its use for hypertext, such as name servers and
+   distributed object management systems, through extension of its
+   request methods, error codes and headers . A feature of HTTP is
+   the typing and negotiation of data representation, allowing systems
+   to be built independently of the data being transferred.
+</t>
+<t>
+   HTTP has been in use by the World-Wide Web global information
+   initiative since 1990. This specification defines the protocol
+   referred to as "HTTP/1.1", and is an update to RFC 2068 .
+</t></abstract></front>
+
+<seriesInfo name='RFC' value='2616' />
+<format type='TXT' octets='422317' target='ftp://ftp.isi.edu/in-notes/rfc2616.txt' />
+<format type='PS' octets='5529857' target='ftp://ftp.isi.edu/in-notes/rfc2616.ps' />
+<format type='PDF' octets='550558' target='ftp://ftp.isi.edu/in-notes/rfc2616.pdf' />
+<format type='HTML' octets='636125' target='http://xml.resource.org/public/rfc/html/rfc2616.html' />
+<format type='XML' octets='493420' target='http://xml.resource.org/public/rfc/xml/rfc2616.xml' />
+</reference>
+
+<reference anchor='RFC1994'>
+
+<front>
+<title>PPP Challenge Handshake Authentication Protocol (CHAP)</title>
+<author initials='W.' surname='Simpson' fullname='William Allen Simpson'>
+<organization>DayDreamer Computer Systems Consulting Services</organization>
+<address>
+<postal>
+<street>1384 Fontaine</street>
+<city>Madison Heights</city>
+<region>MI</region>
+<code>48071</code>
+<country>US</country></postal>
+<email>wsimpson@GreenDragon.com</email></address></author>
+<date year='1996' month='August' />
+<abstract>
+<t>The Point-to-Point Protocol (PPP)provides a standard method for transporting multi-protocol datagrams over point-to-point links. PPP also defines an extensible Link Control Protocol, which allows negotiation of an Authentication Protocol for authenticating its peer before allowing Network Layer protocols to transmit over the link.</t>
+<t>This document defines a method for Authentication using PPP, which uses a random Challenge, with a cryptographically hashed Response which depends upon the Challenge and a secret key.</t></abstract></front>
+
+<seriesInfo name='RFC' value='1994' />
+<format type='TXT' octets='24094' target='ftp://ftp.isi.edu/in-notes/rfc1994.txt' />
+</reference>
+
+<reference anchor="FEDFS-NSDB">
+        <front>
+                <title>NSDB Protocol for Federated Filesystems</title>
+                <author initials="J." surname="Lentini">
+                        <organization />
+                </author>
+                <author initials="C." surname="Everhart">
+                        <organization />
+                </author>
+                <author initials="D." surname="Ellard">
+                        <organization />
+                </author>
+                <author initials="R." surname="Tewari">
+                        <organization />
+                </author>
+                <author initials="M." surname="Naik">
+                        <organization />
+                </author>
+                <date year="2010" />
+        </front>
+        <seriesInfo name="draft-ietf-nfsv4-federated-fs-protocol" value="(Work In Progress)"/>
+</reference>
+
+<reference anchor="FEDFS-ADMIN">
+        <front>
+                <title>Administration Protocol for Federated Filesystems</title>
+                <author initials="J." surname="Lentini">
+                        <organization />
+                </author>
+                <author initials="C." surname="Everhart">
+                        <organization />
+                </author>
+                <author initials="D." surname="Ellard">
+                        <organization />
+                </author>
+                <author initials="R." surname="Tewari">
+                        <organization />
+                </author>
+                <author initials="M." surname="Naik">
+                        <organization />
+                </author>
+                <date year="2010" />
+        </front>
+        <seriesInfo name="draft-ietf-nfsv4-federated-fs-admin" value="(Work In Progress)"/>
+</reference>
 
 </references>
