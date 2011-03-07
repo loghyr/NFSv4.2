@@ -1,7 +1,31 @@
 <!-- Copyright (C) The IETF Trust (2011) -->
 <!-- Copyright (C) The Internet Society (2011) -->
+
 <section title="Acknowledgments">
-	<t>
+  <t>
+    For the pNFS Access Permissions Check, the original draft was
+    by Sorin Faibish, David Black, Mike Eisler, and Jason Glasgow.
+    The work was influenced by discussions with Benny Halevy and
+    Bruce Fields. A review was done by Tom Haynes.
+  </t>
+  <t>
+    For the NFS Server-side Copy, the original draft was by
+    James Lentini, Mike Eisler, Deepak Kenchammana, Anshul Madan,
+    and Rahul Iyer. Talpey co-authored an unpublished version of that document.
+    It was also was reviewed by a number of individuals:
+    Pranoop Erasani, Tom Haynes, Arthur Lent, Trond Myklebust,
+    Dave Noveck, Theresa Lingutla-Raj, Manjunath Shankararao, Satyam
+    Vaghani, and Nico Williams.
+  </t>
+  <t>
+    For the NFS space reservation operations, the original draft was
+    by Mike Eisler, James Lentini, Manjunath Shankararao, and Rahul Iyer.
+  </t>
+  <t>
+    For the sparse file support, the original draft was by Dean Hildebrand
+    and Marc Eshel. Valuable input and advice was received from Sorin
+    Faibish, Bruce Fields, Benny Halevy, Trond Myklebust, and Richard
+    Scheffenegger.
   </t>
 </section>
 
