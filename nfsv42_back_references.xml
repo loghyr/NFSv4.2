@@ -2,28 +2,94 @@
 <!-- Copyright (C) The Internet Society (2011) -->
   <references title="Normative References">
 
-    <reference anchor='I-D.ietf-nfsv4-rfc3530bis-dot-x'>
+    <reference anchor='RFC5661'>
       <front>
-        <title>NFSv4 Version 0 XDR Description</title>
-        <author initials='T' surname='Haynes' fullname='Thomas Haynes'>
-          <organization abbrev='Editors' />
-        </author>
-        <author initials='D' surname='Noveck' fullname='David Noveck'>
-          <organization abbrev='Editors' />
-        </author>
-
-        <date month='Feb' day='03' year='2011' />
-
-        <abstract><t>This Internet-Draft provides the XDR description for NFSv4.</t></abstract>
-
+	<title>Network File System (NFS) Version 4 Minor Version 1 Protocol</title>
+	<author initials="S." surname="Shepler" fullname="S. Shepler">
+	  <organization>Storspeed, Inc.</organization>
+	</author>
+	<author initials="M." surname="Eisler" fullname="M. Eisler">
+	  <organization>NetApp</organization>
+	</author>
+	<author initials="D." surname="Noveck" fullname="D. Noveck">
+	  <organization>NetApp</organization>
+	</author>
+	<date year="2010" month="January"/>
       </front>
-
-      <seriesInfo name='Internet-Draft' value='draft-ietf-nfsv4-rfc3530bis-dot-x-02' />
-      <format type='TXT'
-        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-rfc3530-dot-x-02.txt' />
+      <seriesInfo name="RFC" value="5661"/>
+      <format type="TXT" octets="600988" 
+	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
-      
+    <reference anchor='RFC5662'>
+      <front>
+	<title>Network File System (NFS) Version 4 Minor Version 1 External Data Representation Standard (XDR) Description</title>
+	<author initials="S." surname="Shepler" fullname="S. Shepler">
+	  <organization>Storspeed, Inc.</organization>
+	</author>
+	<author initials="M." surname="Eisler" fullname="M. Eisler">
+	  <organization>NetApp</organization>
+	</author>
+	<author initials="D." surname="Noveck" fullname="D. Noveck">
+	  <organization>NetApp</organization>
+	</author>
+	<date year="2010" month="January"/>
+      </front>
+      <seriesInfo name="RFC" value="5662"/>
+      <format type="TXT"
+	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
+    </reference>
+
+    <reference anchor='RFC5663'>
+      <front>
+	<title>Parallel NFS (pNFS) Block/Volume Layout</title>
+	<author initials="D." surname="Black" fullname="D. Shepler">
+	  <organization>EMC Corporation</organization>
+	</author>
+	<author initials="J." surname="Glasgow" fullname="J. Glasgow">
+	  <organization>Google</organization>
+	</author>
+	<author initials="S." surname="Fridella" fullname="S. Fridella">
+	  <organization>EMC Corporation</organization>
+	</author>
+	<date year="2010" month="January"/>
+      </front>
+      <seriesInfo name="RFC" value="5663"/>
+      <format type="TXT"
+	      target="ftp://ftp.isi.edu/in-notes/rfc5663.txt"/>
+    </reference>
+
+    <reference anchor='RFC5664'>
+      <front>
+	<title>Object-Based Parallel NFS (pNFS) Operations</title>
+	<author initials="B." surname="Halevy" fullname="B. Halevy">
+	  <organization>Panasas</organization>
+	</author>
+	<author initials="B." surname="Welch" fullname="B. Welch">
+	  <organization>Panasas</organization>
+	</author>
+	<author initials="J." surname="Zelenka" fullname="J. Zelenka">
+	  <organization>Panasas</organization>
+	</author>
+	<date year="2010" month="January"/>
+      </front>
+      <seriesInfo name="RFC" value="5664"/>
+      <format type="TXT"
+	      target="ftp://ftp.isi.edu/in-notes/rfc5664.txt"/>
+    </reference>
+
+    <reference anchor='4.2xdr'>
+      <front>
+	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
+	<author initials="T." surname="Haynes" fullname="T. Haynes">
+	  <organization>NetApp</organization>
+	</author>
+	<date year="2011" month="March"/>
+      </front>
+      <format type="TXT"
+	      target="https://datatracker.ietf.org/doc/draft-haynes-nfsv4-minorversion2-dot-x/" />
+    </reference>
+
     <reference anchor="ISO.10646-1.1993">
       <front>
      <title>Information Technology - Universal Multiple-octet coded
@@ -753,25 +819,6 @@ document are to be interpreted as described in RFC
       <seriesInfo name="RFC" value="3530"/>
       <format type="TXT" octets="600988" 
 	      target="ftp://ftp.isi.edu/in-notes/rfc3530.txt"/>
-    </reference>
-
-    <reference anchor='RFC5661'>
-      <front>
-	<title>Network File System (NFS) Version 4 Minor Version 1 Protocol</title>
-	<author initials="S." surname="Shepler" fullname="S. Shepler">
-	  <organization>Storspeed, Inc.</organization>
-	</author>
-	<author initials="M." surname="Eisler" fullname="M. Eisler">
-	  <organization>NetApp</organization>
-	</author>
-	<author initials="D." surname="Noveck" fullname="D. Noveck">
-	  <organization>NetApp</organization>
-	</author>
-	<date year="2010" month="January"/>
-      </front>
-      <seriesInfo name="RFC" value="5661"/>
-      <format type="TXT" octets="600988" 
-	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
     <reference anchor="Floyd">

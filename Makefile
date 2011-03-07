@@ -274,6 +274,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_start.xml \
 	nfsv42_middle_introduction.xml \
 	nfsv42_middle_minor.xml \
+	nfsv42_middle_access.xml \
         nfsv42_middle_security.xml \
 	nfsv42_middle_iana.xml \
 	nfsv42_middle_end.xml \
