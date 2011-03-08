@@ -165,6 +165,9 @@ enum nfsstat4 {
  NFS4ERR_REJECT_DELEG   = 10085,/* cb rejected delegation  */
  NFS4ERR_RETURNCONFLICT = 10086,/* layout get before return*/
  NFS4ERR_DELEG_REVOKED  = 10087,
+
+ /* NFSv4.2 errors start here. */
+
  NFS4ERR_PARTNER_NOTSUPP= 10088,/* s2s not supported       */
  NFS4ERR_PARTNER_NO_AUTH= 10089,/* s2s not authorized      */
  NFS4ERR_METADATA_NOTSUPP=10090,/* dest metadata diff sourc*/
@@ -383,6 +386,7 @@ include(type_fs_charset_cap4.x)
  */
 
 include(type_netloc_type4.x)
+include(type_chattr_type.x)
 
 /*
  * NFSv4.1 attributes
@@ -555,6 +559,7 @@ const FATTR4_FS_CHARSET_CAP	= 76;
 const FATTR4_SPACE_RESERVED	= 77;
 const FATTR4_SPACE_FREED	= 78;
 const FATTR4_MAX_HOLE_PUNCHED	= 79;
+const FATTR4_CHANGE_ATTR_TYPE	= 80;
 
 /*
  * File attribute container

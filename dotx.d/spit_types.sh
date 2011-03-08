@@ -1302,6 +1302,20 @@ struct nfsacl41 {
 EOF
 	;;
 
+	type_chattr_type.x )
+
+cat << EOF > $i
+enum change_attr_typeinfo = {
+           NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR         = 0,
+           NFS4_CHANGE_TYPE_IS_VERSION_COUNTER        = 1,
+           NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS = 2,
+           NFS4_CHANGE_TYPE_IS_TIME_METADATA          = 3,
+           NFS4_CHANGE_TYPE_IS_UNDEFINED              = 4
+};
+EOF
+
+	;;
+
 	* )
 		echo $0: Error: $i not recognized target.
 

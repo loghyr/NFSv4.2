@@ -1382,12 +1382,12 @@
   <section title="Security Considerations">
 
     <t>
-     The security considerations pertaining to NFSv4 <xref target="RFC3530"/>
+     The security considerations pertaining to NFSv4 <xref target="RFC3530bis" />
       apply to this document.
     </t>
 
     <t>
-      The standard security mechanisms provide by NFSv4 <xref target="RFC3530"/>
+      The standard security mechanisms provide by NFSv4 <xref target="RFC3530bis" />
       may be used to secure the protocol described in this document.
     </t>
 

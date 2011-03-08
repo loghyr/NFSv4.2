@@ -32,9 +32,11 @@
     <abstract>
       <t>
         This Internet-Draft describes NFS version 4 minor version two,
-        including features retained from the base protocol and protocol
-        extensions made subsequently.  Major extensions introduced in
-        NFS version 4 minor version two include: XXX
+        focusing mainly on the protocol extensions made from NFS version
+	4 minor version 0 and NFS version 4
+        minor version 1. Major extensions
+        introduced in NFS version 4 minor version two include: Server-side
+	Copy, Space Reservations, and Support for Sparse Files.
       </t>
     </abstract>
 

@@ -532,6 +532,20 @@ document are to be interpreted as described in RFC
 	      target="ftp://ftp.isi.edu/in-notes/rfc1964.txt"/>
     </reference>
 
+    <reference anchor='RFC3530bis'>
+      <front>
+        <title>Network File System (NFS) version 4 Protocol</title>
+        <author initials="T." surname="Haynes" fullname="T. Haynes">
+          <organization>NetApp</organization>
+        </author>
+        <author initials="D." surname="Noveck" fullname="D. Noveck">
+          <organization>EMC Corporation</organization>
+        </author>
+        <date year="2011" month="March" />
+      </front>
+      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-09" value="(Work In Progress)"/>
+    </reference>
+
     <reference anchor='RFC3530'>
       <front>
 	<title>Network File System (NFS) version 4 Protocol</title>

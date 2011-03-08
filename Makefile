@@ -163,7 +163,8 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/type_nfs_resop4.x \
 		dotx.d/type_COMPOUND4args.x \
 		dotx.d/type_COMPOUND4res.x \
-		dotx.d/type_netloc_type4.x
+		dotx.d/type_netloc_type4.x \
+		dotx.d/type_chattr_type.x
 
 SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_time_how4.xml \
@@ -229,7 +230,8 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_nfs_resop4.xml \
 		autogen/type_COMPOUND4args.xml \
 		autogen/type_COMPOUND4res.xml \
-		autogen/type_netloc_type4.xml
+		autogen/type_netloc_type4.xml \
+		autogen/type_chattr_type.xml
 
 $(SPITGEN): dotx.d/spit_types.sh
 	cd dotx.d ; sh spit_types.sh `basename $@`
@@ -393,8 +395,8 @@ FRONT_PREGEN = nfsv42_front.xml
 IDXMLSRC_BASE = \
 	nfsv42_middle_start.xml \
 	nfsv42_middle_introduction.xml \
-	nfsv42_middle_minor.xml \
 	nfsv42_middle_access.xml \
+	nfsv42_middle_chattr.xml \
 	nfsv42_middle_copy.xml \
 	nfsv42_middle_space.xml \
 	nfsv42_middle_sparse.xml \

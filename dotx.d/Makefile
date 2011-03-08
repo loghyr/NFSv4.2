@@ -220,7 +220,8 @@ SPITGEN =	basic_types.x \
 		type_nfs_resop4.x \
 		type_COMPOUND4args.x \
 		type_COMPOUND4res.x \
-		type_netloc_type4.x
+		type_netloc_type4.x \
+		type_chattr_type.x
 
 AUTOGEN =	hand_edit_warning.x \
 		fore_ops.x \

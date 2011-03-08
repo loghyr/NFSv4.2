@@ -41,21 +41,12 @@
         <title>NFS Version 4 Minor Version 2</title>
 
         <author initials='T' surname='Haynes' fullname='Thomas Haynes'>
-          <organization abbrev='Editors' />
+          <organization abbrev='NetApp' />
         </author>
 
-        <date month='Mar' day='31' year='2011' />
-
-        <abstract><t>This Internet-Draft describes NFS version 4 minor version two, including
-	  features retained from the base protocol and protocol extensions made subsequently.
-	  Major extensions introduced in NFS version 4 minor version two include:
-	  </t>
-        </abstract>
-
+        <date month='March' year='2011' />
       </front>
-
-<!--      <seriesInfo name='Internet-Draft' value='I-D.ietf-nfsv4-minorversion2' />  -->
-<!--      <format type='TXT' target='http://www.ietf.org/internet-drafts/draft-haynes-nfsv4-minorversion2-dot-x-00.txt' /> -->
+      <seriesInfo name="draft-haynes-nfsv4-minorversion2-00" value="(Work In Progress)"/>
     </reference>
 
 </references>
