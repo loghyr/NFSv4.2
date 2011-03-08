@@ -43,6 +43,7 @@ typedef :utf8str_cs:linktext4:Symbolic link contents.
 typedef :component4:pathname4<>:Represents path name for fs_locations.
 typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operations (COMMIT, CREATE, EXCHANGE_ID, OPEN, READDIR, WRITE) NFS4_VERIFIER_SIZE is defined as 8.
 :enum:netloc_type4:Specifies network locations.
+typedef :string:secrer<>|Secret value to share between servers.
 EOF
 
 	fi
@@ -1313,7 +1314,49 @@ enum change_attr_typeinfo = {
            NFS4_CHANGE_TYPE_IS_UNDEFINED              = 4
 };
 EOF
+	;;
 
+	copy_from_auth.x )
+
+cat << EOF > $i
+struct copy_from_auth_priv {
+	secret4             cfap_shared_secret;
+	netloc4             cfap_destination;
+	/* the NFSv4 user name that the user principal maps to */
+	utf8str_mixed       cfap_username;
+	/* equal to seq_num of rpc_gss_cred_vers_3_t */
+	unsigned int        cfap_seq_num;
+};
+EOF
+	;;
+
+	copy_to_auth.x )
+
+cat << EOF > $i
+struct copy_to_auth_priv {
+	/* equal to cfap_shared_secret */
+	secret4              ctap_shared_secret;
+	netloc4              ctap_source;
+	/* the NFSv4 user name that the user principal maps to */
+	utf8str_mixed        ctap_username;
+	/* equal to seq_num of rpc_gss_cred_vers_3_t */
+	unsigned int         ctap_seq_num;
+};
+EOF
+	;;
+
+	copy_confirm_auth.x )
+
+cat << EOF > $i
+struct copy_confirm_auth_priv {
+	/* equal to GSS_GetMIC() of cfap_shared_secret */
+	opaque              ccap_shared_secret_mic<>;
+	/* the NFSv4 user name that the user principal maps to */
+	utf8str_mixed       ccap_username;
+	/* equal to seq_num of rpc_gss_cred_vers_3_t */
+	unsigned int        ccap_seq_num;
+};
+EOF
 	;;
 
 	* )
