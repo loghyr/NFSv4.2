@@ -9,6 +9,10 @@
     Bruce Fields. A review was done by Tom Haynes.
   </t>
   <t>
+    For the Sharing change attribute implementation details with NFSv4
+    clients, the original draft was by Trond Myklebust.
+  </t>
+  <t>
     For the NFS Server-side Copy, the original draft was by
     James Lentini, Mike Eisler, Deepak Kenchammana, Anshul Madan,
     and Rahul Iyer. Talpey co-authored an unpublished version of that document.
