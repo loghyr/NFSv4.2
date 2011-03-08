@@ -1,0 +1,3584 @@
+
+
+
+NFSv4                                                          T. Haynes
+Internet-Draft                                                    Editor
+Intended status: Standards Track                          March 07, 2011
+Expires: September 8, 2011
+
+
+                     NFS Version 4 Minor Version 2
+                draft-haynes-nfsv4-minorversion2-00.txt
+
+Abstract
+
+   This Internet-Draft describes NFS version 4 minor version two,
+   focusing mainly on the protocol extensions made from NFS version 4
+   minor version 0 and NFS version 4 minor version 1.  Major extensions
+   introduced in NFS version 4 minor version two include: Server-side
+   Copy, Space Reservations, and Support for Sparse Files.
+
+Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [1].
+
+Status of this Memo
+
+   This Internet-Draft is submitted to IETF in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF), its areas, and its working groups.  Note that
+   other groups may also distribute working documents as Internet-
+   Drafts.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   The list of current Internet-Drafts can be accessed at
+   http://www.ietf.org/ietf/1id-abstracts.txt.
+
+   The list of Internet-Draft Shadow Directories can be accessed at
+   http://www.ietf.org/shadow.html.
+
+   This Internet-Draft will expire on September 8, 2011.
+
+Copyright Notice
+
+
+
+
+Haynes                  Expires September 8, 2011               [Page 1]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   Copyright (c) 2011 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the BSD License.
+
+   This document may contain material from IETF Documents or IETF
+   Contributions published or made publicly available before November
+   10, 2008.  The person(s) controlling the copyright in some of this
+   material may not have granted the IETF Trust the right to allow
+   modifications of such material outside the IETF Standards Process.
+   Without obtaining an adequate license from the person(s) controlling
+   the copyright in such materials, this document may not be modified
+   outside the IETF Standards Process, and derivative works of it may
+   not be created outside the IETF Standards Process, except to format
+   it for publication as an RFC or to translate it into languages other
+   than English.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011               [Page 2]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+Table of Contents
+
+   1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . . .  4
+     1.1.  The NFS Version 4 Minor Version 2 Protocol . . . . . . . .  4
+     1.2.  Scope of This Document . . . . . . . . . . . . . . . . . .  4
+     1.3.  NFSv4.2 Goals  . . . . . . . . . . . . . . . . . . . . . .  4
+     1.4.  Overview of NFSv4.2 Features . . . . . . . . . . . . . . .  4
+     1.5.  Differences from NFSv4.1 . . . . . . . . . . . . . . . . .  4
+   2.  pNFS Access Permissions Check  . . . . . . . . . . . . . . . .  4
+     2.1.  Introduction . . . . . . . . . . . . . . . . . . . . . . .  4
+     2.2.  Changes to Operation 51: LAYOUTRETURN (RFC 5661) . . . . .  6
+       2.2.1.  ARGUMENT (18.44.1) . . . . . . . . . . . . . . . . . .  7
+       2.2.2.  RESULT (18.44.2) . . . . . . . . . . . . . . . . . . .  8
+       2.2.3.  DESCRIPTION (18.44.3)  . . . . . . . . . . . . . . . .  8
+       2.2.4.  IMPLEMENTATION (18.44.4) . . . . . . . . . . . . . . .  9
+     2.3.  Change to NFS4ERR_NXIO Usage . . . . . . . . . . . . . . . 11
+     2.4.  Security Considerations  . . . . . . . . . . . . . . . . . 11
+     2.5.  IANA Considerations  . . . . . . . . . . . . . . . . . . . 11
+   3.  Sharing change attribute implementation details with NFSv4
+       clients  . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+     3.1.  Abstract . . . . . . . . . . . . . . . . . . . . . . . . . 11
+     3.2.  Introduction . . . . . . . . . . . . . . . . . . . . . . . 12
+     3.3.  Definition of the 'change_attr_type' per-file system
+           attribute  . . . . . . . . . . . . . . . . . . . . . . . . 12
+   4.  NFS Server-side Copy . . . . . . . . . . . . . . . . . . . . . 13
+     4.1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . 14
+     4.2.  Protocol Overview  . . . . . . . . . . . . . . . . . . . . 14
+       4.2.1.  Intra-Server Copy  . . . . . . . . . . . . . . . . . . 16
+       4.2.2.  Inter-Server Copy  . . . . . . . . . . . . . . . . . . 17
+       4.2.3.  Server-to-Server Copy Protocol . . . . . . . . . . . . 20
+     4.3.  Operations . . . . . . . . . . . . . . . . . . . . . . . . 22
+       4.3.1.  netloc4 - Network Locations  . . . . . . . . . . . . . 22
+       4.3.2.  Operation 61: COPY_NOTIFY - Notify a source server
+               of a future copy . . . . . . . . . . . . . . . . . . . 23
+       4.3.3.  Operation 62: COPY_REVOKE - Revoke a destination
+               server's copy privileges . . . . . . . . . . . . . . . 25
+       4.3.4.  Operation 59: COPY - Initiate a server-side copy . . . 26
+       4.3.5.  Operation 60: COPY_ABORT - Cancel a server-side
+               copy . . . . . . . . . . . . . . . . . . . . . . . . . 34
+       4.3.6.  Operation 63: COPY_STATUS - Poll for status of a
+               server-side copy . . . . . . . . . . . . . . . . . . . 35
+       4.3.7.  Operation 15: CB_COPY - Report results of a
+               server-side copy . . . . . . . . . . . . . . . . . . . 36
+       4.3.8.  Copy Offload Stateids  . . . . . . . . . . . . . . . . 37
+     4.4.  Security Considerations  . . . . . . . . . . . . . . . . . 38
+       4.4.1.  Inter-Server Copy Security . . . . . . . . . . . . . . 38
+     4.5.  IANA Considerations  . . . . . . . . . . . . . . . . . . . 46
+   5.  Space Reservation  . . . . . . . . . . . . . . . . . . . . . . 46
+
+
+
+Haynes                  Expires September 8, 2011               [Page 3]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+     5.1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . 46
+     5.2.  Use Cases  . . . . . . . . . . . . . . . . . . . . . . . . 47
+       5.2.1.  Space Reservation  . . . . . . . . . . . . . . . . . . 47
+       5.2.2.  Space freed on deletes . . . . . . . . . . . . . . . . 48
+       5.2.3.  Operations and attributes  . . . . . . . . . . . . . . 49
+       5.2.4.  Attribute 77: space_reserve  . . . . . . . . . . . . . 49
+       5.2.5.  Attribute 78: space_freed  . . . . . . . . . . . . . . 49
+       5.2.6.  Attribute 79: max_hole_punch . . . . . . . . . . . . . 49
+       5.2.7.  Operation 64: HOLE_PUNCH - Zero and deallocate
+               blocks backing the file in the specified range.  . . . 50
+     5.3.  Security Considerations  . . . . . . . . . . . . . . . . . 51
+     5.4.  IANA Considerations  . . . . . . . . . . . . . . . . . . . 51
+   6.  Simple and Efficient Read Support for Sparse Files . . . . . . 51
+     6.1.  Introduction . . . . . . . . . . . . . . . . . . . . . . . 51
+     6.2.  Terminology  . . . . . . . . . . . . . . . . . . . . . . . 52
+     6.3.  Applications and Sparse Files  . . . . . . . . . . . . . . 52
+     6.4.  Overview of Sparse Files and NFSv4 . . . . . . . . . . . . 53
+     6.5.  Operation 65: READPLUS . . . . . . . . . . . . . . . . . . 54
+       6.5.1.  ARGUMENT . . . . . . . . . . . . . . . . . . . . . . . 55
+       6.5.2.  RESULT . . . . . . . . . . . . . . . . . . . . . . . . 55
+       6.5.3.  DESCRIPTION  . . . . . . . . . . . . . . . . . . . . . 55
+       6.5.4.  IMPLEMENTATION . . . . . . . . . . . . . . . . . . . . 57
+       6.5.5.  READPLUS with Sparse Files Example . . . . . . . . . . 58
+     6.6.  Related Work . . . . . . . . . . . . . . . . . . . . . . . 59
+     6.7.  Security Considerations  . . . . . . . . . . . . . . . . . 59
+     6.8.  IANA Considerations  . . . . . . . . . . . . . . . . . . . 59
+   7.  Security Considerations  . . . . . . . . . . . . . . . . . . . 60
+   8.  IANA Considerations  . . . . . . . . . . . . . . . . . . . . . 60
+   9.  References . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+     9.1.  Normative References . . . . . . . . . . . . . . . . . . . 60
+     9.2.  Informative References . . . . . . . . . . . . . . . . . . 60
+   Appendix A.  Acknowledgments . . . . . . . . . . . . . . . . . . . 62
+   Appendix B.  RFC Editor Notes  . . . . . . . . . . . . . . . . . . 62
+   Author's Address . . . . . . . . . . . . . . . . . . . . . . . . . 62
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011               [Page 4]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+1.  Introduction
+
+1.1.  The NFS Version 4 Minor Version 2 Protocol
+
+   The NFS version 4 minor version 2 (NFSv4.2) protocol is the third
+   minor version of the NFS version 4 (NFSv4) protocol.  The first minor
+   version, NFSv4.0, is described in [10] and the second minor version,
+   NFSv4.1, is described in [2].  It follows the guidelines for minor
+   versioning that are listed in Section 11 of RFC 3530bis.
+
+   As a minor version, NFSv4.2 is consistent with the overall goals for
+   NFSv4, but extends the protocol so as to better meet those goals,
+   based on experiences with NFSv4.1.  In addition, NFSv4.2 has adopted
+   some additional goals, which motivate some of the major extensions in
+   NFSv4.2.
+
+1.2.  Scope of This Document
+
+   This document describes the NFSv4.2 protocol.  With respect to
+   NFSv4.0 and NFSv4.1, this document does not:
+
+   o  describe the NFSv4.0 or NFSv4.1 protocols, except where needed to
+      contrast with NFSv4.2.
+
+   o  modify the specification of the NFSv4.0 or NFSv4.1 protocols.
+
+   o  clarify the NFSv4.0 or NFSv4.1 protocols.
+
+1.3.  NFSv4.2 Goals
+
+1.4.  Overview of NFSv4.2 Features
+
+1.5.  Differences from NFSv4.1
+
+
+2.  pNFS Access Permissions Check
+
+2.1.  Introduction
+
+   Figure 1 shows the overall architecture of a Parallel NFS (pNFS)
+   system:
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011               [Page 5]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   +-----------+
+   |+-----------+                                 +-----------+
+   ||+-----------+                                |           |
+   |||           |       NFSv4.1 + pNFS           |           |
+   +||  Clients  |<------------------------------>|    MDS    |
+    +|           |                                |           |
+     +-----------+                                |           |
+          |||                                     +-----------+
+          |||                                           |
+          |||                                           |
+          ||| Storage        +-----------+              |
+          ||| Protocol       |+-----------+             |
+          ||+----------------||+-----------+  Control   |
+          |+-----------------|||           |  Protocol  |
+          +------------------+||  Storage  |------------+
+                              +|  Devices  |
+                               +-----------+
+
+                        Figure 1: pNFS Architecture
+
+   In this document, "storage device" is used as a general term for a
+   data server and/or storage server for the file, block, or object pNFS
+   layouts.
+
+   The current pNFS protocol [2] assumes that a client can access every
+   storage device (SD) included in a valid layout sent by the MDS
+   server, and provides no means to communicate client access failures
+   to the MDS.  Access failures can impair pNFS performance scaling and
+   allow significant errors to go unreported.  If the MDS can access all
+   the storage devices involved, but the client doesn't have sufficient
+   access rights to some storage devices, the client may choose to fall
+   back to accessing the file system using NFSV4.1 without pNFS support;
+   there are environments in which this behavior is undesirable,
+   especially if it occurs silently.  An important example is addition
+   of a new storage device to which a large population of pNFS clients
+   (e.g., 1000s) lacks access permission.  Layouts granted that use this
+   new device, result in client errors, requiring that all I/Os to that
+   new storage device be served by the MDS server.  This creates a
+   performance and scalability bottleneck that may be difficult to
+   detect based on I/O behavior because the other storage devices are
+   functioning correctly.
+
+   The preferable approach to this scenario is to report the access
+   failures before any client attempts to issue any I/Os that can only
+   be serviced by the MDS server.  This makes the problem explicit,
+   rather than forcing the MDS, or a system administrator, to diagnose
+   the performance problem caused by client I/O using NFS instead of
+   pNFS.  There are limits to this approach because complex mount
+
+
+
+Haynes                  Expires September 8, 2011               [Page 6]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   structures may prevent a client from detecting this situation at
+   mount time, but at a minimum, access problems involving the root of
+   the mount structure can be detected.
+
+   The most suitable time for the client to report inability to access a
+   storage device is at mount time, but this is not always possible.  If
+   the application uses a special tag or a switch to the mount command
+   (e.g., -pnfs) and syscall to declare its intention to use pNFS, at
+   the client, the client can check for both pNFS support and device
+   accessibility.
+
+   This document introduces an error reporting mechanism that is an
+   extension to the return of a pNFS layout; a pNFS client MAY use this
+   mechanism to inform the MDS that the layout is being returned because
+   one or more data servers are not accessible to the client.  Error
+   reporting at I/O time is not affected because the result of an
+   inaccessible data server may not be an I/O error if a subsequent
+   retry of the operation via the MDS is successful.
+
+   There is a related problem scenario involving an MDS that cannot
+   access some storage devices and hence cannot perform I/Os on behalf
+   of a client.  In the case of the block layout [3] if the MDS lacks
+   access to a storage device (e.g., LUN), MDS implementations generally
+   do not export any filesystem using that storage device.  In contrast
+   to the block layout, MDSs for the file [2] and object [4] layouts may
+   be unable to access the storage devices that store data for an
+   exported filesystem.  This enables a file or object layout MDS to
+   provide layouts that contain client-inaccessible devices.  For the
+   specific case of adding a new storage device to a filesystem, MDS
+   issuance of test I/Os to the newly added device before using it in
+   layouts avoids this problem scenario, but does not cover loss of
+   access to existing storage devices at a later time.
+
+   In addition, [2] states that a client can write through or read from
+   the MDS, even if it has a layout; this assumes that the MDS can
+   access all the storage devices.  This document makes that assumed
+   access an explicit requirement.
+
+2.2.  Changes to Operation 51: LAYOUTRETURN (RFC 5661)
+
+   The existing LAYOUTRETURN operation is extended by introducing three
+   new layout return types that correspond to the existing types:
+
+   o  LAYOUT4_RET_REC_FILE_NO_ACCESS at file scope;
+
+   o  LAYOUT4_RET_REC_FSID_NO_ACCESS at fsid scope; and
+
+
+
+
+
+Haynes                  Expires September 8, 2011               [Page 7]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   o  LAYOUT4_RET_REC_ALL_NO_ACCESS at client scope.
+
+   The first return type returns the layout for an individual file and
+   informs the server that the reason for the return is a storage device
+   connectivity problem.  The second return type performs that function
+   for all layouts held by the client for the filesystem that
+   corresponds to the current filehandle used for the LAYOUTRETURN
+   operation.  The third return type performs that function for all
+   layouts held by the client; it is intended for situations in which a
+   device is shared across all or most of the filesystems from a server
+   for which the client has layouts.
+
+2.2.1.  ARGUMENT (18.44.1)
+
+   The ARGUMENT specification of the LAYOUTRETURN operation in section
+   18.44.1 of [2] is replaced by the following XDR code [11]:
+
+   /* Constants used for new LAYOUTRETURN and CB_LAYOUTRECALL */
+   const LAYOUT4_RET_REC_FILE      = 1;
+   const LAYOUT4_RET_REC_FSID      = 2;
+   const LAYOUT4_RET_REC_ALL       = 3;
+   const LAYOUT4_RET_REC_FILE_NO_ACCESS    = 4;
+   const LAYOUT4_RET_REC_FSID_NO_ACESSS    = 5;
+   const LAYOUT4_RET_REC_ALL_NO_ACCESS     = 6;
+
+   enum layoutreturn_type4 {
+        LAYOUTRETURN4_FILE = LAYOUT4_RET_REC_FILE,
+        LAYOUTRETURN4_FSID = LAYOUT4_RET_REC_FSID,
+        LAYOUTRETURN4_ALL  = LAYOUT4_RET_REC_ALL,
+        LAYOUTRETURN4_FILE_NO_ACCESS = LAYOUT4_RET_REC_FILE_NO_ACCESS,
+        LAYOUTRETURN4_FSID_NO_ACCESS = LAYOUT4_RET_REC_FSID_NO_ACCESS,
+        LAYOUTRETURN4_ALL_NO_ACCESS  = LAYOUT4_RET_REC_ALL_NO_ACCESS
+   };
+
+   struct layoutreturn_file4 {
+         offset4         lrf_offset;
+         length4         lrf_length;
+         stateid4        lrf_stateid;
+         /* layouttype4 specific data */
+         opaque          lrf_body<>;
+   };
+
+   struct layoutreturn_device_no_access4 {
+         deviceid4     lrdna_deviceid;
+         nfsstat4      lrdna_status;
+   };
+
+   struct layoutreturn_file_no_access4 {
+
+
+
+Haynes                  Expires September 8, 2011               [Page 8]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+         offset4         lrfna_offset;
+         length4         lrfna_length;
+         stateid4        lrfna_stateid;
+         deviceid4       lrfna_deviceid;
+         nfsstat4        lrfna_status;
+         /* layouttype4 specific data */
+         opaque          lrfna_body<>;
+   };
+
+   union layoutreturn4 switch(layoutreturn_type4 lr_returntype) {
+         case LAYOUTRETURN4_FILE:
+                 layoutreturn_file4             lr_layout;
+         case LAYOUTRETURN4_FILE_NO_ACCESS:
+                 layoutreturn_file_no_access4   lr_layout_na;
+         case LAYOUTRETURN4_FSID_NO_ACCESS:
+         case LAYOUTRETURN4_ALL_NO_ACCESS:
+                 layoutreturn_device_no_access4      lr_device<>;
+         default:
+                 void;
+   };
+
+2.2.2.  RESULT (18.44.2)
+
+   The RESULT of the LAYOUTRETURN operation is unchanged; see section
+   18.44.2 of [2]
+
+2.2.3.  DESCRIPTION (18.44.3)
+
+   The following text is added to the end of the LAYOUTRETURN operation
+   DESCRIPTION in section 18.44.3 of [2]
+
+   There are three NO_ACCESS layoutreturn_type4 values that indicate a
+   persistent lack of client ability to access storage device(s),
+   LAYOUT4_RET_REC_FILE_NO_ACCESS, LAYOUT4_RET_REC_FSID_NO_ACCESS and
+   LAYOUT4_RET_REC_ALL_NO_ACCESS.  A client uses these return types to
+   return a layout (or portion thereof) for a file, return all layouts
+   for an FSID or all layouts from that server held by the client, and
+   in all cases to inform the server that the reason for the return is
+   the client's inability to access one or more storage devices.  The
+   same stateid may be used or the client MAY force use of a new stateid
+   in order to report a new error.
+
+   An NFS error value (nfsstat4) is included for each device for these
+   three NO_ACCESS return types to provide additional information on the
+   cause.  The allowed NFS errors are those that are valid for an NFS
+   READ or WRITE operation, and NFS4ERR_NXIO is also allowed to report
+   an inaccessible device.  The server SHOULD log the received NFS error
+   value, but that error value does not affect server processing of the
+
+
+
+Haynes                  Expires September 8, 2011               [Page 9]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   LAYOUTRETURN operation.  All uses of the NO_ACCESS layout return
+   types that report NFS errors SHOULD be logged by the client.
+
+   The client MAY use the new LAYOUT4_RET_REC_FILE_NO_ACCESS when only
+   one file, or a small number of files are affected.  If the access
+   problem affects multiple devices, the client may use multiple file
+   layout return operations; each return operation SHOULD return a
+   layout extent obtained from the device for which an error is being
+   reported.  In contrast, both LAYOUT4_RET_REC_FSID_NO_ACCESS and
+   LAYOUT4_RET_REC_ALL_NO_ACCESS include an array of <device, status>
+   pairs to enable a single operation to report errors for multiple
+   devices in a single operation.
+
+2.2.4.  IMPLEMENTATION (18.44.4)
+
+   The following text is added to the end of the LAYOUTRETURN operation
+   IMPLEMENTATION in section 18.4.4 of [2]
+
+   A client that expects to use pNFS for a mounted filesystem SHOULD
+   check for pNFS support at mount time.  This check SHOULD be performed
+   by sending a GETDEVICELIST operation, followed by layout-type-
+   specific checks for accessibility of each storage device returned by
+   GETDEVICELIST.  If the NFS server does not support pNFS, the
+   GETDEVICELIST operation will be rejected with an NFS4ERR_NOTSUPP
+   error; in this situation it is up to the client to determine whether
+   it is acceptable to proceed with NFS-only access.
+
+   Clients are expected to tolerate transient storage device errors, and
+   hence clients SHOULD NOT use the NO_ACCESS layout return types for
+   device access problems that may be transient.  The methods by which a
+   client decides whether an access problem is transient vs. persistent
+   are implementation-specific, but may include retrying I/Os to a data
+   server under appropriate conditions.
+
+   When an I/O fails because a storage device is inaccessible, the
+   client SHOULD retry the failed I/O via the MDS.  In this situation,
+   before retrying the I/O, the client SHOULD return the layout, or
+   inaccessible portion thereof, and SHOULD indicate which storage
+   device or devices was or were inaccessible.  If the client does not
+   do this, the MDS may issue a layout recall callback in order to
+   perform the retried I/O.
+
+   Backwards compatibility may require a client to perform two layout
+   return operations to deal with servers that don't implement the
+   NO_ACCESS layoutreturn_type4 values and hence respond to them with
+   NFS4ERR_INVAL.  In this situation, the client SHOULD perform an
+   ordinary layout return operation and remember that the new layout
+   NO_ACCESS return types are not to be used with that server.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 10]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   The metadata server (MDS) SHOULD NOT use storage devices in pNFS
+   layouts that are not accessible to the MDS.  At a minimum, the server
+   SHOULD check its own storage device accessibility before exporting a
+   filesystem that supports pNFS and when the device configuration for
+   such an exported filesystem is changed (e.g., to add a storage
+   device).
+
+   If an MDS is aware that a storage device is inaccessible to a client,
+   the MDS SHOULD NOT include that storage device in any pNFS layouts
+   sent to that client.  An MDS SHOULD react to a client return of
+   inaccessible layouts by not using the inaccessible storage devices in
+   layouts for that client, but the MDS is not required to indefinitely
+   retain per-client storage device inaccessibility information.  An MDS
+   is also not required to automatically reinstate use of a previously
+   inaccessible storage device; administrative intervention may be
+   required instead.
+
+   A client MAY perform I/O via the MDS even when the client holds a
+   layout that covers the I/O; servers MUST support this client
+   behavior, and MAY recall layouts as needed to complete I/Os.
+
+2.2.4.1.  Storage Device Error Mapping (18.44.4.1, new)
+
+   The following text is added as new subsection 18.44.4.1 of [2]
+
+   An NFS error value is sent for each device that the client reports as
+   inaccessible via a NO_ACCESS layout return type.  In general:
+
+   o  If the client is unable to access the storage device, NFS4ERR_NXIO
+      SHOULD be used.
+
+   o  If the client is able to access the storage device, but permission
+      is denied, NFS4ERR_ACCESS SHOULD be used.
+
+   Beyond these two rules, error code usage is layout-type specific:
+
+   o  For the pNFS file layout, an indicative NFS error from a failed
+      read or write operation on the inaccessible device SHOULD be used.
+
+   o  For the pNFS block layout, other errors from the Storage Protocol
+      SHOULD be mapped to NFS4ERR_IO.  In addition, the client SHOULD
+      log information about the actual storage protocol error (e.g.,
+      SCSI status and sense data), but that information is not sent to
+      the pNFS server.
+
+   o  For the pNFS object layout, occurrences of the object error types
+      specified in [4] SHOULD be mapped to the following NFS errors for
+      use in LAYOUTRETURN:
+
+
+
+Haynes                  Expires September 8, 2011              [Page 11]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+      *  PNFS_OSD_ERR_EIO -> NFS4ERR_IO
+
+      *  PNFS_OSD_ERR_NOT_FOUND -> NFS4ERR_STALE
+
+      *  PNFS_OSD_ERR_NO_SPACE -> NFS4ERR_NOSPC
+
+      *  PNFS_OSD_ERR_BAD_CRED -> NFS4ERR_INVAL
+
+      *  PNFS_OSD_ERR_NO_ACCESS -> NFS4ERR_ACCESS
+
+      *  PNFS_OSD_ERR_UNREACHABLE -> NFS4ERR_NXIO
+
+      *  PNFS_OSD_ERR_RESOURCE -> NFS4ERR_SERVERFAULT
+
+   The LAYOUTRETURN NO_ACCESS return types are used for persistent
+   device errors; they do not replace other error reporting mechanisms
+   that also apply to transient errors (e.g., as specified for the
+   object layout in [4]).
+
+2.3.  Change to NFS4ERR_NXIO Usage
+
+   This document specifies that the NFS4ERR_NXIO error SHOULD be used to
+   report an inaccessible storage device.  To enable that usage, this
+   document updates [2] to allow use of the currently obsolete
+   NFS4ERR_NXIO error in the ARGUMENT of LAYOUTRETURN; NFS4ERR_NXIO
+   remains obsolete for all other uses of NFS errors.
+
+2.4.  Security Considerations
+
+   This section adds a small extension to the NFSv4 LAYOUTRETURN
+   operation.  The NFS and pNFS security considerations in [2], [3], and
+   [4] apply to the extended LAYOUTRETURN operation.
+
+2.5.  IANA Considerations
+
+   There are no additional IANA considerations in this section beyond
+   the IANA Considerations covered in [2]
+
+
+3.  Sharing change attribute implementation details with NFSv4 clients
+
+3.1.  Abstract
+
+   This document describes an extension to the NFSv4 protocol that
+   allows the server to share information about the implementation of
+   its change attribute with the client.  The aim is to improve the
+   client's ability to determine the order in which parallel updates to
+   the same file were processed.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 12]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+3.2.  Introduction
+
+   Although both the NFSv4 [10] and NFSv4.1 protocol [2], define the
+   change attribute as being mandatory to implement, there is little in
+   the way of guidance.  The only feature that is mandated by the spec
+   is that the value must change whenever the file data or metadata
+   change.
+
+   While this allows for a wide range of implementations, it also leaves
+   the client with a conundrum: how does it determine which is the most
+   recent value for the change attribute in a case where several RPC
+   calls have been issued in parallel?  In other words if two COMPOUNDs,
+   both containing WRITE and GETATTR requests for the same file, have
+   been issued in parallel, how does the client determine which of the
+   two change attribute values returned in the replies to the GETATTR
+   requests corresponds to the most recent state of the file?  In some
+   cases, the only recourse may be to send another COMPOUND containing a
+   third GETATTR that is fully serialised with the first two.
+
+   In order to avoid this kind of inefficiency, we propose a method to
+   allow the server to share details about how the change attribute is
+   expected to evolve, so that the client may immediately determine
+   which, out of the several change attribute values returned by the
+   server, is the most recent.
+
+3.3.  Definition of the 'change_attr_type' per-file system attribute
+
+   enum change_attr_typeinfo = {
+              NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR         = 0,
+              NFS4_CHANGE_TYPE_IS_VERSION_COUNTER        = 1,
+              NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS = 2,
+              NFS4_CHANGE_TYPE_IS_TIME_METADATA          = 3,
+              NFS4_CHANGE_TYPE_IS_UNDEFINED              = 4
+   };
+
+        +------------------+----+---------------------------+-----+
+        | Name             | Id | Data Type                 | Acc |
+        +------------------+----+---------------------------+-----+
+        | change_attr_type | XX | enum change_attr_typeinfo | R   |
+        +------------------+----+---------------------------+-----+
+
+   The proposed solution is to enable the NFS server to provide
+   additional information about how it expects the change attribute
+   value to evolve after the file data or metadata has changed.  To do
+   so, we define a new recommended attribute, 'change_attr_type', which
+   may take values from enum change_attr_typeinfo as follows:
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 13]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR:  The change attribute value MUST
+      monotonically increase for every atomic change to the file
+      attributes, data or directory contents.
+
+   NFS4_CHANGE_TYPE_IS_VERSION_COUNTER:  The change attribute value MUST
+      be incremented by one unit for every atomic change to the file
+      attributes, data or directory contents.  This property is
+      preserved when writing to pNFS data servers.
+
+   NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS:  The change attribute
+      value MUST be incremented by one unit for every atomic change to
+      the file attributes, data or directory contents.  In the case
+      where the client is writing to pNFS data servers, the number of
+      increments is not guaranteed to exactly match the number of
+      writes.
+
+   NFS4_CHANGE_TYPE_IS_TIME_METADATA:  The change attribute is
+      implemented as suggested in the NFSv4 spec [10] in terms of the
+      time_metadata attribute.
+
+   NFS4_CHANGE_TYPE_IS_UNDEFINED:  The change attribute does not take
+      values that fit into any of these categories.
+
+   If either NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR,
+   NFS4_CHANGE_TYPE_IS_VERSION_COUNTER, or
+   NFS4_CHANGE_TYPE_IS_TIME_METADATA are set, then the client knows at
+   the very least that the change attribute is monotonically increasing,
+   which is sufficient to resolve the question of which value is the
+   most recent.
+
+   If the client sees the value NFS4_CHANGE_TYPE_IS_TIME_METADATA, then
+   by inspecting the value of the 'time_delta' attribute it additionally
+   has the option of detecting rogue server implementations that use
+   time_metadata in violation of the spec.
+
+   Finally, if the client sees NFS4_CHANGE_TYPE_IS_VERSION_COUNTER, it
+   has the ability to predict what the resulting change attribute value
+   should be after a COMPOUND containing a SETATTR, WRITE, or CREATE.
+   This again allows it to detect changes made in parallel by another
+   client.  The value NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS permits
+   the same, but only if the client is not doing pNFS WRITEs.
+
+
+4.  NFS Server-side Copy
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 14]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+4.1.  Introduction
+
+   This document describes a server-side copy feature for the NFS
+   protocol.
+
+   The server-side copy feature provides a mechanism for the NFS client
+   to perform a file copy on the server without the data being
+   transmitted back and forth over the network.
+
+   Without this feature, an NFS client copies data from one location to
+   another by reading the data from the server over the network, and
+   then writing the data back over the network to the server.  Using
+   this server-side copy operation, the client is able to instruct the
+   server to copy the data locally without the data being sent back and
+   forth over the network unnecessarily.
+
+   In general, this feature is useful whenever data is copied from one
+   location to another on the server.  It is particularly useful when
+   copying the contents of a file from a backup.  Backup-versions of a
+   file are copied for a number of reasons, including restoring and
+   cloning data.
+
+   If the source object and destination object are on different file
+   servers, the file servers will communicate with one another to
+   perform the copy operation.  The server-to-server protocol by which
+   this is accomplished is not defined in this document.
+
+4.2.  Protocol Overview
+
+   The server-side copy offload operations support both intra-server and
+   inter-server file copies.  An intra-server copy is a copy in which
+   the source file and destination file reside on the same server.  In
+   an inter-server copy, the source file and destination file are on
+   different servers.  In both cases, the copy may be performed
+   synchronously or asynchronously.
+
+   Throughout the rest of this document, we refer to the NFS server
+   containing the source file as the "source server" and the NFS server
+   to which the file is transferred as the "destination server".  In the
+   case of an intra-server copy, the source server and destination
+   server are the same server.  Therefore in the context of an intra-
+   server copy, the terms source server and destination server refer to
+   the single server performing the copy.
+
+   The operations described below are designed to copy files.  Other
+   file system objects can be copied by building on these operations or
+   using other techniques.  For example if the user wishes to copy a
+   directory, the client can synthesize a directory copy by first
+
+
+
+Haynes                  Expires September 8, 2011              [Page 15]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   creating the destination directory and then copying the source
+   directory's files to the new destination directory.  If the user
+   wishes to copy a namespace junction [12] [13], the client can use the
+   ONC RPC Federated Filesystem protocol [13] to perform the copy.
+   Specifically the client can determine the source junction's
+   attributes using the FEDFS_LOOKUP_FSN procedure and create a
+   duplicate junction using the FEDFS_CREATE_JUNCTION procedure.
+
+   For the inter-server copy protocol, the operations are defined to be
+   compatible with a server-to-server copy protocol in which the
+   destination server reads the file data from the source server.  This
+   model in which the file data is pulled from the source by the
+   destination has a number of advantages over a model in which the
+   source pushes the file data to the destination.  The advantages of
+   the pull model include:
+
+   o  The pull model only requires a remote server (i.e. the destination
+      server) to be granted read access.  A push model requires a remote
+      server (i.e. the source server) to be granted write access, which
+      is more privileged.
+
+   o  The pull model allows the destination server to stop reading if it
+      has run out of space.  In a push model, the destination server
+      must flow control the source server in this situation.
+
+   o  The pull model allows the destination server to easily flow
+      control the data stream by adjusting the size of its read
+      operations.  In a push model, the destination server does not have
+      this ability.  The source server in a push model is capable of
+      writing chunks larger than the destination server has requested in
+      attributes and session parameters.  In theory, the destination
+      server could perform a "short" write in this situation, but this
+      approach is known to behave poorly in practice.
+
+   The following operations are provided to support server-side copy:
+
+   COPY_NOTIFY:  For inter-server copies, the client sends this
+      operation to the source server to notify it of a future file copy
+      from a given destination server for the given user.
+
+   COPY_REVOKE:  Also for inter-server copies, the client sends this
+      operation to the source server to revoke permission to copy a file
+      for the given user.
+
+   COPY:  Used by the client to request a file copy.
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 16]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   COPY_ABORT:  Used by the client to abort an asynchronous file copy.
+
+   COPY_STATUS:  Used by the client to poll the status of an
+      asynchronous file copy.
+
+   CB_COPY:  Used by the destination server to report the results of an
+      asynchronous file copy to the client.
+
+   These operations are described in detail in Section 4.3.  This
+   section provides an overview of how these operations are used to
+   perform server-side copies.
+
+4.2.1.  Intra-Server Copy
+
+   To copy a file on a single server, the client uses a COPY operation.
+   The server may respond to the copy operation with the final results
+   of the copy or it may perform the copy asynchronously and deliver the
+   results using a CB_COPY operation callback.  If the copy is performed
+   asynchronously, the client may poll the status of the copy using
+   COPY_STATUS or cancel the copy using COPY_ABORT.
+
+   A synchronous intra-server copy is shown in Figure 2.  In this
+   example, the NFS server chooses to perform the copy synchronously.
+   The copy operation is completed, either successfully or
+   unsuccessfully, before the server replies to the client's request.
+   The server's reply contains the final result of the operation.
+
+     Client                                  Server
+        +                                      +
+        |                                      |
+        |--- COPY ---------------------------->| Client requests
+        |<------------------------------------/| a file copy
+        |                                      |
+        |                                      |
+
+                Figure 2: A synchronous intra-server copy.
+
+   An asynchronous intra-server copy is shown in Figure 3.  In this
+   example, the NFS server performs the copy asynchronously.  The
+   server's reply to the copy request indicates that the copy operation
+   was initiated and the final result will be delivered at a later time.
+   The server's reply also contains a copy stateid.  The client may use
+   this copy stateid to poll for status information (as shown) or to
+   cancel the copy using a COPY_ABORT.  When the server completes the
+   copy, the server performs a callback to the client and reports the
+   results.
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 17]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+     Client                                  Server
+        +                                      +
+        |                                      |
+        |--- COPY ---------------------------->| Client requests
+        |<------------------------------------/| a file copy
+        |                                      |
+        |                                      |
+        |--- COPY_STATUS --------------------->| Client may poll
+        |<------------------------------------/| for status
+        |                                      |
+        |                  .                   | Multiple COPY_STATUS
+        |                  .                   | operations may be sent.
+        |                  .                   |
+        |                                      |
+        |<-- CB_COPY --------------------------| Server reports results
+        |\------------------------------------>|
+        |                                      |
+
+               Figure 3: An asynchronous intra-server copy.
+
+4.2.2.  Inter-Server Copy
+
+   A copy may also be performed between two servers.  The copy protocol
+   is designed to accommodate a variety of network topologies.  As shown
+   in Figure 4, the client and servers may be connected by multiple
+   networks.  In particular, the servers may be connected by a
+   specialized, high speed network (network 192.168.33.0/24 in the
+   diagram) that does not include the client.  The protocol allows the
+   client to setup the copy between the servers (over network
+   10.11.78.0/24 in the diagram) and for the servers to communicate on
+   the high speed network if they choose to do so.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 18]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+                             192.168.33.0/24
+                 +-------------------------------------+
+                 |                                     |
+                 |                                     |
+                 | 192.168.33.18                       | 192.168.33.56
+         +-------+------+                       +------+------+
+         |     Source   |                       | Destination |
+         +-------+------+                       +------+------+
+                 | 10.11.78.18                         | 10.11.78.56
+                 |                                     |
+                 |                                     |
+                 |             10.11.78.0/24           |
+                 +------------------+------------------+
+                                    |
+                                    |
+                                    | 10.11.78.243
+                              +-----+-----+
+                              |   Client  |
+                              +-----------+
+
+            Figure 4: An example inter-server network topology.
+
+   For an inter-server copy, the client notifies the source server that
+   a file will be copied by the destination server using a COPY_NOTIFY
+   operation.  The client then initiates the copy by sending the COPY
+   operation to the destination server.  The destination server may
+   perform the copy synchronously or asynchronously.
+
+   A synchronous inter-server copy is shown in Figure 5.  In this case,
+   the destination server chooses to perform the copy before responding
+   to the client's COPY request.
+
+   An asynchronous copy is shown in Figure 6.  In this case, the
+   destination server chooses to respond to the client's COPY request
+   immediately and then perform the copy asynchronously.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 19]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+     Client                Source         Destination
+        +                    +                 +
+        |                    |                 |
+        |--- COPY_NOTIFY --->|                 |
+        |<------------------/|                 |
+        |                    |                 |
+        |                    |                 |
+        |--- COPY ---------------------------->|
+        |                    |                 |
+        |                    |                 |
+        |                    |<----- read -----|
+        |                    |\--------------->|
+        |                    |                 |
+        |                    |        .        | Multiple reads may
+        |                    |        .        | be necessary
+        |                    |        .        |
+        |                    |                 |
+        |                    |                 |
+        |<------------------------------------/| Destination replies
+        |                    |                 | to COPY
+
+                Figure 5: A synchronous inter-server copy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 20]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+     Client                Source         Destination
+        +                    +                 +
+        |                    |                 |
+        |--- COPY_NOTIFY --->|                 |
+        |<------------------/|                 |
+        |                    |                 |
+        |                    |                 |
+        |--- COPY ---------------------------->|
+        |<------------------------------------/|
+        |                    |                 |
+        |                    |                 |
+        |                    |<----- read -----|
+        |                    |\--------------->|
+        |                    |                 |
+        |                    |        .        | Multiple reads may
+        |                    |        .        | be necessary
+        |                    |        .        |
+        |                    |                 |
+        |                    |                 |
+        |--- COPY_STATUS --------------------->| Client may poll
+        |<------------------------------------/| for status
+        |                    |                 |
+        |                    |        .        | Multiple COPY_STATUS
+        |                    |        .        | operations may be sent
+        |                    |        .        |
+        |                    |                 |
+        |                    |                 |
+        |                    |                 |
+        |<-- CB_COPY --------------------------| Destination reports
+        |\------------------------------------>| results
+        |                    |                 |
+
+               Figure 6: An asynchronous inter-server copy.
+
+4.2.3.  Server-to-Server Copy Protocol
+
+   During an inter-server copy, the destination server reads the file
+   data from the source server.  The source server and destination
+   server are not required to use a specific protocol to transfer the
+   file data.  The choice of what protocol to use is ultimately the
+   destination server's decision.
+
+4.2.3.1.  Using NFSv4.x as a Server-to-Server Copy Protocol
+
+   The destination server MAY use standard NFSv4.x (where x >= 1) to
+   read the data from the source server.  If NFSv4.x is used for the
+   server-to-server copy protocol, the destination server can use the
+   filehandle contained in the COPY request with standard NFSv4.x
+
+
+
+Haynes                  Expires September 8, 2011              [Page 21]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   operations to read data from the source server.  Specifically, the
+   destination server may use the NFSv4.x OPEN operation's CLAIM_FH
+   facility to open the file being copied and obtain an open stateid.
+   Using the stateid, the destination server may then use NFSv4.x READ
+   operations to read the file.
+
+4.2.3.2.  Using an alternative Server-to-Server Copy Protocol
+
+   In a homogeneous environment, the source and destination servers
+   might be able to perform the file copy extremely efficiently using
+   specialized protocols.  For example the source and destination
+   servers might be two nodes sharing a common file system format for
+   the source and destination file systems.  Thus the source and
+   destination are in an ideal position to efficiently render the image
+   of the source file to the destination file by replicating the file
+   system formats at the block level.  Another possibility is that the
+   source and destination might be two nodes sharing a common storage
+   area network, and thus there is no need to copy any data at all, and
+   instead ownership of the file and its contents might simply be re-
+   assigned to the destination.  To allow for these possibilities, the
+   destination server is allowed to use a server-to-server copy protocol
+   of its choice.
+
+   In a heterogeneous environment, using a protocol other than NFSv4.x
+   (e.g.  HTTP [14] or FTP [15]) presents some challenges.  In
+   particular, the destination server is presented with the challenge of
+   accessing the source file given only an NFSv4.x filehandle.
+
+   One option for protocols that identify source files with path names
+   is to use an ASCII hexadecimal representation of the source
+   filehandle as the file name.
+
+   Another option for the source server is to use URLs to direct the
+   destination server to a specialized service.  For example, the
+   response to COPY_NOTIFY could include the URL
+   ftp://s1.example.com:9999/_FH/0x12345, where 0x12345 is the ASCII
+   hexadecimal representation of the source filehandle.  When the
+   destination server receives the source server's URL, it would use
+   "_FH/0x12345" as the file name to pass to the FTP server listening on
+   port 9999 of s1.example.com.  On port 9999 there would be a special
+   instance of the FTP service that understands how to convert NFS
+   filehandles to an open file descriptor (in many operating systems,
+   this would require a new system call, one which is the inverse of the
+   makefh() function that the pre-NFSv4 MOUNT service needs).
+
+   Authenticating and identifying the destination server to the source
+   server is also a challenge.  Recommendations for how to accomplish
+   this are given in Section 4.4.1.2.4 and Section 4.4.1.4.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 22]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+4.3.  Operations
+
+   In the sections that follow, several operations are defined that
+   together provide the server-side copy feature.  These operations are
+   intended to be OPTIONAL operations as defined in section 17 of [2].
+   The COPY_NOTIFY, COPY_REVOKE, COPY, COPY_ABORT, and COPY_STATUS
+   operations are designed to be sent within an NFSv4 COMPOUND
+   procedure.  The CB_COPY operation is designed to be sent within an
+   NFSv4 CB_COMPOUND procedure.
+
+   Each operation is performed in the context of the user identified by
+   the ONC RPC credential of its containing COMPOUND or CB_COMPOUND
+   request.  For example, a COPY_ABORT operation issued by a given user
+   indicates that a specified COPY operation initiated by the same user
+   be canceled.  Therefore a COPY_ABORT MUST NOT interfere with a copy
+   of the same file initiated by another user.
+
+   An NFS server MAY allow an administrative user to monitor or cancel
+   copy operations using an implementation specific interface.
+
+4.3.1.  netloc4 - Network Locations
+
+   The server-side copy operations specify network locations using the
+   netloc4 data type shown below:
+
+   enum netloc_type4 {
+           NL4_NAME        = 0,
+           NL4_URL         = 1,
+           NL4_NETADDR     = 2
+   };
+   union netloc4 switch (netloc_type4 nl_type) {
+           case NL4_NAME:          utf8str_cis nl_name;
+           case NL4_URL:           utf8str_cis nl_url;
+           case NL4_NETADDR:       netaddr4    nl_addr;
+   };
+
+   If the netloc4 is of type NL4_NAME, the nl_name field MUST be
+   specified as a UTF-8 string.  The nl_name is expected to be resolved
+   to a network address via DNS, LDAP, NIS, /etc/hosts, or some other
+   means.  If the netloc4 is of type NL4_URL, a server URL [5]
+   appropriate for the server-to-server copy operation is specified as a
+   UTF-8 string.  If the netloc4 is of type NL4_NETADDR, the nl_addr
+   field MUST contain a valid netaddr4 as defined in Section 3.3.9 of
+   [2].
+
+   When netloc4 values are used for an inter-server copy as shown in
+   Figure 4, their values may be evaluated on the source server,
+   destination server, and client.  The network environment in which
+
+
+
+Haynes                  Expires September 8, 2011              [Page 23]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   these systems operate should be configured so that the netloc4 values
+   are interpreted as intended on each system.
+
+4.3.2.  Operation 61: COPY_NOTIFY - Notify a source server of a future
+        copy
+
+4.3.2.1.  ARGUMENT
+
+   struct COPY_NOTIFY4args {
+           /* CURRENT_FH: source file */
+           netloc4         cna_destination_server;
+   };
+
+
+4.3.2.2.  RESULT
+
+   union COPY_NOTIFY4res switch (nfsstat4 cnr_status) {
+           case NFS4_OK:
+                   nfstime4        cnr_lease_time;
+                   netloc4         cnr_source_server<>;
+           default:
+                   void;
+   };
+
+
+4.3.2.3.  DESCRIPTION
+
+   This operation is used for an inter-server copy.  A client sends this
+   operation in a COMPOUND request to the source server to authorize a
+   destination server identified by cna_destination_server to read the
+   file specified by CURRENT_FH on behalf of the given user.
+
+   The cna_destination_server MUST be specified using the netloc4
+   network location format.  The server is not required to resolve the
+   cna_destination_server address before completing this operation.
+
+   If this operation succeeds, the source server will allow the
+   cna_destination_server to copy the specified file on behalf of the
+   given user.  If COPY_NOTIFY succeeds, the destination server is
+   granted permission to read the file as long as both of the following
+   conditions are met:
+
+   o  The destination server begins reading the source file before the
+      cnr_lease_time expires.  If the cnr_lease_time expires while the
+      destination server is still reading the source file, the
+      destination server is allowed to finish reading the file.
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 24]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   o  The client has not issued a COPY_REVOKE for the same combination
+      of user, filehandle, and destination server.
+
+   The cnr_lease_time is chosen by the source server.  A cnr_lease_time
+   of 0 (zero) indicates an infinite lease.  To renew the copy lease
+   time the client should resend the same copy notification request to
+   the source server.
+
+   To avoid the need for synchronized clocks, copy lease times are
+   granted by the server as a time delta.  However, there is a
+   requirement that the client and server clocks do not drift
+   excessively over the duration of the lease.  There is also the issue
+   of propagation delay across the network which could easily be several
+   hundred milliseconds as well as the possibility that requests will be
+   lost and need to be retransmitted.
+
+   To take propagation delay into account, the client should subtract it
+   from copy lease times (e.g. if the client estimates the one-way
+   propagation delay as 200 milliseconds, then it can assume that the
+   lease is already 200 milliseconds old when it gets it).  In addition,
+   it will take another 200 milliseconds to get a response back to the
+   server.  So the client must send a lease renewal or send the copy
+   offload request to the cna_destination_server at least 400
+   milliseconds before the copy lease would expire.  If the propagation
+   delay varies over the life of the lease (e.g. the client is on a
+   mobile host), the client will need to continuously subtract the
+   increase in propagation delay from the copy lease times.
+
+   The server's copy lease period configuration should take into account
+   the network distance of the clients that will be accessing the
+   server's resources.  It is expected that the lease period will take
+   into account the network propagation delays and other network delay
+   factors for the client population.  Since the protocol does not allow
+   for an automatic method to determine an appropriate copy lease
+   period, the server's administrator may have to tune the copy lease
+   period.
+
+   A successful response will also contain a list of names, addresses,
+   and URLs called cnr_source_server, on which the source is willing to
+   accept connections from the destination.  These might not be
+   reachable from the client and might be located on networks to which
+   the client has no connection.
+
+   If the client wishes to perform an inter-server copy, the client MUST
+   send a COPY_NOTIFY to the source server.  Therefore, the source
+   server MUST support COPY_NOTIFY.
+
+   For a copy only involving one server (the source and destination are
+
+
+
+Haynes                  Expires September 8, 2011              [Page 25]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   on the same server), this operation is unnecessary.
+
+   The COPY_NOTIFY operation may fail for the following reasons (this is
+   a partial list):
+
+   NFS4ERR_MOVED:  The file system which contains the source file is not
+      present on the source server.  The client can determine the
+      correct location and reissue the operation with the correct
+      location.
+
+   NFS4ERR_NOTSUPP:  The copy offload operation is not supported by the
+      NFS server receiving this request.
+
+   NFS4ERR_WRONGSEC:  The security mechanism being used by the client
+      does not match the server's security policy.
+
+4.3.3.  Operation 62: COPY_REVOKE - Revoke a destination server's copy
+        privileges
+
+4.3.3.1.  ARGUMENT
+
+   struct COPY_REVOKE4args {
+           /* CURRENT_FH: source file */
+           netloc4         cra_destination_server;
+   };
+
+
+4.3.3.2.  RESULT
+
+   struct COPY_REVOKE4res {
+           nfsstat4        crr_status;
+   };
+
+4.3.3.3.  DESCRIPTION
+
+   This operation is used for an inter-server copy.  A client sends this
+   operation in a COMPOUND request to the source server to revoke the
+   authorization of a destination server identified by
+   cra_destination_server from reading the file specified by CURRENT_FH
+   on behalf of given user.  If the cra_destination_server has already
+   begun copying the file, a successful return from this operation
+   indicates that further access will be prevented.
+
+   The cra_destination_server MUST be specified using the netloc4
+   network location format.  The server is not required to resolve the
+   cra_destination_server address before completing this operation.
+
+   The COPY_REVOKE operation is useful in situations in which the source
+
+
+
+Haynes                  Expires September 8, 2011              [Page 26]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   server granted a very long or infinite lease on the destination
+   server's ability to read the source file and all copy operations on
+   the source file have been completed.
+
+   For a copy only involving one server (the source and destination are
+   on the same server), this operation is unnecessary.
+
+   If the server supports COPY_NOTIFY, the server is REQUIRED to support
+   the COPY_REVOKE operation.
+
+   The COPY_REVOKE operation may fail for the following reasons (this is
+   a partial list):
+
+   NFS4ERR_MOVED:  The file system which contains the source file is not
+      present on the source server.  The client can determine the
+      correct location and reissue the operation with the correct
+      location.
+
+   NFS4ERR_NOTSUPP:  The copy offload operation is not supported by the
+      NFS server receiving this request.
+
+4.3.4.  Operation 59: COPY - Initiate a server-side copy
+
+4.3.4.1.  ARGUMENT
+
+
+   const COPY4_GUARDED     = 0x00000001;
+   const COPY4_METADATA    = 0x00000002;
+
+   struct COPY4args {
+           /* SAVED_FH: source file */
+           /* CURRENT_FH: destination file or */
+           /*             directory           */
+           offset4         ca_src_offset;
+           offset4         ca_dst_offset;
+           length4         ca_count;
+           uint32_t        ca_flags;
+           component4      ca_destination;
+           netloc4         ca_source_server<>;
+   };
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 27]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+4.3.4.2.  RESULT
+
+   union COPY4res switch (nfsstat4 cr_status) {
+           /* CURRENT_FH: destination file */
+
+           case NFS4_OK:
+                   stateid4        cr_callback_id<1>;
+           default:
+                   length4         cr_bytes_copied;
+   };
+
+
+4.3.4.3.  DESCRIPTION
+
+   The COPY operation is used for both intra- and inter-server copies.
+   In both cases, the COPY is always sent from the client to the
+   destination server of the file copy.  The COPY operation requests
+   that a file be copied from the location specified by the SAVED_FH
+   value to the location specified by the combination of CURRENT_FH and
+   ca_destination.
+
+   The SAVED_FH must be a regular file.  If SAVED_FH is not a regular
+   file, the operation MUST fail and return NFS4ERR_WRONG_TYPE.
+
+   In order to set SAVED_FH to the source file handle, the compound
+   procedure requesting the COPY will include a sub-sequence of
+   operations such as
+
+                           PUTFH source-fh
+                           SAVEFH
+
+   If the request is for a server-to-server copy, the source-fh is a
+   filehandle from the source server and the compound procedure is being
+   executed on the destination server.  In this case, the source-fh is a
+   foreign filehandle on the server receiving the COPY request.  If
+   either PUTFH or SAVEFH checked the validity of the filehandle, the
+   operation would likely fail and return NFS4ERR_STALE.
+
+   In order to avoid this problem, the minor version incorporating the
+   COPY operations will need to make a few small changes in the handling
+   of existing operations.  If a server supports the server-to-server
+   COPY feature, a PUTFH followed by a SAVEFH MUST NOT return
+   NFS4ERR_STALE for either operation.  These restrictions do not pose
+   substantial difficulties for servers.  The CURRENT_FH and SAVED_FH
+   may be validated in the context of the operation referencing them and
+   an NFS4ERR_STALE error returned for an invalid file handle at that
+   point.
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 28]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   The CURRENT_FH and ca_destination together specify the destination of
+   the copy operation.  If ca_destination is of 0 (zero) length, then
+   CURRENT_FH specifies the target file.  In this case, CURRENT_FH MUST
+   be a regular file and not a directory.  If ca_destination is not of 0
+   (zero) length, the ca_destination argument specifies the file name to
+   which the data will be copied within the directory identified by
+   CURRENT_FH.  In this case, CURRENT_FH MUST be a directory and not a
+   regular file.
+
+   If the file named by ca_destination does not exist and the operation
+   completes successfully, the file will be visible in the file system
+   namespace.  If the file does not exist and the operation fails, the
+   file MAY be visible in the file system namespace depending on when
+   the failure occurs and on the implementation of the NFS server
+   receiving the COPY operation.  If the ca_destination name cannot be
+   created in the destination file system (due to file name
+   restrictions, such as case or length), the operation MUST fail.
+
+   The ca_src_offset is the offset within the source file from which the
+   data will be read, the ca_dst_offset is the offset within the
+   destination file to which the data will be written, and the ca_count
+   is the number of bytes that will be copied.  An offset of 0 (zero)
+   specifies the start of the file.  A count of 0 (zero) requests that
+   all bytes from ca_src_offset through EOF be copied to the
+   destination.  If concurrent modifications to the source file overlap
+   with the source file region being copied, the data copied may include
+   all, some, or none of the modifications.  The client can use standard
+   NFS operations (e.g.  OPEN with OPEN4_SHARE_DENY_WRITE or mandatory
+   byte range locks) to protect against concurrent modifications if the
+   client is concerned about this.  If the source file's end of file is
+   being modified in parallel with a copy that specifies a count of 0
+   (zero) bytes, the amount of data copied is implementation dependent
+   (clients may guard against this case by specifying a non-zero count
+   value or preventing modification of the source file as mentioned
+   above).
+
+   If the source offset or the source offset plus count is greater than
+   or equal to the size of the source file, the operation will fail with
+   NFS4ERR_INVAL.  The destination offset or destination offset plus
+   count may be greater than the size of the destination file.  This
+   allows for the client to issue parallel copies to implement
+   operations such as "cat file1 file2 file3 file4 > dest".
+
+   If the destination file is created as a result of this command, the
+   destination file's size will be equal to the number of bytes
+   successfully copied.  If the destination file already existed, the
+   destination file's size may increase as a result of this operation
+   (e.g. if ca_dst_offset plus ca_count is greater than the
+
+
+
+Haynes                  Expires September 8, 2011              [Page 29]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   destination's initial size).
+
+   If the ca_source_server list is specified, then this is an inter-
+   server copy operation and the source file is on a remote server.  The
+   client is expected to have previously issued a successful COPY_NOTIFY
+   request to the remote source server.  The ca_source_server list
+   SHOULD be the same as the COPY_NOTIFY response's cnr_source_server
+   list.  If the client includes the entries from the COPY_NOTIFY
+   response's cnr_source_server list in the ca_source_server list, the
+   source server can indicate a specific copy protocol for the
+   destination server to use by returning a URL, which specifies both a
+   protocol service and server name.  Server-to-server copy protocol
+   considerations are described in Section 4.2.3 and Section 4.4.1.
+
+   The ca_flags argument allows the copy operation to be customized in
+   the following ways using the guarded flag (COPY4_GUARDED) and the
+   metadata flag (COPY4_METADATA).
+
+   [NOTE: Earlier versions of this document defined a
+   COPY4_SPACE_RESERVED flag for controlling space reservations on the
+   destination file.  This flag has been removed with the expectation
+   that the space_reserve attribute defined in XXX_TDH_XXX will be
+   adopted.]
+
+   If the guarded flag is set and the destination exists on the server,
+   this operation will fail with NFS4ERR_EXIST.
+
+   If the guarded flag is not set and the destination exists on the
+   server, the behavior is implementation dependent.
+
+   If the metadata flag is set and the client is requesting a whole file
+   copy (i.e. ca_count is 0 (zero)), a subset of the destination file's
+   attributes MUST be the same as the source file's corresponding
+   attributes and a subset of the destination file's attributes SHOULD
+   be the same as the source file's corresponding attributes.  The
+   attributes in the MUST and SHOULD copy subsets will be defined for
+   each NFS version.
+
+   For NFSv4.1, Table 1 and Table 2 list the REQUIRED and RECOMMENDED
+   attributes respectively.  A "MUST" in the "Copy to destination file?"
+   column indicates that the attribute is part of the MUST copy set.  A
+   "SHOULD" in the "Copy to destination file?" column indicates that the
+   attribute is part of the SHOULD copy set.
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 30]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+          +--------------------+----+---------------------------+
+          | Name               | Id | Copy to destination file? |
+          +--------------------+----+---------------------------+
+          | supported_attrs    | 0  | no                        |
+          | type               | 1  | MUST                      |
+          | fh_expire_type     | 2  | no                        |
+          | change             | 3  | SHOULD                    |
+          | size               | 4  | MUST                      |
+          | link_support       | 5  | no                        |
+          | symlink_support    | 6  | no                        |
+          | named_attr         | 7  | no                        |
+          | fsid               | 8  | no                        |
+          | unique_handles     | 9  | no                        |
+          | lease_time         | 10 | no                        |
+          | rdattr_error       | 11 | no                        |
+          | filehandle         | 19 | no                        |
+          | suppattr_exclcreat | 75 | no                        |
+          +--------------------+----+---------------------------+
+
+                                  Table 1
+
+          +--------------------+----+---------------------------+
+          | Name               | Id | Copy to destination file? |
+          +--------------------+----+---------------------------+
+          | acl                | 12 | MUST                      |
+          | aclsupport         | 13 | no                        |
+          | archive            | 14 | no                        |
+          | cansettime         | 15 | no                        |
+          | case_insensitive   | 16 | no                        |
+          | case_preserving    | 17 | no                        |
+          | change_policy      | 60 | no                        |
+          | chown_restricted   | 18 | MUST                      |
+          | dacl               | 58 | MUST                      |
+          | dir_notif_delay    | 56 | no                        |
+          | dirent_notif_delay | 57 | no                        |
+          | fileid             | 20 | no                        |
+          | files_avail        | 21 | no                        |
+          | files_free         | 22 | no                        |
+          | files_total        | 23 | no                        |
+          | fs_charset_cap     | 76 | no                        |
+          | fs_layout_type     | 62 | no                        |
+          | fs_locations       | 24 | no                        |
+          | fs_locations_info  | 67 | no                        |
+          | fs_status          | 61 | no                        |
+          | hidden             | 25 | MUST                      |
+          | homogeneous        | 26 | no                        |
+          | layout_alignment   | 66 | no                        |
+          | layout_blksize     | 65 | no                        |
+
+
+
+Haynes                  Expires September 8, 2011              [Page 31]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+          | layout_hint        | 63 | no                        |
+          | layout_type        | 64 | no                        |
+          | maxfilesize        | 27 | no                        |
+          | maxlink            | 28 | no                        |
+          | maxname            | 29 | no                        |
+          | maxread            | 30 | no                        |
+          | maxwrite           | 31 | no                        |
+          | mdsthreshold       | 68 | no                        |
+          | mimetype           | 32 | MUST                      |
+          | mode               | 33 | MUST                      |
+          | mode_set_masked    | 74 | no                        |
+          | mounted_on_fileid  | 55 | no                        |
+          | no_trunc           | 34 | no                        |
+          | numlinks           | 35 | no                        |
+          | owner              | 36 | MUST                      |
+          | owner_group        | 37 | MUST                      |
+          | quota_avail_hard   | 38 | no                        |
+          | quota_avail_soft   | 39 | no                        |
+          | quota_used         | 40 | no                        |
+          | rawdev             | 41 | no                        |
+          | retentevt_get      | 71 | MUST                      |
+          | retentevt_set      | 72 | no                        |
+          | retention_get      | 69 | MUST                      |
+          | retention_hold     | 73 | MUST                      |
+          | retention_set      | 70 | no                        |
+          | sacl               | 59 | MUST                      |
+          | space_avail        | 42 | no                        |
+          | space_free         | 43 | no                        |
+          | space_total        | 44 | no                        |
+          | space_used         | 45 | no                        |
+          | system             | 46 | MUST                      |
+          | time_access        | 47 | MUST                      |
+          | time_access_set    | 48 | no                        |
+          | time_backup        | 49 | no                        |
+          | time_create        | 50 | MUST                      |
+          | time_delta         | 51 | no                        |
+          | time_metadata      | 52 | SHOULD                    |
+          | time_modify        | 53 | MUST                      |
+          | time_modify_set    | 54 | no                        |
+          +--------------------+----+---------------------------+
+
+                                  Table 2
+
+   [NOTE: The space_reserve attribute XXX_TDH_XXX will be in the MUST
+   set.]
+
+   [NOTE: The source file's attribute values will take precedence over
+   any attribute values inherited by the destination file.]
+
+
+
+Haynes                  Expires September 8, 2011              [Page 32]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   In the case of an inter-server copy or an intra-server copy between
+   file systems, the attributes supported for the source file and
+   destination file could be different.  By definition,the REQUIRED
+   attributes will be supported in all cases.  If the metadata flag is
+   set and the source file has a RECOMMENDED attribute that is not
+   supported for the destination file, the copy MUST fail with
+   NFS4ERR_ATTRNOTSUPP.
+
+   Any attribute supported by the destination server that is not set on
+   the source file SHOULD be left unset.
+
+   Metadata attributes not exposed via the NFS protocol SHOULD be copied
+   to the destination file where appropriate.
+
+   The destination file's named attributes are not duplicated from the
+   source file.  After the copy process completes, the client MAY
+   attempt to duplicate named attributes using standard NFSv4
+   operations.  However, the destination file's named attribute
+   capabilities MAY be different from the source file's named attribute
+   capabilities.
+
+   If the metadata flag is not set and the client is requesting a whole
+   file copy (i.e. ca_count is 0 (zero)), the destination file's
+   metadata is implementation dependent.
+
+   If the client is requesting a partial file copy (i.e. ca_count is not
+   0 (zero)), the client SHOULD NOT set the metadata flag and the server
+   MUST ignore the metadata flag.
+
+   If the operation does not result in an immediate failure, the server
+   will return NFS4_OK, and the CURRENT_FH will remain the destination's
+   filehandle.
+
+   If an immediate failure does occur, cr_bytes_copied will be set to
+   the number of bytes copied to the destination file before the error
+   occurred.  The cr_bytes_copied value indicates the number of bytes
+   copied but not which specific bytes have been copied.
+
+   A return of NFS4_OK indicates that either the operation is complete
+   or the operation was initiated and a callback will be used to deliver
+   the final status of the operation.
+
+   If the cr_callback_id is returned, this indicates that the operation
+   was initiated and a CB_COPY callback will deliver the final results
+   of the operation.  The cr_callback_id stateid is termed a copy
+   stateid in this context.  The server is given the option of returning
+   the results in a callback because the data may require a relatively
+   long period of time to copy.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 33]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   If no cr_callback_id is returned, the operation completed
+   synchronously and no callback will be issued by the server.  The
+   completion status of the operation is indicated by cr_status.
+
+   If the copy completes successfully, either synchronously or
+   asynchronously, the data copied from the source file to the
+   destination file MUST appear identical to the NFS client.  However,
+   the NFS server's on disk representation of the data in the source
+   file and destination file MAY differ.  For example, the NFS server
+   might encrypt, compress, deduplicate, or otherwise represent the on
+   disk data in the source and destination file differently.
+
+   In the event of a failure the state of the destination file is
+   implementation dependent.  The COPY operation may fail for the
+   following reasons (this is a partial list).
+
+   NFS4ERR_MOVED:  The file system which contains the source file, or
+      the destination file or directory is not present.  The client can
+      determine the correct location and reissue the operation with the
+      correct location.
+
+   NFS4ERR_NOTSUPP:  The copy offload operation is not supported by the
+      NFS server receiving this request.
+
+   NFS4ERR_PARTNER_NOTSUPP:  The remote server does not support the
+      server-to-server copy offload protocol.
+
+   NFS4ERR_PARTNER_NO_AUTH:  The remote server does not authorize a
+      server-to-server copy offload operation.  This may be due to the
+      client's failure to send the COPY_NOTIFY operation to the remote
+      server, the remote server receiving a server-to-server copy
+      offload request after the copy lease time expired, or for some
+      other permission problem.
+
+   NFS4ERR_FBIG:  The copy operation would have caused the file to grow
+      beyond the server's limit.
+
+   NFS4ERR_NOTDIR:  The CURRENT_FH is a file and ca_destination has non-
+      zero length.
+
+   NFS4ERR_WRONG_TYPE:  The SAVED_FH is not a regular file.
+
+   NFS4ERR_ISDIR:  The CURRENT_FH is a directory and ca_destination has
+      zero length.
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 34]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   NFS4ERR_INVAL:  The source offset or offset plus count are greater
+      than or equal to the size of the source file.
+
+   NFS4ERR_DELAY:  The server does not have the resources to perform the
+      copy operation at the current time.  The client should retry the
+      operation sometime in the future.
+
+   NFS4ERR_METADATA_NOTSUPP:  The destination file cannot support the
+      same metadata as the source file.
+
+   NFS4ERR_WRONGSEC:  The security mechanism being used by the client
+      does not match the server's security policy.
+
+4.3.5.  Operation 60: COPY_ABORT - Cancel a server-side copy
+
+4.3.5.1.  ARGUMENT
+
+   struct COPY_ABORT4args {
+           /* CURRENT_FH: desination file */
+           stateid4        caa_stateid;
+   };
+
+
+4.3.5.2.  RESULT
+
+   struct COPY_ABORT4res {
+           nfsstat4        car_status;
+   };
+
+4.3.5.3.  DESCRIPTION
+
+   COPY_ABORT is used for both intra- and inter-server asynchronous
+   copies.  The COPY_ABORT operation allows the client to cancel a
+   server-side copy operation that it initiated.  This operation is sent
+   in a COMPOUND request from the client to the destination server.
+   This operation may be used to cancel a copy when the application that
+   requested the copy exits before the operation is completed or for
+   some other reason.
+
+   The request contains the filehandle and copy stateid cookies that act
+   as the context for the previously initiated copy operation.
+
+   The result's car_status field indicates whether the cancel was
+   successful or not.  A value of NFS4_OK indicates that the copy
+   operation was canceled and no callback will be issued by the server.
+   A copy operation that is successfully canceled may result in none,
+   some, or all of the data copied.
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 35]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   If the server supports asynchronous copies, the server is REQUIRED to
+   support the COPY_ABORT operation.
+
+   The COPY_ABORT operation may fail for the following reasons (this is
+   a partial list):
+
+   NFS4ERR_NOTSUPP:  The abort operation is not supported by the NFS
+      server receiving this request.
+
+   NFS4ERR_RETRY:  The abort failed, but a retry at some time in the
+      future MAY succeed.
+
+   NFS4ERR_COMPLETE_ALREADY:  The abort failed, and a callback will
+      deliver the results of the copy operation.
+
+   NFS4ERR_SERVERFAULT:  An error occurred on the server that does not
+      map to a specific error code.
+
+4.3.6.  Operation 63: COPY_STATUS - Poll for status of a server-side
+        copy
+
+4.3.6.1.  ARGUMENT
+
+   struct COPY_STATUS4args {
+           /* CURRENT_FH: destination file */
+           stateid4        csa_stateid;
+   };
+
+
+4.3.6.2.  RESULT
+
+   union COPY_STATUS4res switch (nfsstat4 csr_status) {
+           case NFS4_OK:
+                   length4         csr_bytes_copied;
+                   nfsstat4        csr_complete<1>;
+           default:
+                   void;
+   };
+
+
+4.3.6.3.  DESCRIPTION
+
+   COPY_STATUS is used for both intra- and inter-server asynchronous
+   copies.  The COPY_STATUS operation allows the client to poll the
+   server to determine the status of an asynchronous copy operation.
+   This operation is sent by the client to the destination server.
+
+   If this operation is successful, the number of bytes copied are
+
+
+
+Haynes                  Expires September 8, 2011              [Page 36]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   returned to the client in the csr_bytes_copied field.  The
+   csr_bytes_copied value indicates the number of bytes copied but not
+   which specific bytes have been copied.
+
+   If the optional csr_complete field is present, the copy has
+   completed.  In this case the status value indicates the result of the
+   asynchronous copy operation.  In all cases, the server will also
+   deliver the final results of the asynchronous copy in a CB_COPY
+   operation.
+
+   The failure of this operation does not indicate the result of the
+   asynchronous copy in any way.
+
+   If the server supports asynchronous copies, the server is REQUIRED to
+   support the COPY_STATUS operation.
+
+   The COPY_STATUS operation may fail for the following reasons (this is
+   a partial list):
+
+   NFS4ERR_NOTSUPP:  The copy status operation is not supported by the
+      NFS server receiving this request.
+
+   NFS4ERR_BAD_STATEID:  The stateid is not valid (see Section 4.3.8
+      below).
+
+   NFS4ERR_EXPIRED:  The stateid has expired (see Copy Offload Stateid
+      section below).
+
+4.3.7.  Operation 15: CB_COPY - Report results of a server-side copy
+
+4.3.7.1.  ARGUMENT
+
+   union copy_info4 switch (nfsstat4 cca_status) {
+           case NFS4_OK:
+                   void;
+           default:
+                   length4         cca_bytes_copied;
+   };
+
+   struct CB_COPY4args {
+           nfs_fh4         cca_fh;
+           stateid4        cca_stateid;
+           copy_info4      cca_copy_info;
+   };
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 37]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+4.3.7.2.  RESULT
+
+   struct CB_COPY4res {
+           nfsstat4        ccr_status;
+   };
+
+4.3.7.3.  DESCRIPTION
+
+   CB_COPY is used for both intra- and inter-server asynchronous copies.
+   The CB_COPY callback informs the client of the result of an
+   asynchronous server-side copy.  This operation is sent by the
+   destination server to the client in a CB_COMPOUND request.  The copy
+   is identified by the filehandle and stateid arguments.  The result is
+   indicated by the status field.  If the copy failed, cca_bytes_copied
+   contains the number of bytes copied before the failure occurred.  The
+   cca_bytes_copied value indicates the number of bytes copied but not
+   which specific bytes have been copied.
+
+   In the absence of an established backchannel, the server cannot
+   signal the completion of the COPY via a CB_COPY callback.  The loss
+   of a callback channel would be indicated by the server setting the
+   SEQ4_STATUS_CB_PATH_DOWN flag in the sr_status_flags field of the
+   SEQUENCE operation.  The client must re-establish the callback
+   channel to receive the status of the COPY operation.  Prolonged loss
+   of the callback channel could result in the server dropping the COPY
+   operation state and invalidating the copy stateid.
+
+   If the client supports the COPY operation, the client is REQUIRED to
+   support the CB_COPY operation.
+
+   The CB_COPY operation may fail for the following reasons (this is a
+   partial list):
+
+   NFS4ERR_NOTSUPP:  The copy offload operation is not supported by the
+      NFS client receiving this request.
+
+4.3.8.  Copy Offload Stateids
+
+   A server may perform a copy offload operation asynchronously.  An
+   asynchronous copy is tracked using a copy offload stateid.  Copy
+   offload stateids are included in the COPY, COPY_ABORT, COPY_STATUS,
+   and CB_COPY operations.
+
+   Section 8.2.4 of [2] specifies that stateids are valid until either
+   (A) the client or server restart or (B) the client returns the
+   resource.
+
+   A copy offload stateid will be valid until either (A) the client or
+
+
+
+Haynes                  Expires September 8, 2011              [Page 38]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   server restart or (B) the client returns the resource by issuing a
+   COPY_ABORT operation or the client replies to a CB_COPY operation.
+
+   A copy offload stateid's seqid MUST NOT be 0 (zero).  In the context
+   of a copy offload operation, it is ambiguous to indicate the most
+   recent copy offload operation using a stateid with seqid of 0 (zero).
+   Therefore a copy offload stateid with seqid of 0 (zero) MUST be
+   considered invalid.
+
+4.4.  Security Considerations
+
+   The security considerations pertaining to NFSv4 [10] apply to this
+   document.
+
+   The standard security mechanisms provide by NFSv4 [10] may be used to
+   secure the protocol described in this document.
+
+   NFSv4 clients and servers supporting the the inter-server copy
+   operations described in this document are REQUIRED to implement [6],
+   including the RPCSEC_GSSv3 privileges copy_from_auth and
+   copy_to_auth.  If the server-to-server copy protocol is ONC RPC
+   based, the servers are also REQUIRED to implement the RPCSEC_GSSv3
+   privilege copy_confirm_auth.  These requirements to implement are not
+   requirements to use.  NFSv4 clients and servers are RECOMMENDED to
+   use [6] to secure server-side copy operations.
+
+4.4.1.  Inter-Server Copy Security
+
+4.4.1.1.  Requirements for Secure Inter-Server Copy
+
+   Inter-server copy is driven by several requirements:
+
+   o  The specification MUST NOT mandate an inter-server copy protocol.
+      There are many ways to copy data.  Some will be more optimal than
+      others depending on the identities of the source server and
+      destination server.  For example the source and destination
+      servers might be two nodes sharing a common file system format for
+      the source and destination file systems.  Thus the source and
+      destination are in an ideal position to efficiently render the
+      image of the source file to the destination file by replicating
+      the file system formats at the block level.  In other cases, the
+      source and destination might be two nodes sharing a common storage
+      area network, and thus there is no need to copy any data at all,
+      and instead ownership of the file and its contents simply gets re-
+      assigned to the destination.
+
+   o  The specification MUST provide guidance for using NFSv4.x as a
+      copy protocol.  For those source and destination servers willing
+
+
+
+Haynes                  Expires September 8, 2011              [Page 39]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+      to use NFSv4.x there are specific security considerations that
+      this specification can and does address.
+
+   o  The specification MUST NOT mandate pre-configuration between the
+      source and destination server.  Requiring that the source and
+      destination first have a "copying relationship" increases the
+      administrative burden.  However the specification MUST NOT
+      preclude implementations that require pre-configuration.
+
+   o  The specification MUST NOT mandate a trust relationship between
+      the source and destination server.  The NFSv4 security model
+      requires mutual authentication between a principal on an NFS
+      client and a principal on an NFS server.  This model MUST continue
+      with the introduction of COPY.
+
+4.4.1.2.  Inter-Server Copy with RPCSEC_GSSv3
+
+   When the client sends a COPY_NOTIFY to the source server to expect
+   the destination to attempt to copy data from the source server, it is
+   expected that this copy is being done on behalf of the principal
+   (called the "user principal") that sent the RPC request that encloses
+   the COMPOUND procedure that contains the COPY_NOTIFY operation.  The
+   user principal is identified by the RPC credentials.  A mechanism
+   that allows the user principal to authorize the destination server to
+   perform the copy in a manner that lets the source server properly
+   authenticate the destination's copy, and without allowing the
+   destination to exceed its authorization is necessary.
+
+   An approach that sends delegated credentials of the client's user
+   principal to the destination server is not used for the following
+   reasons.  If the client's user delegated its credentials, the
+   destination would authenticate as the user principal.  If the
+   destination were using the NFSv4 protocol to perform the copy, then
+   the source server would authenticate the destination server as the
+   user principal, and the file copy would securely proceed.  However,
+   this approach would allow the destination server to copy other files.
+   The user principal would have to trust the destination server to not
+   do so.  This is counter to the requirements, and therefore is not
+   considered.  Instead an approach using RPCSEC_GSSv3 [6] privileges is
+   proposed.
+
+   One of the stated applications of the proposed RPCSEC_GSSv3 protocol
+   is compound client host and user authentication [+ privilege
+   assertion].  For inter-server file copy, we require compound NFS
+   server host and user authentication [+ privilege assertion].  The
+   distinction between the two is one without meaning.
+
+   RPCSEC_GSSv3 introduces the notion of privileges.  We define three
+
+
+
+Haynes                  Expires September 8, 2011              [Page 40]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   privileges:
+
+   copy_from_auth:  A user principal is authorizing a source principal
+      ("nfs@<source>") to allow a destination principal ("nfs@
+      <destination>") to copy a file from the source to the destination.
+      This privilege is established on the source server before the user
+      principal sends a COPY_NOTIFY operation to the source server.
+
+
+   struct copy_from_auth_priv {
+           secret4             cfap_shared_secret;
+           netloc4             cfap_destination;
+           /* the NFSv4 user name that the user principal maps to */
+           utf8str_mixed       cfap_username;
+           /* equal to seq_num of rpc_gss_cred_vers_3_t */
+           unsigned int        cfap_seq_num;
+   };
+
+
+      cap_shared_secret is a secret value the user principal generates.
+
+   copy_to_auth:  A user principal is authorizing a destination
+      principal ("nfs@<destination>") to allow it to copy a file from
+      the source to the destination.  This privilege is established on
+      the destination server before the user principal sends a COPY
+      operation to the destination server.
+
+
+   struct copy_to_auth_priv {
+           /* equal to cfap_shared_secret */
+           secret4              ctap_shared_secret;
+           netloc4              ctap_source;
+           /* the NFSv4 user name that the user principal maps to */
+           utf8str_mixed        ctap_username;
+           /* equal to seq_num of rpc_gss_cred_vers_3_t */
+           unsigned int         ctap_seq_num;
+   };
+
+
+      ctap_shared_secret is a secret value the user principal generated
+      and was used to establish the copy_from_auth privilege with the
+      source principal.
+
+   copy_confirm_auth:  A destination principal is confirming with the
+      source principal that it is authorized to copy data from the
+      source on behalf of the user principal.  When the inter-server
+      copy protocol is NFSv4, or for that matter, any protocol capable
+      of being secured via RPCSEC_GSSv3 (i.e. any ONC RPC protocol),
+
+
+
+Haynes                  Expires September 8, 2011              [Page 41]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+      this privilege is established before the file is copied from the
+      source to the destination.
+
+
+   struct copy_confirm_auth_priv {
+           /* equal to GSS_GetMIC() of cfap_shared_secret */
+           opaque              ccap_shared_secret_mic<>;
+           /* the NFSv4 user name that the user principal maps to */
+           utf8str_mixed       ccap_username;
+           /* equal to seq_num of rpc_gss_cred_vers_3_t */
+           unsigned int        ccap_seq_num;
+   };
+
+4.4.1.2.1.  Establishing a Security Context
+
+   When the user principal wants to COPY a file between two servers, if
+   it has not established copy_from_auth and copy_to_auth privileges on
+   the servers, it establishes them:
+
+   o  The user principal generates a secret it will share with the two
+      servers.  This shared secret will be placed in the
+      cfap_shared_secret and ctap_shared_secret fields of the
+      appropriate privilege data types, copy_from_auth_priv and
+      copy_to_auth_priv.
+
+   o  An instance of copy_from_auth_priv is filled in with the shared
+      secret, the destination server, and the NFSv4 user id of the user
+      principal.  It will be sent with an RPCSEC_GSS3_CREATE procedure,
+      and so cfap_seq_num is set to the seq_num of the credential of the
+      RPCSEC_GSS3_CREATE procedure.  Because cfap_shared_secret is a
+      secret, after XDR encoding copy_from_auth_priv, GSS_Wrap() (with
+      privacy) is invoked on copy_from_auth_priv.  The
+      RPCSEC_GSS3_CREATE procedure's arguments are:
+
+
+           struct {
+               rpc_gss3_gss_binding    *compound_binding;
+               rpc_gss3_chan_binding   *chan_binding_mic;
+               rpc_gss3_assertion      assertions<>;
+               rpc_gss3_extension      extensions<>;
+           } rpc_gss3_create_args;
+
+
+      The string "copy_from_auth" is placed in assertions[0].privs.  The
+      output of GSS_Wrap() is placed in extensions[0].data.  The field
+      extensions[0].critical is set to TRUE.  The source server calls
+      GSS_Unwrap() on the privilege, and verifies that the seq_num
+      matches the credential.  It then verifies that the NFSv4 user id
+
+
+
+Haynes                  Expires September 8, 2011              [Page 42]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+      being asserted matches the source server's mapping of the user
+      principal.  If it does, the privilege is established on the source
+      server as: <"copy_from_auth", user id, destination>.  The
+      successful reply to RPCSEC_GSS3_CREATE has:
+
+
+           struct {
+               opaque                  handle<>;
+               rpc_gss3_chan_binding   *chan_binding_mic;
+               rpc_gss3_assertion      granted_assertions<>;
+               rpc_gss3_assertion      server_assertions<>;
+               rpc_gss3_extension      extensions<>;
+           } rpc_gss3_create_res;
+
+
+      The field "handle" is the RPCSEC_GSSv3 handle that the client will
+      use on COPY_NOTIFY requests involving the source and destination
+      server. granted_assertions[0].privs will be equal to
+      "copy_from_auth".  The server will return a GSS_Wrap() of
+      copy_to_auth_priv.
+
+   o  An instance of copy_to_auth_priv is filled in with the shared
+      secret, the source server, and the NFSv4 user id.  It will be sent
+      with an RPCSEC_GSS3_CREATE procedure, and so ctap_seq_num is set
+      to the seq_num of the credential of the RPCSEC_GSS3_CREATE
+      procedure.  Because ctap_shared_secret is a secret, after XDR
+      encoding copy_to_auth_priv, GSS_Wrap() is invoked on
+      copy_to_auth_priv.  The RPCSEC_GSS3_CREATE procedure's arguments
+      are:
+
+
+           struct {
+               rpc_gss3_gss_binding    *compound_binding;
+               rpc_gss3_chan_binding   *chan_binding_mic;
+               rpc_gss3_assertion      assertions<>;
+               rpc_gss3_extension      extensions<>;
+           } rpc_gss3_create_args;
+
+
+      The string "copy_to_auth" is placed in assertions[0].privs.  The
+      output of GSS_Wrap() is placed in extensions[0].data.  The field
+      extensions[0].critical is set to TRUE.  After unwrapping,
+      verifying the seq_num, and the user principal to NFSv4 user ID
+      mapping, the destination establishes a privilege of
+      <"copy_to_auth", user id, source>.  The successful reply to
+      RPCSEC_GSS3_CREATE has:
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 43]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+           struct {
+               opaque                  handle<>;
+               rpc_gss3_chan_binding   *chan_binding_mic;
+               rpc_gss3_assertion      granted_assertions<>;
+               rpc_gss3_assertion      server_assertions<>;
+               rpc_gss3_extension      extensions<>;
+           } rpc_gss3_create_res;
+
+
+      The field "handle" is the RPCSEC_GSSv3 handle that the client will
+      use on COPY requests involving the source and destination server.
+      The field granted_assertions[0].privs will be equal to
+      "copy_to_auth".  The server will return a GSS_Wrap() of
+      copy_to_auth_priv.
+
+4.4.1.2.2.  Starting a Secure Inter-Server Copy
+
+   When the client sends a COPY_NOTIFY request to the source server, it
+   uses the privileged "copy_from_auth" RPCSEC_GSSv3 handle.
+   cna_destination_server in COPY_NOTIFY MUST be the same as the name of
+   the destination server specified in copy_from_auth_priv.  Otherwise,
+   COPY_NOTIFY will fail with NFS4ERR_ACCESS.  The source server
+   verifies that the privilege <"copy_from_auth", user id, destination>
+   exists, and annotates it with the source filehandle, if the user
+   principal has read access to the source file, and if administrative
+   policies give the user principal and the NFS client read access to
+   the source file (i.e. if the ACCESS operation would grant read
+   access).  Otherwise, COPY_NOTIFY will fail with NFS4ERR_ACCESS.
+
+   When the client sends a COPY request to the destination server, it
+   uses the privileged "copy_to_auth" RPCSEC_GSSv3 handle.
+   ca_source_server in COPY MUST be the same as the name of the source
+   server specified in copy_to_auth_priv.  Otherwise, COPY will fail
+   with NFS4ERR_ACCESS.  The destination server verifies that the
+   privilege <"copy_to_auth", user id, source> exists, and annotates it
+   with the source and destination filehandles.  If the client has
+   failed to establish the "copy_to_auth" policy it will reject the
+   request with NFS4ERR_PARTNER_NO_AUTH.
+
+   If the client sends a COPY_REVOKE to the source server to rescind the
+   destination server's copy privilege, it uses the privileged
+   "copy_from_auth" RPCSEC_GSSv3 handle and the cra_destination_server
+   in COPY_REVOKE MUST be the same as the name of the destination server
+   specified in copy_from_auth_priv.  The source server will then delete
+   the <"copy_from_auth", user id, destination> privilege and fail any
+   subsequent copy requests sent under the auspices of this privilege
+   from the destination server.
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 44]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+4.4.1.2.3.  Securing ONC RPC Server-to-Server Copy Protocols
+
+   After a destination server has a "copy_to_auth" privilege established
+   on it, and it receives a COPY request, if it knows it will use an ONC
+   RPC protocol to copy data, it will establish a "copy_confirm_auth"
+   privilege on the source server, using nfs@<destination> as the
+   initiator principal, and nfs@<source> as the target principal.
+
+   The value of the field ccap_shared_secret_mic is a GSS_VerifyMIC() of
+   the shared secret passed in the copy_to_auth privilege.  The field
+   ccap_username is the mapping of the user principal to an NFSv4 user
+   name ("user"@"domain" form), and MUST be the same as ctap_username
+   and cfap_username.  The field ccap_seq_num is the seq_num of the
+   RPCSEC_GSSv3 credential used for the RPCSEC_GSS3_CREATE procedure the
+   destination will send to the source server to establish the
+   privilege.
+
+   The source server verifies the privilege, and establishes a
+   <"copy_confirm_auth", user id, destination> privilege.  If the source
+   server fails to verify the privilege, the COPY operation will be
+   rejected with NFS4ERR_PARTNER_NO_AUTH.  All subsequent ONC RPC
+   requests sent from the destination to copy data from the source to
+   the destination will use the RPCSEC_GSSv3 handle returned by the
+   source's RPCSEC_GSS3_CREATE response.
+
+   Note that the use of the "copy_confirm_auth" privilege accomplishes
+   the following:
+
+   o  if a protocol like NFS is being used, with export policies, export
+      policies can be overridden in case the destination server as-an-
+      NFS-client is not authorized
+
+   o  manual configuration to allow a copy relationship between the
+      source and destination is not needed.
+
+   If the attempt to establish a "copy_confirm_auth" privilege fails,
+   then when the user principal sends a COPY request to destination, the
+   destination server will reject it with NFS4ERR_PARTNER_NO_AUTH.
+
+4.4.1.2.4.  Securing Non ONC RPC Server-to-Server Copy Protocols
+
+   If the destination won't be using ONC RPC to copy the data, then the
+   source and destination are using an unspecified copy protocol.  The
+   destination could use the shared secret and the NFSv4 user id to
+   prove to the source server that the user principal has authorized the
+   copy.
+
+   For protocols that authenticate user names with passwords (e.g.  HTTP
+
+
+
+Haynes                  Expires September 8, 2011              [Page 45]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   [14] and FTP [15]), the nfsv4 user id could be used as the user name,
+   and an ASCII hexadecimal representation of the RPCSEC_GSSv3 shared
+   secret could be used as the user password or as input into non-
+   password authentication methods like CHAP [16].
+
+4.4.1.3.  Inter-Server Copy via ONC RPC but without RPCSEC_GSSv3
+
+   ONC RPC security flavors other than RPCSEC_GSSv3 MAY be used with the
+   server-side copy offload operations described in this document.  In
+   particular, host-based ONC RPC security flavors such as AUTH_NONE and
+   AUTH_SYS MAY be used.  If a host-based security flavor is used, a
+   minimal level of protection for the server-to-server copy protocol is
+   possible.
+
+   In the absence of strong security mechanisms such as RPCSEC_GSSv3,
+   the challenge is how the source server and destination server
+   identify themselves to each other, especially in the presence of
+   multi-homed source and destination servers.  In a multi-homed
+   environment, the destination server might not contact the source
+   server from the same network address specified by the client in the
+   COPY_NOTIFY.  This can be overcome using the procedure described
+   below.
+
+   When the client sends the source server the COPY_NOTIFY operation,
+   the source server may reply to the client with a list of target
+   addresses, names, and/or URLs and assign them to the unique triple:
+   <source fh, user ID, destination address Y>.  If the destination uses
+   one of these target netlocs to contact the source server, the source
+   server will be able to uniquely identify the destination server, even
+   if the destination server does not connect from the address specified
+   by the client in COPY_NOTIFY.
+
+   For example, suppose the network topology is as shown in Figure 4.
+   If the source filehandle is 0x12345, the source server may respond to
+   a COPY_NOTIFY for destination 10.11.78.56 with the URLs:
+
+      nfs://10.11.78.18//_COPY/10.11.78.56/_FH/0x12345
+
+      nfs://192.168.33.18//_COPY/10.11.78.56/_FH/0x12345
+
+   The client will then send these URLs to the destination server in the
+   COPY operation.  Suppose that the 192.168.33.0/24 network is a high
+   speed network and the destination server decides to transfer the file
+   over this network.  If the destination contacts the source server
+   from 192.168.33.56 over this network using NFSv4.1, it does the
+   following:
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 46]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   COMPOUND  { PUTROOTFH, LOOKUP "_COPY" ; LOOKUP "10.11.78.56"; LOOKUP
+      "_FH" ; OPEN "0x12345" ; GETFH }
+
+   The source server will therefore know that these NFSv4.1 operations
+   are being issued by the destination server identified in the
+   COPY_NOTIFY.
+
+4.4.1.4.  Inter-Server Copy without ONC RPC and RPCSEC_GSSv3
+
+   The same techniques as Section 4.4.1.3, using unique URLs for each
+   destination server, can be used for other protocols (e.g.  HTTP [14]
+   and FTP [15]) as well.
+
+4.5.  IANA Considerations
+
+   This section has no actions for IANA.
+
+
+5.  Space Reservation
+
+5.1.  Introduction
+
+   This section describes a set of operations that allow applications
+   such as hypervisors to reserve space for a file, report the amount of
+   actual disk space a file occupies and freeup the backing space of a
+   file when it is not required.
+
+   In virtualized environments, virtual disk files are often stored on
+   NFS mounted volumes.  Since virtual disk files represent the hard
+   disks of virtual machines, hypervisors often have to guarantee
+   certain properties for the file.
+
+   One such example is space reservation.  When a hypervisor creates a
+   virtual disk file, it often tries to preallocate the space for the
+   file so that there are no future allocation related errors during the
+   operation of the virtual machine.  Such errors prevent a virtual
+   machine from continuing execution and result in downtime.
+
+   Another useful feature would be the ability to report the number of
+   blocks that would be freed when a file is deleted.  Currently, NFS
+   reports two size attributes:
+
+   size  The logical file size of the file.
+
+   space_used  The size in bytes that the file occupies on disk
+
+   While these attributes are sufficient for space accounting in
+   traditional filesystems, they prove to be inadequate in modern
+
+
+
+Haynes                  Expires September 8, 2011              [Page 47]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   filesystems that support block sharing.  Having a way to tell the
+   number of blocks that would be freed if the file was deleted would be
+   useful to applications that wish to migrate files when a volume is
+   low on space.
+
+   Since virtual disks represent a hard drive in a virtual machine, a
+   virtual disk can be viewed as a filesystem within a file.  Since not
+   all blocks within a filesystem are in use, there is an opportunity to
+   reclaim blocks that are no longer in use.  A call to deallocate
+   blocks could result in better space efficiency.  Lesser space MAY be
+   consumed for backups after block deallocation.
+
+   We propose the following operations and attributes for the
+   aforementioned use cases:
+
+   space_reserve  This attribute specifies whether the blocks backing
+      the file have been preallocated.
+
+   space_freed  This attribute specifies the space freed when a file is
+      deleted, taking block sharing into consideration.
+
+   max_hole_punch  This attribute specifies the maximum sized hole that
+      can be punched on the filesystem.
+
+   HOLE_PUNCH  This operation zeroes and/or deallocates the blocks
+      backing a region of the file.
+
+5.2.  Use Cases
+
+5.2.1.  Space Reservation
+
+   Some applications require that once a file of a certain size is
+   created, writes to that file never fail with an out of space
+   condition.  One such example is that of a hypervisor writing to a
+   virtual disk.  An out of space condition while writing to virtual
+   disks would mean that the virtual machine would need to be frozen.
+
+   Currently, in order to achieve such a guarantee, applications zero
+   the entire file.  The initial zeroing allocates the backing blocks
+   and all subsequent writes are overwrites of already allocated blocks.
+   This approach is not only inefficient in terms of the amount of I/O
+   done, it is also not guaranteed to work on filesystems that are log
+   structured or deduplicated.  An efficient way of guaranteeing space
+   reservation would be beneficial to such applications.
+
+   If the space_reserved attribute is set on a file, it is guaranteed
+   that writes that do not grow the file will not fail with
+   NFSERR_NOSPC.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 48]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+5.2.2.  Space freed on deletes
+
+   Currently, files in NFS have two size attributes:
+
+   size  The logical file size of the file.
+
+   space_used  The size in bytes that the file occupies on disk.
+
+   While these attributes are sufficient for space accounting in
+   traditional filesystems, they prove to be inadequate in modern
+   filesystems that support block sharing.  In such filesystems,
+   multiple inodes can point to a single block with a block reference
+   count to guard against premature freeing.
+
+   If space_used of a file is interpreted to mean the size in bytes of
+   all disk blocks pointed to by the inode of the file, then shared
+   blocks get double counted, over-reporting the space utilization.
+   This also has the adverse effect that the deletion of a file with
+   shared blocks frees up less than space_used bytes.
+
+   On the other hand, if space_used is interpreted to mean the size in
+   bytes of those disk blocks unique to the inode of the file, then
+   shared blocks are not counted in any file, resulting in under-
+   reporting of the space utilization.
+
+   For example, two files A and B have 10 blocks each.  Let 6 of these
+   blocks be shared between them.  Thus, the combined space utilized by
+   the two files is 14 * BLOCK_SIZE bytes.  In the former case, the
+   combined space utilization of the two files would be reported as 20 *
+   BLOCK_SIZE.  However, deleting either would only result in 4 *
+   BLOCK_SIZE being freed.  Conversely, the latter interpretation would
+   report that the space utilization is only 8 * BLOCK_SIZE.
+
+   Adding another size attribute, space_freed, is helpful in solving
+   this problem. space_freed is the number of blocks that are allocated
+   to the given file that would be freed on its deletion.  In the
+   example, both A and B would report space_freed as 4 * BLOCK_SIZE and
+   space_used as 10 * BLOCK_SIZE.  If A is deleted, B will report
+   space_freed as 10 * BLOCK_SIZE as the deletion of B would result in
+   the deallocation of all 10 blocks.
+
+   The addition of this problem doesn't solve the problem of space being
+   over-reported.  However, over-reporting is better than under-
+   reporting.
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 49]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+5.2.3.  Operations and attributes
+
+   In the sections that follow, one operation and three attributes are
+   defined that together provide the space management facilities
+   outlined earlier in the document.  The operation is intended to be
+   OPTIONAL and the attributes RECOMMENDED as defined in section 17 of
+   [2].
+
+5.2.4.  Attribute 77: space_reserve
+
+   The space_reserve attribute is a read/write attribute of type
+   boolean.  It is a per file attribute.  When the space_reserved
+   attribute is set via SETATTR, the server must ensure that there is
+   disk space to accommodate every byte in the file before it can return
+   success.  If the server cannot guarantee this, it must return
+   NFS4ERR_NOSPC.
+
+   If the client tries to grow a file which has the space_reserved
+   attribute set, the server must guarantee that there is disk space to
+   accommodate every byte in the file with the new size before it can
+   return success.  If the server cannot guarantee this, it must return
+   NFS4ERR_NOSPC.
+
+   It is not required that the server allocate the space to the file
+   before returning success.  The allocation can be deferred, however,
+   it must be guaranteed that it will not fail for lack of space.
+
+   The value of space_reserved can be obtained at any time through
+   GETATTR.
+
+   In order to avoid ambiguity, the space_reserve bit cannot be set
+   along with the size bit in SETATTR.  Increasing the size of a file
+   with space_reserve set will fail if space reservation cannot be
+   guaranteed for the new size.  If the file size is decreased, space
+   reservation is only guaranteed for the new size and the extra blocks
+   backing the file can be released.
+
+5.2.5.  Attribute 78: space_freed
+
+   space_freed gives the number of bytes freed if the file is deleted.
+   This attribute is read only and is of type length4.  It is a per file
+   attribute.
+
+5.2.6.  Attribute 79: max_hole_punch
+
+   max_hole_punch specifies the maximum size of a hole that the
+   HOLE_PUNCH operation can handle.  This attribute is read only and of
+   type length4.  It is a per filesystem attribute.  This attribute MUST
+
+
+
+Haynes                  Expires September 8, 2011              [Page 50]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   be implemented if HOLE_PUNCH is implemented.
+
+5.2.7.  Operation 64: HOLE_PUNCH - Zero and deallocate blocks backing
+        the file in the specified range.
+
+5.2.7.1.  ARGUMENT
+
+   struct HOLE_PUNCH4args {
+           /* CURRENT_FH: file */
+           offset4        hpa_offset;
+           length4        hpa_count;
+   };
+
+5.2.7.2.  RESULT
+
+   struct HOLEPUNCH4res {
+           nfsstat4        hpr_status;
+   };
+
+5.2.7.3.  DESCRIPTION
+
+   Whenever a client wishes to deallocate the blocks backing a
+   particular region in the file, it calls the HOLE_PUNCH operation with
+   the current filehandle set to the filehandle of the file in question,
+   start offset and length in bytes of the region set in hpa_offset and
+   hpa_count respectively.  All further reads to this region MUST return
+   zeros until overwritten.  The filehandle specified must be that of a
+   regular file.
+
+   Situations may arise where hpa_offset and/or hpa_offset + hpa_count
+   will not be aligned to a boundary that the server does allocations/
+   deallocations in.  For most filesystems, this is the block size of
+   the file system.  In such a case, the server can deallocate as many
+   bytes as it can in the region.  The blocks that cannot be deallocated
+   MUST be zeroed.  Except for the block deallocation and maximum hole
+   punching capability, a HOLE_PUNCH operation is to be treated similar
+   to a write of zeroes.
+
+   The server is not required to complete deallocating the blocks
+   specified in the operation before returning.  It is acceptable to
+   have the deallocation be deferred.  In fact, HOLE_PUNCH is merely a
+   hint; it is valid for a server to return success without ever doing
+   anything towards deallocating the blocks backing the region
+   specified.  However, any future reads to the region MUST return
+   zeroes.
+
+   HOLE_PUNCH will result in the space_used attribute being decreased by
+   the number of bytes that were deallocated.  The space_freed attribute
+
+
+
+Haynes                  Expires September 8, 2011              [Page 51]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   may or may not decrease, depending on the support and whether the
+   blocks backing the specified range were shared or not.  The size
+   attribute will remain unchanged.
+
+   The HOLE_PUNCH operation MUST NOT change the space reservation
+   guarantee of the file.  While the server can deallocate the blocks
+   specified by hpa_offset and hpa_count, future writes to this region
+   MUST NOT fail with NFSERR_NOSPC.
+
+   The HOLE_PUNCH operation may fail for the following reasons (this is
+   a partial list):
+
+   NFS4ERR_NOTSUPP  The Hole punch operations are not supported by the
+      NFS server receiving this request.
+
+   NFS4ERR_DIR  The current filehandle is of type NF4DIR.
+
+   NFS4ERR_SYMLINK  The current filehandle is of type NF4LNK.
+
+   NFS4ERR_WRONG_TYPE  The current filehandle does not designate an
+      ordinary file.
+
+5.3.  Security Considerations
+
+   There are no security considerations for this section.
+
+5.4.  IANA Considerations
+
+   This section has no actions for IANA.
+
+
+6.  Simple and Efficient Read Support for Sparse Files
+
+6.1.  Introduction
+
+   NFS is now used in many data centers as the sole or primary method of
+   data access.  Consequently, more types of applications are using NFS
+   than ever before, each with their own requirements and generated
+   workloads.  As part of this, sparse files are increasing in number
+   while NFS continues to lack any specific knowledge of a sparse file's
+   layout.  This document puts forth a proposal for the NFSv4.2 protocol
+   to support efficient reading of sparse files.
+
+   A sparse file is a common way of representing a large file without
+   having to reserve disk space for it.  Consequently, a sparse file
+   uses less physical space than its size indicates.  This means the
+   file contains 'holes', byte ranges within the file that contain no
+   data.  Most modern file systems support sparse files, including most
+
+
+
+Haynes                  Expires September 8, 2011              [Page 52]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   UNIX file systems and NTFS, but notably not Apple's HFS+.  Common
+   examples of sparse files include VM OS/disk images, database files,
+   log files, and even checkpoint recovery files most commonly used by
+   the HPC community.
+
+   If an application reads a hole in a sparse file, the file system must
+   returns all zeros to the application.  For local data access there is
+   little penalty, but with NFS these zeroes must be transferred back to
+   the client.  If an application uses the NFS client to read data into
+   memory, this wastes time and bandwidth as the application waits for
+   the zeroes to be transferred.  Once the zeroes arrive, they then
+   steal memory or cache space from real data.  To make matters worse,
+   if an application then proceeds to write data to another file system,
+   the zeros are written into the file, expanding the sparse file into a
+   full sized regular file.  Beyond wasting disk space, this can
+   actually prevent large sparse files from ever being copied to another
+   storage location due to space limitations.
+
+   This document adds a new READPLUS operation to efficiently read from
+   sparse files by avoiding the transfer of all zero regions from the
+   server to the client.  READPLUS supports all the features of READ but
+   includes a minimal extension to support sparse files.  In addition,
+   the return value of READPLUS is now compatible with NFSv4.1 minor
+   versioning rules and could support other future extensions without
+   requiring yet another operation.  READPLUS is guaranteed to perform
+   no worse than READ, and can dramatically improve performance with
+   sparse files.  READPLUS does not depend on pNFS protocol features,
+   but can be used by pNFS to support sparse files.
+
+6.2.  Terminology
+
+   Regular file  Regular file: An object of file type NF4REG or
+      NF4NAMEDATTR.
+
+   Sparse file  Sparse File.  A Regular file that contains one or more
+      Holes.
+
+   Hole  Hole.  A byte range within a Sparse file that contains regions
+      of all zeroes.  For block-based file systems, this could also be
+      an unallocated region of the file.
+
+6.3.  Applications and Sparse Files
+
+   Applications may cause an NFS client to read holes in a file for
+   several reasons.  This section describes three different application
+   workloads that cause the NFS client to transfer data unnecessarily.
+   These workloads are simply examples, and there are probably many more
+   workloads that are negatively impacted by sparse files.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 53]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   The first workload that can cause holes to be read is sequential
+   reads within a sparse file.  When this happens, the NFS client may
+   perform read requests ("readahead") into sections of the file not
+   explicitly requested by the application.  Since the NFS client cannot
+   differentiate between holes and non-holes, the NFS client may
+   prefetch empty sections of the file.
+
+   This workload is exemplified by Virtual Machines and their associated
+   file system images, e.g., VMware .vmdk files, which are large sparse
+   files encapsulating an entire operating system.  If a VM reads files
+   within the file system image, this will translate to sequential NFS
+   read requests into the much larger file system image file.  Since NFS
+   does not understand the internals of the file system image, it ends
+   up performing readahead file holes.
+
+   The second workload is generated by copying a file from a directory
+   in NFS to either the same NFS server, to another file system, e.g.,
+   another NFS or Samba server, to a local ext3 file system, or even a
+   network socket.  In this case, bandwidth and server resources are
+   wasted as the entire file is transferred from the NFS server to the
+   NFS client.  Once a byte range of the file has been transferred to
+   the client, it is up to the client application, e.g., rsync, cp, scp,
+   on how it writes the data to the target location.  For example, cp
+   supports sparse files and will not write all zero regions, whereas
+   scp does not support sparse files and will transfer every byte of the
+   file.
+
+   The third workload is generated by applications that do not utilize
+   the NFS client cache, but instead use direct I/O and manage cached
+   data independently, e.g., databases.  These applications may perform
+   whole file caching with sparse files, which would mean that even the
+   holes will be transferred to the clients and cached.
+
+6.4.  Overview of Sparse Files and NFSv4
+
+   This proposal seeks to provide sparse file support to the largest
+   number of NFS client and server implementations, and as such proposes
+   to add a new return code to the mandatory NFSv4.1 READPLUS operation
+   instead of proposing additions or extensions of new or existing
+   optional features (such as pNFS).
+
+   As well, this document seeks to ensure that the proposed extensions
+   are simple and do not transfer data between the client and server
+   unnecessarily.  For example, one possible way to implement sparse
+   file read support would be to have the client, on the first hole
+   encountered or at OPEN time, request a Data Region Map from the
+   server.  A Data Region Map would specify all zero and non-zero
+   regions in a file.  While this option seems simple, it is less useful
+
+
+
+Haynes                  Expires September 8, 2011              [Page 54]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   and can become inefficient and cumbersome for several reasons:
+
+   o  Data Region Maps can be large, and transferring them can reduce
+      overall read performance.  For example, VMware's .vmdk files can
+      have a file size of over 100 GBs and have a map well over several
+      MBs.
+
+   o  Data Region Maps can change frequently, and become invalidated on
+      every write to the file.  This can result the map being
+      transferred multiple times with each update to the file.  For
+      example, a VM that updates a config file in its file system image
+      would invalidate the Data Region Map not only for itself, but for
+      all other clients accessing the same file system image.
+
+   o  Data Region Maps do not handle all zero-filled sections of the
+      file, reducing the effectiveness of the solution.  While it may be
+      possible to modify the maps to handle zero-filled sections (at
+      possibly great effort to the server), it is almost impossible with
+      pNFS.  With pNFS, the owner of the Data Region Map is the metadata
+      server, which is not in the data path and has no knowledge of the
+      contents of a data region.
+
+   Another way to handle holes is compression, but this not ideal since
+   it requires all implementations to agree on a single compression
+   algorithm and requires a fair amount of computational overhead.
+
+   Note that supporting writing to a sparse file does not require
+   changes to the protocol.  Applications and/or NFS implementations can
+   choose to ignore WRITE requests of all zeroes to the NFS server
+   without consequence.
+
+6.5.  Operation 65: READPLUS
+
+   The section introduces a new read operation, named READPLUS, which
+   allows NFS clients to avoid reading holes in a sparse file.  READPLUS
+   is guaranteed to perform no worse than READ, and can dramatically
+   improve performance with sparse files.
+
+   READPLUS supports all the features of the existing NFSv4.1 READ
+   operation [2] and adds a simple yet significant extension to the
+   format of its response.  The change allows the client to avoid
+   returning all zeroes from a file hole, wasting computational and
+   network resources and reducing performance.  READPLUS uses a new
+   result structure that tells the client that the result is all zeroes
+   AND the byte-range of the hole in which the request was made.
+   Returning the hole's byte-range, and only upon request, avoids
+   transferring large Data Region Maps that may be soon invalidated and
+   contain information about a file that may not even be read in its
+
+
+
+Haynes                  Expires September 8, 2011              [Page 55]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   entirely.
+
+   A new read operation is required due to NFSv4.1 minor versioning
+   rules that do not allow modification of existing operation's
+   arguments or results.  READPLUS is designed in such a way to allow
+   future extensions to the result structure.  The same approach could
+   be taken to extend the argument structure, but a good use case is
+   first required to make such a change.
+
+6.5.1.  ARGUMENT
+
+   struct COPY_NOTIFY4args {
+           /* CURRENT_FH: source file */
+           netloc4         cna_destination_server;
+   };
+
+
+6.5.2.  RESULT
+
+   union COPY_NOTIFY4res switch (nfsstat4 cnr_status) {
+           case NFS4_OK:
+                   nfstime4        cnr_lease_time;
+                   netloc4         cnr_source_server<>;
+           default:
+                   void;
+   };
+
+
+6.5.3.  DESCRIPTION
+
+   The READPLUS operation is based upon the NFSv4.1 READ operation [2],
+   and similarly reads data from the regular file identified by the
+   current filehandle.
+
+   The client provides an offset of where the READPLUS is to start and a
+   count of how many bytes are to be read.  An offset of zero means to
+   read data starting at the beginning of the file.  If offset is
+   greater than or equal to the size of the file, the status NFS4_OK is
+   returned with nfs_readplusrestype4 set to READ_OK, data length set to
+   zero, and eof set to TRUE.  The READPLUS is subject to access
+   permissions checking.
+
+   If the client specifies a count value of zero, the READPLUS succeeds
+   and returns zero bytes of data, again subject to access permissions
+   checking.  In all situations, the server may choose to return fewer
+   bytes than specified by the client.  The client needs to check for
+   this condition and handle the condition appropriately.
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 56]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   If the client specifies an offset and count value that is entirely
+   contained within a hole of the file, the status NFS4_OK is returned
+   with nfs_readplusresok4 set to READ_HOLE, and if information is
+   available regarding the hole, a nfs_readplusreshole structure
+   containing the offset and range of the entire hole.  The
+   nfs_readplusreshole structure is considered valid until the file is
+   changed (detected via the change attribute).  The server MUST provide
+   the same semantics for nfs_readplusreshole as if the client read the
+   region and received zeroes; the implied holes contents lifetime MUST
+   be exactly the same as any other read data.
+
+   If the client specifies an offset and count value that begins in a
+   non-hole of the file but extends into hole the server should return a
+   short read with status NFS4_OK, nfs_readplusresok4 set to READ_OK,
+   and data length set to the number of bytes returned.  The client will
+   then issue another READPLUS for the remaining bytes, which the server
+   will respond with information about the hole in the file.
+
+   If the server knows that the requested byte range is into a hole of
+   the file, but has no further information regarding the hole, it
+   returns a nfs_readplusreshole structure with holeres4 set to
+   HOLE_NOINFO.
+
+   If hole information is available on the server and can be returned to
+   the client, the server returns a nfs_readplusreshole structure with
+   the value of holeres4 to HOLE_INFO.  The values of hole_offset and
+   hole_length define the byte-range for the current hole in the file.
+   These values represent the information known to the server and may
+   describe a byte-range smaller than the true size of the hole.
+
+   Except when special stateids are used, the stateid value for a
+   READPLUS request represents a value returned from a previous byte-
+   range lock or share reservation request or the stateid associated
+   with a delegation.  The stateid identifies the associated owners if
+   any and is used by the server to verify that the associated locks are
+   still valid (e.g., have not been revoked).
+
+   If the read ended at the end-of-file (formally, in a correctly formed
+   READPLUS operation, if offset + count is equal to the size of the
+   file), or the READPLUS operation extends beyond the size of the file
+   (if offset + count is greater than the size of the file), eof is
+   returned as TRUE; otherwise, it is FALSE.  A successful READPLUS of
+   an empty file will always return eof as TRUE.
+
+   If the current filehandle is not an ordinary file, an error will be
+   returned to the client.  In the case that the current filehandle
+   represents an object of type NF4DIR, NFS4ERR_ISDIR is returned.  If
+   the current filehandle designates a symbolic link, NFS4ERR_SYMLINK is
+
+
+
+Haynes                  Expires September 8, 2011              [Page 57]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   returned.  In all other cases, NFS4ERR_WRONG_TYPE is returned.
+
+   For a READPLUS with a stateid value of all bits equal to zero, the
+   server MAY allow the READPLUS to be serviced subject to mandatory
+   byte-range locks or the current share deny modes for the file.  For a
+   READPLUS with a stateid value of all bits equal to one, the server
+   MAY allow READPLUS operations to bypass locking checks at the server.
+
+   On success, the current filehandle retains its value.
+
+6.5.4.  IMPLEMENTATION
+
+   If the server returns a "short read" (i.e., fewer data than requested
+   and eof is set to FALSE), the client should send another READPLUS to
+   get the remaining data.  A server may return less data than requested
+   under several circumstances.  The file may have been truncated by
+   another client or perhaps on the server itself, changing the file
+   size from what the requesting client believes to be the case.  This
+   would reduce the actual amount of data available to the client.  It
+   is possible that the server reduce the transfer size and so return a
+   short read result.  Server resource exhaustion may also occur in a
+   short read.
+
+   If mandatory byte-range locking is in effect for the file, and if the
+   byte-range corresponding to the data to be read from the file is
+   WRITE_LT locked by an owner not associated with the stateid, the
+   server will return the NFS4ERR_LOCKED error.  The client should try
+   to get the appropriate READ_LT via the LOCK operation before re-
+   attempting the READPLUS.  When the READPLUS completes, the client
+   should release the byte-range lock via LOCKU.
+
+   If another client has an OPEN_DELEGATE_WRITE delegation for the file
+   being read, the delegation must be recalled, and the operation cannot
+   proceed until that delegation is returned or revoked.  Except where
+   this happens very quickly, one or more NFS4ERR_DELAY errors will be
+   returned to requests made while the delegation remains outstanding.
+   Normally, delegations will not be recalled as a result of a READPLUS
+   operation since the recall will occur as a result of an earlier OPEN.
+   However, since it is possible for a READPLUS to be done with a
+   special stateid, the server needs to check for this case even though
+   the client should have done an OPEN previously.
+
+6.5.4.1.  Additional pNFS Implementation Information
+
+   With pNFS, the semantics of using READPLUS remains the same.  Any
+   data server MAY return a READ_HOLE result for a READPLUS request that
+   it receives.
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 58]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   When a data server chooses to return a READ_HOLE result, it has a
+   certain level of flexibility in how it fills out the
+   nfs_readplusreshole structure.
+
+   1.  For a data server that cannot determine any hole information, the
+       data server SHOULD return HOLE_NOINFO.
+
+   2.  For a data server that can only obtain hole information for the
+       parts of the file stored on that data server, the data server
+       SHOULD return HOLE_INFO and the byte range of the hole stored on
+       that data server.
+
+   3.  For a data server that can obtain hole information for the entire
+       file without severe performance impact, it MAY return HOLE_INFO
+       nd the byte range of the entire file hole.
+
+   In general, a data server should do its best to return as much
+   information about a hole as is feasible.  In general, pNFS server
+   implementers should try ensure that data servers do not overload the
+   metadata server with requests for information.  Therefore, if
+   supplying global sparse information for a file to data servers can
+   overwhelm a metadata server, then data servers should use option 1 or
+   2 above.
+
+   When a pNFS client receives a READ_HOLE result and a non-empty
+   nfs_readplusreshole structure, it MAY use this information in
+   conjunction with a valid layout for the file to determine the next
+   data server for the next region of data that is not in a hole.
+
+6.5.5.  READPLUS with Sparse Files Example
+
+   To see how the return value READ_HOLE will work, the following table
+   describes a sparse file.  For each byte range, the file contains
+   either non-zero data or a hole.
+
+                        +-------------+----------+
+                        | Byte-Range  | Contents |
+                        +-------------+----------+
+                        | 0-31999     | Non-Zero |
+                        | 32K-255999  | Hole     |
+                        | 256K-287999 | Non-Zero |
+                        | 288K-353999 | Hole     |
+                        | 354K-417999 | Non-Zero |
+                        +-------------+----------+
+
+                                  Table 3
+
+   Under the given circumstances, if a client was to read the file from
+
+
+
+Haynes                  Expires September 8, 2011              [Page 59]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   beginning to end with a max read size of 64K, the following will be
+   the result.  This assumes the client has already opened the file and
+   acquired a valid stateid and just needs to issue READPLUS requests.
+
+   1.  READPLUS(s, 0, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof =
+       false, data<>[32K].  Return a short read, as the last half of the
+       equest was all zeroes.
+
+   2.  READPLUS(s, 32K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
+       nfs_readplusreshole(HOLE_INFO)(32K, 224K).  The requested range
+       was all zeros, and the current hole begins at offset 32K and is
+       224K in length.
+
+   3.  READPLUS(s, 256K, 64K) --> NFS_OK, readplusrestype4 = READ_OK,
+       eof = false, data<>[32K].  Return a short read, as the last half
+       of the request was all zeroes.
+
+   4.  READPLUS(s, 288K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
+       nfs_readplusreshole(HOLE_INFO)(288K, 66K).
+
+   5.  READPLUS(s, 354K, 64K) --> NFS_OK, readplusrestype4 = READ_OK,
+       eof = true, data<>[64K].
+
+6.6.  Related Work
+
+   Solaris and ZFS support an extension to lseek(2) that allows
+   applications to discover holes in a file.  The values, SEEK_HOLE and
+   SEEK_DATA, allow clients to seek to the next hole or beginning of
+   data, respectively.
+
+   XFS supports the XFS_IOC_GETBMAP extended attribute, which returns
+   the Data Region Map for a file.  Clients can then use this
+   information to avoid reading holes in a file.
+
+   NTFS and CIFS support the FSCTL_SET_SPARSE attribute, which allows
+   applications to control whether empty regions of the file are
+   preallocated and filled in with zeros or simply left unallocated.
+
+6.7.  Security Considerations
+
+   The additions to the NFS protocol for supporting sparse file reads
+   does not alter the security considerations of the NFSv4.1 protocol
+   [2].
+
+6.8.  IANA Considerations
+
+   There are no IANA considerations in this section.
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 60]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+7.  Security Considerations
+
+
+8.  IANA Considerations
+
+   This section uses terms that are defined in [17].
+
+
+9.  References
+
+9.1.  Normative References
+
+   [1]   Bradner, S., "Key words for use in RFCs to Indicate Requirement
+         Levels", March 1997.
+
+   [2]   Shepler, S., Eisler, M., and D. Noveck, "Network File System
+         (NFS) Version 4 Minor Version 1 Protocol", RFC 5661,
+         January 2010.
+
+   [3]   Black, D., Glasgow, J., and S. Fridella, "Parallel NFS (pNFS)
+         Block/Volume Layout", RFC 5663, January 2010.
+
+   [4]   Halevy, B., Welch, B., and J. Zelenka, "Object-Based Parallel
+         NFS (pNFS) Operations", RFC 5664, January 2010.
+
+   [5]   Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+         Resource Identifier (URI): Generic Syntax", STD 66, RFC 3986,
+         January 2005.
+
+   [6]   Williams, N., "Remote Procedure Call (RPC) Security Version 3",
+         draft-williams-rpcsecgssv3 (work in progress), 2008.
+
+   [7]   Shepler, S., Eisler, M., and D. Noveck, "Network File System
+         (NFS) Version 4 Minor Version 1 External Data Representation
+         Standard (XDR) Description", RFC 5662, January 2010.
+
+   [8]   Haynes, T., "Network File System (NFS) Version 4 Minor Version
+         2 External Data Representation Standard (XDR) Description",
+         March 2011.
+
+   [9]   Eisler, M., Chiu, A., and L. Ling, "RPCSEC_GSS Protocol
+         Specification", RFC 2203, September 1997.
+
+9.2.  Informative References
+
+   [10]  Haynes, T. and D. Noveck, "Network File System (NFS) version 4
+         Protocol", draft-ietf-nfsv4-rfc3530bis-09 (Work In Progress),
+         March 2011.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 61]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   [11]  Eisler, M., "XDR: External Data Representation Standard",
+         RFC 4506, May 2006.
+
+   [12]  Lentini, J., Everhart, C., Ellard, D., Tewari, R., and M. Naik,
+         "NSDB Protocol for Federated Filesystems",
+         draft-ietf-nfsv4-federated-fs-protocol (Work In Progress),
+         2010.
+
+   [13]  Lentini, J., Everhart, C., Ellard, D., Tewari, R., and M. Naik,
+         "Administration Protocol for Federated Filesystems",
+         draft-ietf-nfsv4-federated-fs-admin (Work In Progress), 2010.
+
+   [14]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H., Masinter, L.,
+         Leach, P., and T. Berners-Lee, "Hypertext Transfer Protocol --
+         HTTP/1.1", RFC 2616, June 1999.
+
+   [15]  Postel, J. and J. Reynolds, "File Transfer Protocol", STD 9,
+         RFC 959, October 1985.
+
+   [16]  Simpson, W., "PPP Challenge Handshake Authentication Protocol
+         (CHAP)", RFC 1994, August 1996.
+
+   [17]  Narten, T. and H. Alvestrand, "Guidelines for Writing an IANA
+         Considerations Section in RFCs", BCP 26, RFC 5226, May 2008.
+
+   [18]  Nowicki, B., "NFS: Network File System Protocol specification",
+         RFC 1094, March 1989.
+
+   [19]  Callaghan, B., Pawlowski, B., and P. Staubach, "NFS Version 3
+         Protocol Specification", RFC 1813, June 1995.
+
+   [20]  Srinivasan, R., "Binding Protocols for ONC RPC Version 2",
+         RFC 1833, August 1995.
+
+   [21]  Eisler, M., "NFS Version 2 and Version 3 Security Issues and
+         the NFS Protocol's Use of RPCSEC_GSS and Kerberos V5",
+         RFC 2623, June 1999.
+
+   [22]  Callaghan, B., "NFS URL Scheme", RFC 2224, October 1997.
+
+   [23]  Shepler, S., "NFS Version 4 Design Considerations", RFC 2624,
+         June 1999.
+
+   [24]  Reynolds, J., "Assigned Numbers: RFC 1700 is Replaced by an On-
+         line Database", RFC 3232, January 2002.
+
+   [25]  Linn, J., "The Kerberos Version 5 GSS-API Mechanism", RFC 1964,
+         June 1996.
+
+
+
+Haynes                  Expires September 8, 2011              [Page 62]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+   [26]  Shepler, S., Callaghan, B., Robinson, D., Thurlow, R., Beame,
+         C., Eisler, M., and D. Noveck, "Network File System (NFS)
+         version 4 Protocol", RFC 3530, April 2003.
+
+
+Appendix A.  Acknowledgments
+
+   For the pNFS Access Permissions Check, the original draft was by
+   Sorin Faibish, David Black, Mike Eisler, and Jason Glasgow.  The work
+   was influenced by discussions with Benny Halevy and Bruce Fields.  A
+   review was done by Tom Haynes.
+
+   For the Sharing change attribute implementation details with NFSv4
+   clients, the original draft was by Trond Myklebust.
+
+   For the NFS Server-side Copy, the original draft was by James
+   Lentini, Mike Eisler, Deepak Kenchammana, Anshul Madan, and Rahul
+   Iyer.  Talpey co-authored an unpublished version of that document.
+   It was also was reviewed by a number of individuals: Pranoop Erasani,
+   Tom Haynes, Arthur Lent, Trond Myklebust, Dave Noveck, Theresa
+   Lingutla-Raj, Manjunath Shankararao, Satyam Vaghani, and Nico
+   Williams.
+
+   For the NFS space reservation operations, the original draft was by
+   Mike Eisler, James Lentini, Manjunath Shankararao, and Rahul Iyer.
+
+   For the sparse file support, the original draft was by Dean
+   Hildebrand and Marc Eshel.  Valuable input and advice was received
+   from Sorin Faibish, Bruce Fields, Benny Halevy, Trond Myklebust, and
+   Richard Scheffenegger.
+
+
+Appendix B.  RFC Editor Notes
+
+   [RFC Editor: please remove this section prior to publishing this
+   document as an RFC]
+
+   [RFC Editor: prior to publishing this document as an RFC, please
+   replace all occurrences of RFCTBD10 with RFCxxxx where xxxx is the
+   RFC number of this document]
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 63]
+
+Internet-Draft                   NFSv4.2                      March 2011
+
+
+Author's Address
+
+   Thomas Haynes
+   NetApp
+   9110 E 66th St
+   Tulsa, OK  74133
+   USA
+
+   Phone: +1 918 307 1415
+   Email: thomas@netapp.com
+   URI:   http://www.tulsalabs.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Haynes                  Expires September 8, 2011              [Page 64]
+
