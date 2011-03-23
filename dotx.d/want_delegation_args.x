@@ -1,7 +1,7 @@
 union deleg_claim4 switch (open_claim_type4 dc_claim) {
 /*
- * No special rights to object. Ordinary delegation
- * request of the specified object. Object identified
+ * No special rights to object.  Ordinary delegation
+ * request of the specified object.  Object identified
  * by filehandle.
  */
 case CLAIM_FH: /* new to v4.1 */

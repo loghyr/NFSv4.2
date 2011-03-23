@@ -14,7 +14,7 @@
 %#define _AUTH_SYS_DEFINE_FOR_NFSv41
 %#include <rpc/auth_sys.h>
 %typedef struct authsys_parms authsys_parms;
-%#endif _AUTH_SYS_DEFINE_FOR_NFSv41
+%#endif /* _AUTH_SYS_DEFINE_FOR_NFSv41 */
 
 /*
  * Basic typedefs for RFC 1832 data type definitions
@@ -61,7 +61,13 @@ enum nfsstat4 {
  NFS4ERR_ACCESS		= 13,	/* access denied	   */
  NFS4ERR_EXIST		= 17,	/* file already exists	   */
  NFS4ERR_XDEV		= 18,	/* different filesystems   */
- /* Unused/reserved	  19 */
+
+/*
+ * Please do not allocate value 19; it was used in NFSv3
+ * and we do not want a value in NFSv3 to have a different
+ * meaning in NFSv4.x.
+ */
+
  NFS4ERR_NOTDIR		= 20,	/* should be a directory   */
  NFS4ERR_ISDIR		= 21,	/* should not be directory */
  NFS4ERR_INVAL		= 22,	/* invalid argument	   */
@@ -164,7 +170,7 @@ enum nfsstat4 {
  NFS4ERR_DIRDELEG_UNAVAIL=10084,/* delegation not avail.   */
  NFS4ERR_REJECT_DELEG   = 10085,/* cb rejected delegation  */
  NFS4ERR_RETURNCONFLICT = 10086,/* layout get before return*/
- NFS4ERR_DELEG_REVOKED  = 10087,
+ NFS4ERR_DELEG_REVOKED  = 10087 /* deleg./layout revoked   */
 
  /* NFSv4.2 errors start here. */
 
@@ -346,12 +352,12 @@ include(type_layouttype4.x)
 include(type_layout_content4.x)
 
 %/*
-%/* LAYOUT4_OSD2_OBJECTS loc_body description
+% * LAYOUT4_OSD2_OBJECTS loc_body description
 % * is in a separate .x file
 % */
 %
 %/*
-%/* LAYOUT4_BLOCK_VOLUME loc_body description
+% * LAYOUT4_BLOCK_VOLUME loc_body description
 % * is in a separate .x file
 % */
 
@@ -396,7 +402,6 @@ include(copy_confirm_auth.x)
  * NFSv4.1 attributes
  */
 typedef bitmap4		fattr4_supported_attrs;
-typedef bitmap4		fattr4_suppattr_exclcreat;
 typedef nfs_ftype4	fattr4_type;
 typedef uint32_t	fattr4_fh_expire_type;
 typedef changeid4	fattr4_change;
@@ -456,12 +461,12 @@ typedef settime4	fattr4_time_modify_set;
 /*
  * attributes new to NFSv4.1
  */
+typedef bitmap4		fattr4_suppattr_exclcreat;
 typedef nfstime4	fattr4_dir_notif_delay;
 typedef nfstime4	fattr4_dirent_notif_delay;
-typedef bool		fattr4_absent;
 typedef layouttype4	fattr4_fs_layout_types<>;
 typedef fs4_status	fattr4_fs_status;
-typedef fs_charset_cap4	fattr4_fs_charset_cap4;
+typedef fs_charset_cap4	fattr4_fs_charset_cap;
 typedef uint32_t	fattr4_layout_alignment;
 typedef uint32_t	fattr4_layout_blksize;
 typedef layouthint4	fattr4_layout_hint;
@@ -474,11 +479,11 @@ typedef retention_set4	fattr4_retentevt_set;
 typedef uint64_t	fattr4_retention_hold;
 typedef nfsacl41	fattr4_dacl;
 typedef nfsacl41	fattr4_sacl;
+typedef change_policy4	fattr4_change_policy;
 
-
-/*
- * Mandatory Attributes
- */
+%/*
+% * REQUIRED Attributes
+% */
 const FATTR4_SUPPORTED_ATTRS	= 0;
 const FATTR4_TYPE		= 1;
 const FATTR4_FH_EXPIRE_TYPE	= 2;
@@ -492,11 +497,15 @@ const FATTR4_UNIQUE_HANDLES	= 9;
 const FATTR4_LEASE_TIME		= 10;
 const FATTR4_RDATTR_ERROR	= 11;
 const FATTR4_FILEHANDLE		= 19;
+
+%/*
+% * new to NFSV4.1
+% */
 const FATTR4_SUPPATTR_EXCLCREAT = 75;
 
-/*
- * Recommended Attributes
- */
+%/*
+% * RECOMMENDED Attributes
+% */
 const FATTR4_ACL		= 12;
 const FATTR4_ACLSUPPORT		= 13;
 const FATTR4_ARCHIVE		= 14;
@@ -540,15 +549,23 @@ const FATTR4_TIME_METADATA	= 52;
 const FATTR4_TIME_MODIFY	= 53;
 const FATTR4_TIME_MODIFY_SET	= 54;
 const FATTR4_MOUNTED_ON_FILEID	= 55;
+
+%/*
+% * new to NFSV4.1
+% */
 const FATTR4_DIR_NOTIF_DELAY	= 56;
 const FATTR4_DIRENT_NOTIF_DELAY = 57;
 const FATTR4_DACL		= 58;
 const FATTR4_SACL		= 59;
 const FATTR4_CHANGE_POLICY	= 60;
+
+%/*
+% * new to NFSV4.2
+% */
 const FATTR4_FS_STATUS		= 61;
-const FATTR4_FS_LAYOUT_TYPE	= 62;
+const FATTR4_FS_LAYOUT_TYPES	= 62;
 const FATTR4_LAYOUT_HINT	= 63;
-const FATTR4_LAYOUT_TYPE	= 64;
+const FATTR4_LAYOUT_TYPES	= 64;
 const FATTR4_LAYOUT_BLKSIZE	= 65;
 const FATTR4_LAYOUT_ALIGNMENT	= 66;
 const FATTR4_FS_LOCATIONS_INFO	= 67;

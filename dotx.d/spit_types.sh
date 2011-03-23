@@ -43,7 +43,7 @@ typedef :utf8str_cs:linktext4:Symbolic link contents.
 typedef :component4:pathname4<>:Represents path name for fs_locations.
 typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operations (COMMIT, CREATE, EXCHANGE_ID, OPEN, READDIR, WRITE) NFS4_VERIFIER_SIZE is defined as 8.
 :enum:netloc_type4:Specifies network locations.
-typedef :string:secrer<>|Secret value to share between servers.
+typedef :string:secret<>:Secret value to share between servers.
 EOF
 
 	fi
@@ -315,7 +315,9 @@ enum filelayout_hint_care4 {
 	NFLH4_CARE_STRIPE_COUNT	= 0x00000080
 };
 %
-%/* Encoded in the loh_body field of type layouthint4: */
+%/*
+% * Encoded in the loh_body field of data type layouthint4:
+%*/
 %
 struct nfsv4_1_file_layouthint4 {
         uint32_t        nflh_care;
@@ -331,7 +333,9 @@ cat << EOF > $i
 %
 typedef netaddr4 multipath_list4<>;
 %
-%/* Encoded in the da_addr_body field of type device_addr4: */
+%/*
+% * Encoded in the da_addr_body field of data type device_addr4:
+%*/
 struct nfsv4_1_file_layout_ds_addr4 {
 	uint32_t	nflda_stripe_indices<>;
 	multipath_list4	nflda_multipath_ds_list<>;
@@ -343,7 +347,9 @@ EOF
 
 cat << EOF > $i
 %
-%/* Encoded in the loc_body field of type layout_content4: */
+%/*
+% * Encoded in the loc_body field of data type layout_content4:
+%*/
 struct nfsv4_1_file_layout4 {
 	 deviceid4	nfl_deviceid;
 	 nfl_util4	nfl_util;

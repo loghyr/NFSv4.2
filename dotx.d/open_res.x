@@ -38,7 +38,7 @@ enum why_no_delegation4 { /* new to v4.1 */
 	WND4_WRITE_DELEG_NOT_SUPP_FTYPE = 4,
 	WND4_NOT_SUPP_UPGRADE	= 5,
 	WND4_NOT_SUPP_DOWNGRADE	= 6,
-	WND4_CANCELED		= 7,
+	WND4_CANCELLED		= 7,
 	WND4_IS_DIR		= 8
 };
 

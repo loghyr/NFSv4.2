@@ -164,8 +164,8 @@ union open_claim4 switch (open_claim_type4 claim) {
 	component4	file_delegate_prev;
 
  /*
-  * Like CLAIM_NULL. No special rights
-  * to file. Ordinary OPEN of the
+  * Like CLAIM_NULL.  No special rights
+  * to file.  Ordinary OPEN of the
   * specified file by current filehandle.
   */
  case CLAIM_FH: /* new to v4.1 */
@@ -173,7 +173,7 @@ union open_claim4 switch (open_claim_type4 claim) {
 	void;
 
  /*
-  * Like CLAIM_DELEGATE_PREV. Right to file based on a
+  * Like CLAIM_DELEGATE_PREV.  Right to file based on a
   * delegation granted to a previous boot
   * instance of the client.  File is identified by
   * by filehandle.
@@ -183,7 +183,7 @@ union open_claim4 switch (open_claim_type4 claim) {
 	void;
 
  /*
-  * Like CLAIM_DELEGATE_CUR. Right to file based on
+  * Like CLAIM_DELEGATE_CUR.  Right to file based on
   * a delegation granted by the server.
   * File is identified by filehandle.
   */
