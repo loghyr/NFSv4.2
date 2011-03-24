@@ -1,0 +1,20 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+<section anchor="sec:iana" title="IANA Considerations">
+
+<t>
+This section uses terms that are defined in <xref target="ref:RFC5226"/>.
+</t>
+
+<t>
+   The LFS and Label Format Registry are described in detail in <xref target='ref:lfsreg' />.
+<cref anchor="I1" source="TH">Do we want to pull that in here?</cref>
+</t>
+
+
+<t>
+   TBDs in this document will be assigned by the ONC RPC registrart
+   (which is not IANA, XXX: verify).
+</t>
+
+</section>
