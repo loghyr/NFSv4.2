@@ -1312,7 +1312,7 @@ EOF
 	type_chattr_type.x )
 
 cat << EOF > $i
-enum change_attr_typeinfo = {
+enum change_attr_typeinfo {
            NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR         = 0,
            NFS4_CHANGE_TYPE_IS_VERSION_COUNTER        = 1,
            NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS = 2,

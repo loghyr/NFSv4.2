@@ -10,11 +10,11 @@
  *	nfs4_prot.x
  */
 
-%#ifndef _AUTH_SYS_DEFINE_FOR_NFSv41
-%#define _AUTH_SYS_DEFINE_FOR_NFSv41
+%#ifndef _AUTH_SYS_DEFINE_FOR_NFSv42
+%#define _AUTH_SYS_DEFINE_FOR_NFSv42
 %#include <rpc/auth_sys.h>
 %typedef struct authsys_parms authsys_parms;
-%#endif /* _AUTH_SYS_DEFINE_FOR_NFSv41 */
+%#endif /* _AUTH_SYS_DEFINE_FOR_NFSv42 */
 
 /*
  * Basic typedefs for RFC 1832 data type definitions
@@ -170,7 +170,7 @@ enum nfsstat4 {
  NFS4ERR_DIRDELEG_UNAVAIL=10084,/* delegation not avail.   */
  NFS4ERR_REJECT_DELEG   = 10085,/* cb rejected delegation  */
  NFS4ERR_RETURNCONFLICT = 10086,/* layout get before return*/
- NFS4ERR_DELEG_REVOKED  = 10087 /* deleg./layout revoked   */
+ NFS4ERR_DELEG_REVOKED  = 10087,/* deleg./layout revoked   */
 
  /* NFSv4.2 errors start here. */
 

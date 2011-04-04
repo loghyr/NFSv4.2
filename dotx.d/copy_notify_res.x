@@ -1,7 +1,11 @@
+struct COPY_NOTIFY4resok {
+	nfstime4	cnr_lease_time;
+	netloc4		cnr_source_server<>;
+};
+
 union COPY_NOTIFY4res switch (nfsstat4 cnr_status) {
 	case NFS4_OK:
-		nfstime4	cnr_lease_time;
-		netloc4		cnr_source_server<>;
+		COPY_NOTIFY4resok	resok4;
 	default:
 		void;
 };

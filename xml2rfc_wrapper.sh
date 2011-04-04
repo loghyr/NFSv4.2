@@ -14,4 +14,4 @@ then
 	export PATH
 fi
 
-exec ${XML2RFCDOT}./xml2rfc-1.34/xml2rfc.tcl $*
+exec ${XML2RFCDOT}./xml2rfc-1.36/xml2rfc.tcl $*
