@@ -3,11 +3,21 @@ struct ressdplus_hole_info {
 	length4		rphi_length;
 };
 
+enum holeres4 {
+	HOLE_NOINFO = 0,
+	HOLE_INFO = 1
+};
+
 union readplus_hole switch (holeres4 resop) {
 	case HOLE_INFO:
 		ressdplus_hole_info	rph_info;
-	default:
+	case HOLE_NOINFO:
 		void;
+};
+
+enum readplusrestype4 {
+	READ_OK = 0,
+	READ_HOLE = 1
 };
 
 union readplus_data switch (readplusrestype4 resop) {

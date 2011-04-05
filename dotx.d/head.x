@@ -176,8 +176,7 @@ enum nfsstat4 {
 
  NFS4ERR_PARTNER_NOTSUPP= 10088,/* s2s not supported       */
  NFS4ERR_PARTNER_NO_AUTH= 10089,/* s2s not authorized      */
- NFS4ERR_METADATA_NOTSUPP=10090,/* dest metadata diff sourc*/
- NFS4ERR_COMPLETE_ALREADY=10091 /* abort failed, use cb    */
+ NFS4ERR_METADATA_NOTSUPP=10090 /* dest metadata diff sourc*/
 };
 
 /*

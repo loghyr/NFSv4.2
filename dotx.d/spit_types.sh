@@ -43,7 +43,7 @@ typedef :utf8str_cs:linktext4:Symbolic link contents.
 typedef :component4:pathname4<>:Represents path name for fs_locations.
 typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operations (COMMIT, CREATE, EXCHANGE_ID, OPEN, READDIR, WRITE) NFS4_VERIFIER_SIZE is defined as 8.
 :enum:netloc_type4:Specifies network locations.
-typedef :string:secret<>:Secret value to share between servers.
+typedef :string:secret4<>:Secret value to share between servers.
 EOF
 
 	fi
