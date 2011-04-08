@@ -220,11 +220,11 @@
     </t>
 
     <section title="ARGUMENT">
-      <?rfc include='autogen/copy_notify_args.xml'?>
+      <?rfc include='autogen/readplus_args.xml'?>
     </section>
 
     <section title="RESULT">
-      <?rfc include='autogen/copy_notify_res.xml'?>
+      <?rfc include='autogen/readplus_res.xml'?>
     </section>
 
     <section title="DESCRIPTION">
