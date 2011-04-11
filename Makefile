@@ -126,6 +126,7 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/type_ssv_seal_plain_tkn4.x \
 		dotx.d/type_ssv_seal_cipher_tkn4.x \
 		dotx.d/type_layoutreturn4.x \
+		dotx.d/type_layoutreturn_errs.x \
 		dotx.d/type_client_owner4.x \
 		dotx.d/type_server_owner4.x \
 		dotx.d/type_device_addr4.x \
@@ -196,6 +197,7 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_ssv_seal_plain_tkn4.xml \
 		autogen/type_ssv_seal_cipher_tkn4.xml \
 		autogen/type_layoutreturn4.xml \
+		autogen/type_layoutreturn_errs.xml \
 		autogen/type_client_owner4.xml \
 		autogen/type_server_owner4.xml \
 		autogen/type_device_addr4.xml \
@@ -401,7 +403,7 @@ FRONT_PREGEN = nfsv42_front.xml
 IDXMLSRC_BASE = \
 	nfsv42_middle_start.xml \
 	nfsv42_middle_introduction.xml \
-	nfsv42_middle_access.xml \
+	nfsv42_middle_lo_errs.xml \
 	nfsv42_middle_chattr.xml \
 	nfsv42_middle_copy.xml \
 	nfsv42_middle_space.xml \

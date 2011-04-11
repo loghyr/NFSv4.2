@@ -439,20 +439,11 @@ cat << EOF > $i
 const LAYOUT4_RET_REC_FILE		= 1;
 const LAYOUT4_RET_REC_FSID		= 2;
 const LAYOUT4_RET_REC_ALL		= 3;
-const LAYOUT4_RET_REC_FILE_NO_ACCESS	= 4;
-const LAYOUT4_RET_REC_FSID_NO_ACCESS	= 5;
-const LAYOUT4_RET_REC_ALL_NO_ACCESS	= 6;
 %
 enum layoutreturn_type4 {
 	LAYOUTRETURN4_FILE = LAYOUT4_RET_REC_FILE,
 	LAYOUTRETURN4_FSID = LAYOUT4_RET_REC_FSID,
 	LAYOUTRETURN4_ALL  = LAYOUT4_RET_REC_ALL,
-	LAYOUTRETURN4_FILE_NO_ACCESS =
-		LAYOUT4_RET_REC_FILE_NO_ACCESS,
-	LAYOUTRETURN4_FSID_NO_ACCESS =
-		LAYOUT4_RET_REC_FSID_NO_ACCESS,
-	LAYOUTRETURN4_ALL_NO_ACCESS  =
-		LAYOUT4_RET_REC_ALL_NO_ACCESS
 };
 
 struct layoutreturn_file4 {
@@ -463,33 +454,28 @@ struct layoutreturn_file4 {
 	opaque		lrf_body<>;
 };
 
-struct layoutreturn_device_no_access4 {
-	deviceid4	lrdna_deviceid;
-	nfsstat4	lrdna_status;
-};
-
-struct layoutreturn_file_no_access4 {
-	offset4		lrfna_offset;
-	length4		lrfna_length;
-	stateid4	lrfna_stateid;
-	deviceid4	lrfna_deviceid;
-	nfsstat4	lrfna_status;
-/* layouttype4 specific data */
-	opaque		lrfna_body<>;
-};
-
 union layoutreturn4 switch(layoutreturn_type4 lr_returntype) {
 	case LAYOUTRETURN4_FILE:
 		layoutreturn_file4	lr_layout;
-	case LAYOUTRETURN4_FILE_NO_ACCESS:
-		layoutreturn_file_no_access4	lr_layout_na;
-	case LAYOUTRETURN4_FSID_NO_ACCESS:
-	case LAYOUTRETURN4_ALL_NO_ACCESS:
-		layoutreturn_device_no_access4	lr_device<>;
 	default:
 		void;
 };
 %
+EOF
+        ;;
+
+	type_layoutreturn_errs.x )
+
+cat << EOF > $i
+struct layoutreturn_device_error4 {
+	deviceid4	lrde_deviceid;
+	nfsstat4	lrde_status;
+	nfs_opnum4	lrde_opnum;
+};
+
+struct layoutreturn_error_report4 {
+	layoutreturn_device_error4	lrer_errors<>;
+};
 EOF
         ;;
 

@@ -183,6 +183,7 @@ SPITGEN =	basic_types.x \
 		type_ssv_seal_plain_tkn4.x \
 		type_ssv_seal_cipher_tkn4.x \
 		type_layoutreturn4.x \
+		type_layoutreturn_errs.x \
 		type_client_owner4.x \
 		type_server_owner4.x \
 		type_device_addr4.x \
