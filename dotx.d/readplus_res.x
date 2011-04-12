@@ -1,4 +1,4 @@
-struct ressdplus_hole_info {
+struct readplus_hole_info {
 	offset4		rphi_offset;
 	length4		rphi_length;
 };
@@ -10,7 +10,7 @@ enum holeres4 {
 
 union readplus_hole switch (holeres4 resop) {
 	case HOLE_INFO:
-		ressdplus_hole_info	rph_info;
+		readplus_hole_info	rph_info;
 	case HOLE_NOINFO:
 		void;
 };

@@ -55,19 +55,27 @@
 
     <t>
       <list style="hanging">
-        <t hangText="Regular file">
-          Regular file: An object of file type NF4REG or NF4NAMEDATTR.
+        <t hangText="Regular file:">
+          An object of file type NF4REG or NF4NAMEDATTR.
         </t>
 
-        <t hangText="Sparse file">
-          Sparse File. A Regular file that contains one or more Holes.
+        <t hangText="Sparse file:">
+          A Regular file that contains one or more Holes.
         </t>
 
-        <t hangText="Hole">
-          Hole. A byte range within a Sparse file that contains regions of
+        <t hangText="Hole:">
+          A byte range within a Sparse file that contains regions of
           all zeroes.  For block-based file systems, this could also be an
           unallocated region of the file.
         </t>
+
+        <t hangText='Hole Threshold'>
+          The minimum length of a Hole as determined by the server.
+          If a server chooses to define a Hole Threshold, then it
+          would not return hole information (nfs_readplusreshole)
+          with a hole_offset and hole_length that specify a range
+          shorter than the Hole Threshold.
+        </t> 
       </list>
     </t>
   </section>
@@ -153,12 +161,16 @@
         </t>
 
         <t>
-          Data Region Maps can change frequently, and become invalidated on
-          every write to the file.  This can result the map being
-          transferred multiple times with each update to the file.  For
-          example, a VM that updates a config file in its file system image
-          would invalidate the Data Region Map not only for itself, but for
-          all other clients accessing the same file system image.
+	        Data Region Maps can change frequently, and become
+	        invalidated on every write to the file.  NFSv4 has a
+	        single change attribute, which means any change to any
+	        region of a file will invalidate all Data Region Maps.
+	        This can result in the map being transferred multiple times
+	        with each update to the file.  For example, a VM that
+	        updates a config file in its file system image would
+	        invalidate the Data Region Map not only for itself, but
+	        for all other clients accessing the same file system
+	        image.
         </t>
 
         <t>
@@ -283,7 +295,7 @@
       </t>
 
       <t>
-        If hole information is available on the server and can be returned to
+        If hole information is available and can be returned to
         the client, the server returns a nfs_readplusreshole structure with
         the value of holeres4 to HOLE_INFO.  The values of hole_offset and
         hole_length define the byte-range for the current hole in the file.
@@ -351,7 +363,10 @@
         server will return the NFS4ERR_LOCKED error.  The client should try
         to get the appropriate READ_LT via the LOCK operation before re-
         attempting the READPLUS.  When the READPLUS completes, the client
-        should release the byte-range lock via LOCKU.
+        should release the byte-range lock via LOCKU. In addition, the
+        server MUST return a nfs_readplusreshole structure with values of
+        hole_offset and hole_length that are within the owner’s locked
+        byte range.
       </t>
 
       <t>
@@ -376,48 +391,40 @@
         </t>
 
         <t>
-          When a data server chooses to return a READ_HOLE result, it has a
-          certain level of flexibility in how it fills out the
-          nfs_readplusreshole structure.
+          When a data server chooses to return a READ_HOLE result, it has the
+          option of returning hole information for the data stored on that
+          data server (as defined by the data layout), but it MUST not return
+          a nfs_readplusreshole structure with a byte range that includes
+          data managed by another data server.
         </t>
 
         <t>
           <list style="numbers">
             <t>
-              For a data server that cannot determine any hole information, the
-              data server SHOULD return HOLE_NOINFO.
+              Data servers that cannot determine hole information
+              SHOULD return HOLE_NOINFO.
             </t>
 
             <t>
-              For a data server that can only obtain hole information for the
-              parts of the file stored on that data server, the data server
-              SHOULD return HOLE_INFO and the byte range of the hole stored on
-              that data server.
-            </t>
-
-            <t>
-              For a data server that can obtain hole information for the entire
-              file without severe performance impact, it MAY return HOLE_INFO
-               nd the byte range of the entire file hole.
+              Data servers that can obtain hole information for the
+              parts of the file stored on that data server, the data
+              server SHOULD return HOLE_INFO and the byte range of
+              the hole stored on that data server.
             </t>
           </list>
         </t>
 
         <t>
-          In general, a data server should do its best to return as much
-          information about a hole as is feasible.  In general, pNFS server
-          implementers should try ensure that data servers do not overload the
-          metadata server with requests for information.  Therefore, if
-          supplying global sparse information for a file to data servers can
-          overwhelm a metadata server, then data servers should use option 1 or
-          2 above.
+          A data server should do its best to return as much information about
+          a hole as is feasible without having to contact the metadata server.
+          If communication with the metadata server is required, then every
+          attempt should be taken to minimize the number of requests.
         </t>
-
+          
         <t>
-          When a pNFS client receives a READ_HOLE result and a non-empty
-          nfs_readplusreshole structure, it MAY use this information in
-          conjunction with a valid layout for the file to determine the next
-          data server for the next region of data that is not in a hole.
+          If mandatory locking is enforced, then the data server must also
+          ensure that to return only information for a Hole that is within
+          the owner’s locked byte range.
         </t>
       </section>
     </section>
@@ -435,11 +442,12 @@
         <ttcol align='left' >Byte-Range</ttcol>
         <ttcol align='left' >Contents</ttcol>
 
-        <c>0-31999     </c> <c>  Non-Zero </c>
-        <c>32K-255999  </c> <c>  Hole     </c>
-        <c>256K-287999 </c> <c>  Non-Zero </c>
-        <c>288K-353999 </c> <c>  Hole     </c>
-        <c>354K-417999 </c> <c>  Non-Zero </c>
+        <c>0-15999    </c> <c>Hole    </c>
+        <c>16K-31999  </c> <c>Non-Zero</c>
+        <c>32K-255999 </c> <c>Hole    </c>
+        <c>256K-287999</c> <c>Non-Zero</c>
+        <c>288K-353999</c> <c>Hole    </c>
+        <c>354K-417999</c> <c>Non-Zero</c>
       </texttable>
 
       <t>
@@ -454,7 +462,7 @@
           <t>
             READPLUS(s, 0, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof =
             false, data&lt;&gt;[32K].  Return a short read, as the last half of the
-             equest was all zeroes.
+            request was all zeroes.
           </t>
 
           <t>
@@ -485,7 +493,6 @@
   </section>
 
   <section anchor="ss:sparse:related" title="Related Work">
-
     <t>
       Solaris and ZFS support an extension to lseek(2) that allows
       applications to discover holes in a file. The values, SEEK_HOLE and
@@ -504,6 +511,89 @@
       applications to control whether empty regions of the file are
       preallocated and filled in with zeros or simply left unallocated.
     </t>
+  </section>
+
+  <section anchor='ss:sparse:other' title='Other Proposed Designs'>
+    <section anchor='ss:sparse:mdshi' title='Multi-Data Server Hole Information'>
+      <t>
+        The current design prohibits pnfs data servers from returning hole
+        information for regions of a file that are not stored on that data
+        server.  Having data servers return information regarding other
+        data servers changes the fundamental principal that all metadata
+        information comes from the metadata server.
+      </t>
+        
+      <t>
+        Here is a brief description if we did choose to support multi-data
+        server hole information:
+      </t>
+        
+      <t>
+        For a data server that can obtain hole information for the entire
+        file without severe performance impact, it MAY return HOLE_INFO and
+        the byte range of the entire file hole.  When a pNFS client receives
+        a READ_HOLE result and a non-empty nfs_readplusreshole structure,
+        it MAY use this information in conjunction with a valid layout for
+        the file to determine the next data server for the next region of
+        data that is not in a hole.
+      </t>
+    </section>
+
+    <section anchor='ss:sparse:dra' title='Data Result Array'>
+      <t>
+        If a single read request contains one or more Holes with a length
+        greater than the Sparse Threshold, the current design would return
+        results indicating a short read to the client.  A client would then
+        send a series of read requests to the server to retrieve information
+        for the Holes and the remaining data.  To avoid turning a single
+        read request into several exchanges between the client and server,
+        the server may need to choose a relatively large Sparse Threshold
+        in order to decrease the number of short reads it creates.  A large
+        Sparse Threshold may miss many smaller holes, which in turn may
+        negate the benefits of sparse read support.
+      </t>
+        
+      <t>
+        To avoid this situation, one option is to have the READPLUS operation
+        return information for multiple holes in a single return value.
+        This would allow several small holes to be described in a single
+        read response without requiring multliple exchanges between the
+        client and server.
+      </t>
+        
+      <t>
+        One important item to consider with returning an array of data
+        chunks is its impact on RDMA, which may use different block sizes
+        on the client and server (among other things).
+      </t>
+    </section>
+
+    <section anchor='ss:sparse:udsm' title='User-Defined Sparse Mask'>
+      <t>
+        Add mask (instead of just zeroes). Specified by server or client? 
+      </t>
+    </section>
+
+    <section anchor='ss:sparse:af' title='Allocated flag'>
+      <t>
+        A Hole on the server may be an allocated byte-range consisting of
+        all zeroes or may not be allocated at all.  To ensure this information
+        is properly communicated to the client, it may be beneficial to add
+        a 'alloc' flag to the HOLE_INFO section of nfs_readplusreshole.
+        This would allow an NFS client to copy a file from one file system
+        to another and have it more closely resemble the original.
+      </t>
+    </section>
+
+    <section anchor='ss:sparse:dspfl' title='Dense and Sparse pNFS File Layouts'>
+      <t>
+        The hole information returned form a data server must be understood
+        by pNFS clients using both Dense or Sparse file layout types.  Does
+        the current READPLUS return value work for both layout types?  Does
+        the data server know if it is using dense or sparse so that it can
+        return the correct hole_offset and hole_length values?
+      </t>
+    </section>
   </section>
 
   <section anchor="ss:sparse:sec" title="Security Considerations">
