@@ -434,7 +434,8 @@
       <t>
         To see how the return value READ_HOLE will work, the following table
         describes a sparse file.  For each byte range, the file contains
-        either non-zero data or a hole.
+        either non-zero data or a hole. In addition, the server in this
+        example uses a hole threshold of 32K.
       </t>
 
 
@@ -462,7 +463,8 @@
           <t>
             READPLUS(s, 0, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof =
             false, data&lt;&gt;[32K].  Return a short read, as the last half of the
-            request was all zeroes.
+            request was all zeroes. Note that the first hole is read back as
+            all zeros as it is below the hole threshhold.
           </t>
 
           <t>
