@@ -28,11 +28,11 @@ all: html txt dotx dotx-txt
 # Build the stuff needed to ensure integrity of document.
 common: testx dotx html dotx-txt
 
-txt: draft-haynes-nfsv4-minorversion2-$(VERS).txt
+txt: draft-ietf-nfsv4-minorversion2-$(VERS).txt
 
-html: draft-haynes-nfsv4-minorversion2-$(VERS).html
+html: draft-ietf-nfsv4-minorversion2-$(VERS).html
 
-nr: draft-haynes-nfsv4-minorversion2-$(VERS).nr
+nr: draft-ietf-nfsv4-minorversion2-$(VERS).nr
 
 dotx:
 	cd dotx.d ; VERS=$(VERS) $(MAKE) all
@@ -43,12 +43,12 @@ dotx:
 dotx-txt:
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) all
 
-xml: draft-haynes-nfsv4-minorversion2-$(VERS).xml
+xml: draft-ietf-nfsv4-minorversion2-$(VERS).xml
 
 clobber:
-	$(RM) draft-haynes-nfsv4-minorversion2-$(VERS).txt \
-		draft-haynes-nfsv4-minorversion2-$(VERS).html \
-		draft-haynes-nfsv4-minorversion2-$(VERS).nr
+	$(RM) draft-ietf-nfsv4-minorversion2-$(VERS).txt \
+		draft-ietf-nfsv4-minorversion2-$(VERS).html \
+		draft-ietf-nfsv4-minorversion2-$(VERS).nr
 	export SPECVERS := $(VERS)
 	export VERS := $(VERS)
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) clobber
@@ -57,7 +57,7 @@ clobber:
 clean:
 	rm -f $(AUTOGEN)
 	rm -rf autogen
-	rm -f draft-haynes-nfsv4-minorversion2-$(VERS).xml
+	rm -f draft-ietf-nfsv4-minorversion2-$(VERS).xml
 	rm -rf draft-$(VERS)
 	rm -f draft-$(VERS).tar.gz
 	rm -rf testx.d
@@ -72,19 +72,19 @@ pall:
 	( $(MAKE) html ; echo .html done ) & \
 	wait
 
-draft-haynes-nfsv4-minorversion2-$(VERS).txt: draft-haynes-nfsv4-minorversion2-$(VERS).xml
+draft-ietf-nfsv4-minorversion2-$(VERS).txt: draft-ietf-nfsv4-minorversion2-$(VERS).xml
 	rm -f $@ draft-tmp.txt
-	sh xml2rfc_wrapper.sh draft-haynes-nfsv4-minorversion2-$(VERS).xml draft-tmp.txt
+	sh xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-$(VERS).xml draft-tmp.txt
 	mv draft-tmp.txt $@
 
-draft-haynes-nfsv4-minorversion2-$(VERS).html: draft-haynes-nfsv4-minorversion2-$(VERS).xml
+draft-ietf-nfsv4-minorversion2-$(VERS).html: draft-ietf-nfsv4-minorversion2-$(VERS).xml
 	rm -f $@ draft-tmp.html
-	sh xml2rfc_wrapper.sh draft-haynes-nfsv4-minorversion2-$(VERS).xml draft-tmp.html
+	sh xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-$(VERS).xml draft-tmp.html
 	mv draft-tmp.html $@
 
-draft-haynes-nfsv4-minorversion2-$(VERS).nr: draft-haynes-nfsv4-minorversion2-$(VERS).xml
+draft-ietf-nfsv4-minorversion2-$(VERS).nr: draft-ietf-nfsv4-minorversion2-$(VERS).xml
 	rm -f $@ draft-tmp.nr
-	sh xml2rfc_wrapper.sh draft-haynes-nfsv4-minorversion2-$(VERS).xml $@.tmp
+	sh xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-$(VERS).xml $@.tmp
 	mv draft-tmp.nr $@
 
 nfsv42_middle_errortoop_autogen.xml: nfsv42_middle_errors.xml
@@ -126,6 +126,7 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/type_ssv_seal_plain_tkn4.x \
 		dotx.d/type_ssv_seal_cipher_tkn4.x \
 		dotx.d/type_layoutreturn4.x \
+		dotx.d/type_layoutreturn_errs.x \
 		dotx.d/type_client_owner4.x \
 		dotx.d/type_server_owner4.x \
 		dotx.d/type_device_addr4.x \
@@ -196,6 +197,7 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_ssv_seal_plain_tkn4.xml \
 		autogen/type_ssv_seal_cipher_tkn4.xml \
 		autogen/type_layoutreturn4.xml \
+		autogen/type_layoutreturn_errs.xml \
 		autogen/type_client_owner4.xml \
 		autogen/type_server_owner4.xml \
 		autogen/type_device_addr4.xml \
@@ -401,7 +403,7 @@ FRONT_PREGEN = nfsv42_front.xml
 IDXMLSRC_BASE = \
 	nfsv42_middle_start.xml \
 	nfsv42_middle_introduction.xml \
-	nfsv42_middle_access.xml \
+	nfsv42_middle_lo_errs.xml \
 	nfsv42_middle_chattr.xml \
 	nfsv42_middle_copy.xml \
 	nfsv42_middle_space.xml \
@@ -426,16 +428,16 @@ draft-tmp.xml: $(START) Makefile $(END)
 		cat $(END) >> $@.tmp
 		mv $@.tmp $@
 
-draft-haynes-nfsv4-minorversion2-$(VERS).xml: draft-tmp.xml $(IDCONTENTS) $(AUTOGEN)
+draft-ietf-nfsv4-minorversion2-$(VERS).xml: draft-tmp.xml $(IDCONTENTS) $(AUTOGEN)
 		rm -f $@
 		cp draft-tmp.xml $@
 
 genhtml: Makefile gendraft html txt dotx dotx-txt draft-$(VERS).tar
 	./gendraft draft-$(PREVVERS) \
-		draft-haynes-nfsv4-minorversion2-$(PREVVERS).txt \
+		draft-ietf-nfsv4-minorversion2-$(PREVVERS).txt \
 		draft-$(VERS) \
-		draft-haynes-nfsv4-minorversion2-$(VERS).txt \
-		draft-haynes-nfsv4-minorversion2-$(VERS).html \
+		draft-ietf-nfsv4-minorversion2-$(VERS).txt \
+		draft-ietf-nfsv4-minorversion2-$(VERS).html \
 		dotx.d/nfsv4.x \
 		draft-$(VERS).tar.gz
 
@@ -485,9 +487,9 @@ AUXFILES = \
 	xml2rfc
 
 DRAFTFILES = \
-	draft-haynes-nfsv4-minorversion2-$(VERS).txt \
-	draft-haynes-nfsv4-minorversion2-$(VERS).html \
-	draft-haynes-nfsv4-minorversion2-$(VERS).xml
+	draft-ietf-nfsv4-minorversion2-$(VERS).txt \
+	draft-ietf-nfsv4-minorversion2-$(VERS).html \
+	draft-ietf-nfsv4-minorversion2-$(VERS).xml
 
 draft-$(VERS).tar: $(IDCONTENTS) $(START_PREGEN) $(FRONT_PREGEN) $(AUXFILES) $(DRAFTFILES) dotx.d/nfsv4.x
 	rm -f draft-$(VERS).tar.gz
