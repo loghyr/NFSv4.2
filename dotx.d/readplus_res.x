@@ -1,4 +1,4 @@
-struct readplus_hole_info {
+struct read_plus_hole_info {
 	offset4		rphi_offset;
 	length4		rphi_length;
 };
@@ -8,33 +8,33 @@ enum holeres4 {
 	HOLE_INFO = 1
 };
 
-union readplus_hole switch (holeres4 resop) {
+union read_plus_hole switch (holeres4 resop) {
 	case HOLE_INFO:
-		readplus_hole_info	rph_info;
+		read_plus_hole_info	rph_info;
 	case HOLE_NOINFO:
 		void;
 };
 
-enum readplusrestype4 {
+enum read_plusrestype4 {
 	READ_OK = 0,
 	READ_HOLE = 1
 };
 
-union readplus_data switch (readplusrestype4 resop) {
+union read_plus_data switch (read_plusrestype4 resop) {
 	case READ_OK:
 		opaque		rpd_data<>;
 	case READ_HOLE:
-		readplus_hole	rpd_hole4;
+		read_plus_hole	rpd_hole4;
 };
 
-struct READPLUS4resok {
+struct READ_PLUS4resok {
 	bool		rpr_eof;
-	readplus_data	rpr_data;
+	read_plus_data	rpr_data;
 };
 
-union READPLUS4res switch (nfsstat4 status) {
+union READ_PLUS4res switch (nfsstat4 status) {
 	case NFS4_OK:
-		READPLUS4resok	resok4;
+		READ_PLUS4resok	resok4;
 	default:
 		void;
 };

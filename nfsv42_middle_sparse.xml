@@ -1,25 +1,15 @@
-<section anchor="sec:sparse" title="Simple and Efficient Read Support for Sparse Files">
+<section anchor="sec:sparse" title="Sparse Files">
   <section anchor="ss:sparse:intro" title="Introduction">
     <t>
-      NFS is now used in many data centers as the sole or primary method of
-      data access.  Consequently, more types of applications are using NFS
-      than ever before, each with their own requirements and generated
-      workloads.  As part of this, sparse files are increasing in number
-      while NFS continues to lack any specific knowledge of a sparse file's
-      layout.  This document puts forth a proposal for the NFSv4.2 protocol
-      to support efficient reading of sparse files.
-    </t>
-
-    <t>
       A sparse file is a common way of representing a large file without
-      having to reserve disk space for it.  Consequently, a sparse file
-      uses less physical space than its size indicates.  This means the
+      having to utilize all of the disk space for it.  Consequently, a
+      sparse file uses less physical space than its size indicates.  This means the
       file contains 'holes', byte ranges within the file that contain no
       data.  Most modern file systems support sparse files, including most
       UNIX file systems and NTFS, but notably not Apple's HFS+.  Common
-      examples of sparse files include VM OS/disk images, database files,
-      log files, and even checkpoint recovery files most commonly used by
-      the HPC community.
+      examples of sparse files include Virtual Machine (VM) OS/disk
+      images, database files, log files, and even checkpoint recovery
+      files most commonly used by the HPC community.
     </t>
 
     <t>
@@ -28,31 +18,54 @@
       is little penalty, but with NFS these zeroes must be transferred back
       to the client.  If an application uses the NFS client to read data
       into memory, this wastes time and bandwidth as the application waits
-      for the zeroes to be transferred.  Once the zeroes arrive, they then
-      steal memory or cache space from real data.  To make matters worse,
-      if an application then proceeds to write data to another file system,
-      the zeros are written into the file, expanding the sparse file into a
-      full sized regular file.  Beyond wasting disk space, this can
-      actually prevent large sparse files from ever being copied to another
-      storage location due to space limitations.
+      for the zeroes to be transferred.
     </t>
 
     <t>
-      This document adds a new READPLUS operation to efficiently read from
-      sparse files by avoiding the transfer of all zero regions from the
-      server to the client.  READPLUS supports all the features of READ but
-      includes a minimal extension to support sparse files.  In addition,
-      the return value of READPLUS is now compatible with NFSv4.1 minor
+      A sparse file is typically created by initializing the file to
+      be all zeros - nothing is written to the data in the file, instead
+      the hole is recorded in the metadata for the file. So a 8G disk
+      image might be represented initially by a couple hundred bits
+      in the inode and nothing on the disk. If the VM then writes
+      100M to a file in the middle of the image, there would now be
+      two holes represented in the metadata and 100M in the data.
+    </t>
+
+    <t>
+      Other applications want to initialize a file to patterns
+      other than zero. The problem with initializing to zero
+      is that it is often difficult to distinguish a byte-range of
+      initialized to all zeroes from data corruption, since a pattern of
+      zeroes is a probable pattern for corruption.  Instead, some
+      applications, such as database management systems, use pattern
+      consisting of bytes or words of non-zero values.
+    </t>
+
+    <t>
+      Besides reading sparse files and initializing them, applications
+      might want to hole punch, which is the deallocation of the data
+      blocks which back a region of the file. At such time, the affected
+      blocks are reinitialized to a pattern.
+    </t>
+
+    <t>
+      This section introduces a new operation to read patterns from
+      a file, READ_PLUS, and a new operation to both initialize patterns
+      and to punch pattern holes into a file, WRITE_PLUS.
+      READ_PLUS supports all the features of READ but includes an extension
+      to support sparse pattern files.
+
+   In addition,
+      the return value of READ_PLUS is now compatible with NFSv4.1 minor
       versioning rules and could support other future extensions without
-      requiring yet another operation.  READPLUS is guaranteed to perform
+      requiring yet another operation.  READ_PLUS is guaranteed to perform
       no worse than READ, and can dramatically improve performance with
-      sparse files.  READPLUS does not depend on pNFS protocol features,
+      sparse files.  READ_PLUS does not depend on pNFS protocol features,
       but can be used by pNFS to support sparse files.
     </t>
   </section>
 
   <section anchor="ss:sparse:terms" title="Terminology">
-
     <t>
       <list style="hanging">
         <t hangText="Regular file:">
@@ -135,7 +148,7 @@
     <t>
       This proposal seeks to provide sparse file support to the largest
       number of NFS client and server implementations, and as such proposes
-      to add a new return code to the mandatory NFSv4.1 READPLUS operation
+      to add a new return code to the mandatory NFSv4.1 READ_PLUS operation
       instead of proposing additions or extensions of new or existing
       optional features (such as pNFS).
     </t>
@@ -199,21 +212,21 @@
     </t>
   </section>
 
-  <section anchor="ss:sparse:readplus" title="Operation 65: READPLUS">
+  <section anchor="ss:sparse:readplus" title="Operation 65: READ_PLUS">
     <t>
-      The section introduces a new read operation, named READPLUS, which
-      allows NFS clients to avoid reading holes in a sparse file. READPLUS
+      The section introduces a new read operation, named READ_PLUS, which
+      allows NFS clients to avoid reading holes in a sparse file. READ_PLUS
       is guaranteed to perform no worse than READ, and can dramatically
       improve performance with sparse files.
     </t>
 
     <t>
-      READPLUS supports all the features of the existing NFSv4.1 READ
+      READ_PLUS supports all the features of the existing NFSv4.1 READ
       operation <xref target="RFC5661" /> and adds a simple yet
       significant extension to the
       format of its response.  The change allows the client to avoid
       returning all zeroes from a file hole, wasting computational and
-      network resources and reducing performance.  READPLUS uses a new
+      network resources and reducing performance.  READ_PLUS uses a new
       result structure that tells the client that the result is all zeroes
       AND the byte-range of the hole in which the request was made.
       Returning the hole's byte-range, and only upon request, avoids
@@ -225,7 +238,7 @@
     <t>
       A new read operation is required due to NFSv4.1 minor versioning
       rules that do not allow modification of existing operation's
-      arguments or results.  READPLUS is designed in such a way to allow
+      arguments or results.  READ_PLUS is designed in such a way to allow
       future extensions to the result structure.  The same approach could
       be taken to extend the argument structure, but a good use case is
       first required to make such a change.
@@ -242,23 +255,23 @@
     <section title="DESCRIPTION">
 
       <t>
-        The READPLUS operation is based upon the NFSv4.1 READ operation
+        The READ_PLUS operation is based upon the NFSv4.1 READ operation
         <xref target="RFC5661" />, and similarly reads data from the
         regular file identified by the current filehandle.
       </t>
 
       <t>
-        The client provides an offset of where the READPLUS is to start and a
+        The client provides an offset of where the READ_PLUS is to start and a
         count of how many bytes are to be read.  An offset of zero means to
         read data starting at the beginning of the file.  If offset is
         greater than or equal to the size of the file, the status NFS4_OK is
         returned with nfs_readplusrestype4 set to READ_OK, data length set to
-        zero, and eof set to TRUE.  The READPLUS is subject to access
+        zero, and eof set to TRUE.  The READ_PLUS is subject to access
         permissions checking.
       </t>
 
       <t>
-        If the client specifies a count value of zero, the READPLUS succeeds
+        If the client specifies a count value of zero, the READ_PLUS succeeds
         and returns zero bytes of data, again subject to access permissions
         checking.  In all situations, the server may choose to return fewer
         bytes than specified by the client.  The client needs to check for
@@ -283,7 +296,7 @@
         non-hole of the file but extends into hole the server should return a
         short read with status NFS4_OK, nfs_readplusresok4 set to READ_OK,
         and data length set to the number of bytes returned.  The client will
-        then issue another READPLUS for the remaining bytes, which the server
+        then issue another READ_PLUS for the remaining bytes, which the server
         will respond with information about the hole in the file.
       </t>
 
@@ -305,7 +318,7 @@
 
       <t>
         Except when special stateids are used, the stateid value for a
-        READPLUS request represents a value returned from a previous byte-
+        READ_PLUS request represents a value returned from a previous byte-
         range lock or share reservation request or the stateid associated
         with a delegation.  The stateid identifies the associated owners if
         any and is used by the server to verify that the associated locks are
@@ -314,10 +327,10 @@
 
       <t>
         If the read ended at the end-of-file (formally, in a correctly formed
-        READPLUS operation, if offset + count is equal to the size of the
-        file), or the READPLUS operation extends beyond the size of the file
+        READ_PLUS operation, if offset + count is equal to the size of the
+        file), or the READ_PLUS operation extends beyond the size of the file
         (if offset + count is greater than the size of the file), eof is
-        returned as TRUE; otherwise, it is FALSE.  A successful READPLUS of
+        returned as TRUE; otherwise, it is FALSE.  A successful READ_PLUS of
         an empty file will always return eof as TRUE.
       </t>
 
@@ -330,11 +343,11 @@
       </t>
 
       <t>
-        For a READPLUS with a stateid value of all bits equal to zero, the
-        server MAY allow the READPLUS to be serviced subject to mandatory
+        For a READ_PLUS with a stateid value of all bits equal to zero, the
+        server MAY allow the READ_PLUS to be serviced subject to mandatory
         byte-range locks or the current share deny modes for the file.  For a
-        READPLUS with a stateid value of all bits equal to one, the server
-        MAY allow READPLUS operations to bypass locking checks at the server.
+        READ_PLUS with a stateid value of all bits equal to one, the server
+        MAY allow READ_PLUS operations to bypass locking checks at the server.
       </t>
 
       <t>
@@ -345,7 +358,7 @@
     <section title="IMPLEMENTATION">
       <t>
         If the server returns a "short read" (i.e., fewer data than requested
-        and eof is set to FALSE), the client should send another READPLUS to
+        and eof is set to FALSE), the client should send another READ_PLUS to
         get the remaining data.  A server may return less data than requested
         under several circumstances.  The file may have been truncated by
         another client or perhaps on the server itself, changing the file
@@ -362,7 +375,7 @@
         WRITE_LT locked by an owner not associated with the stateid, the
         server will return the NFS4ERR_LOCKED error.  The client should try
         to get the appropriate READ_LT via the LOCK operation before re-
-        attempting the READPLUS.  When the READPLUS completes, the client
+        attempting the READ_PLUS.  When the READ_PLUS completes, the client
         should release the byte-range lock via LOCKU. In addition, the
         server MUST return a nfs_readplusreshole structure with values of
         hole_offset and hole_length that are within the owner’s locked
@@ -375,9 +388,9 @@
         proceed until that delegation is returned or revoked.  Except where
         this happens very quickly, one or more NFS4ERR_DELAY errors will be
         returned to requests made while the delegation remains outstanding.
-        Normally, delegations will not be recalled as a result of a READPLUS
+        Normally, delegations will not be recalled as a result of a READ_PLUS
         operation since the recall will occur as a result of an earlier OPEN.
-        However, since it is possible for a READPLUS to be done with a
+        However, since it is possible for a READ_PLUS to be done with a
         special stateid, the server needs to check for this case even though
         the client should have done an OPEN previously.
       </t>
@@ -385,8 +398,8 @@
       <section title="Additional pNFS Implementation Information">
 
         <t>
-          With pNFS, the semantics of using READPLUS remains the same.  Any
-          data server MAY return a READ_HOLE result for a READPLUS request that
+          With pNFS, the semantics of using READ_PLUS remains the same.  Any
+          data server MAY return a READ_HOLE result for a READ_PLUS request that
           it receives.
         </t>
 
@@ -429,7 +442,7 @@
       </section>
     </section>
 
-    <section title="READPLUS with Sparse Files Example">
+    <section title="READ_PLUS with Sparse Files Example">
 
       <t>
         To see how the return value READ_HOLE will work, the following table
@@ -455,38 +468,38 @@
         Under the given circumstances, if a client was to read the file from
         beginning to end with a max read size of 64K, the following will be
         the result.  This assumes the client has already opened the file and
-        acquired a valid stateid and just needs to issue READPLUS requests.
+        acquired a valid stateid and just needs to issue READ_PLUS requests.
       </t>
 
       <t>
         <list style="numbers">
           <t>
-            READPLUS(s, 0, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof =
+            READ_PLUS(s, 0, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof =
             false, data&lt;&gt;[32K].  Return a short read, as the last half of the
             request was all zeroes. Note that the first hole is read back as
             all zeros as it is below the hole threshhold.
           </t>
 
           <t>
-            READPLUS(s, 32K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
+            READ_PLUS(s, 32K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
             nfs_readplusreshole(HOLE_INFO)(32K, 224K). The requested range was
             all zeros, and the current hole begins at offset 32K and is 224K
             in length.
           </t>
 
           <t>
-            READPLUS(s, 256K, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof
+            READ_PLUS(s, 256K, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof
             = false, data&lt;&gt;[32K].  Return a short read, as the last half of
             the request was all zeroes.
           </t>
 
           <t>
-            READPLUS(s, 288K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
+            READ_PLUS(s, 288K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
             nfs_readplusreshole(HOLE_INFO)(288K, 66K).
           </t>
 
           <t>
-           READPLUS(s, 354K, 64K) --> NFS_OK, readplusrestype4 = READ_OK,
+           READ_PLUS(s, 354K, 64K) --> NFS_OK, readplusrestype4 = READ_OK,
            eof = true, data&lt;&gt;[64K].
           </t>
         </list>
@@ -556,7 +569,7 @@
       </t>
         
       <t>
-        To avoid this situation, one option is to have the READPLUS operation
+        To avoid this situation, one option is to have the READ_PLUS operation
         return information for multiple holes in a single return value.
         This would allow several small holes to be described in a single
         read response without requiring multliple exchanges between the
@@ -591,24 +604,10 @@
       <t>
         The hole information returned form a data server must be understood
         by pNFS clients using both Dense or Sparse file layout types.  Does
-        the current READPLUS return value work for both layout types?  Does
+        the current READ_PLUS return value work for both layout types?  Does
         the data server know if it is using dense or sparse so that it can
         return the correct hole_offset and hole_length values?
       </t>
     </section>
-  </section>
-
-  <section anchor="ss:sparse:sec" title="Security Considerations">
-    <t>
-      The additions to the NFS protocol for supporting sparse file reads
-      does not alter the security considerations of the NFSv4.1 protocol
-      <xref target="RFC5661" />.
-    </t>
-  </section>
-
-  <section anchor="ss:sparse:iana" title="IANA Considerations">
-    <t>
-      There are no IANA considerations in this section.
-    </t>
   </section>
 </section>

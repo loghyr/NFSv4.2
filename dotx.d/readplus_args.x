@@ -1,4 +1,4 @@
-struct READPLUS4args {
+struct READ_PLUS4args {
 	/* CURRENT_FH: file */
 	stateid4        rpa_stateid;
 	offset4         rpa_offset;
