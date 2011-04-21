@@ -764,4 +764,18 @@ document are to be interpreted as described in RFC
         <seriesInfo name="draft-ietf-nfsv4-federated-fs-admin" value="(Work In Progress)"/>
 </reference>
 
+<reference anchor='Oracle11'>
+  <front>
+    <title>
+      Chapter 2, Data Blocks, Extents, and Segments, of Oracle Database Concepts 11g Release 1 (11.1)
+    </title>
+    <author initials='R.' surname='Strohm'>
+      <organization />
+    </author>
+    <date month='January' year='2011' />
+    </front>
+    <format type='HTML' target='http://download.oracle.com/docs/cd/B28359_01/server.111/b28318/logical.htm' />
+</reference>
+
+
 </references>
