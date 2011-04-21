@@ -42,6 +42,10 @@
         </t>
       </list>
     </t>
+
+    <t>
+      The full XDR for NFSv4.2 is presented in <xref target='4.2xdr' />.
+    </t>
   </section>
 
   <section title="NFSv4.2 Goals">
