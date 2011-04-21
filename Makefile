@@ -8,7 +8,7 @@ MONTH=`date +%B`
 DAY=`date +%d`
 PREVVERS=00
 VERS=01
-VPATH = dotx.d
+VPATH=dotx.d
 
 autogen/%.xml : %.x
 	@mkdir -p autogen
@@ -49,8 +49,8 @@ clobber:
 	$(RM) draft-ietf-nfsv4-minorversion2-$(VERS).txt \
 		draft-ietf-nfsv4-minorversion2-$(VERS).html \
 		draft-ietf-nfsv4-minorversion2-$(VERS).nr
-	export SPECVERS := $(VERS)
-	export VERS := $(VERS)
+	export SPECVERS=$(VERS)
+	export VERS=$(VERS)
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) clobber
 	cd dotx.d ; VERS=$(VERS) $(MAKE) clobber
 
