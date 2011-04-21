@@ -46,7 +46,7 @@
 
         <date month='March' year='2011' />
       </front>
-      <seriesInfo name="draft-haynes-nfsv4-minorversion2-00" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-minorversion2-00" value="(Work In Progress)"/>
     </reference>
 
 </references>

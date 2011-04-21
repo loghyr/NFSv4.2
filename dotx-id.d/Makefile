@@ -20,7 +20,8 @@ xml: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 
 clobber:
 	$(RM) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt \
-		draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).nr
+		draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).nr \
+		nfsv42.x
 
 clean:
 	rm -f $(AUTOGEN)

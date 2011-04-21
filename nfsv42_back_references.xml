@@ -87,7 +87,7 @@
 	<date year="2011" month="March"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-haynes-nfsv4-minorversion2-dot-x/" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x/" />
     </reference>
 
     <reference anchor='RFC2119'>
