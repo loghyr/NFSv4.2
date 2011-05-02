@@ -225,6 +225,7 @@ SPITGEN =	basic_types.x \
 		copy_confirm_auth.x \
 		copy_from_auth.x \
 		copy_to_auth.x \
+		data_block.x \
 		type_chattr_type.x
 
 AUTOGEN =	hand_edit_warning.x \

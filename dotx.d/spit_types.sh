@@ -1349,6 +1349,23 @@ struct copy_confirm_auth_priv {
 	unsigned int        ccap_seq_num;
 };
 EOF
+
+	;;
+
+	data_block.x )
+
+cat << EOF > $i
+struct data_block4 {
+	offset4		db_offset;
+	length4		db_block_size;
+	length4		db_block_count;
+	length4		db_reloff_blocknum;
+	count4		db_block_num;
+	length4		db_reloff_pattern;
+	opaque		db_pattern<>;
+};
+EOF
+
 	;;
 
 	* )

@@ -1,0 +1,141 @@
+<section anchor='sec:adb' title='Application Data Block Support'>
+  <t>
+    At the OS level, files are contained on disk
+    blocks. I.e., hole punching is the removal of disk blocks from
+    a file to free space and to reinitialize the data to a known
+    state. Applications are also free to impose structure on the
+    data contained in a file and we can define an Application Data
+    Block (ADB) to be such a structure. From the application's
+    viewpoint, it only wants to handle ADBs and not raw bytes (see
+    <xref target='Oracle11' />).
+  </t>
+
+  <t>
+    A typical piece of information contained in an ADB is the ADB
+    Number (ADBN), which allows the application to determine which
+    data block is being referenced.
+    The ADBN is a logical block number and is useful when the
+    client is not storing the blocks in contiguous memory.
+  </t>
+
+  <t>
+    Other important, and generic, pieces of information can be
+    the state of the ADB and a means to detect block corruption.
+    For both pieces of data, a useful property is that allowed
+    values be unique in that if passed across the network,
+    corruption due to translation between big and little endian
+    architectures are detectable.  For example, 0xF0DEDEF0 has
+    the same bit pattern in both architectures.
+  </t>
+
+  <t>
+    In this section, we are going to define a generic framework
+    for an ADB, present one approach to detcting corruption in
+    a given ADB implementation, and describe the model for
+    how the client and server can support efficient initialization
+    of ADBs, reading of ADB holes, punching holes in ADBs, and space
+    reservation. Further, we need to be able to extend this model
+    to applications which do not support ADBs, but wish to be able
+    to handle sparse files, hole punching, and space reservation.
+  </t>
+
+  <section anchor='ss:adb:framework' title='Generic Framework'>
+    <t>
+      We want the representation of the ADB to be flexible
+      enough to support many different applications. The most
+      basic approach is no imposition of a block at all, which
+      means we are working with the raw bytes. Such an approach
+      would be useful for storing holes, punching holes, etc.
+      In more complex deployments, a server might be supporting
+      multiple applications, each with their own definition of
+      the ADB. One might store the ADBN at the start of the block
+      and then have a guard pattern to detect corruption. The next
+      might store the ADBN at an offset of 100 bytes within the
+      block and have no guard pattern at all. The point is that
+      existing applications might already have well defined
+      formats for their data blocks.
+    </t>
+
+    <t>
+      The guard pattern can be used to represent the state of
+      the block, to protect against corruption, or both. Again,
+      it needs to be able to be placed anywhere within the
+      ADB.
+    </t>
+
+    <t>
+      We need to be able to represent the starting
+      offset of the block and the size of the block. Note that
+      nothing prevents the application from defining different
+      sized blocks in a file.
+    </t>
+
+    <section anchor='ss:adb:db' title='Data Block Representation'>
+      <?rfc include='autogen/data_block.xml'?>
+
+      <t>
+        The data_block4 structure captures the abstraction presented
+        for the ADB. The additional fields present are to allow
+        the transmission of db_block_count ADBs at one time.  We
+        also use db_block_num to convey the ADBN of the first block
+        in the sequence.  Each ADB will contain the same db_pattern
+        string.
+      </t>
+
+      <t>
+        As both db_block_num and db_pattern are optional, if
+        either db_reloff_pattern or db_reloff_blocknum is set
+        to NFS4_UINT64_MAX, then the corresponding field is not
+        set in any of the ADB.
+      </t>
+    </section>
+
+    <section anchor='ss:adb:init' title='Operaration XX: INITIALIZE'>
+      <t>
+        The server has no concept of the structure imposed
+        by the application. It is only when the application
+        writes to a section of the file does order get imposed.
+        In order to detect corruption even before the application
+        utilizes the file, the application will want to initialize
+        a range of ADBs. It uses the INITIALIZE operation to do so.
+      </t>
+
+      <section title="ARGUMENT">
+        <?rfc include='autogen/initialize_args.xml'?>
+      </section>
+
+      <section title="RESULT">
+        <?rfc include='autogen/initialize_res.xml'?>
+      </section>
+
+      <section title="DESCRIPTION">
+        <t>
+          When the client invokes the INITIALIZE operation, it has
+          two desired results:
+        </t>
+
+        <t>
+          <list style='numbers'>
+            <t>
+              The structure described by the data_block4 be imposed
+              on the file.
+            </t>
+
+            <t>
+              The contents described by the data_block4 be sparse.
+            </t>
+          </list>
+        </t>
+
+        <t>
+          If the server supports the INITIALIZE operation, it still
+          might not support sparse files. So if it receives the
+          INITIALIZE operation, then it MUST populate the contents
+          of the file with the initialized ADBs. In other words,
+          if the server supports INITIALIZE, then it supports
+          the concept of ADBs.
+        </t>
+      </section>
+    </section>
+  </section>
+</section>

@@ -168,7 +168,8 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/type_chattr_type.x \
 		dotx.d/copy_confirm_auth.x \
 		dotx.d/copy_from_auth.x \
-		dotx.d/copy_to_auth.x
+		dotx.d/copy_to_auth.x \
+		dotx.d/data_block.x
 
 SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_time_how4.xml \
@@ -239,7 +240,8 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_chattr_type.xml \
 		autogen/copy_confirm_auth.xml \
 		autogen/copy_from_auth.xml \
-		autogen/copy_to_auth.xml
+		autogen/copy_to_auth.xml \
+		autogen/data_block.xml
 
 $(SPITGEN): dotx.d/spit_types.sh
 	cd dotx.d ; sh spit_types.sh `basename $@`
@@ -406,6 +408,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_lo_errs.xml \
 	nfsv42_middle_chattr.xml \
 	nfsv42_middle_copy.xml \
+	nfsv42_middle_application.xml \
 	nfsv42_middle_space.xml \
 	nfsv42_middle_sparse.xml \
         nfsv42_middle_security.xml \
