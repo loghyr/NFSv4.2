@@ -397,7 +397,9 @@ include(copy_from_auth.x)
 include(copy_to_auth.x)
 include(copy_confirm_auth.x)
 
-include(data_block.x)
+include(data_block4.x)
+
+include(data_content4.x)
 
 /*
  * NFSv4.1 attributes

@@ -1,4 +1,10 @@
 <section anchor="sec:sparse" title="Sparse Files">
+  <t>
+    WARNING: Most of this section is now obsolete. Parts
+    of it need to be scavanged for the ADB discussion,
+    but for the most part, it cannot be trusted.
+  </t>
+
   <section anchor="ss:sparse:intro" title="Introduction">
     <t>
       A sparse file is a common way of representing a large file without
@@ -245,11 +251,11 @@
     </t>
 
     <section title="ARGUMENT">
-      <?rfc include='autogen/readplus_args.xml'?>
+      <?rfc include='autogen/read_plus_args.xml'?>
     </section>
 
     <section title="RESULT">
-      <?rfc include='autogen/readplus_res.xml'?>
+      <?rfc include='autogen/read_plus_res.xml'?>
     </section>
 
     <section title="DESCRIPTION">

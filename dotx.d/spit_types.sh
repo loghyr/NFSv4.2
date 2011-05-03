@@ -992,7 +992,7 @@ enum nfs_opnum4 {
  OP_COPY_NOTIFY		= 61,
  OP_COPY_REVOKE		= 62,
  OP_COPY_STATUS		= 63,
- OP_HOLE_PUNCH		= 64,
+ OP_INITIALIZE		= 64,
  OP_READ_PLUS		= 65,
  OP_ILLEGAL		= 10044
 };
@@ -1110,7 +1110,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY:		COPY4args opcopy;
  case OP_COPY_ABORT:	COPY_ABORT4args opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4args opcopy_status;
- case OP_HOLE_PUNCH:	HOLE_PUNCH4args ophole_punch;
+ case OP_INITIALIZE:	INITIALIZE4args ophole_punch;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
 
  /* Operations not new to NFSv4.1 */
@@ -1232,13 +1232,13 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
 			RECLAIM_COMPLETE4res
 				opreclaim_complete;
 
- /* Operations new to NFSv4.1 */
+ /* Operations new to NFSv4.2 */
  case OP_COPY_NOTIFY:	COPY_NOTIFY4res opcopy_notify;
  case OP_COPY_REVOKE:	COPY_REVOKE4res opcopy_revoke;
  case OP_COPY:		COPY4res opcopy;
  case OP_COPY_ABORT:	COPY_ABORT4res opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4res opcopy_status;
- case OP_HOLE_PUNCH:	HOLE_PUNCH4res ophole_punch;
+ case OP_INITIALIZE:	INITIALIZE4res ophole_punch;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
 
  /* Operations not new to NFSv4.1 */
@@ -1352,7 +1352,7 @@ EOF
 
 	;;
 
-	data_block.x )
+	data_block4.x )
 
 cat << EOF > $i
 struct data_block4 {
@@ -1363,6 +1363,20 @@ struct data_block4 {
 	count4		db_block_num;
 	length4		db_reloff_pattern;
 	opaque		db_pattern<>;
+};
+EOF
+
+	;;
+
+	data_content4.x )
+
+cat << EOF > $i
+/*
+ * Use an enum such that we can extend new types.
+ */
+enum data_content4 {
+	NFS4_CONTENT_DATA = 0,
+	NFS4_CONTENT_APP_BLOCK = 1
 };
 EOF
 

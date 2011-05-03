@@ -120,8 +120,10 @@ FORE_OPS_AS_IS2 = \
                 copy_status_res.x \
 		hole_punch_args.x \
 		hole_punch_res.x \
-		readplus_args.x \
-		readplus_res.x
+		initialize_args.x \
+		initialize_res.x \
+		read_plus_args.x \
+		read_plus_res.x
 
 FORE_OPS = $(FORE_OPS_AS_IS1) open_args_gen.x $(FORE_OPS_AS_IS2)
 
@@ -225,7 +227,8 @@ SPITGEN =	basic_types.x \
 		copy_confirm_auth.x \
 		copy_from_auth.x \
 		copy_to_auth.x \
-		data_block.x \
+		data_block4.x \
+		data_content4.x \
 		type_chattr_type.x
 
 AUTOGEN =	hand_edit_warning.x \

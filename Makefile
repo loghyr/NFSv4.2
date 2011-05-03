@@ -169,7 +169,8 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/copy_confirm_auth.x \
 		dotx.d/copy_from_auth.x \
 		dotx.d/copy_to_auth.x \
-		dotx.d/data_block.x
+		dotx.d/data_block4.x \
+		dotx.d/data_content4.x
 
 SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_time_how4.xml \
@@ -241,7 +242,8 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/copy_confirm_auth.xml \
 		autogen/copy_from_auth.xml \
 		autogen/copy_to_auth.xml \
-		autogen/data_block.xml
+		autogen/data_block4.xml \
+		autogen/data_content4.xml
 
 $(SPITGEN): dotx.d/spit_types.sh
 	cd dotx.d ; sh spit_types.sh `basename $@`
@@ -333,6 +335,8 @@ AUTOGEN =	\
 		autogen/hole_punch_args.xml \
 		autogen/hole_punch_res.xml \
 		autogen/illegal_res.xml \
+		autogen/initialize_args.xml \
+		autogen/initialize_res.xml \
 		autogen/layoutcommit_args.xml \
 		autogen/layoutcommit_res.xml \
 		autogen/layoutget_args.xml \
@@ -364,8 +368,8 @@ AUTOGEN =	\
 		autogen/putrootfh_res.xml \
 		autogen/read_args.xml \
 		autogen/read_res.xml \
-		autogen/readplus_args.xml \
-		autogen/readplus_res.xml \
+		autogen/read_plus_args.xml \
+		autogen/read_plus_res.xml \
 		autogen/readdir_args.xml \
 		autogen/readdir_res.xml \
 		autogen/readlink_res.xml \

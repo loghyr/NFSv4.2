@@ -1,9 +1,7 @@
 <section anchor='sec:adb' title='Application Data Block Support'>
   <t>
     At the OS level, files are contained on disk
-    blocks. I.e., hole punching is the removal of disk blocks from
-    a file to free space and to reinitialize the data to a known
-    state. Applications are also free to impose structure on the
+    blocks.  Applications are also free to impose structure on the
     data contained in a file and we can define an Application Data
     Block (ADB) to be such a structure. From the application's
     viewpoint, it only wants to handle ADBs and not raw bytes (see
@@ -30,7 +28,7 @@
 
   <t>
     In this section, we are going to define a generic framework
-    for an ADB, present one approach to detcting corruption in
+    for an ADB, present one approach to detecting corruption in
     a given ADB implementation, and describe the model for
     how the client and server can support efficient initialization
     of ADBs, reading of ADB holes, punching holes in ADBs, and space
@@ -71,7 +69,7 @@
     </t>
 
     <section anchor='ss:adb:db' title='Data Block Representation'>
-      <?rfc include='autogen/data_block.xml'?>
+      <?rfc include='autogen/data_block4.xml'?>
 
       <t>
         The data_block4 structure captures the abstraction presented
@@ -90,52 +88,361 @@
       </t>
     </section>
 
-    <section anchor='ss:adb:init' title='Operaration XX: INITIALIZE'>
+    <section anchor='ss:adb:dc' title='Data Content'>
+      <?rfc include='autogen/data_content4.xml'?>
+
       <t>
-        The server has no concept of the structure imposed
-        by the application. It is only when the application
-        writes to a section of the file does order get imposed.
-        In order to detect corruption even before the application
-        utilizes the file, the application will want to initialize
-        a range of ADBs. It uses the INITIALIZE operation to do so.
+        New operations might need to differentiate between
+        wanting to access data versus an ADB. Also, future
+        minor versions might want to introduce new data
+        formats. This enumeration allows that to occur.
+      </t>
+    </section>
+  </section>
+
+  <section anchor='ss:adb:init' title='Operation 64: INITIALIZE'>
+    <t>
+      The server has no concept of the structure imposed
+      by the application. It is only when the application
+      writes to a section of the file does order get imposed.
+      In order to detect corruption even before the application
+      utilizes the file, the application will want to initialize
+      a range of ADBs. It uses the INITIALIZE operation to do so.
+    </t>
+
+    <section title="ARGUMENT">
+      <?rfc include='autogen/initialize_args.xml'?>
+    </section>
+
+    <section title="RESULT">
+      <?rfc include='autogen/initialize_res.xml'?>
+    </section>
+
+    <section title="DESCRIPTION">
+      <t>
+        When the client invokes the INITIALIZE operation, it has
+        two desired results:
       </t>
 
-      <section title="ARGUMENT">
-        <?rfc include='autogen/initialize_args.xml'?>
-      </section>
+      <t>
+        <list style='numbers'>
+          <t>
+            The structure described by the data_block4 be imposed
+            on the file.
+          </t>
 
-      <section title="RESULT">
-        <?rfc include='autogen/initialize_res.xml'?>
-      </section>
+          <t>
+            The contents described by the data_block4 be sparse.
+          </t>
+        </list>
+      </t>
 
-      <section title="DESCRIPTION">
-        <t>
-          When the client invokes the INITIALIZE operation, it has
-          two desired results:
-        </t>
+      <t>
+        If the server supports the INITIALIZE operation, it still
+        might not support sparse files. So if it receives the
+        INITIALIZE operation, then it MUST populate the contents
+        of the file with the initialized ADBs. In other words,
+        if the server supports INITIALIZE, then it supports
+        the concept of ADBs.
 
-        <t>
-          <list style='numbers'>
-            <t>
-              The structure described by the data_block4 be imposed
-              on the file.
-            </t>
+        <cref anchor='AI1' source='TH'>
+          Do we want to support an asynchronous INITIALIZE?
+          Do we have to?
+        </cref>
+      </t>
 
-            <t>
-              The contents described by the data_block4 be sparse.
-            </t>
-          </list>
-        </t>
+      <t>
+        If the data was already initialized, There are two
+        interesting scenarios:
+      </t>
 
-        <t>
-          If the server supports the INITIALIZE operation, it still
-          might not support sparse files. So if it receives the
-          INITIALIZE operation, then it MUST populate the contents
-          of the file with the initialized ADBs. In other words,
-          if the server supports INITIALIZE, then it supports
-          the concept of ADBs.
-        </t>
-      </section>
+      <t>
+        <list style='numbers'>
+          <t>
+            The data blocks are allocated.
+          </t>
+
+          <t>
+            Initializing in the middle of an existing ADB.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        If the data blocks were already allocated, then
+        the INITIALIZE is a hole punch operation. If
+        INITIALIZE supports sparse files, then the data
+        blocks are to be deallocated. If not, then the
+        data blocks are to be rewritten in the indicated
+        ADB format.
+
+        <cref anchor='AI2' source='TH'>
+          Need to document interaction between space
+          reservation and hole punching?
+        </cref>
+      </t>
+
+      <t>
+        Since the server has no knowledge of ADBs, it
+        should not report misaligned creation of ADBs.
+        Even while it can detect them, it cannot disallow
+        them, as the application might be in the process of
+        changing the size of the ADBs. Thus the server
+        must be prepared to handle an INITIALIZE into
+        an existing ADB.
+      </t>
+
+      <t>
+        This document does not mandate the manner in
+        which the server stores ADBs sparsely for a
+        file. It does assume that if ADBs are stored
+        sparsely, then the server can detect when
+        an INITIALIZE arrives that will force a new
+        ADB to start inside an existing ADB. For
+        example, assume that ADBi has a db_block_size
+        of 4k and that an INITIALIZE starts 1k inside
+        ADBi. The server should
+
+        <cref anchor='AI3' source='TH'>
+          Need to flesh this out.
+        </cref>
+      </t>
     </section>
+  </section>
+
+  <section anchor='ss:adb:read_plus' title='Operation 65: READ_PLUS'>
+    <t>
+      If the client sends a READ operation, it is explicitly
+      stating that it is not supporting sparse files. So
+      if a READ occurs on a sparse ADB, then the server must
+      expand such ADBs to be raw bytes. If a READ occurs in
+      the middle of an ADB, the server can only send back
+      bytes starting from that offset.
+    </t>
+
+    <t>
+      Such an operation is inefficient for transfer of sparse
+      sections of the file. As such, READ is marked as OBSOLETE in
+      NFSv4.2. Instead, a client should issue READ_PLUS. Note that
+      as the client has no a priori knowledge of whether an ADB
+      is present or not, it should always use READ_PLUS.
+    </t>
+
+    <section title="ARGUMENT">
+      <?rfc include='autogen/read_plus_args.xml'?>
+    </section>
+
+    <section title="RESULT">
+      <?rfc include='autogen/read_plus_res.xml'?>
+    </section>
+
+    <section title="DESCRIPTION">
+      <t>
+        Over the given range, READ_PLUS will return all data
+        and ADBs found as an array of read_plus_content. It is
+        possible to have consecutive ADBs in the array as
+        either different definitions of ADBs are present or
+        as the guard pattern changes.
+      </t>
+
+      <t>
+        Edge cases exist for ABDs which either begin before the
+        rpa_offset requested by the READ_PLUS or end after the
+        rpa_count requested - both of which may occur as not all
+        applications which access the file are aware of the
+        main application imposing a format on the file contents, i.e.,
+        tar, dd, cp, etc. READ_PLUS MUST retrieve whole ADBs, but
+        it need not retrieve an entire sequences of ADBs.
+      </t>
+
+      <t>
+        The server MUST return a whole ADB because if it does
+        not, it must expand that partial ADB before it sends
+        it to the client. E.g., if an ADB had a block size of
+        64k and the READ_PLUS was for 128k starting at an
+        offset of 32k inside the ADB, then the first 32k
+        would be converted to data.
+      </t>
+    </section>
+  </section>
+
+  <section anchor='ss:adb:pnfs' title='pNFS Considerations'>
+    <t>
+      While this document does not mandate how sparse ADBs
+      are recorded on the server, it does make the assumption
+      that such information is not in the file. I.e., the
+      information is metadata. As such, the INITIALIZE operation
+      is defined to be not supported by the DS - it must be
+      issued to the MDS. But since the client must not assume
+      a priori whether a read is sparse or not, the READ_PLUS
+      operation MUST be supported by both the DS and the MDS.
+      I.e., the client might impose on the MDS to asynchronously
+      read the data from the DS.
+    </t>
+
+    <t>
+      Furthermore, each DS MUST not report to a client either a sparse
+      ADB or data which belongs to another DS. One implication
+      of this requirement is that the data_block4's db_block_size
+      MUST be either be the stripe width or the stripe width
+      must be an even multiple of it.
+    </t>
+
+    <t>
+      The second implication here is that the DS must be able
+      to use the Control Protocol to determine from the MDS
+      where the sparse ADBs occur.
+
+      <cref anchor='AI4' source='TH'>
+        Need to discuss what happens if after the file is
+        being written to and an INITIALIZE occurs? 
+      </cref>
+
+      Perhaps instead of the DS pulling from the MDS, the MDS
+      pushes to the DS? Thus an INITIALIZE causes a new push?
+  
+      <cref anchor='AI5' source='TH'>
+        Still need to consider race cases of the DS getting
+        a WRITE and the MDS getting an INITIALIZE.
+      </cref>
+    </t>
+  </section>
+
+  <section anchor='ss:adb:corrupt' title='An Example of Detecting Corruption'>
+    <t>
+      In this section, we define an ADB format in which
+      corruption can be detected. Note that this is just
+      one possible format and means to detect corruption.
+    </t>
+
+    <t>
+      Consider a very basic implementation of an operating
+      system's disk blocks. A block is either data or it
+      is an indirect block which allows for files to be
+      larger than one block. It is desired to be able
+      to initialize a block. Lastly, to quickly unlink
+      a file, a block can be marked invalid. The contents
+      remain intact - which would enable this OS application
+      to undelete a file.
+    </t>
+
+    <t>
+      The application defines 4k sized data blocks, with an
+      8 byte block counter occurring at offset 0 in the block,
+      and with the guard pattern occurring at offset 8 inside
+      the block. Furthermore, the guard pattern can take one
+      of four states:
+    </t>
+
+    <t>
+      <list style='hanging'>
+        <t hangText='0xfeedface - '>
+          This is the INITIALIZED state and indicates that the
+          ADB format has been applied.
+        </t>
+
+        <t hangText='0xcafedead - '>
+          This is the DATA state and indicates that real
+          data has been written to this block.
+        </t>
+
+        <t hangText='0xe4e5c001 - '>
+          This is the INDIRECT state and indicates that the block
+          contains block counter numbers that are chained off of
+          this block.
+        </t>
+
+        <t hangText='0xba1ed4a3 - '>
+          This is the INVALID state and indicates that the
+          block contains data whose contents are garbage.
+        </t>
+      </list>
+    </t>
+
+    <t>
+      Finally, it also defines an 8 byte
+      checksum starting at byte 16 which applies to the remaining
+      contents of the block. If the state is INITIALIZED, then
+      that checksum is trivially zero. As such, the application
+      has no need to transfer the checksum implicitly inside the
+      ADB - it need not make the transfer layer aware of the
+      fact that there is a checksum.
+    </t>
+
+    <t>
+      Corruption in each ADB can be detected thusly:
+    </t>
+
+    <t>
+      <list style='symbols'>
+        <t>
+          If the guard pattern is anything other than one
+          of the allowed values, including all zeros.
+        </t>
+
+        <t>
+          If the guard pattern is INITIALIZED and any other
+          byte in the remainder of the ADB is anything other
+          than zero.
+        </t>
+
+        <t>
+          If the guard pattern is anything other than INITIALIZED,
+          then if the stored checksum does not match the
+          computed checksum.
+        </t>
+
+        <t>
+          If the guard pattern is INDIRECT and one of the
+          stored indirect block numbers has a value greater
+          than the number of ADBs in the file.
+        </t>
+
+        <t>
+          If the guard pattern is INDIRECT and one of the
+          stored indirect block numbers is a duplicate of
+          another stored indirect block number.
+        </t>
+      </list>
+    </t>
+
+    <t>
+      As can be seen, the application can detect errors based
+      on the combination of the guard pattern state and the
+      checksum. But also, the application can detect corruption
+      based on the state and the contents of the ADB.
+      This last point is important in validating the minimum
+      amount of data we incorporated into our generic
+      framework. I.e., the guard pattern is sufficient
+      in allowing applications to design their own
+      corruption detection.
+    </t>
+
+    <t>
+      Finally, it is important to note that none of these
+      corruption checks occur in the transport layer. The
+      server and client components are totally unaware of
+      the file format and might report everything as being
+      transferred correctly even in the case the application
+      detects corruption.
+    </t>
+  </section>
+
+  <section anchor='ss:adb:zero_holes' title='Zero filled holes'>
+    <t>
+      As applications are free to define the structure of an
+      ADB, it is trivial to define an ADB which supports
+      zero filled holes. Such a case would encompass the
+      traditional definitions of a sparse file and hole
+      punching. For example, to punch a 64k hole, starting
+      at 100M, into an existing file which has no ADB structure:
+    </t>
+
+    <figure>
+      <artwork>
+   INITIALIZE {100M, 64k, 1, NFS4_UINT64_MAX,
+               0, NFS4_UINT64_MAX, 0x0}
+      </artwork>
+    </figure>
   </section>
 </section>
