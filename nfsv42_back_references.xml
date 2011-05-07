@@ -764,7 +764,7 @@ document are to be interpreted as described in RFC
         <seriesInfo name="draft-ietf-nfsv4-federated-fs-admin" value="(Work In Progress)"/>
 </reference>
 
-<reference anchor='Oracle11'>
+<reference anchor='ref:Oracle:blocks'>
   <front>
     <title>
       Chapter 2, Data Blocks, Extents, and Segments, of Oracle Database Concepts 11g Release 1 (11.1)
@@ -777,5 +777,54 @@ document are to be interpreted as described in RFC
     <format type='HTML' target='http://download.oracle.com/docs/cd/B28359_01/server.111/b28318/logical.htm' />
 </reference>
 
+<reference anchor='ref:solaris:corruption'>
+  <front>
+    <title>
+      Section 11.4.3, Detecting Memory Corruption of Solaris Internals
+    </title>
+    <author initials='R.' surname='McDougall' />
+    <author initials='J.' surname='Mauro' />
+    <date year='2007' />
+  </front>
+</reference>
+
+<reference anchor='ref:Oracle:corruption'>
+  <front>
+    <title>
+      Chapter 15, Validating Database Files and Backups, of Oracle Database Backup and Recovery User's Guide 11g Release 1 (11.1)
+    </title>
+    <author initials='L.' surname='Ashdown'>
+      <organization />
+    </author>
+    <date month='August' year='2008' />
+    </front>
+    <format type='HTML' target='http://download.oracle.com/docs/cd/B28359_01/backup.111/b28270/rcmvalid.htm' />
+</reference>
+
+<reference anchor='ref:storage_stack'>
+  <front>
+    <title>
+      An Analysis of Data Corruption in the Storage Stack
+    </title>
+    <author initials='L. N.' surname='Bairavasundaram'>
+      <organization>University of Wisconsin-Madison</organization>
+    </author>
+    <author initials='G. R.' surname='Goodson'>
+      <organization>Network Appliance, Inc.</organization>
+    </author>
+    <author initials='B.' surname='Schroeder'>
+      <organization>University of Toronto</organization>
+    </author>
+    <author initials='A. C.' surname='Arpaci-Dusseau'>
+      <organization>University of Wisconsin-Madison</organization>
+    </author>
+    <author initials='R. H.' surname='Arpaci-Dusseau'>
+      <organization>University of Wisconsin-Madison</organization>
+    </author>
+    <date year='2008' />
+  </front>
+  <seriesInfo name="Proceedings of the 6th USENIX Symposium on File and Storage Technologies (FAST '08)" value='' />
+  <format type='HTML' target='http://www.usenix.org/events/fast08/tech/full_papers/bairavasundaram/bairavasundaram.pdf' />
+</reference>
 
 </references>

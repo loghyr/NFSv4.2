@@ -5,25 +5,55 @@
     data contained in a file and we can define an Application Data
     Block (ADB) to be such a structure. From the application's
     viewpoint, it only wants to handle ADBs and not raw bytes (see
-    <xref target='Oracle11' />).
+    <xref target='ref:Oracle:blocks' />). An ADB is typically
+    comprised of two sections: a header and data. The header
+    describes the characteristics of the block and can provide
+    a means to detect corruption in the data payload.
+    The data section is typically initialized to all zeros.
   </t>
 
   <t>
-    A typical piece of information contained in an ADB is the ADB
-    Number (ADBN), which allows the application to determine which
-    data block is being referenced.
-    The ADBN is a logical block number and is useful when the
-    client is not storing the blocks in contiguous memory.
+    The format of the header is application specific, but there
+    are two main components typically encountered:
   </t>
 
   <t>
-    Other important, and generic, pieces of information can be
-    the state of the ADB and a means to detect block corruption.
-    For both pieces of data, a useful property is that allowed
-    values be unique in that if passed across the network,
-    corruption due to translation between big and little endian
-    architectures are detectable.  For example, 0xF0DEDEF0 has
-    the same bit pattern in both architectures.
+    <list style='numbers'>
+      <t>
+        An ADB
+        Number (ADBN), which allows the application to determine which
+        data block is being referenced.
+        The ADBN is a logical block number and is useful when the
+        client is not storing the blocks in contiguous memory.
+      </t>
+
+      <t>
+        Fields to describe
+        the state of the ADB and a means to detect block corruption.
+        For both pieces of data, a useful property is that allowed
+        values be unique in that if passed across the network,
+        corruption due to translation between big and little endian
+        architectures are detectable.  For example, 0xF0DEDEF0 has
+        the same bit pattern in both architectures.
+      </t>
+    </list>
+  </t>
+
+  <t>
+    Applications already impose structures on files
+    <xref target='ref:Oracle:blocks' /> and detect corruption
+    in data blocks <xref target='ref:Oracle:corruption' />.
+    What they are not able to do is efficiently transfer and
+    store ADBs. To initialize a file with ADBs, the client
+    must send the full ADB to the server and that must be stored
+    on the server. When the application is initializing a file
+    to have the ADB structure, it could compress the ADBs to
+    just the information to necessary to later reconstruct the
+    header portion of the ADB when the contents are read back.
+    Using sparse file techniques, the disk blocks described by
+    would not be allocated. Unlike sparse file techniques, there
+    would be a small cost to store the compressed header
+    data.
   </t>
 
   <t>
@@ -47,7 +77,8 @@
       In more complex deployments, a server might be supporting
       multiple applications, each with their own definition of
       the ADB. One might store the ADBN at the start of the block
-      and then have a guard pattern to detect corruption. The next
+      and then have a guard pattern to detect corruption
+      <xref target='ref:solaris:corruption' />. The next
       might store the ADBN at an offset of 100 bytes within the
       block and have no guard pattern at all. The point is that
       existing applications might already have well defined
@@ -58,7 +89,7 @@
       The guard pattern can be used to represent the state of
       the block, to protect against corruption, or both. Again,
       it needs to be able to be placed anywhere within the
-      ADB.
+      ADB. 
     </t>
 
     <t>
@@ -337,7 +368,7 @@
     <t>
       <list style='hanging'>
         <t hangText='0xfeedface - '>
-          This is the INITIALIZED state and indicates that the
+          This is the FREE state and indicates that the
           ADB format has been applied.
         </t>
 
@@ -361,12 +392,16 @@
 
     <t>
       Finally, it also defines an 8 byte
-      checksum starting at byte 16 which applies to the remaining
-      contents of the block. If the state is INITIALIZED, then
+      checksum <xref target='ref:storage_stack' /> starting at
+      byte 16 which applies to the remaining
+      contents of the block. If the state is FREE, then
       that checksum is trivially zero. As such, the application
       has no need to transfer the checksum implicitly inside the
       ADB - it need not make the transfer layer aware of the
-      fact that there is a checksum.
+      fact that there is a checksum (see
+      <xref target='ref:Oracle:corruption' /> for an example
+      of checksums used to detect corruption in application
+      data blocks).
     </t>
 
     <t>
@@ -381,13 +416,13 @@
         </t>
 
         <t>
-          If the guard pattern is INITIALIZED and any other
+          If the guard pattern is FREE and any other
           byte in the remainder of the ADB is anything other
           than zero.
         </t>
 
         <t>
-          If the guard pattern is anything other than INITIALIZED,
+          If the guard pattern is anything other than FREE,
           then if the stored checksum does not match the
           computed checksum.
         </t>
@@ -428,7 +463,51 @@
     </t>
   </section>
 
-  <section anchor='ss:adb:zero_holes' title='Zero filled holes'>
+  <section anchor='ss:adb:ex_rp' title='Example of READ_PLUS'>
+    <t>
+      The hypothetical application presented in
+      <xref target='ss:adb:corrupt' /> can be used to
+      illustrate how READ_PLUS would return an array
+      of results. A file is created and initialized
+      with 100 4k ADBs in the FREE state:
+    </t>
+
+    <figure>
+      <artwork>
+   INITIALIZE {0, 4k, 100, 0, 0, 8, 0xfeedface}
+      </artwork>
+    </figure>
+
+    <t>
+      Further, assume the application writes a single
+      ADB at 16k, changing the guard pattern to 0xcafedead,
+      we would then have in memory:
+    </t>
+
+    <figure>
+      <artwork>
+   0 -> (16k - 1)   : 4k, 4, 0, 0, 8, 0xfeedface
+   16k -> (20k - 1) : 00 00 00 05 ca fe de ad XX XX ... XX XX
+   20k -> 400k      : 4k, 95, 0, 6, 0xfeedface
+      </artwork>
+    </figure>
+
+    <t>
+     And when the client did a READ_PLUS of 64k at the start of the file,
+     it would get back a result of an ADB, some data, and a final ADB:
+    </t>
+
+    <figure>
+      <artwork>
+   ADB {0, 4, 0, 0, 8, 0xfeedface}
+   data 4k
+   ADB {20k, 4k, 59, 0, 6, 0xfeedface}
+      </artwork>
+    </figure>
+
+  </section>
+
+  <section anchor='ss:adb:zero_holes' title='Zero Filled Holes'>
     <t>
       As applications are free to define the structure of an
       ADB, it is trivial to define an ADB which supports
