@@ -1,8 +1,7 @@
 <section anchor="sec:sparse" title="Sparse Files">
   <t>
-    WARNING: Most of this section is now obsolete. Parts
-    of it need to be scavanged for the ADB discussion,
-    but for the most part, it cannot be trusted.
+    WARNING: Most of this section needs to be reworked because
+    of the work going on in the ADB section.
   </t>
 
   <section anchor="ss:sparse:intro" title="Introduction">

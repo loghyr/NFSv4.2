@@ -332,16 +332,4 @@
       </section>
     </section>
   </section>
-
-  <section anchor="ss:space:sec" title="Security Considerations">
-    <t>
-      There are no security considerations for this section.
-    </t>
-  </section>
-
-  <section anchor="ss:space:iana" title="IANA Considerations">
-    <t>
-      This section has no actions for IANA.
-    </t>
-  </section>
 </section>
