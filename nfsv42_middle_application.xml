@@ -100,20 +100,20 @@
     </t>
 
     <section anchor='ss:adb:db' title='Data Block Representation'>
-      <?rfc include='autogen/data_block4.xml'?>
+      <?rfc include='autogen/app_data_block4.xml'?>
 
       <t>
-        The data_block4 structure captures the abstraction presented
+        The app_data_block4 structure captures the abstraction presented
         for the ADB. The additional fields present are to allow
-        the transmission of db_block_count ADBs at one time.  We
-        also use db_block_num to convey the ADBN of the first block
-        in the sequence.  Each ADB will contain the same db_pattern
+        the transmission of adb_block_count ADBs at one time.  We
+        also use adb_block_num to convey the ADBN of the first block
+        in the sequence.  Each ADB will contain the same adb_pattern
         string.
       </t>
 
       <t>
-        As both db_block_num and db_pattern are optional, if
-        either db_reloff_pattern or db_reloff_blocknum is set
+        As both adb_block_num and adb_pattern are optional, if
+        either adb_reloff_pattern or adb_reloff_blocknum is set
         to NFS4_UINT64_MAX, then the corresponding field is not
         set in any of the ADB.
       </t>
@@ -158,12 +158,12 @@
       <t>
         <list style='numbers'>
           <t>
-            The structure described by the data_block4 be imposed
+            The structure described by the app_data_block4 be imposed
             on the file.
           </t>
 
           <t>
-            The contents described by the data_block4 be sparse.
+            The contents described by the app_data_block4 be sparse.
           </t>
         </list>
       </t>
@@ -230,7 +230,7 @@
         sparsely, then the server can detect when
         an INITIALIZE arrives that will force a new
         ADB to start inside an existing ADB. For
-        example, assume that ADBi has a db_block_size
+        example, assume that ADBi has a adb_block_size
         of 4k and that an INITIALIZE starts 1k inside
         ADBi. The server should
 
@@ -314,7 +314,7 @@
     <t>
       Furthermore, each DS MUST not report to a client either a sparse
       ADB or data which belongs to another DS. One implication
-      of this requirement is that the data_block4's db_block_size
+      of this requirement is that the app_data_block4's adb_block_size
       MUST be either be the stripe width or the stripe width
       must be an even multiple of it.
     </t>

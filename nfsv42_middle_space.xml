@@ -250,16 +250,14 @@
     <section anchor="ss:space:ops:zero" title="Operation 64: HOLE_PUNCH - Zero and deallocate blocks backing the
       file in the specified range.">
 
-      <section title="ARGUMENT">
-        <?rfc include='autogen/hole_punch_args.xml'?>
-      </section>
+     <t>
+       WARNING: Most of this section is now obsolete. Parts
+       of it need to be scavanged for the ADB discussion,
+       but for the most part, it cannot be trusted.
+     </t>
 
-      <section title="RESULT">
-        <?rfc include='autogen/hole_punch_res.xml'?>
-      </section>
 
      <section title="DESCRIPTION">
-
        <t>
          Whenever a client wishes to deallocate the blocks backing a
          particular region in the file, it calls the HOLE_PUNCH operation with

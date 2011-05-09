@@ -118,8 +118,6 @@ FORE_OPS_AS_IS2 = \
                 copy_revoke_res.x \
                 copy_status_args.x \
                 copy_status_res.x \
-		hole_punch_args.x \
-		hole_punch_res.x \
 		initialize_args.x \
 		initialize_res.x \
 		read_plus_args.x \
@@ -227,7 +225,7 @@ SPITGEN =	basic_types.x \
 		copy_confirm_auth.x \
 		copy_from_auth.x \
 		copy_to_auth.x \
-		data_block4.x \
+		app_data_block4.x \
 		data_content4.x \
 		type_chattr_type.x
 

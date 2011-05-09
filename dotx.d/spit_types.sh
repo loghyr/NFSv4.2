@@ -1352,17 +1352,17 @@ EOF
 
 	;;
 
-	data_block4.x )
+	app_data_block4.x )
 
 cat << EOF > $i
-struct data_block4 {
-	offset4		db_offset;
-	length4		db_block_size;
-	length4		db_block_count;
-	length4		db_reloff_blocknum;
-	count4		db_block_num;
-	length4		db_reloff_pattern;
-	opaque		db_pattern<>;
+struct app_data_block4 {
+	offset4		adb_offset;
+	length4		adb_block_size;
+	length4		adb_block_count;
+	length4		adb_reloff_blocknum;
+	count4		adb_block_num;
+	length4		adb_reloff_pattern;
+	opaque		adb_pattern<>;
 };
 EOF
 
@@ -1376,7 +1376,8 @@ cat << EOF > $i
  */
 enum data_content4 {
 	NFS4_CONTENT_DATA = 0,
-	NFS4_CONTENT_APP_BLOCK = 1
+	NFS4_CONTENT_APP_BLOCK = 1,
+	NFS4_CONTENT_HOLE = 2
 };
 EOF
 
