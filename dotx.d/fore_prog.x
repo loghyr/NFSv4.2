@@ -9,6 +9,12 @@ include(type_COMPOUND4args.x)
 include(type_COMPOUND4res.x)
 
 /*
+ * Layout return errors, which might
+ * include the nfs_opnum4.
+ */
+include(layout_errors.x)
+
+/*
  * Remote file service routines
  */
 program NFS4_PROGRAM {

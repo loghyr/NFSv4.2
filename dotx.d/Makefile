@@ -239,7 +239,7 @@ AUTOGEN =	hand_edit_warning.x \
 
 all:	nfsv42.x filelist
 
-nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x \
+nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x layout_errors.x fore_prog.x \
 		back_ops.x back_prog.x
 	m4 hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x back_ops.x back_prog.x | expand | tr -d "\r" > nfsv42.tmp
 	mv nfsv42.tmp nfsv42.x
