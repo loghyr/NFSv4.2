@@ -59,12 +59,8 @@
       a file, READ_PLUS, and a new operation to both initialize patterns
       and to punch pattern holes into a file, WRITE_PLUS.
       READ_PLUS supports all the features of READ but includes an extension
-      to support sparse pattern files.
-
-   In addition,
-      the return value of READ_PLUS is now compatible with NFSv4.1 minor
-      versioning rules and could support other future extensions without
-      requiring yet another operation.  READ_PLUS is guaranteed to perform
+      to support sparse pattern files.  
+      READ_PLUS is guaranteed to perform
       no worse than READ, and can dramatically improve performance with
       sparse files.  READ_PLUS does not depend on pNFS protocol features,
       but can be used by pNFS to support sparse files.
