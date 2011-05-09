@@ -1,4 +1,4 @@
-# Copyright (C) The IETF Trust (2007-2008)
+# Copyright (C) The IETF Trust (2011)
 
 FORE_OPS_AS_IS1 = \
 		access_args.x \
@@ -227,7 +227,8 @@ SPITGEN =	basic_types.x \
 		copy_to_auth.x \
 		app_data_block4.x \
 		data_content4.x \
-		type_chattr_type.x
+		type_chattr_type.x \
+		type_label_format.x
 
 AUTOGEN =	hand_edit_warning.x \
 		fore_ops.x \

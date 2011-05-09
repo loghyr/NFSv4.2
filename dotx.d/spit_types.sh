@@ -44,6 +44,7 @@ typedef :component4:pathname4<>:Represents path name for fs_locations.
 typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operations (COMMIT, CREATE, EXCHANGE_ID, OPEN, READDIR, WRITE) NFS4_VERIFIER_SIZE is defined as 8.
 :enum:netloc_type4:Specifies network locations.
 typedef :string:secret4<>:Secret value to share between servers.
+typedef :uint32_t:policy4:Label formt specifier or policy identifier.
 EOF
 
 	fi
@@ -1378,6 +1379,22 @@ enum data_content4 {
 	NFS4_CONTENT_DATA = 0,
 	NFS4_CONTENT_APP_BLOCK = 1,
 	NFS4_CONTENT_HOLE = 2
+};
+EOF
+
+	;;
+
+	type_label_format.x )
+
+cat << EOF > $i
+struct labelformat_spec4 {
+	policy4	lfs_lfs;
+	policy4	lfs_pi;
+};
+
+struct sec_label_attr_info {
+	labelformat_spec4	slai_lfs;
+	opaque			slai_data<>;
 };
 EOF
 

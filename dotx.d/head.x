@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) The IETF Trust (2007-2008)
+ *  Copyright (C) The IETF Trust (2007-2011)
  *  All Rights Reserved.
  *
  *  Copyright (C) The Internet Society (1998-2006).
@@ -7,7 +7,7 @@
  */
 
 /*
- *	nfs4_prot.x
+ *	nfsv42.x
  */
 
 %#ifndef _AUTH_SYS_DEFINE_FOR_NFSv42
@@ -392,6 +392,7 @@ include(type_fs_charset_cap4.x)
 
 include(type_netloc_type4.x)
 include(type_chattr_type.x)
+include(type_label_format.x)
 
 include(copy_from_auth.x)
 include(copy_to_auth.x)
@@ -584,6 +585,7 @@ const FATTR4_SPACE_RESERVED	= 77;
 const FATTR4_SPACE_FREED	= 78;
 const FATTR4_MAX_HOLE_PUNCHED	= 79;
 const FATTR4_CHANGE_ATTR_TYPE	= 80;
+const FATTR4_SEC_LABEL		= 81;
 
 /*
  * File attribute container
