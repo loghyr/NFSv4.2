@@ -1110,7 +1110,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY:		COPY4args opcopy;
  case OP_COPY_ABORT:	COPY_ABORT4args opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4args opcopy_status;
- case OP_INITIALIZE:	INITIALIZE4args ophole_punch;
+ case OP_INITIALIZE:	INITIALIZE4args opinitialize;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
 
  /* Operations not new to NFSv4.1 */
@@ -1238,7 +1238,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_COPY:		COPY4res opcopy;
  case OP_COPY_ABORT:	COPY_ABORT4res opcopy_abort;
  case OP_COPY_STATUS:	COPY_STATUS4res opcopy_status;
- case OP_INITIALIZE:	INITIALIZE4res ophole_punch;
+ case OP_INITIALIZE:	INITIALIZE4res opinitialize;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
 
  /* Operations not new to NFSv4.1 */
