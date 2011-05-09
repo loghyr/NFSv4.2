@@ -65,7 +65,7 @@
 
     <t>
       <list style="hanging">
-        <t hangText="space_reserve">
+        <t hangText="space_reserved">
           This attribute specifies whether the blocks backing
           the file have been preallocated.
         </t>
@@ -190,7 +190,7 @@
       </t>
     </section>
 
-    <section anchor="ss:space:ops:sr" title="Attribute 77: space_reserve">
+    <section anchor="ss:space:ops:sr" title="Attribute 77: space_reserved">
       <t>
         The space_reserve attribute is a read/write attribute of type
         boolean.  It is a per file attribute.  When the space_reserved

@@ -488,6 +488,16 @@ typedef uint64_t	fattr4_retention_hold;
 typedef nfsacl41	fattr4_dacl;
 typedef nfsacl41	fattr4_sacl;
 typedef change_policy4	fattr4_change_policy;
+/*
+ * attributes new to NFSv4.2
+ */
+typedef bool		fattr_space_reserved;
+typedef uint64_t	fattr_space_freed;
+typedef uint64_t	fattr_max_hole_punch;
+typedef change_attr_typeinfo
+		fattr4_change_attr_type;
+typedef sec_label_attr_info
+		fattr_sec_label;
 
 %/*
 % * REQUIRED Attributes
@@ -587,7 +597,7 @@ const FATTR4_MODE_SET_MASKED	= 74;
 const FATTR4_FS_CHARSET_CAP	= 76;
 const FATTR4_SPACE_RESERVED	= 77;
 const FATTR4_SPACE_FREED	= 78;
-const FATTR4_MAX_HOLE_PUNCHED	= 79;
+const FATTR4_MAX_HOLE_PUNCH	= 79;
 const FATTR4_CHANGE_ATTR_TYPE	= 80;
 const FATTR4_SEC_LABEL		= 81;
 
