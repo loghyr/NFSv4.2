@@ -272,6 +272,8 @@ AUTOGEN =	\
 		autogen/cb_getattr_args.xml \
 		autogen/cb_getattr_res.xml \
 		autogen/cb_illegal_res.xml \
+		autogen/cb_label_changed_args.xml \
+		autogen/cb_label_changed_res.xml \
 		autogen/cb_layoutrecall_args.xml \
 		autogen/cb_layoutrecall_res.xml \
 		autogen/cb_notify_args.xml \

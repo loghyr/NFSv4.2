@@ -153,7 +153,9 @@ BACK_OPS =	cb_getattr_args.x \
 		cb_notify_deviceid_args.x \
 		cb_notify_deviceid_res.x \
 		cb_copy_args.x \
-		cb_copy_res.x
+		cb_copy_res.x \
+		cb_label_changed_args.x \
+		cb_label_changed_res.x
 
 SPITGEN =	basic_types.x \
 		type_nfstime4.x \
