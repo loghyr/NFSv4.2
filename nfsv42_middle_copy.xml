@@ -37,7 +37,6 @@
   </section>
 
   <section title="Protocol Overview">
-
     <t>
       The server-side copy offload operations support both intra-server and 
       inter-server file copies. An intra-server copy is a copy in which the 
@@ -86,7 +85,6 @@
 
     <t>
       <list style="symbols">
-
         <t>
           The pull model only requires a remote server (i.e. the destination
           server) to be granted read access. A push model requires a
@@ -119,67 +117,65 @@
 
     <t>
       <list style="hanging">
+        <t hangText="COPY_NOTIFY:">
+          For inter-server copies, the client sends  
+          this operation to the source server to notify it of a future 
+          file copy from a given destination server for the given user.
+        </t>
 
-      <t hangText="COPY_NOTIFY:">
-        For inter-server copies, the client sends  
-        this operation to the source server to notify it of a future 
-        file copy from a given destination server for the given user.
-      </t>
+        <t hangText="COPY_REVOKE:">
+          Also for inter-server copies, the client 
+          sends this operation to the source server to revoke permission 
+          to copy a file for the given user.
+        </t>
 
-      <t hangText="COPY_REVOKE:">
-        Also for inter-server copies, the client 
-        sends this operation to the source server to revoke permission 
-        to copy a file for the given user.
-      </t>
+        <t hangText="COPY:">
+          Used by the client to request a file copy.
+        </t>
 
-      <t hangText="COPY:">
-        Used by the client to request a file copy.
-      </t>
+        <t hangText="COPY_ABORT:">
+          Used by the client to abort an asynchronous file copy.
+        </t>
 
-      <t hangText="COPY_ABORT:">
-        Used by the client to abort an asynchronous file copy.
-      </t>
+        <t hangText="COPY_STATUS:">
+          Used by the client to poll the status of 
+          an asynchronous file copy.
+        </t>
 
-      <t hangText="COPY_STATUS:">
-        Used by the client to poll the status of 
-        an asynchronous file copy.
-      </t>
-
-      <t hangText="CB_COPY:">
-        Used by the destination server to report the 
-        results of an asynchronous file copy to the client.
-      </t>
-    </list>
-  </t>
-
-  <t>
-    These operations are described in detail in <xref target="operations"/>.
-    This section provides an overview of how these operations are used 
-    to perform server-side copies.
-  </t>
-
-  <section title="Intra-Server Copy">
-
-    <t>
-      To copy a file on a single server, the client uses a COPY operation. 
-      The server may respond to the copy operation with the final results of 
-      the copy or it may perform the copy asynchronously and deliver the 
-      results using a CB_COPY operation callback. If the copy is performed 
-      asynchronously, the client may poll the status of the copy using 
-      COPY_STATUS or cancel the copy using COPY_ABORT.
+        <t hangText="CB_COPY:">
+          Used by the destination server to report the 
+          results of an asynchronous file copy to the client.
+        </t>
+      </list>
     </t>
 
     <t>
-      A synchronous intra-server copy is shown in 
-      <xref target="sync-intra-server-fig"/>. In this example, the NFS 
-      server chooses to perform the copy synchronously. The copy operation 
-      is completed, either successfully or unsuccessfully, before the 
-      server replies to the client's request. The server's reply contains 
-      the final result of the operation.
+      These operations are described in detail in <xref target="operations"/>.
+      This section provides an overview of how these operations are used 
+      to perform server-side copies.
     </t>
 
-    <figure title="A synchronous intra-server copy." anchor="sync-intra-server-fig">
-      <artwork><![CDATA[
+    <section title="Intra-Server Copy">
+      <t>
+        To copy a file on a single server, the client uses a COPY operation. 
+        The server may respond to the copy operation with the final results of 
+        the copy or it may perform the copy asynchronously and deliver the 
+        results using a CB_COPY operation callback. If the copy is performed 
+        asynchronously, the client may poll the status of the copy using 
+        COPY_STATUS or cancel the copy using COPY_ABORT.
+      </t>
+
+      <t>
+        A synchronous intra-server copy is shown in 
+        <xref target="sync-intra-server-fig"/>. In this example, the NFS 
+        server chooses to perform the copy synchronously. The copy operation 
+        is completed, either successfully or unsuccessfully, before the 
+        server replies to the client's request. The server's reply contains 
+        the final result of the operation.
+      </t>
+
+      <figure title="A synchronous intra-server copy." anchor="sync-intra-server-fig">
+        <artwork><![CDATA[
   Client                                  Server
      +                                      +
      |                                      |
@@ -187,24 +183,23 @@
      |<------------------------------------/| a file copy
      |                                      |
      |                                      |
-      ]]></artwork>
-    </figure>
+        ]]></artwork>
+      </figure>
 
-    <t>
-      An asynchronous intra-server copy is shown in 
-      <xref target="async-intra-server-fig"/>. In this example, the NFS 
-      server performs the copy asynchronously. The server's reply to 
-      the copy request indicates that the copy operation was initiated 
-      and the final result will be delivered at a later time. The server's 
-      reply also contains a copy stateid. The client may use this copy 
-      stateid to poll for status information (as shown) or to cancel the copy 
-      using a COPY_ABORT. When the server completes the copy, the server 
-      performs a callback to the client and reports the results.
-    </t>
+      <t>
+        An asynchronous intra-server copy is shown in 
+        <xref target="async-intra-server-fig"/>. In this example, the NFS 
+        server performs the copy asynchronously. The server's reply to 
+        the copy request indicates that the copy operation was initiated 
+        and the final result will be delivered at a later time. The server's 
+        reply also contains a copy stateid. The client may use this copy 
+        stateid to poll for status information (as shown) or to cancel the copy 
+        using a COPY_ABORT. When the server completes the copy, the server 
+        performs a callback to the client and reports the results.
+      </t>
 
-    <figure title="An asynchronous intra-server copy." anchor="async-intra-server-fig">
-      <artwork><![CDATA[
-
+      <figure title="An asynchronous intra-server copy." anchor="async-intra-server-fig">
+        <artwork><![CDATA[
   Client                                  Server
      +                                      +
      |                                      |
@@ -222,28 +217,27 @@
      |<-- CB_COPY --------------------------| Server reports results
      |\------------------------------------>|
      |                                      |
-      ]]></artwork>
-    </figure>
-  </section>
+        ]]></artwork>
+      </figure>
+    </section>
 
-  <section title="Inter-Server Copy">
+    <section title="Inter-Server Copy">
+      <t>
+        A copy may also be performed between two servers. The copy 
+        protocol is designed to accommodate a variety of network 
+        topologies. As shown in <xref target="inter-server-fig"/>, 
+        the client and servers may be connected by multiple networks. 
+        In particular, the servers may be connected by a specialized, 
+        high speed network (network 192.168.33.0/24 in the diagram) 
+        that does not include the client. The protocol allows the 
+        client to setup the copy between the servers (over network 
+        10.11.78.0/24 in the diagram) and for the servers to 
+        communicate on the high speed network if they choose to 
+        do so.
+      </t>
 
-    <t>
-      A copy may also be performed between two servers. The copy 
-      protocol is designed to accommodate a variety of network 
-      topologies. As shown in <xref target="inter-server-fig"/>, 
-      the client and servers may be connected by multiple networks. 
-      In particular, the servers may be connected by a specialized, 
-      high speed network (network 192.168.33.0/24 in the diagram) 
-      that does not include the client. The protocol allows the 
-      client to setup the copy between the servers (over network 
-      10.11.78.0/24 in the diagram) and for the servers to 
-      communicate on the high speed network if they choose to 
-      do so.
-    </t>
-
-    <figure title="An example inter-server network topology." anchor="inter-server-fig">
-      <artwork><![CDATA[
+      <figure title="An example inter-server network topology." anchor="inter-server-fig">
+        <artwork><![CDATA[
                           192.168.33.0/24
               +-------------------------------------+
               |                                     |
@@ -263,35 +257,35 @@
                            +-----+-----+
                            |   Client  |
                            +-----------+
-      ]]></artwork>
-    </figure>
+        ]]></artwork>
+      </figure>
 
-    <t>
-      For an inter-server copy, the client notifies the source 
-      server that a file will be copied by the destination 
-      server using a COPY_NOTIFY operation. The client then 
-      initiates the copy by sending the COPY operation to the 
-      destination server. The destination server may perform the 
-      copy synchronously or asynchronously.
-    </t> 
+      <t>
+        For an inter-server copy, the client notifies the source 
+        server that a file will be copied by the destination 
+        server using a COPY_NOTIFY operation. The client then 
+        initiates the copy by sending the COPY operation to the 
+        destination server. The destination server may perform the 
+        copy synchronously or asynchronously.
+      </t> 
 
-    <t>
-      A synchronous inter-server copy is shown in 
-      <xref target="sync-inter-server-fig"/>. In this case, the 
-      destination server chooses to perform the copy before 
-      responding to the client's COPY request.
-    </t> 
+      <t>
+        A synchronous inter-server copy is shown in 
+        <xref target="sync-inter-server-fig"/>. In this case, the 
+        destination server chooses to perform the copy before 
+        responding to the client's COPY request.
+      </t> 
 
-    <t>
-      An asynchronous copy is shown in 
-      <xref target="async-inter-server-fig"/>. In this case, the 
-      destination server chooses to respond to the client's COPY 
-      request immediately and then perform the copy 
-      asynchronously.
-    </t>
+      <t>
+        An asynchronous copy is shown in 
+        <xref target="async-inter-server-fig"/>. In this case, the 
+        destination server chooses to respond to the client's COPY 
+        request immediately and then perform the copy 
+        asynchronously.
+      </t>
 
-    <figure title="A synchronous inter-server copy." anchor="sync-inter-server-fig">
-      <artwork><![CDATA[
+      <figure title="A synchronous inter-server copy." anchor="sync-inter-server-fig">
+        <artwork><![CDATA[
   Client                Source         Destination 
      +                    +                 +
      |                    |                 |
@@ -312,11 +306,11 @@
      |                    |                 |
      |<------------------------------------/| Destination replies
      |                    |                 | to COPY
-      ]]></artwork>
-    </figure>
+        ]]></artwork>
+      </figure>
 
-    <figure title="An asynchronous inter-server copy." anchor="async-inter-server-fig">
-      <artwork><![CDATA[
+      <figure title="An asynchronous inter-server copy." anchor="async-inter-server-fig">
+        <artwork><![CDATA[
   Client                Source         Destination 
      +                    +                 +
      |                    |                 |
@@ -348,22 +342,20 @@
      |<-- CB_COPY --------------------------| Destination reports
      |\------------------------------------>| results
      |                    |                 |
-      ]]></artwork>
-    </figure>
-  </section>
+        ]]></artwork>
+      </figure>
+    </section>
 
-  <section title="Server-to-Server Copy Protocol" anchor="server-to-server-proto">
-
-    <t>
-      During an inter-server copy, the destination server reads 
-      the file data from the source server. The source server and 
-      destination server are not required to use a specific protocol to 
-      transfer the file data. The choice of what protocol to use 
-      is ultimately the destination server's decision.
-    </t>
+    <section title="Server-to-Server Copy Protocol" anchor="server-to-server-proto">
+      <t>
+        During an inter-server copy, the destination server reads 
+        the file data from the source server. The source server and 
+        destination server are not required to use a specific protocol to 
+        transfer the file data. The choice of what protocol to use 
+        is ultimately the destination server's decision.
+      </t>
 
       <section title="Using NFSv4.x as a Server-to-Server Copy Protocol">
-
         <t>
           The destination server MAY use standard NFSv4.x (where x >= 1) 
           to read the data from the source server. If NFSv4.x is used 
@@ -379,7 +371,6 @@
       </section>
 
       <section title="Using an alternative Server-to-Server Copy Protocol">
-
         <t>
           In a homogeneous environment, the source and destination servers 
           might be able to perform the file copy extremely efficiently using 
@@ -436,7 +427,6 @@
   </section>
 
   <section title="Operations" anchor="operations">
-
     <t>
       In the sections that follow, several operations are defined that
       together provide the server-side copy feature. These operations 
@@ -462,7 +452,6 @@
     </t>
 
     <section title="netloc4 - Network Locations">
-
       <t>
         The server-side copy operations specify network locations using 
         the netloc4 data type shown below:
@@ -493,7 +482,6 @@
     </section>
 
     <section title="Operation 61: COPY_NOTIFY - Notify a source server of a future copy">
-
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_notify_args.xml'?>
       </section>
@@ -503,7 +491,6 @@
       </section>
 
       <section title="DESCRIPTION">
- 
         <t>
           This operation is used for an inter-server copy. A client 
           sends this operation in a COMPOUND request to the source 
@@ -644,7 +631,6 @@
       </section>
 
       <section title="DESCRIPTION">
- 
         <t>
           This operation is used for an inter-server copy. A client sends this 
           operation in a COMPOUND request to the source server to revoke the
@@ -703,7 +689,6 @@
     </section>
 
     <section title="Operation 59: COPY - Initiate a server-side copy">
-
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_args.xml'?>
       </section>
@@ -713,7 +698,6 @@
       </section>
 
       <section title="DESCRIPTION">
- 
         <t>
           The COPY operation is used for both intra- and inter-server 
           copies. In both cases, the COPY is always sent from the client 
@@ -734,10 +718,12 @@
           include a sub-sequence of operations such as
         </t>
 
-      <figure><artwork>
-                        PUTFH source-fh
-                        SAVEFH
-      </artwork></figure>
+        <figure>
+          <artwork>
+   PUTFH source-fh
+   SAVEFH
+          </artwork>
+        </figure>
 
         <t>
           If the request is for a server-to-server copy, the source-fh 
@@ -1149,7 +1135,6 @@
     </section>
 
     <section title="Operation 60: COPY_ABORT - Cancel a server-side copy">
-
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_abort_args.xml'?>
       </section>
@@ -1159,7 +1144,6 @@
       </section>
 
       <section title="DESCRIPTION">
- 
         <t>
           COPY_ABORT is used for both intra- and inter-server 
           asynchronous copies. The COPY_ABORT operation allows the client 
@@ -1223,7 +1207,6 @@
     </section>
   
     <section title="Operation 63: COPY_STATUS - Poll for status of a server-side copy">
-
       <section title="ARGUMENT">
         <?rfc include='autogen/copy_status_args.xml'?>
       </section>
@@ -1233,7 +1216,6 @@
       </section>
 
       <section title="DESCRIPTION">
- 
         <t>
           COPY_STATUS is used for both intra- and inter-server asynchronous 
           copies. The COPY_STATUS operation allows the client to poll the 
@@ -1292,7 +1274,6 @@
     </section>
   
     <section title="Operation 15: CB_COPY - Report results of a server-side copy">
-
       <section title="ARGUMENT">
         <?rfc include='autogen/cb_copy_args.xml'?>
       </section>
@@ -1302,7 +1283,6 @@
       </section>
 
       <section title="DESCRIPTION">
- 
         <t>
           CB_COPY is used for both intra- and inter-server asynchronous 
           copies. The CB_COPY callback informs the client of the result of
@@ -1348,7 +1328,6 @@
     </section>
 
     <section title="Copy Offload Stateids" anchor="copy_stateid">
-
       <t>
         A server may perform a copy offload operation asynchronously. An 
         asynchronous copy is tracked using a copy offload stateid. Copy 
@@ -1380,9 +1359,8 @@
   </section>
 
   <section title="Security Considerations">
-
     <t>
-     The security considerations pertaining to NFSv4 <xref target="RFC3530bis" />
+      The security considerations pertaining to NFSv4 <xref target="RFC3530bis" />
       apply to this document.
     </t>
 
@@ -1404,9 +1382,7 @@
     </t>
 
     <section title="Inter-Server Copy Security" anchor="server-to-server-sec">
-
       <section title="Requirements for Secure Inter-Server Copy">
-
         <t>
           Inter-server copy is driven by several requirements:
         </t>
@@ -1458,7 +1434,6 @@
       </section>
 
       <section title="Inter-Server Copy with RPCSEC_GSSv3">
-
         <t>
           When the client sends a COPY_NOTIFY to the source server to expect 
           the destination to attempt to copy data from the source server, it 
@@ -1552,7 +1527,6 @@
         </t>
 
         <section title="Establishing a Security Context">
-
           <t>
             When the user principal wants to COPY a file between two servers, if it has 
             not established copy_from_auth and copy_to_auth privileges on the servers, 
@@ -1582,14 +1556,16 @@
 
                 <vspace blankLines="1"/>
 
-              <figure><artwork>
-        struct {
-            rpc_gss3_gss_binding    *compound_binding;
-            rpc_gss3_chan_binding   *chan_binding_mic;
-            rpc_gss3_assertion      assertions&lt;&gt;;
-            rpc_gss3_extension      extensions&lt;&gt;;
-        } rpc_gss3_create_args;
-              </artwork></figure>
+                <figure>
+                  <artwork>
+   struct {
+      rpc_gss3_gss_binding    *compound_binding;
+      rpc_gss3_chan_binding   *chan_binding_mic;
+      rpc_gss3_assertion      assertions&lt;&gt;;
+      rpc_gss3_extension      extensions&lt;&gt;;
+   } rpc_gss3_create_args;
+                 </artwork>
+                </figure>
 
                 <vspace blankLines="1"/>
 
@@ -1605,15 +1581,17 @@
 
                 <vspace blankLines="1"/>
 
-                <figure><artwork>
-        struct {
-            opaque                  handle&lt;&gt;;
-            rpc_gss3_chan_binding   *chan_binding_mic;
-            rpc_gss3_assertion      granted_assertions&lt;&gt;;
-            rpc_gss3_assertion      server_assertions&lt;&gt;;
-            rpc_gss3_extension      extensions&lt;&gt;;
-        } rpc_gss3_create_res;
-                </artwork></figure>
+                <figure>
+                  <artwork>
+   struct {
+      opaque                  handle&lt;&gt;;
+      rpc_gss3_chan_binding   *chan_binding_mic;
+      rpc_gss3_assertion      granted_assertions&lt;&gt;;
+      rpc_gss3_assertion      server_assertions&lt;&gt;;
+      rpc_gss3_extension      extensions&lt;&gt;;
+   } rpc_gss3_create_res;
+                  </artwork>
+                </figure>
 
                 <vspace blankLines="1"/>
 
@@ -1636,14 +1614,16 @@
 
                 <vspace blankLines="1"/>
 
-                <figure><artwork>
-        struct {
-            rpc_gss3_gss_binding    *compound_binding;
-            rpc_gss3_chan_binding   *chan_binding_mic;
-            rpc_gss3_assertion      assertions&lt;&gt;;
-            rpc_gss3_extension      extensions&lt;&gt;;
-        } rpc_gss3_create_args;
-                </artwork></figure>
+                <figure>
+                  <artwork>
+   struct {
+      rpc_gss3_gss_binding    *compound_binding;
+      rpc_gss3_chan_binding   *chan_binding_mic;
+      rpc_gss3_assertion      assertions&lt;&gt;;
+      rpc_gss3_extension      extensions&lt;&gt;;
+   } rpc_gss3_create_args;
+                  </artwork>
+                </figure>
 
                 <vspace blankLines="1"/>
 
@@ -1657,15 +1637,17 @@
 
                 <vspace blankLines="1"/>
 
-                <figure><artwork>
-        struct {
-            opaque                  handle&lt;&gt;;
-            rpc_gss3_chan_binding   *chan_binding_mic;
-            rpc_gss3_assertion      granted_assertions&lt;&gt;;
-            rpc_gss3_assertion      server_assertions&lt;&gt;;
-            rpc_gss3_extension      extensions&lt;&gt;;
-        } rpc_gss3_create_res;
-                </artwork></figure>
+                <figure>
+                  <artwork>
+   struct {
+      opaque                  handle&lt;&gt;;
+      rpc_gss3_chan_binding   *chan_binding_mic;
+      rpc_gss3_assertion      granted_assertions&lt;&gt;;
+      rpc_gss3_assertion      server_assertions&lt;&gt;;
+      rpc_gss3_extension      extensions&lt;&gt;;
+   } rpc_gss3_create_res;
+                  </artwork>
+                </figure>
 
                 <vspace blankLines="1"/>
 
@@ -1679,7 +1661,6 @@
         </section>
 
         <section title="Starting a Secure Inter-Server Copy">
-
           <t>
             When the client sends a COPY_NOTIFY request to the source server, it uses 
             the privileged "copy_from_auth" RPCSEC_GSSv3 handle. cna_destination_server 
@@ -1719,7 +1700,6 @@
         </section>
 
         <section title="Securing ONC RPC Server-to-Server Copy Protocols">
-
           <t>
             After a destination server has a "copy_to_auth" privilege established on 
             it, and it receives a COPY request, if it knows it will use an ONC RPC 
@@ -1756,7 +1736,6 @@
   
           <t>
             <list style="symbols">
-
               <t>
                 if a protocol like NFS is being used, with export policies, 
                 export policies can be overridden in case the destination server 
@@ -1779,7 +1758,6 @@
 
         <section title="Securing Non ONC RPC Server-to-Server Copy Protocols"
          anchor="server-to-server-no-rpc-with-gss">
-
           <t>
             If the destination won't be using ONC RPC to copy the data, then 
             the source and destination are using an unspecified copy protocol. 
@@ -1801,7 +1779,6 @@
 
       <section title="Inter-Server Copy via ONC RPC but without RPCSEC_GSSv3" 
        anchor="server-to-server-with-rpc-no-gss">
-
         <t>
           ONC RPC security flavors other than RPCSEC_GSSv3 MAY be used with 
           the server-side copy offload operations described in this 
@@ -1875,7 +1852,6 @@
 
       <section title="Inter-Server Copy without ONC RPC and RPCSEC_GSSv3" 
          anchor="server-to-server-no-rpc-no-gss">
-
         <t>
           The same techniques as <xref target="server-to-server-with-rpc-no-gss"/>, 
           using unique URLs for each destination server, can be used for other 
