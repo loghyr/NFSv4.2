@@ -86,9 +86,9 @@
     <t>
       <list style="symbols">
         <t>
-          The pull model only requires a remote server (i.e. the destination
+          The pull model only requires a remote server (i.e., the destination
           server) to be granted read access. A push model requires a
-          remote server (i.e. the source server) to be granted write
+          remote server (i.e., the source server) to be granted write
           access, which is more privileged.
         </t>
 
@@ -389,7 +389,7 @@
 
         <t>
           In a heterogeneous environment, using a protocol other than NFSv4.x
-          (e.g. HTTP <xref target="RFC2616"/> or FTP <xref target="RFC0959"/>)
+          (e.g,. HTTP <xref target="RFC2616"/> or FTP <xref target="RFC0959"/>)
           presents some challenges. In particular, the destination
           server is presented with the challenge of accessing the source file
           given only an NFSv4.x filehandle.
@@ -551,14 +551,14 @@
 
         <t>
           To take propagation delay into account, the client should
-          subtract it from copy lease times (e.g. if the client estimates
+          subtract it from copy lease times (e.g., if the client estimates
           the one-way propagation delay as 200 milliseconds, then it can
           assume that the lease is already 200 milliseconds old when it gets
           it). In addition, it will take another 200 milliseconds to get a
           response back to the server. So the client must send a lease
           renewal or send the copy offload request to the cna_destination_server
           at least 400 milliseconds before the copy lease would expire. If
-          the propagation delay varies over the life of the lease (e.g. the
+          the propagation delay varies over the life of the lease (e.g., the
           client is on a mobile host), the client will need to continuously
           subtract the increase in propagation delay from the copy lease times.
         </t>
@@ -780,7 +780,7 @@
           through EOF be copied to the destination. If concurrent modifications
           to the source file overlap with the source file region being copied,
           the data copied may include all, some, or none of the
-          modifications. The client can use standard NFS operations (e.g. OPEN with
+          modifications. The client can use standard NFS operations (e.g., OPEN with
           OPEN4_SHARE_DENY_WRITE or mandatory byte range locks) to protect against
           concurrent modifications if the client is concerned about this. If the
           source file's end of file is being modified in parallel with a copy that
@@ -851,7 +851,7 @@
 
         <t>
           If the metadata flag is set and the client is requesting a
-          whole file copy (i.e. ca_count is 0 (zero)), a subset of
+          whole file copy (i.e., ca_count is 0 (zero)), a subset of
           the destination file's attributes MUST be the same as the
           source file's corresponding attributes and a subset of
           the destination file's attributes SHOULD be the same as
@@ -1002,12 +1002,12 @@
 
         <t>
           If the metadata flag is not set and the client is requesting a
-          whole file copy (i.e. ca_count is 0 (zero)), the destination
+          whole file copy (i.e., ca_count is 0 (zero)), the destination
           file's metadata is implementation dependent.
         </t>
 
         <t>
-          If the client is requesting a partial file copy (i.e. ca_count
+          If the client is requesting a partial file copy (i.e., ca_count
           is not 0 (zero)), the client SHOULD NOT set the metadata flag
           and the server MUST ignore the metadata flag.
         </t>
@@ -1516,7 +1516,7 @@
               from the source on behalf of the user principal. When
               the inter-server copy protocol is NFSv4, or for that
               matter, any protocol capable of being secured via
-              RPCSEC_GSSv3 (i.e. any ONC RPC protocol), this privilege
+              RPCSEC_GSSv3 (i.e., any ONC RPC protocol), this privilege
               is established before the file is copied from the
               source to the destination.
 
@@ -1670,7 +1670,7 @@
             &lt;"copy_from_auth", user id, destination&gt; exists, and annotates it
             with the source filehandle, if the user principal has read
             access to the source file, and if administrative policies give the user
-            principal and the NFS client read access to the source file (i.e. if the
+            principal and the NFS client read access to the source file (i.e., if the
             ACCESS operation would grant read access). Otherwise, COPY_NOTIFY will fail
             with NFS4ERR_ACCESS.
           </t>
@@ -1768,7 +1768,7 @@
 
           <t>
             For protocols that authenticate user names with passwords
-            (e.g. HTTP <xref target="RFC2616"/> and FTP <xref target="RFC0959"/>),
+            (e.g., HTTP <xref target="RFC2616"/> and FTP <xref target="RFC0959"/>),
             the nfsv4 user id could be used as the user name, and an ASCII
             hexadecimal representation of the RPCSEC_GSSv3 shared secret could be
             used as the user password or as input into non-password authentication
@@ -1855,7 +1855,7 @@
         <t>
           The same techniques as <xref target="server-to-server-with-rpc-no-gss"/>,
           using unique URLs for each destination server, can be used for other
-          protocols (e.g. HTTP <xref target="RFC2616"/> and FTP <xref target="RFC0959"/>)
+          protocols (e.g., HTTP <xref target="RFC2616"/> and FTP <xref target="RFC0959"/>)
           as well.
         </t>
       </section>
