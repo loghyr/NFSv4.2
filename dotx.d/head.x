@@ -177,7 +177,7 @@ enum nfsstat4 {
  NFS4ERR_PARTNER_NOTSUPP= 10088,/* s2s not supported       */
  NFS4ERR_PARTNER_NO_AUTH= 10089,/* s2s not authorized      */
  NFS4ERR_METADATA_NOTSUPP=10090,/* dest metadata diff sourc*/
- NFS4ERR_DU_ARM_NOTSUPP = 10091,/* Arm of union not supp   */
+ NFS4ERR_UNION_NOTSUPP  = 10091,/* Arm of union not supp   */
  NFS4ERR_WRONG_LFS      = 10092,/* LFS not supported       */
  NFS4ERR_BAD_LABEL      = 10093,/* incorrect label         */
  NFS4ERR_MAC_ACCESS     = 10094 /* No MAC access allowed   */
@@ -497,7 +497,7 @@ typedef uint64_t	fattr_max_hole_punch;
 typedef change_attr_typeinfo
 		fattr4_change_attr_type;
 typedef sec_label_attr_info
-		fattr_sec_label;
+		fattr_sec_label<>;
 
 %/*
 % * REQUIRED Attributes
