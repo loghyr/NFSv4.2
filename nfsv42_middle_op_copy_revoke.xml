@@ -1,0 +1,66 @@
+<section title="Operation 62: COPY_REVOKE - Revoke a destination server's copy privileges">
+  <section title="ARGUMENT">
+    <?rfc include='autogen/copy_revoke_args.xml'?>
+  </section>
+
+  <section title="RESULT">
+    <?rfc include='autogen/copy_revoke_res.xml'?>
+  </section>
+
+  <section title="DESCRIPTION">
+    <t>
+      This operation is used for an inter-server copy. A client sends this
+      operation in a COMPOUND request to the source server to revoke the
+      authorization of a destination server identified by
+      cra_destination_server from
+      reading the file specified by CURRENT_FH on behalf of given user. If the
+      cra_destination_server has already begun copying the file, a successful
+      return from this operation indicates that further access will be prevented.
+    </t>
+
+    <t>
+      The cra_destination_server MUST be specified using the
+      netloc4 network location format. The server is not required
+      to resolve the cra_destination_server address before completing
+      this operation.
+    </t>
+
+    <t>
+      The COPY_REVOKE operation is useful in situations in which the
+      source server granted a very long or infinite lease on the
+      destination server's ability to read the source file and
+      all copy operations on the source file have been completed.
+    </t>
+
+    <t>
+      For a copy only involving one server (the source and destination
+      are on the same server), this operation is unnecessary.
+    </t>
+
+    <t>
+      If the server supports COPY_NOTIFY, the server is
+      REQUIRED to support the COPY_REVOKE operation.
+    </t>
+
+    <t>
+      The COPY_REVOKE operation may fail for the following reasons
+      (this is a partial list):
+    </t>
+
+    <t>
+      <list style="hanging">
+
+        <t hangText="NFS4ERR_MOVED:">
+          The file system which contains the source file
+          is not present on the source server. The client can determine the correct
+          location and reissue the operation with the correct location.
+        </t>
+
+        <t hangText="NFS4ERR_NOTSUPP:">
+          The copy offload operation is not supported by
+          the NFS server receiving this request.
+        </t>
+      </list>
+    </t>
+  </section>
+</section>

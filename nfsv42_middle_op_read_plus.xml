@@ -1,0 +1,55 @@
+<section anchor='ss:adb:read_plus' title='Operation 65: READ_PLUS'>
+  <t>
+    If the client sends a READ operation, it is explicitly
+    stating that it is not supporting sparse files. So
+    if a READ occurs on a sparse ADB, then the server must
+    expand such ADBs to be raw bytes. If a READ occurs in
+    the middle of an ADB, the server can only send back
+    bytes starting from that offset.
+  </t>
+
+  <t>
+    Such an operation is inefficient for transfer of sparse
+    sections of the file. As such, READ is marked as OBSOLETE in
+    NFSv4.2. Instead, a client should issue READ_PLUS. Note that
+    as the client has no a priori knowledge of whether an ADB
+    is present or not, it should always use READ_PLUS.
+  </t>
+
+  <section title="ARGUMENT">
+    <?rfc include='autogen/read_plus_args.xml'?>
+  </section>
+
+  <section title="RESULT">
+    <?rfc include='autogen/read_plus_res.xml'?>
+  </section>
+
+  <section title="DESCRIPTION">
+    <t>
+      Over the given range, READ_PLUS will return all data
+      and ADBs found as an array of read_plus_content. It is
+      possible to have consecutive ADBs in the array as
+      either different definitions of ADBs are present or
+      as the guard pattern changes.
+    </t>
+
+    <t>
+      Edge cases exist for ABDs which either begin before the
+      rpa_offset requested by the READ_PLUS or end after the
+      rpa_count requested - both of which may occur as not all
+      applications which access the file are aware of the
+      main application imposing a format on the file contents, i.e.,
+      tar, dd, cp, etc. READ_PLUS MUST retrieve whole ADBs, but
+      it need not retrieve an entire sequences of ADBs.
+    </t>
+
+    <t>
+      The server MUST return a whole ADB because if it does
+      not, it must expand that partial ADB before it sends
+      it to the client. E.g., if an ADB had a block size of
+      64k and the READ_PLUS was for 128k starting at an
+      offset of 32k inside the ADB, then the first 32k
+      would be converted to data.
+    </t>
+  </section>
+</section>

@@ -1,0 +1,436 @@
+<section title="Operation 59: COPY - Initiate a server-side copy">
+  <section title="ARGUMENT">
+    <?rfc include='autogen/copy_args.xml'?>
+  </section>
+
+  <section title="RESULT">
+    <?rfc include='autogen/copy_res.xml'?>
+  </section>
+
+  <section title="DESCRIPTION">
+    <t>
+      The COPY operation is used for both intra- and inter-server
+      copies. In both cases, the COPY is always sent from the client
+      to the destination server of the file copy. The COPY operation
+      requests that a file be copied from the location specified by the
+      SAVED_FH value to the location specified by the combination of
+      CURRENT_FH and ca_destination.
+    </t>
+
+    <t>
+      The SAVED_FH must be a regular file. If SAVED_FH is not a
+      regular file, the operation MUST fail and return NFS4ERR_WRONG_TYPE.
+    </t>
+
+    <t>
+      In order to set SAVED_FH to the source file handle,
+      the compound procedure requesting the COPY will
+      include a sub-sequence of operations such as
+    </t>
+
+    <figure>
+      <artwork>
+   PUTFH source-fh
+   SAVEFH
+      </artwork>
+    </figure>
+
+    <t>
+      If the request is for a server-to-server copy, the source-fh
+      is a filehandle from the source server and the compound
+      procedure is being executed on the destination server. In
+      this case, the source-fh is a foreign filehandle on the
+      server receiving the COPY request. If either PUTFH or
+      SAVEFH checked the validity of the filehandle, the operation
+      would likely fail and return NFS4ERR_STALE.
+    </t>
+
+    <t>
+      In order to avoid this problem, the minor version incorporating
+      the COPY operations will need to make a few small changes in
+      the handling of existing operations. If a server supports the
+      server-to-server COPY feature, a PUTFH followed by a SAVEFH
+      MUST NOT return NFS4ERR_STALE for either operation. These
+      restrictions do not pose substantial difficulties for
+      servers. The CURRENT_FH and SAVED_FH may be validated in the
+      context of the operation referencing them and an NFS4ERR_STALE
+      error returned for an invalid file handle at that point.
+    </t>
+
+    <t>
+      The CURRENT_FH and ca_destination together specify the
+      destination of the copy operation. If ca_destination
+      is of 0 (zero) length, then CURRENT_FH specifies the target file.
+      In this case, CURRENT_FH MUST be a regular file and not a directory.
+      If ca_destination is not of 0 (zero) length, the ca_destination
+      argument specifies the file name to which the data will be copied
+      within the directory identified by CURRENT_FH. In this case,
+      CURRENT_FH MUST be a directory and not a regular file.
+    </t>
+
+    <t>
+      If the file named by ca_destination does not exist and the operation
+      completes successfully, the file will be visible in the file system
+      namespace. If the file does not exist and the operation fails, the
+      file MAY be visible in the file system namespace depending on when
+      the failure occurs and on the implementation of the NFS server
+      receiving the COPY operation. If the ca_destination name
+      cannot be created in the destination file system (due to
+      file name restrictions, such as case or length), the operation
+      MUST fail.
+    </t>
+
+    <t>
+      The ca_src_offset is the offset within the source file from
+      which the data will be read, the ca_dst_offset is the offset
+      within the destination file to which the data will be
+      written, and the ca_count is the number of bytes that will be
+      copied. An offset of 0 (zero) specifies the start of the file. A
+      count of 0 (zero) requests that all bytes from ca_src_offset
+      through EOF be copied to the destination. If concurrent modifications
+      to the source file overlap with the source file region being copied,
+      the data copied may include all, some, or none of the
+      modifications. The client can use standard NFS operations (e.g., OPEN with
+      OPEN4_SHARE_DENY_WRITE or mandatory byte range locks) to protect against
+      concurrent modifications if the client is concerned about this. If the
+      source file's end of file is being modified in parallel with a copy that
+      specifies a count of 0 (zero) bytes, the amount of data copied is
+      implementation dependent (clients may guard against this case by specifying
+      a non-zero count value or preventing modification of the source file as
+      mentioned above).
+    </t>
+
+    <t>
+      If the source offset or the source offset plus count is
+      greater than or equal to the size of the source file, the
+      operation will fail with NFS4ERR_INVAL. The destination
+      offset or destination offset plus count may be greater than
+      the size of the destination file. This allows for the client
+      to issue parallel copies to implement operations such as
+      "cat file1 file2 file3 file4 > dest".
+    </t>
+
+    <t>
+      If the destination file is created as a result of this command, the
+      destination file's size will be equal to the number of bytes
+      successfully copied. If the destination file already existed, the
+      destination file's size may increase as a result of this operation
+      (e.g. if ca_dst_offset plus ca_count is greater than the destination's
+      initial size).
+    </t>
+
+    <t>
+      If the ca_source_server list is specified, then this is an inter-server
+      copy operation and the source file is on a remote server.  The client
+      is expected to have previously issued a successful COPY_NOTIFY request
+      to the remote source server. The ca_source_server list SHOULD be the
+      same as the COPY_NOTIFY response's cnr_source_server list. If the client
+      includes the entries from the COPY_NOTIFY response's cnr_source_server
+      list in the ca_source_server list, the source server can indicate a
+      specific copy protocol for the destination server to use by returning
+      a URL, which specifies both a protocol service and server name.
+      Server-to-server copy protocol considerations are described in
+      <xref target="server-to-server-proto"/> and
+      <xref target="server-to-server-sec"/>.
+    </t>
+
+    <t>
+      The ca_flags argument allows the copy operation to be
+      customized in the following ways using the guarded flag
+      (COPY4_GUARDED) and the metadata flag (COPY4_METADATA).
+    </t>
+
+    <t>
+      If the guarded flag is set and the destination exists on the
+      server, this operation will fail with NFS4ERR_EXIST.
+    </t>
+
+    <t>
+      If the guarded flag is not set and the destination exists
+      on the server, the behavior is implementation dependent.
+    </t>
+
+    <t>
+      If the metadata flag is set and the client is requesting a
+      whole file copy (i.e., ca_count is 0 (zero)), a subset of
+      the destination file's attributes MUST be the same as the
+      source file's corresponding attributes and a subset of
+      the destination file's attributes SHOULD be the same as
+      the source file's corresponding attributes. The attributes
+      in the MUST and SHOULD copy subsets will be defined for each
+      NFS version.
+    </t>
+
+    <t>
+      For NFSv4.1, <xref target="req_attr_tbl"/> and
+      <xref target="rec_attr_tbl"/> list the REQUIRED and
+      RECOMMENDED attributes respectively. A "MUST" in the
+      "Copy to destination file?" column indicates that the
+      attribute is part of the MUST copy set. A "SHOULD" in
+      the "Copy to destination file?" column indicates that
+      the attribute is part of the SHOULD copy set.
+    </t>
+
+    <texttable anchor="req_attr_tbl">
+      <ttcol align='left' >Name</ttcol>
+      <ttcol align='left' >Id</ttcol>
+      <ttcol align='left' >Copy to destination file?</ttcol>
+
+      <c>supported_attrs</c>   <c>0</c> <c>no</c>
+      <c>type</c>              <c>1</c> <c>MUST</c>
+      <c>fh_expire_type</c>    <c>2</c> <c>no</c>
+      <c>change</c>            <c>3</c> <c>SHOULD</c>
+      <c>size</c>              <c>4</c> <c>MUST</c>
+      <c>link_support</c>      <c>5</c> <c>no</c>
+      <c>symlink_support</c>   <c>6</c> <c>no</c>
+      <c>named_attr</c>        <c>7</c> <c>no</c>
+      <c>fsid</c>              <c>8</c> <c>no</c>
+      <c>unique_handles</c>    <c>9</c> <c>no</c>
+      <c>lease_time</c>        <c>10</c><c>no</c>
+      <c>rdattr_error</c>      <c>11</c><c>no</c>
+      <c>filehandle</c>        <c>19</c><c>no</c>
+      <c>suppattr_exclcreat</c><c>75</c><c>no</c>
+    </texttable>
+
+    <texttable anchor="rec_attr_tbl">
+      <ttcol align='left' >Name</ttcol>
+      <ttcol align='left' >Id</ttcol>
+      <ttcol align='left' >Copy to destination file?</ttcol>
+
+      <c>acl</c>               <c>12</c><c>MUST</c>
+      <c>aclsupport</c>        <c>13</c><c>no</c>
+      <c>archive</c>           <c>14</c><c>no</c>
+      <c>cansettime</c>        <c>15</c><c>no</c>
+      <c>case_insensitive</c>  <c>16</c><c>no</c>
+      <c>case_preserving</c>   <c>17</c><c>no</c>
+      <c>change_policy</c>     <c>60</c><c>no</c>
+      <c>chown_restricted</c>  <c>18</c><c>MUST</c>
+      <c>dacl</c>              <c>58</c><c>MUST</c>
+      <c>dir_notif_delay</c>   <c>56</c><c>no</c>
+      <c>dirent_notif_delay</c><c>57</c><c>no</c>
+      <c>fileid</c>            <c>20</c><c>no</c>
+      <c>files_avail</c>       <c>21</c><c>no</c>
+      <c>files_free</c>        <c>22</c><c>no</c>
+      <c>files_total</c>       <c>23</c><c>no</c>
+      <c>fs_charset_cap</c>    <c>76</c><c>no</c>
+      <c>fs_layout_type</c>    <c>62</c><c>no</c>
+      <c>fs_locations</c>      <c>24</c><c>no</c>
+      <c>fs_locations_info</c> <c>67</c><c>no</c>
+      <c>fs_status</c>         <c>61</c><c>no</c>
+      <c>hidden</c>            <c>25</c><c>MUST</c>
+      <c>homogeneous</c>       <c>26</c><c>no</c>
+      <c>layout_alignment</c>  <c>66</c><c>no</c>
+      <c>layout_blksize</c>    <c>65</c><c>no</c>
+      <c>layout_hint</c>       <c>63</c><c>no</c>
+      <c>layout_type</c>       <c>64</c><c>no</c>
+      <c>maxfilesize</c>       <c>27</c><c>no</c>
+      <c>maxlink</c>           <c>28</c><c>no</c>
+      <c>maxname</c>           <c>29</c><c>no</c>
+      <c>maxread</c>           <c>30</c><c>no</c>
+      <c>maxwrite</c>          <c>31</c><c>no</c>
+      <c>mdsthreshold</c>      <c>68</c><c>no</c>
+      <c>mimetype</c>          <c>32</c><c>MUST</c>
+      <c>mode</c>              <c>33</c><c>MUST</c>
+      <c>mode_set_masked</c>   <c>74</c><c>no</c>
+      <c>mounted_on_fileid</c> <c>55</c><c>no</c>
+      <c>no_trunc</c>          <c>34</c><c>no</c>
+      <c>numlinks</c>          <c>35</c><c>no</c>
+      <c>owner</c>             <c>36</c><c>MUST</c>
+      <c>owner_group</c>       <c>37</c><c>MUST</c>
+      <c>quota_avail_hard</c>  <c>38</c><c>no</c>
+      <c>quota_avail_soft</c>  <c>39</c><c>no</c>
+      <c>quota_used</c>        <c>40</c><c>no</c>
+      <c>rawdev</c>            <c>41</c><c>no</c>
+      <c>retentevt_get</c>     <c>71</c><c>MUST</c>
+      <c>retentevt_set</c>     <c>72</c><c>no</c>
+      <c>retention_get</c>     <c>69</c><c>MUST</c>
+      <c>retention_hold</c>    <c>73</c><c>MUST</c>
+      <c>retention_set</c>     <c>70</c><c>no</c>
+      <c>sacl</c>              <c>59</c><c>MUST</c>
+      <c>space_avail</c>       <c>42</c><c>no</c>
+      <c>space_free</c>        <c>43</c><c>no</c>
+      <c>space_total</c>       <c>44</c><c>no</c>
+      <c>space_used</c>        <c>45</c><c>no</c>
+      <c>system</c>            <c>46</c><c>MUST</c>
+      <c>time_access</c>       <c>47</c><c>MUST</c>
+      <c>time_access_set</c>   <c>48</c><c>no</c>
+      <c>time_backup</c>       <c>49</c><c>no</c>
+      <c>time_create</c>       <c>50</c><c>MUST</c>
+      <c>time_delta</c>        <c>51</c><c>no</c>
+      <c>time_metadata</c>     <c>52</c><c>SHOULD</c>
+      <c>time_modify</c>       <c>53</c><c>MUST</c>
+      <c>time_modify_set</c>   <c>54</c><c>no</c>
+    </texttable>
+
+    <t>
+      [NOTE: The space_reserve attribute XXX_TDH_XXX
+       will be in the MUST set.]
+    </t>
+
+    <t>
+      [NOTE: The source file's attribute values will take precedence
+      over any attribute values inherited by the destination file.]
+    </t>
+
+    <t>
+      In the case of an inter-server copy or an intra-server copy
+      between file systems, the attributes supported for the source
+      file and destination file could be different. By definition,the
+      REQUIRED attributes will be supported in all cases. If the
+      metadata flag is set and the source file has a RECOMMENDED
+      attribute that is not supported for the destination file, the
+      copy MUST fail with NFS4ERR_ATTRNOTSUPP.
+    </t>
+
+    <t>
+      Any attribute supported by the destination server that is not
+      set on the source file SHOULD be left unset.
+    </t>
+
+    <t>
+      Metadata attributes not exposed via the NFS protocol SHOULD
+      be copied to the destination file where appropriate.
+    </t>
+
+    <t>
+      The destination file's named attributes are not duplicated
+      from the source file. After the copy process completes, the
+      client MAY attempt to duplicate named attributes using standard
+      NFSv4 operations. However, the destination file's named
+      attribute capabilities MAY be different from the source
+      file's named attribute capabilities.
+    </t>
+
+    <t>
+      If the metadata flag is not set and the client is requesting a
+      whole file copy (i.e., ca_count is 0 (zero)), the destination
+      file's metadata is implementation dependent.
+    </t>
+
+    <t>
+      If the client is requesting a partial file copy (i.e., ca_count
+      is not 0 (zero)), the client SHOULD NOT set the metadata flag
+      and the server MUST ignore the metadata flag.
+    </t>
+
+    <t>
+      If the operation does not result in an immediate failure, the
+      server will return NFS4_OK, and the CURRENT_FH will remain
+      the destination's filehandle.
+    </t>
+
+    <t>
+      If an immediate failure does occur, cr_bytes_copied will be
+      set to the number of bytes copied to the destination file before
+      the error occurred. The cr_bytes_copied value indicates the number
+      of bytes copied but not which specific bytes have been copied.
+    </t>
+
+    <t>
+      A return of NFS4_OK indicates that either the operation is
+      complete or the operation was initiated and a callback will
+      be used to deliver the final status of the operation.
+    </t>
+
+    <t>
+      If the cr_callback_id is returned, this indicates that the operation
+      was initiated and a CB_COPY callback will deliver the final results
+      of the operation. The cr_callback_id stateid is termed a copy stateid
+      in this context. The server is given the option of returning the
+      results in a callback because the data may require a relatively long
+      period of time to copy.
+    </t>
+
+    <t>
+      If no cr_callback_id is returned, the operation completed synchronously
+      and no callback will be issued by the server. The completion status of
+      the operation is indicated by cr_status.
+    </t>
+
+    <t>
+      If the copy completes successfully, either synchronously or
+      asynchronously, the data copied from the source file to the destination
+      file MUST appear identical to the NFS client. However, the NFS server's
+      on disk representation of the data in the source file and destination file
+      MAY differ. For example, the NFS server might encrypt, compress,
+      deduplicate, or otherwise represent the on disk data in the source and
+      destination file differently.
+    </t>
+
+    <t>
+      In the event of a failure the state of the destination file is
+      implementation dependent. The COPY operation may fail for the following
+      reasons (this is a partial list).
+    </t>
+
+    <t>
+      <list style="hanging">
+
+        <t hangText="NFS4ERR_MOVED:">
+          The file system which contains the
+          source file, or the destination file or directory is not present.
+          The client can determine the correct location and reissue the
+          operation with the correct location.
+        </t>
+
+        <t hangText="NFS4ERR_NOTSUPP:">
+          The copy offload operation is not supported by
+          the NFS server receiving this request.
+        </t>
+
+        <t hangText="NFS4ERR_PARTNER_NOTSUPP:">
+          The remote server does not support the
+          server-to-server copy offload protocol.
+        </t>
+
+        <t hangText="NFS4ERR_PARTNER_NO_AUTH:">
+          The remote server does not authorize
+          a server-to-server copy offload operation. This may be due to the
+          client's failure to send the COPY_NOTIFY operation to the remote server,
+          the remote server receiving a server-to-server copy offload request
+          after the copy lease time expired, or for some other permission problem.
+        </t>
+
+        <t hangText="NFS4ERR_FBIG:">
+          The copy operation would have caused the file
+          to grow beyond the server's limit.
+        </t>
+
+        <t hangText="NFS4ERR_NOTDIR:">
+          The CURRENT_FH is a file and ca_destination
+          has non-zero length.
+        </t>
+
+        <t hangText="NFS4ERR_WRONG_TYPE:">
+          The SAVED_FH is not a regular file.
+        </t>
+
+        <t hangText="NFS4ERR_ISDIR:">
+          The CURRENT_FH is a directory and ca_destination
+          has zero length.
+        </t>
+
+        <t hangText="NFS4ERR_INVAL:">
+          The source offset or offset plus count are
+          greater than or equal to the size of the source file.
+        </t>
+
+        <t hangText="NFS4ERR_DELAY:">
+          The server does not have the resources to
+          perform the copy operation at the current time. The client should
+          retry the operation sometime in the future.
+        </t>
+
+        <t hangText="NFS4ERR_METADATA_NOTSUPP:">
+          The destination file cannot
+          support the same metadata as the source file.
+        </t>
+
+        <t hangText="NFS4ERR_WRONGSEC:">
+          The security mechanism being used by the client
+          does not match the server's security policy.
+        </t>
+      </list>
+    </t>
+  </section>
+</section>

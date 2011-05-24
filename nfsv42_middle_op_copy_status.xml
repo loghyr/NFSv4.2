@@ -1,0 +1,66 @@
+<section title="Operation 63: COPY_STATUS - Poll for status of a server-side copy">
+  <section title="ARGUMENT">
+    <?rfc include='autogen/copy_status_args.xml'?>
+  </section>
+
+  <section title="RESULT">
+    <?rfc include='autogen/copy_status_res.xml'?>
+  </section>
+
+  <section title="DESCRIPTION">
+    <t>
+      COPY_STATUS is used for both intra- and inter-server asynchronous
+      copies. The COPY_STATUS operation allows the client to poll the
+      server to determine the status of an asynchronous copy operation.
+      This operation is sent by the client to the destination server.
+    </t>
+
+    <t>
+      If this operation is successful, the number of bytes copied are
+      returned to the client in the csr_bytes_copied field. The
+      csr_bytes_copied value indicates the number of bytes copied but
+      not which specific bytes have been copied.
+    </t>
+
+    <t>
+      If the optional csr_complete field is present, the copy has
+      completed. In this case the status value indicates the result
+      of the asynchronous copy operation. In all cases, the server will
+      also deliver the final results of the asynchronous copy in a
+      CB_COPY operation.
+    </t>
+
+    <t>
+      The failure of this operation does not indicate the result of
+      the asynchronous copy in any way.
+    </t>
+
+    <t>
+      If the server supports asynchronous copies, the server is
+      REQUIRED to support the COPY_STATUS operation.
+    </t>
+
+    <t>
+      The COPY_STATUS operation may fail for the following reasons
+      (this is a partial list):
+    </t>
+
+    <t>
+      <list style="hanging">
+
+        <t hangText="NFS4ERR_NOTSUPP:">
+          The copy status operation is not supported by
+          the NFS server receiving this request.
+        </t>
+
+        <t hangText="NFS4ERR_BAD_STATEID:">
+          The stateid is not valid (see <xref target="copy_stateid"/> below).
+        </t>
+
+        <t hangText="NFS4ERR_EXPIRED:">
+          The stateid has expired (see Copy Offload Stateid section below).
+        </t>
+      </list>
+    </t>
+  </section>
+</section>

@@ -1,0 +1,53 @@
+<section title="Operation 15: CB_COPY - Report results of a server-side copy">
+  <section title="ARGUMENT">
+    <?rfc include='autogen/cb_copy_args.xml'?>
+  </section>
+
+  <section title="RESULT">
+    <?rfc include='autogen/cb_copy_res.xml'?>
+  </section>
+
+  <section title="DESCRIPTION">
+    <t>
+      CB_COPY is used for both intra- and inter-server asynchronous
+      copies. The CB_COPY callback informs the client of the result of
+      an asynchronous server-side copy. This operation is sent by the
+      destination server to the client in a CB_COMPOUND request. The
+      copy is identified by the filehandle and stateid arguments. The result
+      is indicated by the status field. If the copy failed, cca_bytes_copied
+      contains the number of bytes copied before the failure occurred.
+      The cca_bytes_copied value indicates the number of bytes copied
+      but not which specific bytes have been copied.
+    </t>
+
+    <t>
+      In the absence of an established backchannel, the server
+      cannot signal the completion of the COPY via a CB_COPY callback.
+      The loss of a callback channel would be indicated by the server
+      setting the SEQ4_STATUS_CB_PATH_DOWN flag in the sr_status_flags
+      field of the SEQUENCE operation. The client must re-establish the
+      callback channel to receive the status of the COPY operation.
+      Prolonged loss of the callback channel could result in the server
+      dropping the COPY operation state and invalidating the copy stateid.
+    </t>
+
+    <t>
+      If the client supports the COPY operation, the client is
+      REQUIRED to support the CB_COPY operation.
+    </t>
+
+    <t>
+      The CB_COPY operation may fail for the following reasons
+      (this is a partial list):
+    </t>
+
+    <t>
+      <list style="hanging">
+        <t hangText="NFS4ERR_NOTSUPP:">
+          The copy offload operation is not supported by
+          the NFS client receiving this request.
+        </t>
+      </list>
+    </t>
+  </section>
+</section>

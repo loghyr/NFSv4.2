@@ -1,0 +1,138 @@
+<section title="Operation 61: COPY_NOTIFY - Notify a source server of a future copy">
+  <section title="ARGUMENT">
+    <?rfc include='autogen/copy_notify_args.xml'?>
+  </section>
+
+  <section title="RESULT">
+    <?rfc include='autogen/copy_notify_res.xml'?>
+  </section>
+
+  <section title="DESCRIPTION">
+    <t>
+      This operation is used for an inter-server copy. A client
+      sends this operation in a COMPOUND request to the source
+      server to authorize a destination server identified by
+      cna_destination_server to read the file specified by
+      CURRENT_FH on behalf of the given user.
+    </t>
+
+    <t>
+      The cna_destination_server MUST be specified using the
+      netloc4 network location format. The server is not required
+      to resolve the cna_destination_server address before completing
+      this operation.
+    </t>
+
+    <t>
+      If this operation succeeds, the source server will allow the
+      cna_destination_server to copy the specified file on behalf
+      of the given user. If COPY_NOTIFY succeeds, the destination
+      server is granted permission to read the file as long as both
+      of the following conditions are met:
+    </t>
+
+    <t>
+      <list style="symbols">
+        <t>
+          The destination server begins reading the source file
+          before the cnr_lease_time expires. If the cnr_lease_time
+          expires while the destination server is still reading
+          the source file, the destination server is allowed to
+          finish reading the file.
+        </t>
+
+        <t>
+          The client has not issued a COPY_REVOKE for
+          the same combination of user, filehandle,
+          and destination server.
+        </t>
+      </list>
+    </t>
+
+    <t>
+      The cnr_lease_time is chosen by the source server. A
+      cnr_lease_time of 0 (zero) indicates an infinite lease. To
+      renew the copy lease time the client should resend the same
+      copy notification request to the source server.
+    </t>
+
+    <t>
+      To avoid the need for synchronized clocks, copy lease times
+      are granted by the server as a time delta. However, there is a
+      requirement that the client and server clocks do not drift
+      excessively over the duration of the lease. There is also the
+      issue of propagation delay across the network which could easily
+      be several hundred milliseconds as well as the possibility that
+      requests will be lost and need to be retransmitted.
+    </t>
+
+    <t>
+      To take propagation delay into account, the client should
+      subtract it from copy lease times (e.g., if the client estimates
+      the one-way propagation delay as 200 milliseconds, then it can
+      assume that the lease is already 200 milliseconds old when it gets
+      it). In addition, it will take another 200 milliseconds to get a
+      response back to the server. So the client must send a lease
+      renewal or send the copy offload request to the cna_destination_server
+      at least 400 milliseconds before the copy lease would expire. If
+      the propagation delay varies over the life of the lease (e.g., the
+      client is on a mobile host), the client will need to continuously
+      subtract the increase in propagation delay from the copy lease times.
+    </t>
+
+    <t>
+      The server's copy lease period configuration should take into
+      account the network distance of the clients that will be
+      accessing the server's resources. It is expected that the lease
+      period will take into account the network propagation delays and
+      other network delay factors for the client population. Since the
+      protocol does not allow for an automatic method to determine an
+      appropriate copy lease period, the server's administrator may have
+      to tune the copy lease period.
+    </t>
+
+    <t>
+      A successful response will also contain a list of names, addresses,
+      and URLs called cnr_source_server, on which the source is willing to
+      accept connections from the destination. These might not be reachable
+      from the client and might be located on networks to which the client
+      has no connection.
+    </t>
+
+    <t>
+      If the client wishes to perform an inter-server copy, the client
+      MUST send a COPY_NOTIFY to the source server. Therefore, the source
+      server MUST support COPY_NOTIFY.
+    </t>
+
+    <t>
+      For a copy only involving one server (the source and destination
+      are on the same server), this operation is unnecessary.
+    </t>
+
+    <t>
+      The COPY_NOTIFY operation may fail for the following reasons
+      (this is a partial list):
+    </t>
+
+    <t>
+      <list style="hanging">
+        <t hangText="NFS4ERR_MOVED:">
+          The file system which contains the source file
+          is not present on the source server. The client can determine the
+          correct location and reissue the operation with the correct location.
+        </t>
+
+        <t hangText="NFS4ERR_NOTSUPP:">
+          The copy offload operation is not supported by
+          the NFS server receiving this request.
+        </t>
+
+        <t hangText="NFS4ERR_WRONGSEC:">
+          The security mechanism being used by the client
+          does not match the server's security policy.
+        </t>
+      </list>
+    </t>
+  </section>
+</section>

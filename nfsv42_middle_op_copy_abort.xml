@@ -1,0 +1,71 @@
+<section title="Operation 60: COPY_ABORT - Cancel a server-side copy">
+  <section title="ARGUMENT">
+    <?rfc include='autogen/copy_abort_args.xml'?>
+  </section>
+
+  <section title="RESULT">
+    <?rfc include='autogen/copy_abort_res.xml'?>
+  </section>
+
+  <section title="DESCRIPTION">
+    <t>
+      COPY_ABORT is used for both intra- and inter-server
+      asynchronous copies. The COPY_ABORT operation allows the client
+      to cancel a server-side copy operation that it initiated. This operation
+      is sent in a COMPOUND request from the client to the destination
+      server. This operation may be used to cancel a copy when
+      the application that requested the copy exits before the operation
+      is completed or for some other reason.
+    </t>
+
+    <t>
+      The request contains the filehandle and copy stateid cookies
+      that act as the context for the previously initiated copy
+      operation.
+    </t>
+
+    <t>
+      The result's car_status field indicates whether the cancel
+      was successful or not. A value of NFS4_OK indicates that the
+      copy operation was canceled and no callback will be issued
+      by the server. A copy operation that is successfully canceled
+      may result in none, some, or all of the data copied.
+    </t>
+
+    <t>
+      If the server supports asynchronous copies, the server is
+      REQUIRED to support the COPY_ABORT operation.
+    </t>
+
+    <t>
+      The COPY_ABORT operation may fail for the following reasons
+      (this is a partial list):
+    </t>
+
+    <t>
+      <list style="hanging">
+
+        <t hangText="NFS4ERR_NOTSUPP:">
+          The abort operation is not supported by
+          the NFS server receiving this request.
+        </t>
+
+        <t hangText="NFS4ERR_RETRY:">
+          The abort failed, but a retry
+          at some time in the future MAY succeed.
+        </t>
+
+        <t hangText="NFS4ERR_COMPLETE_ALREADY:">
+          The abort failed,
+          and a callback will deliver the results of the copy
+          operation.
+        </t>
+
+        <t hangText="NFS4ERR_SERVERFAULT:">
+          An error occurred on the server
+          that does not map to a specific error code.
+        </t>
+      </list>
+    </t>
+  </section>
+</section>

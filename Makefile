@@ -418,6 +418,18 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_space.xml \
 	nfsv42_middle_sparse.xml \
         nfsv42_middle_security.xml \
+	nfsv42_middle_op_aaa.xml \
+	nfsv42_middle_op_copy.xml \
+	nfsv42_middle_op_copy_abort.xml \
+	nfsv42_middle_op_copy_notify.xml \
+	nfsv42_middle_op_copy_revoke.xml \
+	nfsv42_middle_op_copy_status.xml \
+	nfsv42_middle_op_initialize.xml \
+	nfsv42_middle_op_read_plus.xml \
+	nfsv42_middle_op_zzz.xml \
+	nfsv42_middle_op_cb_aaa.xml \
+	nfsv42_middle_op_cb_copy.xml \
+	nfsv42_middle_op_cb_zzz.xml \
 	nfsv42_middle_iana.xml \
 	nfsv42_middle_end.xml \
 	nfsv42_back_front.xml \
