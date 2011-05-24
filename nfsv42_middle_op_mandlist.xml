@@ -1,0 +1,195 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
+<section anchor="sec:operations:mandlist" title="Operations: REQUIRED, RECOMMENDED, or OPTIONAL">
+  <t>
+    The following tables summarize the operations of the NFSv4.2 protocol
+    and the corresponding designation of REQUIRED, RECOMMENDED, and
+    OPTIONAL to implement or MUST NOT implement.  The designation of MUST
+    NOT implement is reserved for those operations that were defined in
+    either NFSv4.0 or NFSV4.1 and MUST NOT be implemented in NFSv4.2.
+  </t>
+
+  <t>
+    For the most part, the REQUIRED, RECOMMENDED, or OPTIONAL designation
+    for operations sent by the client is for the server implementation.
+    The client is generally required to implement the operations needed
+    for the operating environment for which it serves.  For example, a
+    read-only NFSv4.2 client would have no need to implement the WRITE
+    operation and is not required to do so.
+  </t>
+
+  <t>
+    The REQUIRED or OPTIONAL designation for callback operations sent by
+    the server is for both the client and server.  Generally, the client
+    has the option of creating the backchannel and sending the operations
+    on the fore channel that will be a catalyst for the server sending
+    callback operations.  A partial exception is CB_RECALL_SLOT; the only
+    way the client can avoid supporting this operation is by not creating
+    a backchannel.
+  </t>
+
+  <t>
+    Since this is a summary of the operations and their designation,
+    there are subtleties that are not presented here.  Therefore, if
+    there is a question of the requirements of implementation, the
+    operation descriptions themselves must be consulted along with other
+    relevant explanatory text within this either specification or that
+    of NFSv4.1 <xref target="RFC5661" />..
+  </t>
+
+  <t>
+    The abbreviations used in the second and third columns of the table
+    are defined as follows.
+  </t>
+
+  <t>
+    <list style='hanging'>
+      <t hangText='REQ'>
+        REQUIRED to implement
+      </t>
+
+      <t hangText='REC'>
+        RECOMMEND to implement
+      </t>
+
+      <t hangText='OPT'>
+        OPTIONAL to implement
+      </t>
+
+      <t hangText='MNI'>
+        MUST NOT implement
+      </t>
+    </list>
+  </t>
+
+  <t>
+    For the NFSv4.2 features that are OPTIONAL, the operations that
+    support those features are OPTIONAL, and the server would return
+    NFS4ERR_NOTSUPP in response to the client's use of those operations.
+    If an OPTIONAL feature is supported, it is possible that a set of
+    operations related to the feature become REQUIRED to implement.  The
+    third column of the table designates the feature(s) and if the
+    operation is REQUIRED or OPTIONAL in the presence of support for the
+    feature.
+  </t>
+
+  <t>
+    The OPTIONAL features identified and their abbreviations are as
+    follows:
+  </t>
+
+  <t>
+    <list style='hanging'>
+      <t hangText='pNFS'>
+        Parallel NFS
+      </t>
+
+      <t hangText='FDELG'>
+        File Delegations
+      </t>
+
+      <t hangText='DDELG'>
+        Directory Delegations
+      </t>
+
+      <t hangText='COPY'>
+        Server Side Copy
+      </t>
+
+      <t hangText='ADB'>
+        Application Data Blocks
+      </t>
+    </list>
+  </t>
+
+  <texttable>
+    <preamble>Operations</preamble>
+    <ttcol align='left'>Operation</ttcol>
+    <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
+    <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
+      <c>ACCESS               </c> <c> REQ </c> <c>              </c>
+      <c>BACKCHANNEL_CTL      </c> <c> REQ </c> <c>              </c>
+      <c>BIND_CONN_TO_SESSION </c> <c> REQ </c> <c>              </c>
+      <c>CLOSE                </c> <c> REQ </c> <c>              </c>
+      <c>COMMIT               </c> <c> REQ </c> <c>              </c>
+      <c>COPY                 </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>COPY_ABORT           </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>COPY_NOTIFY          </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>COPY_REVOKE          </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>COPY_STATUS          </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>CREATE               </c> <c> REQ </c> <c>              </c>
+      <c>CREATE_SESSION       </c> <c> REQ </c> <c>              </c>
+      <c>DELEGPURGE           </c> <c> OPT </c> <c> FDELG (REQ)  </c>
+      <c>DELEGRETURN          </c> <c> OPT </c> <c> FDELG, DDELG, pNFS (REQ) </c>
+      <c>DESTROY_CLIENTID     </c> <c> REQ </c> <c>              </c>
+      <c>DESTROY_SESSION      </c> <c> REQ </c> <c>              </c>
+      <c>EXCHANGE_ID          </c> <c> REQ </c> <c>              </c>
+      <c>FREE_STATEID         </c> <c> REQ </c> <c>              </c>
+      <c>GETATTR              </c> <c> REQ </c> <c>              </c>
+      <c>GETDEVICEINFO        </c> <c> OPT </c> <c> pNFS (REQ)   </c>
+      <c>GETDEVICELIST        </c> <c> OPT </c> <c> pNFS (OPT)   </c>
+      <c>GETFH                </c> <c> REQ </c> <c>              </c>
+      <c>INITIALIZE           </c> <c> OPT </c> <c> ADB (REQ)    </c>
+      <c>GET_DIR_DELEGATION   </c> <c> OPT </c> <c> DDELG (REQ)  </c>
+      <c>LAYOUTCOMMIT         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
+      <c>LAYOUTGET            </c> <c> OPT </c> <c> pNFS (REQ)   </c>
+      <c>LAYOUTRETURN         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
+      <c>LINK                 </c> <c> OPT </c> <c>              </c>
+      <c>LOCK                 </c> <c> REQ </c> <c>              </c>
+      <c>LOCKT                </c> <c> REQ </c> <c>              </c>
+      <c>LOCKU                </c> <c> REQ </c> <c>              </c>
+      <c>LOOKUP               </c> <c> REQ </c> <c>              </c>
+      <c>LOOKUPP              </c> <c> REQ </c> <c>              </c>
+      <c>NVERIFY              </c> <c> REQ </c> <c>              </c>
+      <c>OPEN                 </c> <c> REQ </c> <c>              </c>
+      <c>OPENATTR             </c> <c> OPT </c> <c>              </c>
+      <c>OPEN_CONFIRM         </c> <c> MNI </c> <c>              </c>
+      <c>OPEN_DOWNGRADE       </c> <c> REQ </c> <c>              </c>
+      <c>PUTFH                </c> <c> REQ </c> <c>              </c>
+      <c>PUTPUBFH             </c> <c> REQ </c> <c>              </c>
+      <c>PUTROOTFH            </c> <c> REQ </c> <c>              </c>
+      <c>READ                 </c> <c> OPT </c> <c>              </c>
+      <c>READDIR              </c> <c> REQ </c> <c>              </c>
+      <c>READLINK             </c> <c> OPT </c> <c>              </c>
+      <c>READ_PLUS            </c> <c> OPT </c> <c> ADB (REQ)    </c>
+      <c>RECLAIM_COMPLETE     </c> <c> REQ </c> <c>              </c>
+      <c>RELEASE_LOCKOWNER    </c> <c> MNI </c> <c>              </c>
+      <c>REMOVE               </c> <c> REQ </c> <c>              </c>
+      <c>RENAME               </c> <c> REQ </c> <c>              </c>
+      <c>RENEW                </c> <c> MNI </c> <c>              </c>
+      <c>RESTOREFH            </c> <c> REQ </c> <c>              </c>
+      <c>SAVEFH               </c> <c> REQ </c> <c>              </c>
+      <c>SECINFO              </c> <c> REQ </c> <c>              </c>
+      <c>SECINFO_NO_NAME      </c> <c> REC </c> <c> pNFS file layout (REQ) </c>
+      <c>SEQUENCE             </c> <c> REQ </c> <c>              </c>
+      <c>SETATTR              </c> <c> REQ </c> <c>              </c>
+      <c>SETCLIENTID          </c> <c> MNI </c> <c>              </c>
+      <c>SETCLIENTID_CONFIRM  </c> <c> MNI </c> <c>              </c>
+      <c>SET_SSV              </c> <c> REQ </c> <c>              </c>
+      <c>TEST_STATEID         </c> <c> REQ </c> <c>              </c>
+      <c>VERIFY               </c> <c> REQ </c> <c>              </c>
+      <c>WANT_DELEGATION      </c> <c> OPT </c> <c> FDELG (OPT)  </c>
+      <c>WRITE                </c> <c> REQ </c> <c>              </c>
+  </texttable>
+
+  <texttable>
+    <preamble>Callback Operations</preamble>
+    <ttcol align='left'>Operation</ttcol>
+    <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
+    <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
+      <c>CB_COPY                 </c> <c> OPT </c> <c> COPY (REQ) </c>
+      <c>CB_GETATTR              </c> <c> OPT </c> <c> FDELG (REQ) </c>
+      <c>CB_LAYOUTRECALL         </c> <c> OPT </c> <c> pNFS (REQ)  </c>
+      <c>CB_NOTIFY               </c> <c> OPT </c> <c> DDELG (REQ) </c>
+      <c>CB_NOTIFY_DEVICEID      </c> <c> OPT </c> <c> pNFS (OPT)  </c>
+      <c>CB_NOTIFY_LOCK          </c> <c> OPT </c> <c>             </c>
+      <c>CB_PUSH_DELEG           </c> <c> OPT </c> <c> FDELG (OPT) </c>
+      <c>CB_RECALL               </c> <c> OPT </c> <c> FDELG, DDELG, pNFS (REQ) </c>
+      <c>CB_RECALL_ANY           </c> <c> OPT </c> <c> FDELG, DDELG, pNFS (REQ) </c>
+      <c>CB_RECALL_SLOT          </c> <c> REQ </c> <c>             </c>
+      <c>CB_RECALLABLE_OBJ_AVAIL </c> <c> OPT </c> <c> DDELG, pNFS (REQ) </c>
+      <c>CB_SEQUENCE             </c> <c> OPT </c> <c> FDELG, DDELG, pNFS (REQ) </c>
+      <c>CB_WANTS_CANCELLED      </c> <c> OPT </c> <c> FDELG, DDELG, pNFS (REQ) </c>
+  </texttable>
+</section>
