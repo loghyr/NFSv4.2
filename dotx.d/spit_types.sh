@@ -1375,6 +1375,17 @@ EOF
 
 	;;
 
+	hole_info4.x )
+
+cat << EOF > $i
+struct hole_info4 {
+	offset4		hi_offset;
+	length4		hi_length;
+};
+EOF
+
+	;;
+
 	data_content4.x )
 
 cat << EOF > $i
