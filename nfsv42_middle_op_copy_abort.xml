@@ -1,13 +1,13 @@
 <section title="Operation 60: COPY_ABORT - Cancel a server-side copy">
-  <section title="ARGUMENT">
+  <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_abort_args.xml'?>
   </section>
 
-  <section title="RESULT">
+  <section toc='exclude' title="RESULT">
     <?rfc include='autogen/copy_abort_res.xml'?>
   </section>
 
-  <section title="DESCRIPTION">
+  <section toc='exclude' title="DESCRIPTION">
     <t>
       COPY_ABORT is used for both intra- and inter-server
       asynchronous copies. The COPY_ABORT operation allows the client

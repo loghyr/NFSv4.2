@@ -1,13 +1,13 @@
 <section title="Operation 63: COPY_STATUS - Poll for status of a server-side copy">
-  <section title="ARGUMENT">
+  <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_status_args.xml'?>
   </section>
 
-  <section title="RESULT">
+  <section toc='exclude' title="RESULT">
     <?rfc include='autogen/copy_status_res.xml'?>
   </section>
 
-  <section title="DESCRIPTION">
+  <section toc='exclude' title="DESCRIPTION">
     <t>
       COPY_STATUS is used for both intra- and inter-server asynchronous
       copies. The COPY_STATUS operation allows the client to poll the

@@ -16,15 +16,15 @@
     is present or not, it should always use READ_PLUS.
   </t>
 
-  <section title="ARGUMENT">
+  <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/read_plus_args.xml'?>
   </section>
 
-  <section title="RESULT">
+  <section toc='exclude' title="RESULT">
     <?rfc include='autogen/read_plus_res.xml'?>
   </section>
 
-  <section title="DESCRIPTION">
+  <section toc='exclude' title="DESCRIPTION">
     <t>
       Over the given range, READ_PLUS will return all data
       and ADBs found as an array of read_plus_content. It is

@@ -1,13 +1,13 @@
 <section title="Operation 61: COPY_NOTIFY - Notify a source server of a future copy">
-  <section title="ARGUMENT">
+  <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_notify_args.xml'?>
   </section>
 
-  <section title="RESULT">
+  <section toc='exclude' title="RESULT">
     <?rfc include='autogen/copy_notify_res.xml'?>
   </section>
 
-  <section title="DESCRIPTION">
+  <section toc='exclude' title="DESCRIPTION">
     <t>
       This operation is used for an inter-server copy. A client
       sends this operation in a COMPOUND request to the source

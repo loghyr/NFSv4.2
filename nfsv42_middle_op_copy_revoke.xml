@@ -1,13 +1,13 @@
 <section title="Operation 62: COPY_REVOKE - Revoke a destination server's copy privileges">
-  <section title="ARGUMENT">
+  <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_revoke_args.xml'?>
   </section>
 
-  <section title="RESULT">
+  <section toc='exclude' title="RESULT">
     <?rfc include='autogen/copy_revoke_res.xml'?>
   </section>
 
-  <section title="DESCRIPTION">
+  <section toc='exclude' title="DESCRIPTION">
     <t>
       This operation is used for an inter-server copy. A client sends this
       operation in a COMPOUND request to the source server to revoke the

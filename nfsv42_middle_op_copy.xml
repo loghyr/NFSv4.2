@@ -1,13 +1,13 @@
 <section title="Operation 59: COPY - Initiate a server-side copy">
-  <section title="ARGUMENT">
+  <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_args.xml'?>
   </section>
 
-  <section title="RESULT">
+  <section toc='exclude' title="RESULT">
     <?rfc include='autogen/copy_res.xml'?>
   </section>
 
-  <section title="DESCRIPTION">
+  <section toc='exclude' title="DESCRIPTION">
     <t>
       The COPY operation is used for both intra- and inter-server
       copies. In both cases, the COPY is always sent from the client
@@ -264,11 +264,6 @@
       <c>time_modify</c>       <c>53</c><c>MUST</c>
       <c>time_modify_set</c>   <c>54</c><c>no</c>
     </texttable>
-
-    <t>
-      [NOTE: The space_reserve attribute XXX_TDH_XXX
-       will be in the MUST set.]
-    </t>
 
     <t>
       [NOTE: The source file's attribute values will take precedence

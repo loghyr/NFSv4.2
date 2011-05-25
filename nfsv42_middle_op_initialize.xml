@@ -8,15 +8,15 @@
     a range of ADBs. It uses the INITIALIZE operation to do so.
   </t>
 
-  <section title="ARGUMENT">
+  <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/initialize_args.xml'?>
   </section>
 
-  <section title="RESULT">
+  <section toc='exclude' title="RESULT">
     <?rfc include='autogen/initialize_res.xml'?>
   </section>
 
-  <section title="DESCRIPTION">
+  <section toc='exclude' title="DESCRIPTION">
     <t>
       When the client invokes the INITIALIZE operation, it has
       two desired results:
