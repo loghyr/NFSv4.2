@@ -130,8 +130,8 @@
       specific copy protocol for the destination server to use by returning
       a URL, which specifies both a protocol service and server name.
       Server-to-server copy protocol considerations are described in
-      <xref target="server-to-server-proto"/> and
-      <xref target="server-to-server-sec"/>.
+      <xref target="server-to-server-proto" /> and
+      <xref target="server-to-server-sec" />.
     </t>
 
     <t>
@@ -162,8 +162,8 @@
     </t>
 
     <t>
-      For NFSv4.1, <xref target="req_attr_tbl"/> and
-      <xref target="rec_attr_tbl"/> list the REQUIRED and
+      For NFSv4.1, <xref target="req_attr_tbl" /> and
+      <xref target="rec_attr_tbl" /> list the REQUIRED and
       RECOMMENDED attributes respectively. A "MUST" in the
       "Copy to destination file?" column indicates that the
       attribute is part of the MUST copy set. A "SHOULD" in

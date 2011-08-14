@@ -186,7 +186,7 @@
         defined that together provide the space management facilities
         outlined earlier in the document.  The operation is intended to be
         OPTIONAL and the attributes RECOMMENDED as defined in section 17 of
-        <xref target="RFC5661" />.
+        <xref target="ref:RFC5661" />.
       </t>
     </section>
 

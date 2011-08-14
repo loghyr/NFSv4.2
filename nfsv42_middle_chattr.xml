@@ -14,8 +14,8 @@
 
   <section title="Introduction">
     <t>
-      Although both the NFSv4 <xref target="RFC3530bis" />
-      and NFSv4.1 protocol <xref target="RFC5661" />,
+      Although both the NFSv4 <xref target="ref:RFC3530bis" />
+      and NFSv4.1 protocol <xref target="ref:RFC5661" />,
       define the change attribute as being mandatory
       to implement, there is little in the way of
       guidance. The only feature that is mandated by
@@ -97,7 +97,7 @@
         <t hangText="NFS4_CHANGE_TYPE_IS_TIME_METADATA:">
           The change attribute is implemented as
           suggested in the NFSv4 spec
-          <xref target="RFC3530bis" /> in terms of
+          <xref target="ref:RFC3530bis" /> in terms of
           the time_metadata attribute.
         </t>
         <t hangText="NFS4_CHANGE_TYPE_IS_UNDEFINED:">

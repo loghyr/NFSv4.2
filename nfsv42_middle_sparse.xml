@@ -223,7 +223,7 @@
 
     <t>
       READ_PLUS supports all the features of the existing NFSv4.1 READ
-      operation <xref target="RFC5661" /> and adds a simple yet
+      operation <xref target="ref:RFC5661" /> and adds a simple yet
       significant extension to the
       format of its response.  The change allows the client to avoid
       returning all zeroes from a file hole, wasting computational and
@@ -257,7 +257,7 @@
 
       <t>
         The READ_PLUS operation is based upon the NFSv4.1 READ operation
-        <xref target="RFC5661" />, and similarly reads data from the
+        <xref target="ref:RFC5661" />, and similarly reads data from the
         regular file identified by the current filehandle.
       </t>
 

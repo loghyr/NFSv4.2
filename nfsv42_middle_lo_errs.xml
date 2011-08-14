@@ -5,10 +5,10 @@
   <section anchor="sec:pLeh:intro" title="Introduction">
 
     <t>
-      In the pNFS description provided in <xref target="RFC5661" />,
+      In the pNFS description provided in <xref target="ref:RFC5661" />,
       the client is not enabled to relay an error code from the
       DS to the MDS. In the specification of the Objects-Based
-      Layout protocol <xref target='RFC5664' />, use is made of the
+      Layout protocol <xref target='ref:RFC5664' />, use is made of the
       opaque lrf_body field of the LAYOUTRETURN argument to
       do such a relaying of error codes. In this section,
       we define a new data structure to enable the passing
@@ -46,8 +46,8 @@
 
       <t>
         The ARGUMENT specification of the LAYOUTRETURN operation in section
-        18.44.1 of <xref target="RFC5661" /> is augmented by the following
-        XDR code <xref target="RFC4506" />:
+        18.44.1 of <xref target="ref:RFC5661" /> is augmented by the following
+        XDR code <xref target="ref:RFC4506" />:
       </t>
 
       <?rfc include='autogen/type_layoutreturn_errs.xml'?>
@@ -58,7 +58,7 @@
 
       <t>
         The RESULT of the LAYOUTRETURN operation is unchanged; see section
-        18.44.2 of <xref target="RFC5661" />.
+        18.44.2 of <xref target="ref:RFC5661" />.
       </t>
     </section>
 
@@ -66,7 +66,7 @@
 
       <t>
         The following text is added to the end of the LAYOUTRETURN operation
-        DESCRIPTION in section 18.44.3 of <xref target="RFC5661" />.
+        DESCRIPTION in section 18.44.3 of <xref target="ref:RFC5661" />.
       </t>
 
       <t>
@@ -75,7 +75,7 @@
         that the client experienced no errors. If lrf_body is non-NULL,
         then the field references error information which is layout type
         specific. I.e., the Objects-Based Layout protocol
-        can continue to utilize lrf_body as specified in <xref target='RFC5664' />.
+        can continue to utilize lrf_body as specified in <xref target='ref:RFC5664' />.
         For both Files-Based Layouts, the field references a
         layoutreturn_device_error4, which contains an array of layoutreturn_device_error4.
       </t>
@@ -111,7 +111,7 @@
     <section anchor="sec:pLeh:LAYOUTRETURN:impl" title="IMPLEMENTATION">
       <t>
         The following text is added to the end of the LAYOUTRETURN operation
-        IMPLEMENTATION in section 18.4.4 of <xref target="RFC5661" />.
+        IMPLEMENTATION in section 18.4.4 of <xref target="ref:RFC5661" />.
       </t>
 
       <t>

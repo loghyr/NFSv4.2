@@ -35,7 +35,7 @@
     there is a question of the requirements of implementation, the
     operation descriptions themselves must be consulted along with other
     relevant explanatory text within this either specification or that
-    of NFSv4.1 <xref target="RFC5661" />..
+    of NFSv4.1 <xref target="ref:RFC5661" />..
   </t>
 
   <t>

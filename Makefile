@@ -419,6 +419,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_application.xml \
 	nfsv42_middle_space.xml \
 	nfsv42_middle_sparse.xml \
+	nfsv42_middle_lnfs.xml \
         nfsv42_middle_security.xml \
 	nfsv42_middle_op_mandlist.xml \
 	nfsv42_middle_op_aaa.xml \

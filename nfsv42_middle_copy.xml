@@ -64,9 +64,9 @@
       a directory, the client can synthesize a directory copy by first
       creating the destination directory and then copying the source
       directory's files to the new destination directory. If the user
-      wishes to copy a namespace junction <xref target="FEDFS-NSDB"/>
-      <xref target="FEDFS-ADMIN"/>, the client can use the ONC RPC
-      Federated Filesystem protocol <xref target="FEDFS-ADMIN"/> to
+      wishes to copy a namespace junction <xref target="ref:FEDFS-NSDB" />
+      <xref target="ref:FEDFS-ADMIN" />, the client can use the ONC RPC
+      Federated Filesystem protocol <xref target="ref:FEDFS-ADMIN" /> to
       perform the copy. Specifically the client can determine the
       source junction's attributes using the FEDFS_LOOKUP_FSN procedure
       and create a duplicate junction using the FEDFS_CREATE_JUNCTION
@@ -150,7 +150,7 @@
     </t>
 
     <t>
-      These operations are described in detail in <xref target="operations"/>.
+      These operations are described in detail in <xref target="operations" />.
       This section provides an overview of how these operations are used
       to perform server-side copies.
     </t>
@@ -167,7 +167,7 @@
 
       <t>
         A synchronous intra-server copy is shown in
-        <xref target="sync-intra-server-fig"/>. In this example, the NFS
+        <xref target="sync-intra-server-fig" />. In this example, the NFS
         server chooses to perform the copy synchronously. The copy operation
         is completed, either successfully or unsuccessfully, before the
         server replies to the client's request. The server's reply contains
@@ -188,7 +188,7 @@
 
       <t>
         An asynchronous intra-server copy is shown in
-        <xref target="async-intra-server-fig"/>. In this example, the NFS
+        <xref target="async-intra-server-fig" />. In this example, the NFS
         server performs the copy asynchronously. The server's reply to
         the copy request indicates that the copy operation was initiated
         and the final result will be delivered at a later time. The server's
@@ -225,7 +225,7 @@
       <t>
         A copy may also be performed between two servers. The copy
         protocol is designed to accommodate a variety of network
-        topologies. As shown in <xref target="inter-server-fig"/>,
+        topologies. As shown in <xref target="inter-server-fig" />,
         the client and servers may be connected by multiple networks.
         In particular, the servers may be connected by a specialized,
         high speed network (network 192.168.33.0/24 in the diagram)
@@ -271,14 +271,14 @@
 
       <t>
         A synchronous inter-server copy is shown in
-        <xref target="sync-inter-server-fig"/>. In this case, the
+        <xref target="sync-inter-server-fig" />. In this case, the
         destination server chooses to perform the copy before
         responding to the client's COPY request.
       </t>
 
       <t>
         An asynchronous copy is shown in
-        <xref target="async-inter-server-fig"/>. In this case, the
+        <xref target="async-inter-server-fig" />. In this case, the
         destination server chooses to respond to the client's COPY
         request immediately and then perform the copy
         asynchronously.
@@ -389,7 +389,7 @@
 
         <t>
           In a heterogeneous environment, using a protocol other than NFSv4.x
-          (e.g,. HTTP <xref target="RFC2616"/> or FTP <xref target="RFC0959"/>)
+          (e.g,. HTTP <xref target="ref:RFC2616" /> or FTP <xref target="ref:RFC0959" />)
           presents some challenges. In particular, the destination
           server is presented with the challenge of accessing the source file
           given only an NFSv4.x filehandle.
@@ -419,8 +419,8 @@
         <t>
           Authenticating and identifying the destination server to the source
           server is also a challenge. Recommendations for how to accomplish
-          this are given in <xref target="server-to-server-no-rpc-with-gss"/>
-          and <xref target="server-to-server-no-rpc-no-gss"/>.
+          this are given in <xref target="server-to-server-no-rpc-with-gss" />
+          and <xref target="server-to-server-no-rpc-no-gss" />.
         </t>
       </section>
     </section>
@@ -431,7 +431,7 @@
       In the sections that follow, several operations are defined that
       together provide the server-side copy feature. These operations
       are intended to be OPTIONAL operations as defined in section 17 of
-      <xref target="RFC5661"/>. The COPY_NOTIFY, COPY_REVOKE, COPY, COPY_ABORT,
+      <xref target="ref:RFC5661" />. The COPY_NOTIFY, COPY_REVOKE, COPY, COPY_ABORT,
       and COPY_STATUS operations are designed to be sent within an NFSv4
       COMPOUND procedure. The CB_COPY operation is designed to be sent
       within an NFSv4 CB_COMPOUND procedure.
@@ -464,16 +464,16 @@
         specified as a UTF-8 string. The nl_name is expected to be
         resolved to a network address via DNS, LDAP, NIS, /etc/hosts,
         or some other means. If the netloc4 is of type NL4_URL, a
-        server URL <xref target="RFC3986"/> appropriate for the
+        server URL <xref target="ref:RFC3986" /> appropriate for the
         server-to-server copy operation is specified as a UTF-8 string.
         If the netloc4 is of type NL4_NETADDR, the nl_addr field MUST
         contain a valid netaddr4 as defined in Section 3.3.9 of
-        <xref target="RFC5661"/>.
+        <xref target="ref:RFC5661" />.
       </t>
 
       <t>
         When netloc4 values are used for an inter-server copy as
-        shown in <xref target="inter-server-fig"/>, their values
+        shown in <xref target="inter-server-fig" />, their values
         may be evaluated on the source server, destination server,
         and client. The network environment in which these systems
         operate should be configured so that the netloc4 values
@@ -490,7 +490,7 @@
       </t>
 
       <t>
-        Section 8.2.4 of <xref target="RFC5661"/> specifies that stateids
+        Section 8.2.4 of <xref target="ref:RFC5661" /> specifies that stateids
         are valid until either (A) the client or server restart or (B)
         the client returns the resource.
       </t>
@@ -514,24 +514,24 @@
 
   <section title="Security Considerations">
     <t>
-      The security considerations pertaining to NFSv4 <xref target="RFC3530bis" />
+      The security considerations pertaining to NFSv4 <xref target="ref:RFC3530bis" />
       apply to this document.
     </t>
 
     <t>
-      The standard security mechanisms provide by NFSv4 <xref target="RFC3530bis" />
+      The standard security mechanisms provide by NFSv4 <xref target="ref:RFC3530bis" />
       may be used to secure the protocol described in this document.
     </t>
 
     <t>
       NFSv4 clients and servers supporting the the inter-server copy
       operations described in this document are REQUIRED to implement
-      <xref target="RPCSEC_GSSv3"/>, including the RPCSEC_GSSv3
+      <xref target="ref:rpcsecgssv3" />, including the RPCSEC_GSSv3
       privileges copy_from_auth and copy_to_auth. If the server-to-server
       copy protocol is ONC RPC based, the servers are also REQUIRED to
       implement the RPCSEC_GSSv3 privilege copy_confirm_auth. These
       requirements to implement are not requirements to use. NFSv4 clients
-      and servers are RECOMMENDED to use <xref target="RPCSEC_GSSv3"/>
+      and servers are RECOMMENDED to use <xref target="ref:rpcsecgssv3" />
       to secure server-side copy operations.
     </t>
 
@@ -613,7 +613,7 @@
           copy other files. The user principal would have to trust the
           destination server to not do so. This is counter to the requirements,
           and therefore is not considered. Instead an approach using
-          RPCSEC_GSSv3 <xref target="RPCSEC_GSSv3"/> privileges is proposed.
+          RPCSEC_GSSv3 <xref target="ref:rpcsecgssv3" /> privileges is proposed.
         </t>
 
         <t>
@@ -640,9 +640,9 @@
               source server before the user principal sends a COPY_NOTIFY
               operation to the source server.
 
-              <vspace blankLines="1"/>
+              <vspace blankLines="1" />
               <?rfc include='autogen/copy_from_auth.xml'?>
-              <vspace blankLines="1"/>
+              <vspace blankLines="1" />
 
               cap_shared_secret is a secret value the user
               principal generates.
@@ -655,9 +655,9 @@
               established on the destination server before the user
               principal sends a COPY operation to the destination server.
 
-              <vspace blankLines="1"/>
+              <vspace blankLines="1" />
               <?rfc include='autogen/copy_to_auth.xml'?>
-              <vspace blankLines="1"/>
+              <vspace blankLines="1" />
 
               ctap_shared_secret is a secret value the user principal
               generated and was used to establish the copy_from_auth
@@ -674,7 +674,7 @@
               is established before the file is copied from the
               source to the destination.
 
-              <vspace blankLines="1"/>
+              <vspace blankLines="1" />
               <?rfc include='autogen/copy_confirm_auth.xml'?>
             </t>
           </list>
@@ -708,7 +708,7 @@
                 on copy_from_auth_priv. The RPCSEC_GSS3_CREATE procedure's
                 arguments are:
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 <figure>
                   <artwork>
@@ -721,7 +721,7 @@
                  </artwork>
                 </figure>
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 The string "copy_from_auth" is placed in assertions[0].privs. The
                 output of GSS_Wrap() is placed in extensions[0].data. The field
@@ -733,7 +733,7 @@
                 &lt;"copy_from_auth", user id, destination&gt;. The successful
                 reply to RPCSEC_GSS3_CREATE has:
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 <figure>
                   <artwork>
@@ -747,7 +747,7 @@
                   </artwork>
                 </figure>
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 The field "handle" is the RPCSEC_GSSv3 handle that the client
                 will use on COPY_NOTIFY requests involving the source and
@@ -766,7 +766,7 @@
                 GSS_Wrap() is invoked on copy_to_auth_priv. The RPCSEC_GSS3_CREATE
                 procedure's arguments are:
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 <figure>
                   <artwork>
@@ -779,7 +779,7 @@
                   </artwork>
                 </figure>
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 The string "copy_to_auth" is placed in assertions[0].privs.
                 The output of GSS_Wrap() is placed in extensions[0].data. The
@@ -789,7 +789,7 @@
                 &lt;"copy_to_auth", user id, source&gt;. The successful reply
                 to RPCSEC_GSS3_CREATE has:
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 <figure>
                   <artwork>
@@ -803,7 +803,7 @@
                   </artwork>
                 </figure>
 
-                <vspace blankLines="1"/>
+                <vspace blankLines="1" />
 
                 The field "handle" is the RPCSEC_GSSv3 handle that the client will
                 use on COPY requests involving the source and destination server.
@@ -922,11 +922,11 @@
 
           <t>
             For protocols that authenticate user names with passwords
-            (e.g., HTTP <xref target="RFC2616"/> and FTP <xref target="RFC0959"/>),
+            (e.g., HTTP <xref target="ref:RFC2616" /> and FTP <xref target="ref:RFC0959" />),
             the nfsv4 user id could be used as the user name, and an ASCII
             hexadecimal representation of the RPCSEC_GSSv3 shared secret could be
             used as the user password or as input into non-password authentication
-            methods like CHAP <xref target="RFC1994"/>.
+            methods like CHAP <xref target="ref:RFC1994" />.
           </t>
         </section>
       </section>
@@ -968,7 +968,7 @@
 
         <t>
           For example, suppose the network topology is as shown in
-          <xref target="inter-server-fig"/>.  If the source filehandle
+          <xref target="inter-server-fig" />.  If the source filehandle
           is 0x12345, the source server may respond to a COPY_NOTIFY
           for destination 10.11.78.56 with the URLs:
         </t>
@@ -1007,9 +1007,9 @@
       <section title="Inter-Server Copy without ONC RPC and RPCSEC_GSSv3"
          anchor="server-to-server-no-rpc-no-gss">
         <t>
-          The same techniques as <xref target="server-to-server-with-rpc-no-gss"/>,
+          The same techniques as <xref target="server-to-server-with-rpc-no-gss" />,
           using unique URLs for each destination server, can be used for other
-          protocols (e.g., HTTP <xref target="RFC2616"/> and FTP <xref target="RFC0959"/>)
+          protocols (e.g., HTTP <xref target="ref:RFC2616" /> and FTP <xref target="ref:RFC0959" />)
           as well.
         </t>
       </section>

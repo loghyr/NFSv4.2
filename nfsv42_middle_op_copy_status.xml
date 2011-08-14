@@ -54,7 +54,7 @@
         </t>
 
         <t hangText="NFS4ERR_BAD_STATEID:">
-          The stateid is not valid (see <xref target="copy_stateid"/> below).
+          The stateid is not valid (see <xref target="copy_stateid" /> below).
         </t>
 
         <t hangText="NFS4ERR_EXPIRED:">

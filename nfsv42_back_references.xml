@@ -2,7 +2,7 @@
 <!-- Copyright (C) The Internet Society (2011) -->
   <references title="Normative References">
 
-    <reference anchor='RFC5661'>
+    <reference anchor='ref:RFC5661'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 1 Protocol</title>
 	<author initials="S." surname="Shepler" fullname="S. Shepler">
@@ -21,7 +21,7 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
-    <reference anchor='RFC5662'>
+    <reference anchor='ref:RFC5662'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 1 External Data Representation Standard (XDR) Description</title>
 	<author initials="S." surname="Shepler" fullname="S. Shepler">
@@ -40,7 +40,7 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
-    <reference anchor='RFC5663'>
+    <reference anchor='ref:RFC5663'>
       <front>
 	<title>Parallel NFS (pNFS) Block/Volume Layout</title>
 	<author initials="D." surname="Black" fullname="D. Shepler">
@@ -59,7 +59,7 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5663.txt"/>
     </reference>
 
-    <reference anchor='RFC5664'>
+    <reference anchor='ref:RFC5664'>
       <front>
 	<title>Object-Based Parallel NFS (pNFS) Operations</title>
 	<author initials="B." surname="Halevy" fullname="B. Halevy">
@@ -78,7 +78,7 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5664.txt"/>
     </reference>
 
-    <reference anchor='4.2xdr'>
+    <reference anchor='ref:4.2xdr'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
 	<author initials="T." surname="Haynes" fullname="T. Haynes">
@@ -90,7 +90,7 @@
 	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x/" />
     </reference>
 
-    <reference anchor='RFC2119'>
+    <reference anchor='ref:RFC2119'>
       <front>
 	<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
 	<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
@@ -106,7 +106,7 @@
       </front>
     </reference>
 
-    <reference anchor='RFC2203'>
+    <reference anchor='ref:RFC2203'>
     
       <front>
       <title>RPCSEC_GSS Protocol Specification</title>
@@ -162,7 +162,7 @@
       <format type='XML' octets='50069' target='http://xml.resource.org/public/rfc/xml/rfc2203.xml' />
     </reference>
 
-<reference anchor='RFC3986'>
+<reference anchor='ref:RFC3986'>
 
 <front>
 <title abbrev='URI Generic Syntax'>Uniform Resource Identifier (URI): Generic Syntax</title>
@@ -236,22 +236,21 @@ specifications of each URI scheme.
 </reference>
 
 
-<reference anchor="RPCSEC_GSSv3">
-        <front>
-                <title>Remote Procedure Call (RPC) Security Version 3</title>
-                <author initials="N." surname="Williams">
-                        <organization />
-                </author>
-                <date year="2008" />
-        </front>
-        <seriesInfo name="draft-williams-rpcsecgssv3" value="(work in progress)"/>
-</reference>
+    <reference anchor="ref:rpcsecgssv3">
+      <front>
+        <title>Remote Procedure Call (RPC) Security Version 3</title>
+        <author initials="T." surname="Haynes" />
+        <author initials="N." surname="Williams" />
+        <date year="2011" />
+      </front>
+      <seriesInfo name="draft-williams-rpcsecgssv3" value="(work in progress)"/>
+    </reference>
 
   </references>
 
   <references title="Informative References">
 
-   <reference anchor='RFC5226'>
+   <reference anchor='ref:RFC5226'>
 
    <front>
    <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>
@@ -268,7 +267,7 @@ specifications of each URI scheme.
    <format type='TXT' octets='66160' target='ftp://ftp.isi.edu/in-notes/rfc5226.txt' />
    </reference>
 
-<reference anchor='RFC1094'>
+<reference anchor='ref:RFC1094'>
 
 <front>
 <title abbrev='NFS: Network File System'>NFS: Network File System Protocol specification</title>
@@ -290,7 +289,7 @@ specifications of each URI scheme.
 <format type='TXT' octets='51454' target='ftp://ftp.isi.edu/in-notes/rfc1094.txt' />
 </reference>
 
-<reference anchor='RFC1813'>
+<reference anchor='ref:RFC1813'>
 
 <front>
 <title abbrev='NFSv3 Protocol'>NFS Version 3 Protocol Specification</title>
@@ -340,7 +339,7 @@ specifications of each URI scheme.
 <format type='TXT' octets='229793' target='ftp://ftp.isi.edu/in-notes/rfc1813.txt' />
 </reference>
 
-    <reference anchor='RFC1833'>
+    <reference anchor='ref:RFC1833'>
 
       <front>
 	<title>Binding Protocols for ONC RPC Version 2</title>
@@ -368,7 +367,7 @@ specifications of each URI scheme.
     </reference>
 
 
-    <reference anchor='RFC2623'>
+    <reference anchor='ref:RFC2623'>
     
       <front>
       <title abbrev='NFS Security, RPCSEC_GSS, and Kerberos V5'>NFS Version 2 and Version 3 Security Issues and the NFS Protocol's Use of RPCSEC_GSS and Kerberos V5</title>
@@ -402,7 +401,7 @@ specifications of each URI scheme.
       <format type='TXT' octets='42521' target='ftp://ftp.isi.edu/in-notes/rfc2623.txt' />
     </reference>
 
-<reference anchor='RFC2224'>
+<reference anchor='ref:RFC2224'>
 
 <front>
 <title>NFS URL Scheme</title>
@@ -445,7 +444,7 @@ specifications of each URI scheme.
 <format type='XML' octets='24805' target='http://xml.resource.org/public/rfc/xml/rfc2224.xml' />
 </reference>
 
-<reference anchor='RFC2624'>
+<reference anchor='ref:RFC2624'>
 
 <front>
 <title abbrev='NFSv4 Design Considerations'>NFS Version 4 Design Considerations</title>
@@ -488,7 +487,7 @@ document are to be interpreted as described in RFC
 <format type='TXT' octets='52891' target='ftp://ftp.isi.edu/in-notes/rfc2624.txt' />
 </reference>
 
-    <reference anchor='RFC3232'>
+    <reference anchor='ref:RFC3232'>
     
       <front>
         <title>Assigned Numbers: RFC 1700 is Replaced by an On-line Database</title>
@@ -506,7 +505,7 @@ document are to be interpreted as described in RFC
       <format type='TXT' octets='3849' target='ftp://ftp.isi.edu/in-notes/rfc3232.txt' />
     </reference>
 
-  <reference anchor='RFC4506'>
+  <reference anchor='ref:RFC4506'>
     <front>
       <title>XDR: External Data Representation Standard</title>
       <author initials='M.' surname='Eisler' fullname='Michael Eisler'>
@@ -519,7 +518,7 @@ document are to be interpreted as described in RFC
       target="ftp://ftp.isi.edu/in-notes/rfc4506.txt"/>
   </reference>
 
-    <reference anchor='RFC1964'>
+    <reference anchor='ref:RFC1964'>
       <front>
 	<title>The Kerberos Version 5 GSS-API Mechanism</title>
 	<author initials="J." surname="Linn" fullname="J. Linn">
@@ -532,7 +531,7 @@ document are to be interpreted as described in RFC
 	      target="ftp://ftp.isi.edu/in-notes/rfc1964.txt"/>
     </reference>
 
-    <reference anchor='RFC3530bis'>
+    <reference anchor='ref:RFC3530bis'>
       <front>
         <title>Network File System (NFS) version 4 Protocol</title>
         <author initials="T." surname="Haynes" fullname="T. Haynes">
@@ -546,7 +545,7 @@ document are to be interpreted as described in RFC
       <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-09" value="(Work In Progress)"/>
     </reference>
 
-    <reference anchor='RFC3530'>
+    <reference anchor='ref:RFC3530'>
       <front>
 	<title>Network File System (NFS) version 4 Protocol</title>
 	<author initials="S." surname="Shepler" fullname="S. Shepler">
@@ -577,7 +576,7 @@ document are to be interpreted as described in RFC
 	      target="ftp://ftp.isi.edu/in-notes/rfc3530.txt"/>
     </reference>
 
-<reference anchor='RFC0959'>
+<reference anchor='ref:RFC0959'>
 
 <front>
 <title abbrev='File Transfer Protocol'>File Transfer Protocol</title>
@@ -593,7 +592,7 @@ document are to be interpreted as described in RFC
 </reference>
 
 
-<reference anchor='RFC2616'>
+<reference anchor='ref:RFC2616'>
 
 <front>
 <title abbrev='HTTP/1.1'>Hypertext Transfer Protocol -- HTTP/1.1</title>
@@ -695,7 +694,7 @@ document are to be interpreted as described in RFC
 <format type='XML' octets='493420' target='http://xml.resource.org/public/rfc/xml/rfc2616.xml' />
 </reference>
 
-<reference anchor='RFC1994'>
+<reference anchor='ref:RFC1994'>
 
 <front>
 <title>PPP Challenge Handshake Authentication Protocol (CHAP)</title>
@@ -718,7 +717,7 @@ document are to be interpreted as described in RFC
 <format type='TXT' octets='24094' target='ftp://ftp.isi.edu/in-notes/rfc1994.txt' />
 </reference>
 
-<reference anchor="FEDFS-NSDB">
+<reference anchor="ref:FEDFS-NSDB">
         <front>
                 <title>NSDB Protocol for Federated Filesystems</title>
                 <author initials="J." surname="Lentini">
@@ -741,7 +740,7 @@ document are to be interpreted as described in RFC
         <seriesInfo name="draft-ietf-nfsv4-federated-fs-protocol" value="(Work In Progress)"/>
 </reference>
 
-<reference anchor="FEDFS-ADMIN">
+<reference anchor="ref:FEDFS-ADMIN">
         <front>
                 <title>Administration Protocol for Federated Filesystems</title>
                 <author initials="J." surname="Lentini">
@@ -826,5 +825,30 @@ document are to be interpreted as described in RFC
   <seriesInfo name="Proceedings of the 6th USENIX Symposium on File and Storage Technologies (FAST '08)" value='' />
   <format type='HTML' target='http://www.usenix.org/events/fast08/tech/full_papers/bairavasundaram/bairavasundaram.pdf' />
 </reference>
+
+    <reference anchor="ref:lfsreg">
+      <front>
+        <title>Registry Specification for MAC Security Label Formats</title>
+        <author initials="D." surname="Quigley" />
+        <author initials="J." surname="Lu" />
+        <date year="2011" />
+      </front>
+      <seriesInfo name="draft-quigley-label-format-registry" value="(work in progress)"/>
+    </reference>
+
+  <reference anchor='ref:rh_mls'>
+    <front>
+      <title>
+        Section 46.6. Multi-Level Security (MLS) of Deployment Guide:
+        Deployment, configuration and administration of Red Hat Enterprise
+        Linux 5, Edition 6
+      </title>
+      <author />
+      <date year='2011' />
+    </front>
+    <format type='HTML' target='http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/ht
+ml/Deployment_Guide/sec-mls-ov.html' />
+  </reference>
+
 
 </references>
