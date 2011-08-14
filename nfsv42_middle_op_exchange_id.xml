@@ -1,0 +1,75 @@
+<section title='Modification to Operation 42: EXCHANGE_ID - Instantiate Client ID'>
+  <section toc='exclude' title="ARGUMENT">
+    <figure>
+      <artwork>
+   /* new */
+   const EXCHGID4_FLAG_SUPP_FENCE_OPS      = 0x00000004;
+      </artwork>
+    </figure>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <figure>
+      <artwork>
+   Unchanged
+      </artwork>
+    </figure>
+  </section>
+
+  <section toc='exclude' title='MOTIVATION'>
+    <t>
+      Enterprise applications require guarantees that an operation has
+      either aborted or completed.  NFSv4.1 provides this guarantee as long
+      as the session is alive: simply send a SEQUENCE operation on the same
+      slot with a new sequence number, and the successful return of
+      SEQUENCE indicates the previous operation has completed.  However, if
+      the session is lost, there is no way to know when any in progress
+      operations have aborted or completed.  In hindsight, the NFSv4.1
+      specification should have mandated that DESTROY_SESSION abort/
+      complete all outstanding operations.
+    </t>
+  </section>
+
+  <section toc='exclude' title='DESCRIPTION'>
+    <t>
+       A client SHOULD request the EXCHGID4_FLAG_SUPP_FENCE_OPS capability
+       when it sends an EXCHANGE_ID operation.  The server SHOULD set this
+       capability in the EXCHANGE_ID reply whether the client requests it or
+       not.  If the client ID is created with this capability then the
+       following will occur:
+    </t>
+
+    <t>
+      <list style='symbols'>
+        <t>
+          The server will not reply to DESTROY_SESSION until all operations
+          in progress are completed or aborted.
+        </t>
+
+        <t>
+          The server will not reply to subsequent EXCHANGE_ID invoked on the
+          same Client Owner with a new verifier until all operations in
+          progress on the Client ID's session are completed or aborted.
+        </t>
+
+        <t>
+          When DESTROY_CLIENTID is invoked, if there are sessions (both idle
+          and non-idle), opens, locks, delegations, layouts, and/or wants
+          (Section 18.49) associated with the client ID are removed.
+          Pending operations will be completed or aborted before the
+          sessions, opens, locks, delegations, layouts, and/or wants are
+          deleted.
+        </t>
+
+        <t>
+          The NFS server SHOULD support client ID trunking, and if it does
+          and the EXCHGID4_FLAG_SUPP_FENCE_OPS capability is enabled, then a
+          session ID created on one node of the storage cluster MUST be
+          destroyable via DESTROY_SESSION.  In addition, DESTROY_CLIENTID
+          and an EXCHANGE_ID with a new verifier affects all sessions
+          regardless what node the sessions were created on.
+        </t>
+      </list>
+    </t>
+  </section>
+</section>
