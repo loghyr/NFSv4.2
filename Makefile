@@ -428,6 +428,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_copy_revoke.xml \
 	nfsv42_middle_op_copy_status.xml \
 	nfsv42_middle_op_initialize.xml \
+	nfsv42_middle_op_exchange_id.xml \
 	nfsv42_middle_op_read_plus.xml \
 	nfsv42_middle_op_zzz.xml \
 	nfsv42_middle_op_cb_aaa.xml \
