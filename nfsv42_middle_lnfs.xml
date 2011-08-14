@@ -1,977 +1,983 @@
 <!-- Copyright (C) The IETF Trust (2011) -->
 <!-- Copyright (C) The Internet Society (2011) -->
-
-<section anchor="sec:lnfs:intro" title="Introduction">
+  
+<section anchor="sec:lnfs" title="Labeled NFS">
   <t>
-    Mandatory Access Control (MAC) systems have been mainstreamed in
-    modern operating systems such as Linux (R), FreeBSD (R), Solaris
-    (TM), and Windows Vista (R).  MAC systems bind security attributes to
-    subjects (processes) and objects within a system.  These attributes
-    are used with other information in the system to make access control
-    decisions.
+    WARNING: Need to pull out the requirements.
   </t>
-
-  <t>
-    Access control models such as Unix permissions or Access Control
-    Lists are commonly referred to as Discretionary Access Control (DAC)
-    models.  These systems base their access decisions on user identity
-    and resource ownership.  In contrast MAC models base their access
-    control decisions on the label on the subject (usually a process) and
-    the object it wishes to access.  These labels may contain user
-    identity information but usually contain additional information.  In
-    DAC systems users are free to specify the access rules for resources
-    that they own.  MAC models base their security decisions on a system
-    wide policy established by an administrator or organization which the
-    users do not have the ability to override.  DAC systems offer no real
-    protection against malicious or flawed software due to each program
-    running with the full permissions of the user executing it.
-    Inversely MAC models can confine malicious or flawed software and
-    usually act at a finer granularity than their DAC counterparts.
-  </t>
-
-  <t>
-    People desire to use NFSv4 with these systems.  A mechanism is
-    required to provide security attribute information to NFSv4 clients
-    and servers.  This mechanism has the following requirements:
-  </t>
-
-  <t>
-    <list style='format (%d)'>
+  
+  <section anchor="ss:lnfs:intro" title="Introduction">
+    <t>
+      Mandatory Access Control (MAC) systems have been mainstreamed in
+      modern operating systems such as Linux (R), FreeBSD (R), Solaris
+      (TM), and Windows Vista (R).  MAC systems bind security attributes to
+      subjects (processes) and objects within a system.  These attributes
+      are used with other information in the system to make access control
+      decisions.
+    </t>
+  
+    <t>
+      Access control models such as Unix permissions or Access Control
+      Lists are commonly referred to as Discretionary Access Control (DAC)
+      models.  These systems base their access decisions on user identity
+      and resource ownership.  In contrast MAC models base their access
+      control decisions on the label on the subject (usually a process) and
+      the object it wishes to access.  These labels may contain user
+      identity information but usually contain additional information.  In
+      DAC systems users are free to specify the access rules for resources
+      that they own.  MAC models base their security decisions on a system
+      wide policy established by an administrator or organization which the
+      users do not have the ability to override.  DAC systems offer no real
+      protection against malicious or flawed software due to each program
+      running with the full permissions of the user executing it.
+      Inversely MAC models can confine malicious or flawed software and
+      usually act at a finer granularity than their DAC counterparts.
+    </t>
+  
+    <t>
+      People desire to use NFSv4 with these systems.  A mechanism is
+      required to provide security attribute information to NFSv4 clients
+      and servers.  This mechanism has the following requirements:
+    </t>
+  
+    <t>
+      <list style='format (%d)'>
+        <t>
+          Clients must be able to convey to the server the security
+          attribute of the subject making the access request.  The server
+          may provide a mechanism to enforce MAC policy based on the
+          requesting subject's security attribute.
+        </t>
+  
+        <t>
+          Server must be able to store and retrieve the security attribute
+          of exported files as requested by the client.
+        </t>
+  
+        <t>
+          Server must provide a mechanism for notifying clients of attribute
+          changes of files on the server.
+        </t>
+  
+        <t>
+          Clients and Servers must be able to negotiate Label Formats and
+          Domains of Interpretation (DOI) and provide a mechanism to
+          translate between them as needed.
+        </t>
+      </list>
+    </t>
+  
+    <t>
+      These four requirements are key to the system with only requirements
+      (2) and (3) requiring changes to NFSv4.  The ability to convey
+      the security attribute of the subject as described in requirement (1)
+      falls upon the RPC layer to implement
+      (see <xref target='ref:rpcsecgssv3' />).  Requirement (4) allows
+      communication between different MAC implementations.  The management
+      of label formats, DOIs, and the translation between them does not
+      require any support from NFSv4 on a protocol level and is out of the
+      scope of this document.
+    </t>
+  
+    <t>
+      The first change necessary is to devise a method for transporting
+      and storing security label data on NFSv4 file objects.  Security
+      labels have several semantics that are met by NFSv4 recommended
+      attributes such as the ability to set the label value upon object
+      creation.  Access control on these attributes are done through a
+      combination of two mechanisms.  As with other recommended attributes
+      on file objects the usual DAC checks (ACLs and permission bits) will
+      be performed to ensure that proper file ownership is enforced.  In
+      addition a MAC system MAY be employed on the client, server, or both to
+      enforce additional policy on what subjects may modify security label
+      information.
+    </t>
+  
+    <t>
+      The second change is to provide a method for the server to
+      notify the client that the attribute changed on an open
+      file on the server. If the file is closed, then during the
+      open attempt, the client will gather the new attribute value.
+      The server MUST not communicate the new value of the attribute,
+      the client MUST query it. This requirement stems from the
+      need for the client to provide sufficient access rights to
+      the attribute.
+    </t>
+  
+    <t>
+      The final change necessary is a modification to the RPC layer used
+      in NFSv4 in the form of a new version of the
+      RPCSEC_GSS <xref target='ref:RFC2203' /> framework.
+      In order for an NFSv4 server to apply MAC checks it must obtain
+      additional information from the client.  Several methods were explored for
+      performing this and it was decided that the best approach was to
+      incorporate the ability to make security attribute assertions through
+      the RPC mechanism.  RPCSECGSSv3 <xref target='ref:rpcsecgssv3' />
+      outlines a method to assert additional security information
+      such as security labels on gss context creation and have that data
+      bound to all RPC requests that make use of that context.
+    </t>
+  </section>
+  
+  <section anchor='ss:lnfs:defs' title='Definitions'>
+    <t>
+      <list style='hanging'>
+        <t hangText='Label Format Specifier (LFS):'>
+          is an identifier used by the client to establish
+          the syntactic format of the security label and the semantic meaning
+          of its components.  These specifiers exist in a registry associated
+          with documents describing the format and semantics of the label.
+        </t>
+  
+        <t hangText='Label Format Registry:'>
+          is the IANA registry containing all registered
+          LFS along with references to the documents that
+          describe the syntactic format and semantics of the security label.
+        </t>
+  
+        <t hangText='Policy Identifier (PI):'>
+          is an optional part of the definition of a Label
+          Format Specifier which allows for clients and server to identify
+          specific security policies.
+        </t>
+  
+        <t hangText='Domain of Interpretation (DOI):'>
+          represents
+          an administrative security boundary, where all systems within the DOI
+          have semantically coherent labeling.  That is, a security attribute
+          must always mean exactly the same thing anywhere within the DOI.
+        </t>
+  
+        <t hangText='Object:'>
+          is a passive resource within the system that we
+          wish to be protected.  Objects can be entities such as files,
+          directories, pipes, sockets, and many other system resources relevant
+          to the protection of the system state.
+        </t>
+  
+        <t hangText='Subject:'>
+          A subject is an active entity usually a process which is
+          requesting access to an object.
+        </t>
+    
+        <t hangText='Multi-Level Security (MLS):'>
+          is a traditional model where objects are given a sensitivity
+          level (Unclassified, Secret, Top Secret,  etc) and a category set
+          <xref target='ref:rh_mls' />.
+        </t>
+      </list>
+    </t>
+  </section>
+  
+  <section anchor="ss:lnfs:macsec" title="MAC Security Attribute">
+    <t>
+      MAC models base access decisions on security attributes bound to
+      subjects and objects.  This information can range from a user
+      identity for an identity based MAC model, sensitivity levels for
+      Multi-level security, or a type for Type Enforcement.  These models
+      base their decisions on different criteria but the semantics of the
+      security attribute remain the same.  The semantics required by the
+      security attributes are listed below:
+    </t>
+  
+    <t>
+      <list style='symbols'>
+        <t>
+          Must provide flexibility with respect to MAC model.
+        </t>
+  
+        <t>
+          Must provide the ability to atomically set security information
+          upon object creation
+        </t>
+  
+        <t>
+          Must provide the ability to enforce access control decisions both
+          on the client and the server
+        </t>
+  
+        <t>
+          Must not expose an object to either the client or server name
+          space before its security information has been bound to it.
+        </t>
+      </list>
+    </t>
+  
+    <t>
+      NFSv4 provides several options for implementing the security
+      attribute.  The first option is to implement the security attribute
+      as a named attribute.  Named attributes provide flexibility since
+      they are treated as an opaque field but lack a way to atomically set
+      the attribute on creation.  In addition, named attributes themselves
+      are file system objects which need to be assigned a security
+      attribute.  This raises the question of how to assign security
+      attributes to the file and directories used to hold the security
+      attribute for the file in question.  The inability to atomically
+      assign the security attribute on file creation and the necessity to
+      assign security attributes to its sub-components makes named
+      attributes unacceptable as a method for storing security attributes.
+    </t>
+  
+    <t>
+      The second option is to implement the security attribute as a
+      recommended attribute.  These attributes have a fixed format
+      and semantics, which
+      conflicts with the flexible nature of the security attribute.  To
+      resolve this the security attribute consists of two components.  The
+      first component is a LFS as defined in <xref target='ref:lfsreg' />
+      to allow for interoperability between MAC
+      mechanisms.  The second component is an opaque field which is the actual
+      security attribute data.  To allow for various MAC models NFSv4
+      should be used solely as a transport mechanism for the security
+      attribute.  It is the responsibility of the endpoints to consume the
+      security attribute and make access decisions based on their
+      respective models.  In addition, creation of objects through OPEN and
+      CREATE allows for the security attribute to be specified upon
+      creation.  By providing an atomic create and set operation for the
+      security attribute it is possible to enforce the second and fourth
+      requirements.  The recommended attribute FATTR4_SEC_LABEL will
+      be used to satisfy this requirement.
+    </t>
+  
+    <section anchor='ss:macss:lnfs:interpret' title='Interpreting FATTR4_SEC_LABEL'>
       <t>
-        Clients must be able to convey to the server the security
-        attribute of the subject making the access request.  The server
-        may provide a mechanism to enforce MAC policy based on the
-        requesting subject's security attribute.
-      </t>
-
-      <t>
-        Server must be able to store and retrieve the security attribute
-        of exported files as requested by the client.
-      </t>
-
-      <t>
-        Server must provide a mechanism for notifying clients of attribute
-        changes of files on the server.
-      </t>
-
-      <t>
-        Clients and Servers must be able to negotiate Label Formats and
-        Domains of Interpretation (DOI) and provide a mechanism to
-        translate between them as needed.
-      </t>
-    </list>
-  </t>
-
-  <t>
-    These four requirements are key to the system with only requirements
-    (2) and (3) requiring changes to NFSv4.  The ability to convey
-    the security attribute of the subject as described in requirement (1)
-    falls upon the RPC layer to implement
-    (see <xref target='ref:rpcsecgssv3' />).  Requirement (4) allows
-    communication between different MAC implementations.  The management
-    of label formats, DOIs, and the translation between them does not
-    require any support from NFSv4 on a protocol level and is out of the
-    scope of this document.
-  </t>
-
-  <t>
-    The first change necessary is to devise a method for transporting
-    and storing security label data on NFSv4 file objects.  Security
-    labels have several semantics that are met by NFSv4 recommended
-    attributes such as the ability to set the label value upon object
-    creation.  Access control on these attributes are done through a
-    combination of two mechanisms.  As with other recommended attributes
-    on file objects the usual DAC checks (ACLs and permission bits) will
-    be performed to ensure that proper file ownership is enforced.  In
-    addition a MAC system MAY be employed on the client, server, or both to
-    enforce additional policy on what subjects may modify security label
-    information.
-  </t>
-
-  <t>
-    The second change is to provide a method for the server to
-    notify the client that the attribute changed on an open
-    file on the server. If the file is closed, then during the
-    open attempt, the client will gather the new attribute value.
-    The server MUST not communicate the new value of the attribute,
-    the client MUST query it. This requirement stems from the
-    need for the client to provide sufficient access rights to
-    the attribute.
-  </t>
-
-  <t>
-    The final change necessary is a modification to the RPC layer used
-    in NFSv4 in the form of a new version of the
-    RPCSEC_GSS <xref target='ref:RFC2203' /> framework.
-    In order for an NFSv4 server to apply MAC checks it must obtain
-    additional information from the client.  Several methods were explored for
-    performing this and it was decided that the best approach was to
-    incorporate the ability to make security attribute assertions through
-    the RPC mechanism.  RPCSECGSSv3 <xref target='ref:rpcsecgssv3' />
-    outlines a method to assert additional security information
-    such as security labels on gss context creation and have that data
-    bound to all RPC requests that make use of that context.
-  </t>
-</section>
-
-<section anchor='sec:lnfs:defs' title='Definitions'>
-  <t>
-    <list style='hanging'>
-      <t hangText='Label Format Specifier (LFS):'>
-        is an identifier used by the client to establish
-        the syntactic format of the security label and the semantic meaning
-        of its components.  These specifiers exist in a registry associated
-        with documents describing the format and semantics of the label.
-      </t>
-
-      <t hangText='Label Format Registry:'>
-        is the IANA registry containing all registered
-        LFS along with references to the documents that
-        describe the syntactic format and semantics of the security label.
-      </t>
-
-      <t hangText='Policy Identifier (PI):'>
-        is an optional part of the definition of a Label
-        Format Specifier which allows for clients and server to identify
-        specific security policies.
-      </t>
-
-      <t hangText='Domain of Interpretation (DOI):'>
-        represents
-        an administrative security boundary, where all systems within the DOI
-        have semantically coherent labeling.  That is, a security attribute
-        must always mean exactly the same thing anywhere within the DOI.
-      </t>
-
-      <t hangText='Object:'>
-        is a passive resource within the system that we
-        wish to be protected.  Objects can be entities such as files,
-        directories, pipes, sockets, and many other system resources relevant
-        to the protection of the system state.
-      </t>
-
-      <t hangText='Subject:'>
-        A subject is an active entity usually a process which is
-        requesting access to an object.
+        The XDR <xref target='ref:RFC4506' /> necessary to implement Labeled
+        NFSv4 is presented in <xref target='fig:xdr' />:
       </t>
   
-      <t hangText='Multi-Level Security (MLS):'>
-        is a traditional model where objects are given a sensitivity
-        level (Unclassified, Secret, Top Secret,  etc) and a category set
-        <xref target='ref:rh_mls' />.
-      </t>
-    </list>
-  </t>
-</section>
-
-<section anchor="sec:lnfs:macsec" title="MAC Security Attribute">
-  <t>
-    MAC models base access decisions on security attributes bound to
-    subjects and objects.  This information can range from a user
-    identity for an identity based MAC model, sensitivity levels for
-    Multi-level security, or a type for Type Enforcement.  These models
-    base their decisions on different criteria but the semantics of the
-    security attribute remain the same.  The semantics required by the
-    security attributes are listed below:
-  </t>
-
-  <t>
-    <list style='symbols'>
+      <figure anchor='fig:xdr'>
+        <artwork>
+      const FATTR4_SEC_LABEL   = 81;
+  
+      typedef uint32_t  policy4;
+      struct labelformat_spec4 {
+        policy4   lfs_lfs;
+        policy4   lfs_pi;
+      };
+  
+      struct sec_label_attr_info {
+        labelformat_spec4   slai_lfs;
+        opaque              slai_data&lt;&gt;;
+      };
+        </artwork>
+      </figure>
+  
       <t>
-        Must provide flexibility with respect to MAC model.
+        The FATTR4_SEC_LABEL contains an array of two components with the first
+        component being an LFS.  It serves to provide the receiving end
+        with the information necessary to translate the security attribute
+        into a form that is usable by the endpoint.  Label Formats assigned
+        an LFS may optionally choose to include a Policy Identifier
+        field to allow for complex policy deployments.  The LFS
+        and Label Format Registry are described in detail in
+        <xref target='ref:lfsreg' />.
+        The translation used to interpret the security
+        attribute is not specified as part of the protocol as it may depend
+        on various factors.  The second component is an opaque section which
+        contains the data of the attribute.  This component is dependent on
+        the MAC model to interpret and enforce.
       </t>
-
       <t>
-        Must provide the ability to atomically set security information
-        upon object creation
+        In particular, it is the responsibility of the LFS specification
+        to define a maximum size for the opaque section, slai_data&lt;&gt;.
+        When creating or modifying a label for an object, the client
+        needs to be guaranteed that the server will accept a label
+        that is sized correctly. By both client and server being part
+        of a specific MAC model, the client will be aware of the size.
       </t>
-
+    </section>
+  
+    <section anchor='ss:macss:lnfs:delegs' title='Delegations'>
       <t>
-        Must provide the ability to enforce access control decisions both
-        on the client and the server
+        In the event that a security attribute is changed on the server while
+        a client holds a delegation on the file, the client should follow the
+        existing protocol with respect to attribute changes.  It should flush
+        all changes back to the server and relinquish the delegation.
       </t>
-
+    </section>
+  
+    <section anchor='ss:macss:lnfs:perms' title='Permission Checking'>
       <t>
-        Must not expose an object to either the client or server name
-        space before its security information has been bound to it.
+        It is not feasible to enumerate all possible MAC models and even
+        levels of protection within a subset of these models.  This means
+        that the NFSv4 client and servers cannot be expected to directly
+        make access control decisions based on the security attribute.
+        Instead NFSv4 should defer permission checking on this attribute to
+        the host system.  These checks are performed in addition to existing
+        DAC and ACL checks outlined in the NFSv4 protocol.
+        <xref target='ss:lnfs:modes' />  gives a
+        specific example of how the security attribute is handled under a
+        particular MAC model.
       </t>
-    </list>
-  </t>
-
-  <t>
-    NFSv4 provides several options for implementing the security
-    attribute.  The first option is to implement the security attribute
-    as a named attribute.  Named attributes provide flexibility since
-    they are treated as an opaque field but lack a way to atomically set
-    the attribute on creation.  In addition, named attributes themselves
-    are file system objects which need to be assigned a security
-    attribute.  This raises the question of how to assign security
-    attributes to the file and directories used to hold the security
-    attribute for the file in question.  The inability to atomically
-    assign the security attribute on file creation and the necessity to
-    assign security attributes to its sub-components makes named
-    attributes unacceptable as a method for storing security attributes.
-  </t>
-
-  <t>
-    The second option is to implement the security attribute as a
-    recommended attribute.  These attributes have a fixed format
-    and semantics, which
-    conflicts with the flexible nature of the security attribute.  To
-    resolve this the security attribute consists of two components.  The
-    first component is a LFS as defined in <xref target='ref:lfsreg' />
-    to allow for interoperability between MAC
-    mechanisms.  The second component is an opaque field which is the actual
-    security attribute data.  To allow for various MAC models NFSv4
-    should be used solely as a transport mechanism for the security
-    attribute.  It is the responsibility of the endpoints to consume the
-    security attribute and make access decisions based on their
-    respective models.  In addition, creation of objects through OPEN and
-    CREATE allows for the security attribute to be specified upon
-    creation.  By providing an atomic create and set operation for the
-    security attribute it is possible to enforce the second and fourth
-    requirements.  The recommended attribute FATTR4_SEC_LABEL will
-    be used to satisfy this requirement.
-  </t>
-
-  <section anchor='ss:macsec:lnfs:interpret' title='Interpreting FATTR4_SEC_LABEL'>
-    <t>
-      The XDR <xref target='ref:RFC4506' /> necessary to implement Labeled
-      NFSv4 is presented in <xref target='fig:xdr' />:
-    </t>
-
-    <figure anchor='fig:xdr'>
-      <artwork>
-    const FATTR4_SEC_LABEL   = 81;
-
-    typedef uint32_t  policy4;
-    struct labelformat_spec4 {
-      policy4   lfs_lfs;
-      policy4   lfs_pi;
-    };
-
-    struct sec_label_attr_info {
-      labelformat_spec4   slai_lfs;
-      opaque              slai_data&lt;&gt;;
-    };
-      </artwork>
-    </figure>
-
-    <t>
-      The FATTR4_SEC_LABEL contains an array of two components with the first
-      component being an LFS.  It serves to provide the receiving end
-      with the information necessary to translate the security attribute
-      into a form that is usable by the endpoint.  Label Formats assigned
-      an LFS may optionally choose to include a Policy Identifier
-      field to allow for complex policy deployments.  The LFS
-      and Label Format Registry are described in detail in
-      <xref target='ref:lfsreg' />.
-      The translation used to interpret the security
-      attribute is not specified as part of the protocol as it may depend
-      on various factors.  The second component is an opaque section which
-      contains the data of the attribute.  This component is dependent on
-      the MAC model to interpret and enforce.
-    </t>
-    <t>
-      In particular, it is the responsibility of the LFS specification
-      to define a maximum size for the opaque section, slai_data&lt;&gt;.
-      When creating or modifying a label for an object, the client
-      needs to be guaranteed that the server will accept a label
-      that is sized correctly. By both client and server being part
-      of a specific MAC model, the client will be aware of the size.
-    </t>
+    </section>
+  
+    <section anchor='ss:macss:lnfs:objects' title='Object Creation'>
+      <t>
+        When creating files in NFSv4 the OPEN and CREATE operations are used.
+        One of the parameters to these operations is an fattr4 structure
+        containing the attributes the file is to be created with.  This
+        allows NFSv4 to atomically set the security attribute of files upon
+        creation.  When a client is MAC aware it must always provide the
+        initial security attribute upon file creation.  In the event that the
+        server is the only MAC aware entity in the system it should ignore
+        the security attribute specified by the client and instead make the
+        determination itself.  A more in depth explanation can be found in
+        <xref target='ss:lnfs:modes' />.
+      </t>
+    </section>
+  
+    <section anchor='ss:macss:lnfs:existing' title='Existing Objects'>
+      <t>
+        Note that under the MAC model, all objects must have labels.
+        Therefore, if an existing server is upgraded to include LNFS support,
+        then it is the responsibility of the security system to
+        define the behavior for existing objects. For example, if
+        the security system is LFS 0, which means the server just
+        stores and returns labels, then existing files should
+        return labels which are set to an empty value.
+      </t>
+    </section>
+  
+    <section anchor='ss:macss:lnfs:changes' title='Label Changes'>
+      <t>
+        As per the requirements, when a file's security label is
+        modified, the server must notify all clients which have
+        the file opened of the change in label. It does so with
+        CB_ATTR_CHANGED. There are preconditions to making an
+        attribute change imposed by NFSv4 and the security system might
+        want to impose others. In the process of meeting these
+        preconditions, the server may chose to either serve
+        the request in whole or return NFS4ERR_DELAY to the
+        SETATTR operation.
+      </t>
+  
+      <t>
+        If there are open delegations on the file
+        belonging to client other than the one making the label
+        change, then the process described in
+        <xref target='ss:macss:lnfs:delegs' /> must be followed.
+      </t>
+  
+      <t>
+        As the server is always presented with the subject
+        label from the client, it does not necessarily need to
+        communicate the fact that the label has changed to
+        the client. In the cases where the change outright denies
+        the client access, the client will be able to quickly
+        determine that there is a new label in effect. It is
+        in cases where the client may share the same object
+        between multiple subjects or a security system which
+        is not strictly hierarchical that the CB_ATTR_CHANGED callback is
+        very useful. It allows the server to inform the clients
+        that the cached security attribute is now stale.
+      </t>
+  
+      <t>
+        In the scenario presented in <xref target='ss:examples:simple' />,
+        the clients are smart and the server has a very simple security
+        system which just stores the labels. In this system, the
+        MAC label check always allows access, regardless of the
+        subject label. 
+      </t>
+  
+      <t>
+        The way in which MAC labels are enforced is by the smart
+        client. So if client A changes a security label on a file,
+        then the server MUST inform all clients that have the file
+        opened that the label has changed via CB_ATTR_CHANGED. Then
+        the clients MUST retrieve the new label and MUST enforce
+        access via the new attribute values.
+      </t>
+  
+      <t>
+        <cref anchor="LAI1" source="TH">
+          Describe a LFS of 0, which will be the means
+          to indicate such a deployment. In the current
+          LFR, 0 is marked as reserved. If we use it, then
+          we define the default LFS to be used by a LNFS aware
+          server. I.e., it lets smart clients work together in
+          the face of a dumb server.  Note that will supporting
+          this system is optional, it will make for a very good
+          debugging mode during development. I.e., even if a server
+          does not deploy with another security system, this
+          mode gets your foot in the door.
+        </cref>
+      </t>
+    </section>
   </section>
-
-  <section anchor='ss:macsec:lnfs:delegs' title='Delegations'>
-    <t>
-      In the event that a security attribute is changed on the server while
-      a client holds a delegation on the file, the client should follow the
-      existing protocol with respect to attribute changes.  It should flush
-      all changes back to the server and relinquish the delegation.
-    </t>
+  
+  <section anchor='ss:cb:lc' title="Procedure 16: CB_ATTR_CHANGED - Notify Client that the File's Attributes Changed">
+    <section toc='exclude' anchor="ss:cbac:args" title='ARGUMENTS'>
+      <figure>
+        <artwork>
+     struct CB_ATTR_CHANGED4args {
+             nfs_fh4         acca_fh;
+             bitmap4         acca_critical;
+             bitmap4         acca_info;
+     };
+        </artwork>
+      </figure>
+    </section>
+  
+    <section toc='exclude' anchor="ss:cbac:result" title='RESULTS'>
+      <figure>
+        <artwork>
+     struct CB_ATTR_CHANGED4res {
+             nfsstat4        accr_status;
+     };
+        </artwork>
+      </figure>
+    </section>
+  
+    <section toc='exclude' anchor="ss:cbac:desc" title="DESCRIPTION">
+      <t>
+        The CB_ATTR_CHANGED callback operation is used by the
+        server to indicate to the client that the file's attributes
+        have been modified on the server. The server does not
+        convey how the attributes have changed, just that they
+        have been modified.  The server can inform the client
+        about both critical and informational attribute changes
+        in the bitmask arguments. The client SHOULD query the
+        server about all attributes set in acca_critical. For
+        all changes reflected in acca_info, the client can decide
+        whether or not it wants to poll the server.
+      </t>
+  
+      <t>
+        The CB_ATTR_CHANGED callback operation with the FATTR4_SEC_LABEL
+        set in acca_critical is the method used by the
+        server to indicate that the MAC label for the file
+        referenced by acca_fh has changed. In many ways, the
+        server does not care about the result returned by the
+        client.
+      </t>
+    </section> 
   </section>
-
-  <section anchor='ss:macsec:lnfs:perms' title='Permission Checking'>
+  
+  <section anchor='ss:lnfs:pnfs' title='pNFS Considerations'>
     <t>
-      It is not feasible to enumerate all possible MAC models and even
-      levels of protection within a subset of these models.  This means
-      that the NFSv4 client and servers cannot be expected to directly
-      make access control decisions based on the security attribute.
-      Instead NFSv4 should defer permission checking on this attribute to
-      the host system.  These checks are performed in addition to existing
-      DAC and ACL checks outlined in the NFSv4 protocol.
-      <xref target='sec:lnfs:modes' />  gives a
-      specific example of how the security attribute is handled under a
-      particular MAC model.
+      This section examines the issues in deploying LNFS in
+      a pNFS community of servers.
     </t>
+  
+    <section toc='exclude' anchor="ss:pnfs:checks" title="MAC Label Checks">
+      <t>
+        The new FATTR4_SEC_LABEL attribute is metadata information
+        and as such the DS is not aware of the value contained
+        on the MDS. Fortunately, the NFSv4.1 protocol <xref target='ref:RFC5661' />
+        already has provisions for doing access level checks from
+        the DS to the MDS. In order for the DS to validate
+        the subject label presented by the client, it SHOULD
+        utilize this mechanism.
+      </t>
+  
+      <t>
+        If a file's FATTR4_SEC_LABEL is changed, then the MDS
+        should utilize CB_ATTR_CHANGED to inform the client
+        of that fact. If the MDS is maintaining 
+      </t>
+    </section> 
   </section>
-
-  <section anchor='ss:macsec:lnfs:objects' title='Object Creation'>
+  
+  <section anchor='ss:lnfs:discovery' title='Discovery of Server LNFS Support'>
     <t>
-      When creating files in NFSv4 the OPEN and CREATE operations are used.
-      One of the parameters to these operations is an fattr4 structure
-      containing the attributes the file is to be created with.  This
-      allows NFSv4 to atomically set the security attribute of files upon
-      creation.  When a client is MAC aware it must always provide the
-      initial security attribute upon file creation.  In the event that the
-      server is the only MAC aware entity in the system it should ignore
-      the security attribute specified by the client and instead make the
-      determination itself.  A more in depth explanation can be found in
-      <xref target='sec:lnfs:modes' />.
+      The server can easily determine that a client supports LNFS
+      when it queries for the FATTR4_SEC_LABEL label for an object.
+      Note that it cannot assume that the presence of RPCSEC_GSSv3
+      indicates LNFS support. The client might need to discover
+      which LFS the server supports.
     </t>
-  </section>
-
-  <section anchor='ss:macsec:lnfs:existing' title='Existing Objects'>
+  
     <t>
-      Note that under the MAC model, all objects must have labels.
-      Therefore, if an existing server is upgraded to include LNFS support,
-      then it is the responsibility of the security system to
-      define the behavior for existing objects. For example, if
-      the security system is LFS 0, which means the server just
-      stores and returns labels, then existing files should
-      return labels which are set to an empty value.
+      A server which supports LNFS MUST allow a client with any subject
+      label to retrieve the FATTR4_SEC_LABEL attribute for the root
+      filehandle, ROOTFH. The following compound must always succeed
+      as far as a MAC label check is concerned:
     </t>
-  </section>
-
-  <section anchor='ss:macsec:lnfs:changes' title='Label Changes'>
-    <t>
-      As per the requirements, when a file's security label is
-      modified, the server must notify all clients which have
-      the file opened of the change in label. It does so with
-      CB_ATTR_CHANGED. There are preconditions to making an
-      attribute change imposed by NFSv4 and the security system might
-      want to impose others. In the process of meeting these
-      preconditions, the server may chose to either serve
-      the request in whole or return NFS4ERR_DELAY to the
-      SETATTR operation.
-    </t>
-
-    <t>
-      If there are open delegations on the file
-      belonging to client other than the one making the label
-      change, then the process described in
-      <xref target='ss:macsec:lnfs:delegs' /> must be followed.
-    </t>
-
-    <t>
-      As the server is always presented with the subject
-      label from the client, it does not necessarily need to
-      communicate the fact that the label has changed to
-      the client. In the cases where the change outright denies
-      the client access, the client will be able to quickly
-      determine that there is a new label in effect. It is
-      in cases where the client may share the same object
-      between multiple subjects or a security system which
-      is not strictly hierarchical that the CB_ATTR_CHANGED callback is
-      very useful. It allows the server to inform the clients
-      that the cached security attribute is now stale.
-    </t>
-
-    <t>
-      In the scenario presented in <xref target='ss:examples:simple' />,
-      the clients are smart and the server has a very simple security
-      system which just stores the labels. In this system, the
-      MAC label check always allows access, regardless of the
-      subject label. 
-    </t>
-
-    <t>
-      The way in which MAC labels are enforced is by the smart
-      client. So if client A changes a security label on a file,
-      then the server MUST inform all clients that have the file
-      opened that the label has changed via CB_ATTR_CHANGED. Then
-      the clients MUST retrieve the new label and MUST enforce
-      access via the new attribute values.
-    </t>
-
-    <t>
-      <cref anchor="LAI1" source="TH">
-        Describe a LFS of 0, which will be the means
-        to indicate such a deployment. In the current
-        LFR, 0 is marked as reserved. If we use it, then
-        we define the default LFS to be used by a LNFS aware
-        server. I.e., it lets smart clients work together in
-        the face of a dumb server.  Note that will supporting
-        this system is optional, it will make for a very good
-        debugging mode during development. I.e., even if a server
-        does not deploy with another security system, this
-        mode gets your foot in the door.
-      </cref>
-    </t>
-  </section>
-</section>
-
-<section anchor='ss:cb:lc' title="Procedure 16: CB_ATTR_CHANGED - Notify Client that the File's Attributes Changed">
-  <section toc='exclude' anchor="ss:cbac:args" title='ARGUMENTS'>
+  
     <figure>
       <artwork>
-   struct CB_ATTR_CHANGED4args {
-           nfs_fh4         acca_fh;
-           bitmap4         acca_critical;
-           bitmap4         acca_info;
-   };
+     PUTROOTFH, GETATTR {FATTR4_SEC_LABEL}
       </artwork>
     </figure>
+  
+    <t>
+      Note that the server might have imposed a security flavor on
+      the root that precludes such access. I.e., if the server
+      requires kerberized access and the client presents a compound
+      with AUTH_SYS, then the server is allowed to return NFS4ERR_WRONGSEC
+      in this case. But if the client presents a correct security
+      flavor, then the server MUST return the FATTR4_SEC_LABEL attribute
+      with the supported LFS filled in.
+    </t>
   </section>
-
-  <section toc='exclude' anchor="ss:cbac:result" title='RESULTS'>
-    <figure>
-      <artwork>
-   struct CB_ATTR_CHANGED4res {
-           nfsstat4        accr_status;
-   };
-      </artwork>
-    </figure>
-  </section>
-
-  <section toc='exclude' anchor="ss:cbac:desc" title="DESCRIPTION">
+  
+  <section anchor='ss:lnfs:modes' title='MAC Security NFS Modes of Operation'>
     <t>
-      The CB_ATTR_CHANGED callback operation is used by the
-      server to indicate to the client that the file's attributes
-      have been modified on the server. The server does not
-      convey how the attributes have changed, just that they
-      have been modified.  The server can inform the client
-      about both critical and informational attribute changes
-      in the bitmask arguments. The client SHOULD query the
-      server about all attributes set in acca_critical. For
-      all changes reflected in acca_info, the client can decide
-      whether or not it wants to poll the server.
+      A system using Labeled NFS may operate in three modes.  The first
+      mode provides the most protection and is called "full mode".  In this
+      mode both the client and server implement a MAC model allowing each
+      end to make an access control decision.  The remaining two modes are
+      variations on each other and are called "smart client" and "smart
+      server" modes.  In these modes one end of the connection is not
+      implementing a MAC model and because of this these operating modes
+      offer less protection than full mode.
     </t>
-
-    <t>
-      The CB_ATTR_CHANGED callback operation with the FATTR4_SEC_LABEL
-      set in acca_critical is the method used by the
-      server to indicate that the MAC label for the file
-      referenced by acca_fh has changed. In many ways, the
-      server does not care about the result returned by the
-      client.
-    </t>
-  </section> 
-</section>
-
-<section anchor='sec:lnfs:pnfs' title='pNFS Considerations'>
-  <t>
-    This section examines the issues in deploying LNFS in
-    a pNFS community of servers.
-  </t>
-
-  <section toc='exclude' anchor="ss:pnfs:checks" title="MAC Label Checks">
-    <t>
-      The new FATTR4_SEC_LABEL attribute is metadata information
-      and as such the DS is not aware of the value contained
-      on the MDS. Fortunately, the NFSv4.1 protocol <xref target='ref:RFC5661' />
-      already has provisions for doing access level checks from
-      the DS to the MDS. In order for the DS to validate
-      the subject label presented by the client, it SHOULD
-      utilize this mechanism.
-    </t>
-
-    <t>
-      If a file's FATTR4_SEC_LABEL is changed, then the MDS
-      should utilize CB_ATTR_CHANGED to inform the client
-      of that fact. If the MDS is maintaining 
-    </t>
-  </section> 
-</section>
-
-<section anchor='sec:lnfs:discovery' title='Discovery of Server LNFS Support'>
-  <t>
-    The server can easily determine that a client supports LNFS
-    when it queries for the FATTR4_SEC_LABEL label for an object.
-    Note that it cannot assume that the presence of RPCSEC_GSSv3
-    indicates LNFS support. The client might need to discover
-    which LFS the server supports.
-  </t>
-
-  <t>
-    A server which supports LNFS MUST allow a client with any subject
-    label to retrieve the FATTR4_SEC_LABEL attribute for the root
-    filehandle, ROOTFH. The following compound must always succeed
-    as far as a MAC label check is concerned:
-  </t>
-
-  <figure>
-    <artwork>
-   PUTROOTFH, GETATTR {FATTR4_SEC_LABEL}
-    </artwork>
-  </figure>
-
-  <t>
-    Note that the server might have imposed a security flavor on
-    the root that precludes such access. I.e., if the server
-    requires kerberized access and the client presents a compound
-    with AUTH_SYS, then the server is allowed to return NFS4ERR_WRONGSEC
-    in this case. But if the client presents a correct security
-    flavor, then the server MUST return the FATTR4_SEC_LABEL attribute
-    with the supported LFS filled in.
-  </t>
-</section>
-
-<section anchor='sec:lnfs:modes' title='MAC Security NFS Modes of Operation'>
-  <t>
-    A system using Labeled NFS may operate in three modes.  The first
-    mode provides the most protection and is called "full mode".  In this
-    mode both the client and server implement a MAC model allowing each
-    end to make an access control decision.  The remaining two modes are
-    variations on each other and are called "smart client" and "smart
-    server" modes.  In these modes one end of the connection is not
-    implementing a MAC model and because of this these operating modes
-    offer less protection than full mode.
-  </t>
-
-  <section anchor='ss:modes:full' title='Full Mode'>
-    <t>
-      Full mode environments consist of MAC aware NFSv4 servers and clients
-      and may be composed of mixed MAC models and policies.  The system
-      requires that both the client and server have an opportunity to
-      perform an access control check based on all relevant information
-      within the network.  The file object security attribute is provided
-      using the mechanism described in <xref target='sec:lnfs:macsec' />.  The
-      security attribute of the subject making the request is transported
-      at the RPC layer using the mechanism described in RPCSECGSSv3
-      <xref target='ref:rpcsecgssv3' />.
-    </t>
-
-    <section anchor='ss:modes:fm_ilt' title='Initial Labeling and Translation'>
+  
+    <section anchor='ss:modes:full' title='Full Mode'>
       <t>
-        The ability to create a file is an action that a MAC model may wish
-        to mediate.  The client is given the responsibility to determine the
-        initial security attribute to be placed on a file.  This allows the
-        client to make a decision as to the acceptable security attributes to
-        create a file with before sending the request to the server.  Once
-        the server receives the creation request from the client it may
-        choose to evaluate if the security attribute is acceptable.
+        Full mode environments consist of MAC aware NFSv4 servers and clients
+        and may be composed of mixed MAC models and policies.  The system
+        requires that both the client and server have an opportunity to
+        perform an access control check based on all relevant information
+        within the network.  The file object security attribute is provided
+        using the mechanism described in <xref target='ss:lnfs:macsec' />.  The
+        security attribute of the subject making the request is transported
+        at the RPC layer using the mechanism described in RPCSECGSSv3
+        <xref target='ref:rpcsecgssv3' />.
       </t>
-
-      <t>
-        Security attributes on the client and server may vary based on MAC
-        model and policy.  To handle this the security attribute field has an
-        LFS component.  This component is a mechanism for the host to
-        identify the format and meaning of the opaque portion of the security
-        attribute.  A full mode environment may contain hosts operating in
-        several different LFSs and DOIs.  In this case a mechanism for
-        translating the opaque portion of the security attribute is needed.
-        The actual translation function will vary based on MAC model and
-        policy and is out of the scope of this document.  If a translation is
-        unavailable for a given LFS and DOI then the request SHOULD be
-        denied.  Another recourse is to allow the host to provide a fallback
-        mapping for unknown security attributes.
-      </t>
+  
+      <section anchor='ss:modes:fm_ilt' title='Initial Labeling and Translation'>
+        <t>
+          The ability to create a file is an action that a MAC model may wish
+          to mediate.  The client is given the responsibility to determine the
+          initial security attribute to be placed on a file.  This allows the
+          client to make a decision as to the acceptable security attributes to
+          create a file with before sending the request to the server.  Once
+          the server receives the creation request from the client it may
+          choose to evaluate if the security attribute is acceptable.
+        </t>
+  
+        <t>
+          Security attributes on the client and server may vary based on MAC
+          model and policy.  To handle this the security attribute field has an
+          LFS component.  This component is a mechanism for the host to
+          identify the format and meaning of the opaque portion of the security
+          attribute.  A full mode environment may contain hosts operating in
+          several different LFSs and DOIs.  In this case a mechanism for
+          translating the opaque portion of the security attribute is needed.
+          The actual translation function will vary based on MAC model and
+          policy and is out of the scope of this document.  If a translation is
+          unavailable for a given LFS and DOI then the request SHOULD be
+          denied.  Another recourse is to allow the host to provide a fallback
+          mapping for unknown security attributes.
+        </t>
+      </section>
+  
+      <section anchor='ss:modes:fm_pe' title='Policy Enforcement'>
+        <t>
+          In full mode access control decisions are made by both the clients
+          and servers.  When a client makes a request it takes the security
+          attribute from the requesting process and makes an access control
+          decision based on that attribute and the security attribute of the
+          object it is trying to access.  If the client denies that access an
+          RPC call to the server is never made.  If however the access is
+          allowed the client will make a call to the NFS server.
+        </t>
+  
+        <t>
+          When the server receives the request from the client it extracts the
+          security attribute conveyed in the RPC request.  The server then uses
+          this security attribute and the attribute of the object the client is
+          trying to access to make an access control decision.  If the server's
+          policy allows this access it will fulfill the client's request,
+          otherwise it will return NFS4ERR_ACCESS.
+        </t>
+  
+        <t>
+          Implementations MAY validate security attributes supplied over the
+          network to ensure that they are within a set of attributes permitted
+          from a specific peer, and if not, reject them.  Note that a system
+          may permit a different set of attributes to be accepted from each
+          peer.  An example of this can be seen in <xref target='ss:examples:fm' />.
+        </t>
+      </section>
     </section>
-
-    <section anchor='ss:modes:fm_pe' title='Policy Enforcement'>
+  
+    <section anchor='ss:modes:client' title='Smart Client Mode'>
       <t>
-        In full mode access control decisions are made by both the clients
-        and servers.  When a client makes a request it takes the security
-        attribute from the requesting process and makes an access control
-        decision based on that attribute and the security attribute of the
-        object it is trying to access.  If the client denies that access an
-        RPC call to the server is never made.  If however the access is
-        allowed the client will make a call to the NFS server.
-      </t>
-
-      <t>
-        When the server receives the request from the client it extracts the
-        security attribute conveyed in the RPC request.  The server then uses
-        this security attribute and the attribute of the object the client is
-        trying to access to make an access control decision.  If the server's
-        policy allows this access it will fulfill the client's request,
-        otherwise it will return NFS4ERR_ACCESS.
-      </t>
-
-      <t>
-        Implementations MAY validate security attributes supplied over the
-        network to ensure that they are within a set of attributes permitted
-        from a specific peer, and if not, reject them.  Note that a system
-        may permit a different set of attributes to be accepted from each
-        peer.  An example of this can be seen in <xref target='ss:examples:fm' />.
-      </t>
-    </section>
-  </section>
-
-  <section anchor='ss:modes:client' title='Smart Client Mode'>
-    <t>
-      Smart client environments consist of NFSv4 servers that are not MAC
-      aware but NFSv4 clients that are.  Clients in this environment are
-      may consist of groups implementing different MAC models policies.
-      The system requires that all clients in the environment be
-      responsible for access control checks.  Due to the amount of trust
-      placed in the clients this mode is only to be used in a trusted
-      environment.
-    </t>
-
-    <section anchor='ss:modes:sc_ilt' title='Initial Labeling and Translation'>
-      <t>
-        Just like in full mode the client is responsible for determining the
-        initial label upon object creation.  The server in smart client mode
-        does not implement a MAC model, however, it may provide the ability
-        to restrict the creation and labeling of object with certain labels
-        based on different criteria as described in <xref target='ss:modes:fm_pe' />.
-      </t>
-
-      <t>
-        In a smart client environment a group of clients operate in a single
-        DOI.  This removes the need for the clients to maintain a set of DOI
-        translations.  Servers should provide a method to allow different
-        groups of clients to access the server at the same time.  However it
-        should not let two groups of clients operating in different DOIs to
-        access the same files.
-      </t>
-    </section>
-
-    <section anchor='ss:modes:sc_pe' title='Policy Enforcement'>
-      <t>
-        In smart client mode access control decisions are made by the
-        clients.  When a client accesses an object it obtains the security
-        attribute of the object from the server and combines it with the
-        security attribute of the process making the request to make an
-        access control decision.  This check is in addition to the DAC checks
-        provided by NFSv4 so this may fail based on the DAC criteria even if
-        the MAC policy grants access.  As the policy check is located on the
-        client an access control denial should take the form that is native
-        to the platform.
-      </t>
-    </section>
-  </section>
-
-  <section anchor='ss:modes:server' title='Smart Server Mode'>
-    <t>
-      Smart server environments consist of NFSv4 servers that are MAC aware
-      and one or more MAC unaware clients.  The server is the only entity
-      enforcing policy, and may selectively provide standard NFS services
-      to clients based on their authentication credentials and/or
-      associated network attributes (e.g., IP address, network interface).
-      The level of trust and access extended to a client in this mode is
-      configuration-specific.
-    </t>
-
-    <section anchor='ss:modes:ss_ilt' title='Initial Labeling and Translation'>
-      <t>
-        In smart server mode all labeling and access control decisions are
-        performed by the NFSv4 server.  In this environment the NFSv4 clients
-        are not MAC aware so they cannot provide input into the access
-        control decision.  This requires the server to determine the initial
-        labeling of objects.  Normally the subject to use in this calculation
-        would originate from the client.  Instead the NFSv4 server may choose
-        to assign the subject security attribute based on their
-        authentication credentials and/or associated network attributes (e.g.,
-        IP address, network interface).
-      </t>
-
-      <t>
-        In smart server mode security attributes are contained solely within
-        the NFSv4 server.  This means that all security attributes used in
-        the system remain within a single LFS and DOI.  Since security
-        attributes will not cross DOIs or change format there is no need to
-        provide any translation functionality above that which is needed
-        internally by the MAC model.
-      </t>
-    </section>
-
-    <section anchor='ss:modes:ss_pe' title='Policy Enforcement'>
-      <t>
-        All access control decisions in smart server mode are made by the
-        server.  The server will assign the subject a security attribute
-        based on some criteria (e.g., IP address, network interface).  Using
-        the newly calculated security attribute and the security attribute of
-        the object being requested the MAC model makes the access control
-        check and returns NFS4ERR_ACCESS on a denial and NFS4_OK on success.
-        This check is done transparently to the client so if the MAC
-        permission check fails the client may be unaware of the reason for
-        the permission failure.  When operating in this mode administrators
-        attempting to debug permission failures should be aware to check the
-        MAC policy running on the server in addition to the DAC settings.
-      </t>
-    </section>
-  </section>
-</section>
-
-<section anchor='sec:lnfs:examples' title='Use Cases'>
-  <t>
-    MAC labeling is meant to allow NFSv4 to be deployed in site
-    configurable security schemes. The LFS and opaque data scheme
-    allows for flexibility to meet these different implementations.
-    In this section, we provide some examples of how NFSv4
-    could be deployed to meet existing needs. This is not an
-    exhaustive listing.
-  </t>
-
-  <section anchor='ss:examples:full' title='Full MAC labeling support for remotely mounted filesystems'>
-    <t>
-      In this case, we assume a local networked environment where the
-      servers and clients are under common administrative control.  All
-      systems in this network have the same MAC implementation and
-      semantically identical MAC security labels for objects (i.e. labels
-      mean the same thing on different systems, even if the policies on
-      each system may differ to some extent).  Clients will be able to
-      apply fine-grained MAC policy to objects accessed via NFS mounts, and
-      thus improve the overall consistency of MAC policy application within
-      this environment.
-    </t>
-
-    <t>
-      An example of this case would be where user home directories are
-      remotely mounted, and fine-grained MAC policy is implemented to
-      protect, for example, private user data from being read by malicious
-      web scripts running in the user's browser.  With Labeled NFS,
-      fine-grained MAC labeling of the user's files will allow the local MAC
-      policy to be implemented and provide the desired protection.
-    </t>
-  </section>
-
-  <section anchor='ss:examples:vms' title='MAC labeling of virtual machine images stored on the network'>
-    <t>
-      Virtualization is now a commonly implemented feature of modern
-      operating systems, and there is a need to ensure that MAC security
-      policy is able to to protect virtualized resources.  A common
-      implementation scheme involves storing virtualized guest filesystems
-      on a networked server, which are then mounted remotely by guests upon
-      instantiation.  In this case, there is a need to ensure that the
-      local guest kernel is able to access fine-grained MAC labels on the
-      remotely mounted filesystem so that its MAC security policy can be
-      applied.
-    </t>
-  </section>
-
-  <section anchor='ss:examples:itar' title='International Traffic in Arms Regulations (ITAR)'>
-    <t>
-      The International Traffic in Arms Regulations (ITAR) is put
-      forth by the United States Department of State, Directorate
-      of Defense and Trade Controls.  ITAR places strict requirements
-      on the export and thus access of defense articles and defense
-      services.  Organizations that manage projects with articles
-      and services deemed as within the scope of ITAR must ensure
-      the regulations are met.  The regulations require an assurance
-      that ITAR information is accessed on a need-to-know basis,
-      thus requiring strict, centrally managed access controls on
-      items labeled as ITAR.  Additionally, organizations must be
-      able to prove that the controls were adequately maintained
-      and that foreign nationals were not permitted access to these
-      defense articles or service.  ITAR control applicability may
-      be dynamic; information may become subject to ITAR after
-      creation (e.g., when the defense implications of technology
-      are recognized).
-    </t>
-  </section>
-
-  <section anchor='ss:examples:legalhold' title='Legal Hold/eDiscovery'>
-    <t>
-      Increased cases of legal holds on electronic sources of
-      information (ESI) have resulted in organizations taking a
-      pro-active approach to reduce the scope and thus costs
-      associated with these activities.  ESI Data Maps are increasing
-      in use and require support in operating systems to strictly
-      manage access controls in the case of a legal hold.  The
-      sizeable quantity of information involved in a legal discovery
-      request may preclude making a copy of the information to a
-      separate system that manages the legal hold on the copies;
-      this results in a need to enforce the legal hold on the
-      original information.
-    </t>
-
-    <t>
-      Organizations are taking steps to map out the sources of
-      information that are most likely to be placed under a legal
-      hold, these efforts result in ESI Data Maps.  ESI Data Maps
-      specify the Electronic Source of Information and the requirements
-      for sensitivity and criticality.  In the case of a legal hold,
-      the ESI data map and labels can be used to ensure the legal
-      hold is properly enforced on the predetermined set of
-      information.  An ESI data map narrows the scope of a legal
-      hold to the predetermined ESI.  The information must then be
-      protected at a level of security of which the weight and
-      admissibility of that evidence may be proved in a court of
-      law.  Current systems use application level controls and do
-      not adequately meet the requirements.  Labels may be used in
-      advance when an ESI data map exercise is conducted with
-      controls being applied at the time of a hold or labels may
-      be applied to data sets during an eDiscovery exercise to
-      ensure the data protections are adequate during the legal
-      hold period.
-    </t>
-
-    <t>
-      Note that this use case requires multi-attribute labels, as
-      both information sensitivity (e.g., to disclosure) and
-      information criticality (e.g., to continued business operations)
-      need to be captured.
-    </t>
-  </section>
-
-  <section anchor='ss:examples:simple' title='Simple security label storage'>
-    <t>
-      In this case, a mixed and loosely administered network is assumed,
-      where nodes may be running a variety of operating systems with
-      different security mechanisms and security policies.  It is desired
-      that network file servers be simply capable of storing and retrieving
-      MAC security labels for clients which use such labels.  The Labeled
-      NFS protocol would be implemented here solely to enable transport of
-      MAC security labels across the network.  It should be noted that in
-      such an environment, overall security cannot be as strongly enforced
-      as in case (a), and that this scheme is aimed at allowing MAC-capable
-      clients to function with local MAC security policy enabled rather
-      than perhaps disabling it entirely.
-    </t>
-  </section>
-
-  <section anchor='ss:examples:diskless' title='Diskless Linux'>
-    <t>
-      A number of popular operating system distributions depend on
-      a mandatory access control (MAC) model to implement a
-      kernel-enforced security policy. Typically, such models assign
-      particular roles to individual processes, which limit or
-      permit performing certain operations on a set of files,
-      directories, sockets, or other objects.  While the enforcing
-      of the policy is typically a matter for the diskless NFS
-      client itself, the filesystem objects in such models will
-      typically carry MAC labels that are used to define policy on
-      access.  These policies may, for instance, describe privilege
-      transitions that cannot be replicated using standard NFS ACL
-      based models.
-    </t>
-
-    <t>
-      For instance on a SYSV compatible system, if the 'init' process
-      spawns a process that attempts to start the 'NetworkManager'
-      executable, there may be a policy that sets up a role transition
-      if the 'init' process and 'NetworkManager' file labels match
-      a particular rule. Without this role transition, the process
-      may find itself having insufficient privileges to perform its
-      primary job of configuring network interfaces.
-    </t>
-
-    <t>
-      In setups of this type, a lot of the policy targets (such as
-      sockets or privileged system calls) are entirely local to the
-      client. The use of RPCSEC_GSSv3 for enforcing compliance at
-      the server level is therefore of limited value. The ability
-      to permanently label files and have those labels read back
-      by the client is, however, crucial to the ability to enforce
-      that policy.
-    </t>
-  </section>
-
-  <section anchor='ss:examples:mls' title='Multi-Level Security'>
-    <t>
-      In a MLS system objects are generally assigned
-      a sensitivity level and a set of compartments.  The sensitivity
-      levels within the system are given an order ranging from lowest to
-      highest classification level.  Read access to an object is allowed
-      when the sensitivity level of the subject "dominates" the object it
-      wants to access.  This means that the sensitivity level of the
-      subject is higher than that of the object it wishes to access and
-      that its set of compartments is a super-set of the compartments on
-      the object.
-    </t>
-
-    <t>
-      The rest of the section will just use sensitivity levels.  In general
-      the example is a client that wishes to list the contents of a
-      directory.  The system defines the sensitivity levels as
-      Unclassified (U), Secret (S), and Top Secret (TS).  The directory to be
-      searched is labeled Top Secret which means access to read the
-      directory will only be granted if the subject making the request is
-      also labeled Top Secret.
-    </t>
-
-    <section anchor='ss:examples:fm' title='Full Mode'>
-      <t>
-        In the first part of this example a process on the client is running
-        at the Secret level.  The process issues a readdir system call which
-        enters the kernel.  Before translating the readdir system call into a
-        request to the NFSv4 server the host operating system will consult
-        the MAC module to see if the operation is allowed.  Since the process
-        is operating at Secret and the directory to be accessed is labeled
-        Top Secret the MAC module will deny the request and an error code is
-        returned to user space.
-      </t>
-
-      <t>
-        Consider a second case where instead of running at Secret the process
-        is running at Top Secret.  In this case the sensitivity of the
-        process is equal to or greater than that of the directory so the MAC
-        module will allow the request.  Now the readdir is translated into
-        the necessary NFSv4 call to the server.  For the RPC request the
-        client is using the proper credential to assert to the server that
-        the process is running at Top Secret.
-      </t>
-
-      <t>
-        When the server receives the request it extracts the security label
-        from the RPC session and retrieves the label on the directory.  The
-        server then checks with its MAC module if a Top Secret process is
-        allowed to read the contents of the Top Secret directory.  Since this
-        is allowed by the policy then the server will return the appropriate
-        information back to the client.
-      </t>
-
-      <t>
-        In this example the policy on the client and server were both the
-        same.  In the event that they were running different policies a
-        translation of the labels might be needed.  In this case it could be
-        possible for a check to pass on the client and fail on the server.
-        The server may consider additional information when making its policy
-        decisions.  For example the server could determine that a certain
-        subnet is only cleared for data up to Secret classification.  If that
-        constraint was in place for the example above the client would still
-        succeed, but the server would fail since the client is asserting a
-        label that it is not able to use (Top Secret on a Secret network).
-      </t>
-    </section>
-
-    <section anchor='ss:examples:scm' title='Smart Client Mode'>
-      <t>
-        In smart client mode the example is identical to the first part of a
-        full mode operation.  A process on the client labeled Secret wishes
-        to access a Top Secret directory.  As in the full mode example this
-        is denied since Secret does not dominate Top Secret.  If the process
-        were operating at Top Secret it would pass the local access control
-        check and the NFSv4 operation would proceed as in a normal NFSv4
+        Smart client environments consist of NFSv4 servers that are not MAC
+        aware but NFSv4 clients that are.  Clients in this environment are
+        may consist of groups implementing different MAC models policies.
+        The system requires that all clients in the environment be
+        responsible for access control checks.  Due to the amount of trust
+        placed in the clients this mode is only to be used in a trusted
         environment.
       </t>
+  
+      <section anchor='ss:modes:sc_ilt' title='Initial Labeling and Translation'>
+        <t>
+          Just like in full mode the client is responsible for determining the
+          initial label upon object creation.  The server in smart client mode
+          does not implement a MAC model, however, it may provide the ability
+          to restrict the creation and labeling of object with certain labels
+          based on different criteria as described in <xref target='ss:modes:fm_pe' />.
+        </t>
+  
+        <t>
+          In a smart client environment a group of clients operate in a single
+          DOI.  This removes the need for the clients to maintain a set of DOI
+          translations.  Servers should provide a method to allow different
+          groups of clients to access the server at the same time.  However it
+          should not let two groups of clients operating in different DOIs to
+          access the same files.
+        </t>
+      </section>
+  
+      <section anchor='ss:modes:sc_pe' title='Policy Enforcement'>
+        <t>
+          In smart client mode access control decisions are made by the
+          clients.  When a client accesses an object it obtains the security
+          attribute of the object from the server and combines it with the
+          security attribute of the process making the request to make an
+          access control decision.  This check is in addition to the DAC checks
+          provided by NFSv4 so this may fail based on the DAC criteria even if
+          the MAC policy grants access.  As the policy check is located on the
+          client an access control denial should take the form that is native
+          to the platform.
+        </t>
+      </section>
     </section>
-
-    <section anchor='ss:examples:ssm' title='Smart Server Mode'>
+  
+    <section anchor='ss:modes:server' title='Smart Server Mode'>
       <t>
-        In a smart server mode the client behaves as if it were in a normal
-        NFSv4 environment.  Since the process on the client does not provide
-        a security attribute the server must define a mechanism for labeling
-        all requests from a client.  Assume that the server is using the same
-        criteria used in the full mode example.  The server sees the request
-        as coming from a subnet that is a Secret network.  The server
-        determines that all clients on that subnet will have their requests
-        labeled with Secret.  Since the directory on the server is labeled
-        Top Secret and Secret does not dominate Top Secret the server would
-        fail the request with NFS4ERR_ACCESS.
+        Smart server environments consist of NFSv4 servers that are MAC aware
+        and one or more MAC unaware clients.  The server is the only entity
+        enforcing policy, and may selectively provide standard NFS services
+        to clients based on their authentication credentials and/or
+        associated network attributes (e.g., IP address, network interface).
+        The level of trust and access extended to a client in this mode is
+        configuration-specific.
       </t>
+  
+      <section anchor='ss:modes:ss_ilt' title='Initial Labeling and Translation'>
+        <t>
+          In smart server mode all labeling and access control decisions are
+          performed by the NFSv4 server.  In this environment the NFSv4 clients
+          are not MAC aware so they cannot provide input into the access
+          control decision.  This requires the server to determine the initial
+          labeling of objects.  Normally the subject to use in this calculation
+          would originate from the client.  Instead the NFSv4 server may choose
+          to assign the subject security attribute based on their
+          authentication credentials and/or associated network attributes (e.g.,
+          IP address, network interface).
+        </t>
+  
+        <t>
+          In smart server mode security attributes are contained solely within
+          the NFSv4 server.  This means that all security attributes used in
+          the system remain within a single LFS and DOI.  Since security
+          attributes will not cross DOIs or change format there is no need to
+          provide any translation functionality above that which is needed
+          internally by the MAC model.
+        </t>
+      </section>
+  
+      <section anchor='ss:modes:ss_pe' title='Policy Enforcement'>
+        <t>
+          All access control decisions in smart server mode are made by the
+          server.  The server will assign the subject a security attribute
+          based on some criteria (e.g., IP address, network interface).  Using
+          the newly calculated security attribute and the security attribute of
+          the object being requested the MAC model makes the access control
+          check and returns NFS4ERR_ACCESS on a denial and NFS4_OK on success.
+          This check is done transparently to the client so if the MAC
+          permission check fails the client may be unaware of the reason for
+          the permission failure.  When operating in this mode administrators
+          attempting to debug permission failures should be aware to check the
+          MAC policy running on the server in addition to the DAC settings.
+        </t>
+      </section>
     </section>
   </section>
-</section>
-
-<section anchor="sec:lnfs:security" title="Security Considerations">
-  <t>
-    This entire document deals with security issues.
-  </t>
-
-  <t>
-    Depending on the level of protection the MAC system offers there may
-    be a requirement to tightly bind the security attribute to the data.
-  </t>
-
-  <t>
-    When either the client is in Smart Client Mode or server is in
-    Smart Server Mode, it is important to realize that the other side is
-    not enforcing MAC protections.  Alternate methods might be in use to
-    handle the lack of MAC support
-    and care should be taken to identify and mitigate threats from
-    possible tampering outside of these methods.
-  </t>
-
-  <t>
-    An example of this is that a smart server that modifies READDIR
-    or LOOKUP results based on the client's subject label might want
-    to always construct the same subject label for a client which
-    does not present one. This will prevent a non-LNFS client from
-    mixing entries in the directory cache.
-  </t>
+  
+  <section anchor='ss:lnfs:examples' title='Use Cases'>
+    <t>
+      MAC labeling is meant to allow NFSv4 to be deployed in site
+      configurable security schemes. The LFS and opaque data scheme
+      allows for flexibility to meet these different implementations.
+      In this section, we provide some examples of how NFSv4
+      could be deployed to meet existing needs. This is not an
+      exhaustive listing.
+    </t>
+  
+    <section anchor='ss:examples:full' title='Full MAC labeling support for remotely mounted filesystems'>
+      <t>
+        In this case, we assume a local networked environment where the
+        servers and clients are under common administrative control.  All
+        systems in this network have the same MAC implementation and
+        semantically identical MAC security labels for objects (i.e. labels
+        mean the same thing on different systems, even if the policies on
+        each system may differ to some extent).  Clients will be able to
+        apply fine-grained MAC policy to objects accessed via NFS mounts, and
+        thus improve the overall consistency of MAC policy application within
+        this environment.
+      </t>
+  
+      <t>
+        An example of this case would be where user home directories are
+        remotely mounted, and fine-grained MAC policy is implemented to
+        protect, for example, private user data from being read by malicious
+        web scripts running in the user's browser.  With Labeled NFS,
+        fine-grained MAC labeling of the user's files will allow the local MAC
+        policy to be implemented and provide the desired protection.
+      </t>
+    </section>
+  
+    <section anchor='ss:examples:vms' title='MAC labeling of virtual machine images stored on the network'>
+      <t>
+        Virtualization is now a commonly implemented feature of modern
+        operating systems, and there is a need to ensure that MAC security
+        policy is able to to protect virtualized resources.  A common
+        implementation scheme involves storing virtualized guest filesystems
+        on a networked server, which are then mounted remotely by guests upon
+        instantiation.  In this case, there is a need to ensure that the
+        local guest kernel is able to access fine-grained MAC labels on the
+        remotely mounted filesystem so that its MAC security policy can be
+        applied.
+      </t>
+    </section>
+  
+    <section anchor='ss:examples:itar' title='International Traffic in Arms Regulations (ITAR)'>
+      <t>
+        The International Traffic in Arms Regulations (ITAR) is put
+        forth by the United States Department of State, Directorate
+        of Defense and Trade Controls.  ITAR places strict requirements
+        on the export and thus access of defense articles and defense
+        services.  Organizations that manage projects with articles
+        and services deemed as within the scope of ITAR must ensure
+        the regulations are met.  The regulations require an assurance
+        that ITAR information is accessed on a need-to-know basis,
+        thus requiring strict, centrally managed access controls on
+        items labeled as ITAR.  Additionally, organizations must be
+        able to prove that the controls were adequately maintained
+        and that foreign nationals were not permitted access to these
+        defense articles or service.  ITAR control applicability may
+        be dynamic; information may become subject to ITAR after
+        creation (e.g., when the defense implications of technology
+        are recognized).
+      </t>
+    </section>
+  
+    <section anchor='ss:examples:legalhold' title='Legal Hold/eDiscovery'>
+      <t>
+        Increased cases of legal holds on electronic sources of
+        information (ESI) have resulted in organizations taking a
+        pro-active approach to reduce the scope and thus costs
+        associated with these activities.  ESI Data Maps are increasing
+        in use and require support in operating systems to strictly
+        manage access controls in the case of a legal hold.  The
+        sizeable quantity of information involved in a legal discovery
+        request may preclude making a copy of the information to a
+        separate system that manages the legal hold on the copies;
+        this results in a need to enforce the legal hold on the
+        original information.
+      </t>
+  
+      <t>
+        Organizations are taking steps to map out the sources of
+        information that are most likely to be placed under a legal
+        hold, these efforts result in ESI Data Maps.  ESI Data Maps
+        specify the Electronic Source of Information and the requirements
+        for sensitivity and criticality.  In the case of a legal hold,
+        the ESI data map and labels can be used to ensure the legal
+        hold is properly enforced on the predetermined set of
+        information.  An ESI data map narrows the scope of a legal
+        hold to the predetermined ESI.  The information must then be
+        protected at a level of security of which the weight and
+        admissibility of that evidence may be proved in a court of
+        law.  Current systems use application level controls and do
+        not adequately meet the requirements.  Labels may be used in
+        advance when an ESI data map exercise is conducted with
+        controls being applied at the time of a hold or labels may
+        be applied to data sets during an eDiscovery exercise to
+        ensure the data protections are adequate during the legal
+        hold period.
+      </t>
+  
+      <t>
+        Note that this use case requires multi-attribute labels, as
+        both information sensitivity (e.g., to disclosure) and
+        information criticality (e.g., to continued business operations)
+        need to be captured.
+      </t>
+    </section>
+  
+    <section anchor='ss:examples:simple' title='Simple security label storage'>
+      <t>
+        In this case, a mixed and loosely administered network is assumed,
+        where nodes may be running a variety of operating systems with
+        different security mechanisms and security policies.  It is desired
+        that network file servers be simply capable of storing and retrieving
+        MAC security labels for clients which use such labels.  The Labeled
+        NFS protocol would be implemented here solely to enable transport of
+        MAC security labels across the network.  It should be noted that in
+        such an environment, overall security cannot be as strongly enforced
+        as in case (a), and that this scheme is aimed at allowing MAC-capable
+        clients to function with local MAC security policy enabled rather
+        than perhaps disabling it entirely.
+      </t>
+    </section>
+  
+    <section anchor='ss:examples:diskless' title='Diskless Linux'>
+      <t>
+        A number of popular operating system distributions depend on
+        a mandatory access control (MAC) model to implement a
+        kernel-enforced security policy. Typically, such models assign
+        particular roles to individual processes, which limit or
+        permit performing certain operations on a set of files,
+        directories, sockets, or other objects.  While the enforcing
+        of the policy is typically a matter for the diskless NFS
+        client itself, the filesystem objects in such models will
+        typically carry MAC labels that are used to define policy on
+        access.  These policies may, for instance, describe privilege
+        transitions that cannot be replicated using standard NFS ACL
+        based models.
+      </t>
+  
+      <t>
+        For instance on a SYSV compatible system, if the 'init' process
+        spawns a process that attempts to start the 'NetworkManager'
+        executable, there may be a policy that sets up a role transition
+        if the 'init' process and 'NetworkManager' file labels match
+        a particular rule. Without this role transition, the process
+        may find itself having insufficient privileges to perform its
+        primary job of configuring network interfaces.
+      </t>
+  
+      <t>
+        In setups of this type, a lot of the policy targets (such as
+        sockets or privileged system calls) are entirely local to the
+        client. The use of RPCSEC_GSSv3 for enforcing compliance at
+        the server level is therefore of limited value. The ability
+        to permanently label files and have those labels read back
+        by the client is, however, crucial to the ability to enforce
+        that policy.
+      </t>
+    </section>
+  
+    <section anchor='ss:examples:mls' title='Multi-Level Security'>
+      <t>
+        In a MLS system objects are generally assigned
+        a sensitivity level and a set of compartments.  The sensitivity
+        levels within the system are given an order ranging from lowest to
+        highest classification level.  Read access to an object is allowed
+        when the sensitivity level of the subject "dominates" the object it
+        wants to access.  This means that the sensitivity level of the
+        subject is higher than that of the object it wishes to access and
+        that its set of compartments is a super-set of the compartments on
+        the object.
+      </t>
+  
+      <t>
+        The rest of the section will just use sensitivity levels.  In general
+        the example is a client that wishes to list the contents of a
+        directory.  The system defines the sensitivity levels as
+        Unclassified (U), Secret (S), and Top Secret (TS).  The directory to be
+        searched is labeled Top Secret which means access to read the
+        directory will only be granted if the subject making the request is
+        also labeled Top Secret.
+      </t>
+  
+      <section anchor='ss:examples:fm' title='Full Mode'>
+        <t>
+          In the first part of this example a process on the client is running
+          at the Secret level.  The process issues a readdir system call which
+          enters the kernel.  Before translating the readdir system call into a
+          request to the NFSv4 server the host operating system will consult
+          the MAC module to see if the operation is allowed.  Since the process
+          is operating at Secret and the directory to be accessed is labeled
+          Top Secret the MAC module will deny the request and an error code is
+          returned to user space.
+        </t>
+  
+        <t>
+          Consider a second case where instead of running at Secret the process
+          is running at Top Secret.  In this case the sensitivity of the
+          process is equal to or greater than that of the directory so the MAC
+          module will allow the request.  Now the readdir is translated into
+          the necessary NFSv4 call to the server.  For the RPC request the
+          client is using the proper credential to assert to the server that
+          the process is running at Top Secret.
+        </t>
+  
+        <t>
+          When the server receives the request it extracts the security label
+          from the RPC session and retrieves the label on the directory.  The
+          server then checks with its MAC module if a Top Secret process is
+          allowed to read the contents of the Top Secret directory.  Since this
+          is allowed by the policy then the server will return the appropriate
+          information back to the client.
+        </t>
+  
+        <t>
+          In this example the policy on the client and server were both the
+          same.  In the event that they were running different policies a
+          translation of the labels might be needed.  In this case it could be
+          possible for a check to pass on the client and fail on the server.
+          The server may consider additional information when making its policy
+          decisions.  For example the server could determine that a certain
+          subnet is only cleared for data up to Secret classification.  If that
+          constraint was in place for the example above the client would still
+          succeed, but the server would fail since the client is asserting a
+          label that it is not able to use (Top Secret on a Secret network).
+        </t>
+      </section>
+  
+      <section anchor='ss:examples:scm' title='Smart Client Mode'>
+        <t>
+          In smart client mode the example is identical to the first part of a
+          full mode operation.  A process on the client labeled Secret wishes
+          to access a Top Secret directory.  As in the full mode example this
+          is denied since Secret does not dominate Top Secret.  If the process
+          were operating at Top Secret it would pass the local access control
+          check and the NFSv4 operation would proceed as in a normal NFSv4
+          environment.
+        </t>
+      </section>
+  
+      <section anchor='ss:examples:ssm' title='Smart Server Mode'>
+        <t>
+          In a smart server mode the client behaves as if it were in a normal
+          NFSv4 environment.  Since the process on the client does not provide
+          a security attribute the server must define a mechanism for labeling
+          all requests from a client.  Assume that the server is using the same
+          criteria used in the full mode example.  The server sees the request
+          as coming from a subnet that is a Secret network.  The server
+          determines that all clients on that subnet will have their requests
+          labeled with Secret.  Since the directory on the server is labeled
+          Top Secret and Secret does not dominate Top Secret the server would
+          fail the request with NFS4ERR_ACCESS.
+        </t>
+      </section>
+    </section>
+  </section>
+  
+  <section anchor="ss:lnfs:security" title="Security Considerations">
+    <t>
+      This entire document deals with security issues.
+    </t>
+  
+    <t>
+      Depending on the level of protection the MAC system offers there may
+      be a requirement to tightly bind the security attribute to the data.
+    </t>
+  
+    <t>
+      When either the client is in Smart Client Mode or server is in
+      Smart Server Mode, it is important to realize that the other side is
+      not enforcing MAC protections.  Alternate methods might be in use to
+      handle the lack of MAC support
+      and care should be taken to identify and mitigate threats from
+      possible tampering outside of these methods.
+    </t>
+  
+    <t>
+      An example of this is that a smart server that modifies READDIR
+      or LOOKUP results based on the client's subject label might want
+      to always construct the same subject label for a client which
+      does not present one. This will prevent a non-LNFS client from
+      mixing entries in the directory cache.
+    </t>
+  </section>
 </section>
