@@ -9,7 +9,7 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      The COPY operation is used for both intra- and inter-server
+      The COPY operation is used for both intra-server and inter-server
       copies. In both cases, the COPY is always sent from the client
       to the destination server of the file copy. The COPY operation
       requests that a file be copied from the location specified by the
@@ -363,7 +363,6 @@
 
     <t>
       <list style="hanging">
-
         <t hangText="NFS4ERR_MOVED:">
           The file system which contains the
           source file, or the destination file or directory is not present.
@@ -379,6 +378,13 @@
         <t hangText="NFS4ERR_PARTNER_NOTSUPP:">
           The remote server does not support the
           server-to-server copy offload protocol.
+        </t>
+
+        <t hangText="NFS4ERR_OFFLOAD_DENIED:">
+          The copy offload operation is supported by both the source and
+          the destination, but the destination is not allowing it for this
+          file. If the client sees this error, it should fall back to
+          the normal copy semantics.
         </t>
 
         <t hangText="NFS4ERR_PARTNER_NO_AUTH:">
