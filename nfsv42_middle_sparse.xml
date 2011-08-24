@@ -1,6 +1,9 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
 <section anchor="sec:sparse" title="Sparse Files">
   <t>
-    WARNING: Most of this section needs to be reworked because
+    WARNING: Some of this section needs to be reworked because
     of the work going on in the ADB section.
   </t>
 

@@ -1,3 +1,6 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
 <section title="Operation 62: COPY_REVOKE - Revoke a destination server's copy privileges">
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_revoke_args.xml'?>

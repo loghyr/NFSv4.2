@@ -167,25 +167,18 @@
     <section anchor='ss:macss:lnfs:interpret' title='Interpreting FATTR4_SEC_LABEL'>
       <t>
         The XDR <xref target='ref:RFC4506' /> necessary to implement Labeled
-        NFSv4 is presented in <xref target='fig:xdr' />:
+        NFSv4 is presented below:
       </t>
   
       <figure anchor='fig:xdr'>
         <artwork>
-      const FATTR4_SEC_LABEL   = 81;
+const FATTR4_SEC_LABEL   = 81;
   
-      typedef uint32_t  policy4;
-      struct labelformat_spec4 {
-        policy4   lfs_lfs;
-        policy4   lfs_pi;
-      };
-  
-      struct sec_label_attr_info {
-        labelformat_spec4   slai_lfs;
-        opaque              slai_data&lt;&gt;;
-      };
+typedef uint32_t  policy4;
         </artwork>
       </figure>
+
+      <?rfc include='autogen/type_label_format.xml'?>
   
       <t>
         The FATTR4_SEC_LABEL contains an array of two components with the first
@@ -329,54 +322,6 @@
         </cref>
       </t>
     </section>
-  </section>
-  
-  <section anchor='ss:cb:lc' title="Procedure 16: CB_ATTR_CHANGED - Notify Client that the File's Attributes Changed">
-    <section toc='exclude' anchor="ss:cbac:args" title='ARGUMENTS'>
-      <figure>
-        <artwork>
-     struct CB_ATTR_CHANGED4args {
-             nfs_fh4         acca_fh;
-             bitmap4         acca_critical;
-             bitmap4         acca_info;
-     };
-        </artwork>
-      </figure>
-    </section>
-  
-    <section toc='exclude' anchor="ss:cbac:result" title='RESULTS'>
-      <figure>
-        <artwork>
-     struct CB_ATTR_CHANGED4res {
-             nfsstat4        accr_status;
-     };
-        </artwork>
-      </figure>
-    </section>
-  
-    <section toc='exclude' anchor="ss:cbac:desc" title="DESCRIPTION">
-      <t>
-        The CB_ATTR_CHANGED callback operation is used by the
-        server to indicate to the client that the file's attributes
-        have been modified on the server. The server does not
-        convey how the attributes have changed, just that they
-        have been modified.  The server can inform the client
-        about both critical and informational attribute changes
-        in the bitmask arguments. The client SHOULD query the
-        server about all attributes set in acca_critical. For
-        all changes reflected in acca_info, the client can decide
-        whether or not it wants to poll the server.
-      </t>
-  
-      <t>
-        The CB_ATTR_CHANGED callback operation with the FATTR4_SEC_LABEL
-        set in acca_critical is the method used by the
-        server to indicate that the MAC label for the file
-        referenced by acca_fh has changed. In many ways, the
-        server does not care about the result returned by the
-        client.
-      </t>
-    </section> 
   </section>
   
   <section anchor='ss:lnfs:pnfs' title='pNFS Considerations'>

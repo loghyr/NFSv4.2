@@ -433,6 +433,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_read_plus.xml \
 	nfsv42_middle_op_zzz.xml \
 	nfsv42_middle_op_cb_aaa.xml \
+	nfsv42_middle_op_cb_attr_changed.xml \
 	nfsv42_middle_op_cb_copy.xml \
 	nfsv42_middle_op_cb_zzz.xml \
 	nfsv42_middle_iana.xml \

@@ -1,3 +1,6 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
 <section title="Operation 60: COPY_ABORT - Cancel a server-side copy">
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_abort_args.xml'?>

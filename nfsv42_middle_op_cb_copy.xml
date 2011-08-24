@@ -1,3 +1,6 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
 <section title="Operation 15: CB_COPY - Report results of a server-side copy">
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/cb_copy_args.xml'?>

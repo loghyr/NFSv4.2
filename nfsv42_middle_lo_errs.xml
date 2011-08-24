@@ -1,9 +1,8 @@
 <!-- Copyright (C) The IETF Trust (2011) -->
 <!-- Copyright (C) The Internet Society (2011) -->
+
 <section anchor="sec:pLeh" title="pNFS LAYOUTRETURN Error Handling">
-
   <section anchor="sec:pLeh:intro" title="Introduction">
-
     <t>
       In the pNFS description provided in <xref target="ref:RFC5661" />,
       the client is not enabled to relay an error code from the
@@ -43,7 +42,6 @@
     </t>
 
     <section anchor="sec:pLeh:LAYOUTRETURN:args" title="ARGUMENT">
-
       <t>
         The ARGUMENT specification of the LAYOUTRETURN operation in section
         18.44.1 of <xref target="ref:RFC5661" /> is augmented by the following
@@ -55,7 +53,6 @@
     </section>
 
     <section anchor="sec:pLeh:LAYOUTRETURN:res" title="RESULT">
-
       <t>
         The RESULT of the LAYOUTRETURN operation is unchanged; see section
         18.44.2 of <xref target="ref:RFC5661" />.
@@ -63,7 +60,6 @@
     </section>
 
     <section anchor="sec:pLeh:LAYOUTRETURN:desc" title="DESCRIPTION">
-
       <t>
         The following text is added to the end of the LAYOUTRETURN operation
         DESCRIPTION in section 18.44.3 of <xref target="ref:RFC5661" />.

@@ -1,3 +1,6 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
 <section anchor='ss:adb:read_plus' title='Operation 65: READ_PLUS'>
   <t>
     If the client sends a READ operation, it is explicitly
