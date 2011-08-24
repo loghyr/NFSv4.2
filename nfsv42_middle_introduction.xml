@@ -8,8 +8,8 @@
       minor version of the NFS version 4 (NFSv4) protocol.  The first minor
       version, NFSv4.0, is described in <xref target="ref:RFC3530bis" /> and the second minor version,
       NFSv4.1, is described in <xref target="ref:RFC5661" />.  It follows the
-      guidelines for minor versioning that are listed in Section 11 of RFC
-      3530bis.
+      guidelines for minor versioning that are listed in Section 11 of
+      <xref target="ref:RFC3530bis" />.
     </t>
 
     <t>
@@ -38,7 +38,8 @@
         </t>
 
         <t>
-          clarify the NFSv4.0 or NFSv4.1 protocols.
+          clarify the NFSv4.0 or NFSv4.1 protocols. I.e., any clarifications made
+          here apply to NFSv4.2 and neither of the prior protocols.
         </t>
       </list>
     </t>
@@ -50,17 +51,19 @@
 
   <section title="NFSv4.2 Goals">
     <t>
+      <cref anchor="TBD1" source="TH">This needs fleshing out!</cref>
     </t>
   </section>
 
   <section title="Overview of NFSv4.2 Features">
     <t>
+      <cref anchor="TBD2" source="TH">This needs fleshing out!</cref>
     </t>
   </section>
 
   <section title="Differences from NFSv4.1">
     <t>
+      <cref anchor="TBD3" source="TH">This needs fleshing out!</cref>
     </t>
   </section>
-
 </section>

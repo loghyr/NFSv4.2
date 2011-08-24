@@ -1,7 +1,7 @@
 <section anchor="sec:copy" title="NFS Server-side Copy">
   <section title="Introduction">
     <t>
-      This document describes a server-side copy feature for
+      This section describes a server-side copy feature for
       the NFS protocol.
     </t>
 

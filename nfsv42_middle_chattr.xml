@@ -1,17 +1,5 @@
 <section anchor="sec:chattr" title="Sharing change attribute implementation details with NFSv4 clients">
 
-  <section title="Abstract">
-    <t>
-      This document describes an extension to the
-      NFSv4 protocol that allows the server to
-      share information about the implementation of its
-      change attribute with the client. The aim is to
-      improve the client's ability to determine the order
-      in which parallel updates to the same file were
-      processed.
-    </t>
-  </section>
-
   <section title="Introduction">
     <t>
       Although both the NFSv4 <xref target="ref:RFC3530bis" />
@@ -19,7 +7,7 @@
       define the change attribute as being mandatory
       to implement, there is little in the way of
       guidance. The only feature that is mandated by
-      the spec is that the value must change
+      them is that the value must change
       whenever the file data or metadata change.
     </t>
     <t>
@@ -39,8 +27,8 @@
       serialised with the first two.
     </t>
     <t>
-      In order to avoid this kind of inefficiency, we
-      propose a method to allow the server to share details
+      NFSv4.2 avoids this kind of inefficiency by
+      allowing the server to share details
       about how the change attribute is expected to evolve,
       so that the client may immediately determine which, out
       of the several change attribute values returned by the
@@ -63,13 +51,12 @@
     </texttable>
 
     <t>
-      The proposed solution is to enable the NFS server to
+      The solution enables the NFS server to
       provide additional information about how it
       expects the change attribute value to evolve after
       the file data or metadata has changed.
-      To do so, we define a new recommended attribute,
-      'change_attr_type', which may take values from
-      enum change_attr_typeinfo as follows:
+      'change_attr_type' is defined as a new recommended attribute,
+      and takes values from enum change_attr_typeinfo as follows:
     </t>
     <t>
       <list style="hanging">
