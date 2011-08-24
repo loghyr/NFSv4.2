@@ -2,81 +2,21 @@
 <!-- Copyright (C) The Internet Society (2011) -->
   
 <section anchor="sec:lnfs" title="Labeled NFS">
-  <t>
-    WARNING: Need to pull out the requirements.
-  </t>
-  
   <section anchor="ss:lnfs:intro" title="Introduction">
-    <t>
-      Mandatory Access Control (MAC) systems have been mainstreamed in
-      modern operating systems such as Linux (R), FreeBSD (R), Solaris
-      (TM), and Windows Vista (R).  MAC systems bind security attributes to
-      subjects (processes) and objects within a system.  These attributes
-      are used with other information in the system to make access control
-      decisions.
-    </t>
-  
     <t>
       Access control models such as Unix permissions or Access Control
       Lists are commonly referred to as Discretionary Access Control (DAC)
       models.  These systems base their access decisions on user identity
-      and resource ownership.  In contrast MAC models base their access
+      and resource ownership.  In contrast Mandatory Access Control (MAC)
+      models base their access
       control decisions on the label on the subject (usually a process) and
       the object it wishes to access.  These labels may contain user
       identity information but usually contain additional information.  In
       DAC systems users are free to specify the access rules for resources
       that they own.  MAC models base their security decisions on a system
       wide policy established by an administrator or organization which the
-      users do not have the ability to override.  DAC systems offer no real
-      protection against malicious or flawed software due to each program
-      running with the full permissions of the user executing it.
-      Inversely MAC models can confine malicious or flawed software and
-      usually act at a finer granularity than their DAC counterparts.
-    </t>
-  
-    <t>
-      People desire to use NFSv4 with these systems.  A mechanism is
-      required to provide security attribute information to NFSv4 clients
-      and servers.  This mechanism has the following requirements:
-    </t>
-  
-    <t>
-      <list style='format (%d)'>
-        <t>
-          Clients must be able to convey to the server the security
-          attribute of the subject making the access request.  The server
-          may provide a mechanism to enforce MAC policy based on the
-          requesting subject's security attribute.
-        </t>
-  
-        <t>
-          Server must be able to store and retrieve the security attribute
-          of exported files as requested by the client.
-        </t>
-  
-        <t>
-          Server must provide a mechanism for notifying clients of attribute
-          changes of files on the server.
-        </t>
-  
-        <t>
-          Clients and Servers must be able to negotiate Label Formats and
-          Domains of Interpretation (DOI) and provide a mechanism to
-          translate between them as needed.
-        </t>
-      </list>
-    </t>
-  
-    <t>
-      These four requirements are key to the system with only requirements
-      (2) and (3) requiring changes to NFSv4.  The ability to convey
-      the security attribute of the subject as described in requirement (1)
-      falls upon the RPC layer to implement
-      (see <xref target='ref:rpcsecgssv3' />).  Requirement (4) allows
-      communication between different MAC implementations.  The management
-      of label formats, DOIs, and the translation between them does not
-      require any support from NFSv4 on a protocol level and is out of the
-      scope of this document.
+      users do not have the ability to override.  In this section, we add
+      a MAC model to NFSv4.
     </t>
   
     <t>
@@ -204,22 +144,7 @@
     </t>
   
     <t>
-      NFSv4 provides several options for implementing the security
-      attribute.  The first option is to implement the security attribute
-      as a named attribute.  Named attributes provide flexibility since
-      they are treated as an opaque field but lack a way to atomically set
-      the attribute on creation.  In addition, named attributes themselves
-      are file system objects which need to be assigned a security
-      attribute.  This raises the question of how to assign security
-      attributes to the file and directories used to hold the security
-      attribute for the file in question.  The inability to atomically
-      assign the security attribute on file creation and the necessity to
-      assign security attributes to its sub-components makes named
-      attributes unacceptable as a method for storing security attributes.
-    </t>
-  
-    <t>
-      The second option is to implement the security attribute as a
+      NFSv4 implements the security attribute as a
       recommended attribute.  These attributes have a fixed format
       and semantics, which
       conflicts with the flexible nature of the security attribute.  To
@@ -702,8 +627,8 @@
     </t>
   
     <t>
-      When either the client is in Smart Client Mode or server is in
-      Smart Server Mode, it is important to realize that the other side is
+      When only one of the client or server enforces labels,
+      it is important to realize that the other side is
       not enforcing MAC protections.  Alternate methods might be in use to
       handle the lack of MAC support
       and care should be taken to identify and mitigate threats from
@@ -711,7 +636,7 @@
     </t>
   
     <t>
-      An example of this is that a smart server that modifies READDIR
+      An example of this is that a server that modifies READDIR
       or LOOKUP results based on the client's subject label might want
       to always construct the same subject label for a client which
       does not present one. This will prevent a non-LNFS client from
