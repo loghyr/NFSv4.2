@@ -413,13 +413,12 @@ FRONT_PREGEN = nfsv42_front.xml
 IDXMLSRC_BASE = \
 	nfsv42_middle_start.xml \
 	nfsv42_middle_introduction.xml \
-	nfsv42_middle_lo_errs.xml \
-	nfsv42_middle_chattr.xml \
 	nfsv42_middle_copy.xml \
-	nfsv42_middle_application.xml \
-	nfsv42_middle_space.xml \
 	nfsv42_middle_sparse.xml \
+	nfsv42_middle_space.xml \
+	nfsv42_middle_application.xml \
 	nfsv42_middle_lnfs.xml \
+	nfsv42_middle_chattr.xml \
         nfsv42_middle_security.xml \
 	nfsv42_middle_op_mandlist.xml \
 	nfsv42_middle_op_aaa.xml \
@@ -428,8 +427,9 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_copy_notify.xml \
 	nfsv42_middle_op_copy_revoke.xml \
 	nfsv42_middle_op_copy_status.xml \
-	nfsv42_middle_op_initialize.xml \
 	nfsv42_middle_op_exchange_id.xml \
+	nfsv42_middle_op_initialize.xml \
+	nfsv42_middle_op_layoutreturn.xml \
 	nfsv42_middle_op_read_plus.xml \
 	nfsv42_middle_op_zzz.xml \
 	nfsv42_middle_op_cb_aaa.xml \

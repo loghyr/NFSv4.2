@@ -7,14 +7,10 @@
       This section describes a set of operations that allow applications
       such as hypervisors to reserve space for a file, report the amount of
       actual disk space a file occupies and freeup the backing space of a
-      file when it is not required.
-    </t>
-
-    <t>
-      In virtualized environments, virtual disk files are often stored on
-      NFS mounted volumes.  Since virtual disk files represent the hard
-      disks of virtual machines, hypervisors often have to guarantee
-      certain properties for the file.
+      file when it is not required.  In virtualized environments, virtual
+      disk files are often stored on NFS mounted volumes.  Since virtual
+      disk files represent the hard disks of virtual machines, hypervisors
+      often have to guarantee certain properties for the file.
     </t>
 
     <t>
@@ -23,6 +19,21 @@
       file so that there are no future allocation related errors during the
       operation of the virtual machine.  Such errors prevent a virtual
       machine from continuing execution and result in downtime.
+    </t>
+
+    <t>
+      Currently, in order to achieve such a guarantee, applications zero
+      the entire file.  The initial zeroing allocates the backing blocks
+      and all subsequent writes are overwrites of already allocated blocks.
+      This approach is not only inefficient in terms of the amount of I/O
+      done, it is also not guaranteed to work on filesystems that are log
+      structured or deduplicated.  An efficient way of guaranteeing space
+      reservation would be beneficial to such applications.
+    </t>
+
+    <t>
+      If the space_reserved attribute is set on a file, it is guaranteed
+      that writes that do not grow the file will not fail with NFSERR_NOSPC.
     </t>
 
     <t>
@@ -46,7 +57,9 @@
     <t>
       While these attributes are sufficient for space accounting in
       traditional filesystems, they prove to be inadequate in modern
-      filesystems that support block sharing.  Having a way to tell the
+      filesystems that support block sharing.  In such filesystems,
+      multiple inodes can point to a single block with a block reference
+      count to guard against premature freeing.  Having a way to tell the
       number of blocks that would be freed if the file was deleted would be
       useful to applications that wish to migrate files when a volume is
       low on space.
@@ -62,8 +75,8 @@
     </t>
 
     <t>
-      We propose the following operations and attributes for the
-      aforementioned use cases:
+      The following operations and attributes can be used to resolve
+      this issues:
     </t>
 
     <t>
@@ -83,256 +96,120 @@
           can be punched on the filesystem.
         </t>
 
-        <t hangText="HOLE_PUNCH">
+        <t hangText="INITIALIZED">
           This operation zeroes and/or deallocates the blocks
           backing a region of the file.
         </t>
       </list>
     </t>
+
+    <t>
+      If space_used of a file is interpreted to mean the size in bytes of
+      all disk blocks pointed to by the inode of the file, then shared
+      blocks get double counted, over-reporting the space utilization.
+      This also has the adverse effect that the deletion of a file with
+      shared blocks frees up less than space_used bytes.
+    </t>
+
+    <t>
+      On the other hand, if space_used is interpreted to mean the size in
+      bytes of those disk blocks unique to the inode of the file, then
+      shared blocks are not counted in any file, resulting in
+      under-reporting of the space utilization.
+    </t>
+
+    <t>
+      For example, two files A and B have 10 blocks each.  Let 6 of these
+      blocks be shared between them.  Thus, the combined space utilized by
+      the two files is 14 * BLOCK_SIZE bytes.  In the former case, the
+      combined space utilization of the two files would be reported as 20 *
+      BLOCK_SIZE.  However, deleting either would only result in 4 *
+      BLOCK_SIZE being freed.  Conversely, the latter interpretation would
+      report that the space utilization is only 8 * BLOCK_SIZE.
+    </t>
+
+    <t>
+      Adding another size attribute, space_freed, is helpful in solving
+      this problem. space_freed is the number of blocks that are allocated
+      to the given file that would be freed on its deletion.  In the
+      example, both A and B would report space_freed as 4 * BLOCK_SIZE and
+      space_used as 10 * BLOCK_SIZE.  If A is deleted, B will report
+      space_freed as 10 * BLOCK_SIZE as the deletion of B would result in
+      the deallocation of all 10 blocks.
+    </t>
+
+    <t>
+      The addition of this problem doesn't solve the problem of space being
+      over-reported.  However, over-reporting is better than under-reporting.
+    </t>
   </section>
 
-  <section anchor="ss:space:cases" title="Use Cases">
-    <section anchor="ss:space:cases:sr" title="Space Reservation">
-      <t>
-        Some applications require that once a file of a certain size is
-        created, writes to that file never fail with an out of space
-        condition.  One such example is that of a hypervisor writing to a
-        virtual disk.  An out of space condition while writing to virtual
-        disks would mean that the virtual machine would need to be frozen.
-      </t>
+  <section anchor="ss:space:ops" title="Operations and attributes">
+    <t>
+      In the sections that follow, one operation and three attributes are
+      defined that together provide the space management facilities
+      outlined earlier in the document.  The operation is intended to be
+      OPTIONAL and the attributes RECOMMENDED as defined in section 17 of
+      <xref target="ref:RFC5661" />.
+    </t>
+  </section>
 
-      <t>
-        Currently, in order to achieve such a guarantee, applications zero
-        the entire file.  The initial zeroing allocates the backing blocks
-        and all subsequent writes are overwrites of already allocated blocks.
-        This approach is not only inefficient in terms of the amount of I/O
-        done, it is also not guaranteed to work on filesystems that are log
-        structured or deduplicated.  An efficient way of guaranteeing space
-        reservation would be beneficial to such applications.
-      </t>
+  <section anchor="ss:space:ops:sr" title="Attribute 77: space_reserved">
+    <t>
+      The space_reserve attribute is a read/write attribute of type
+      boolean.  It is a per file attribute.  When the space_reserved
+      attribute is set via SETATTR, the server must ensure that there is
+      disk space to accommodate every byte in the file before it can return
+      success.  If the server cannot guarantee this, it must return
+      NFS4ERR_NOSPC.
+    </t>
 
-      <t>
-        If the space_reserved attribute is set on a file, it is guaranteed
-        that writes that do not grow the file will not fail with NFSERR_NOSPC.
-      </t>
-    </section>
+    <t>
+      If the client tries to grow a file which has the space_reserved
+      attribute set, the server must guarantee that there is disk space to
+      accommodate every byte in the file with the new size before it can
+      return success.  If the server cannot guarantee this, it must return
+      NFS4ERR_NOSPC.
+    </t>
 
-    <section anchor="ss:space:cases:sfd" title="Space freed on deletes">
-      <t>
-        Currently, files in NFS have two size attributes:
-      </t>
+    <t>
+      It is not required that the server allocate the space to the file
+      before returning success.  The allocation can be deferred, however,
+      it must be guaranteed that it will not fail for lack of space.
+    </t>
 
-      <t>
-        <list style="hanging">
-          <t hangText="size">
-            The logical file size of the file.
-          </t>
+    <t>
+      The value of space_reserved can be obtained at any time through
+      GETATTR.
+    </t>
 
-          <t hangText="space_used">
-            The size in bytes that the file occupies on disk.
-          </t>
-        </list>
-      </t>
+    <t>
+      In order to avoid ambiguity, the space_reserve bit cannot be set
+      along with the size bit in SETATTR.  Increasing the size of a file
+      with space_reserve set will fail if space reservation cannot be
+      guaranteed for the new size.  If the file size is decreased, space
+      reservation is only guaranteed for the new size and the extra blocks
+      backing the file can be released.
+    </t>
+  </section>
 
-      <t>
-        While these attributes are sufficient for space accounting in
-        traditional filesystems, they prove to be inadequate in modern
-        filesystems that support block sharing.  In such filesystems,
-        multiple inodes can point to a single block with a block reference
-        count to guard against premature freeing.
-      </t>
+  <section anchor="ss:space:ops:sf" title="Attribute 78: space_freed">
+    <t>
+      space_freed gives the number of bytes freed if the file is deleted.
+      This attribute is read only and is of type length4.  It is a per file
+      attribute.
+    </t>
+  </section>
 
-      <t>
-        If space_used of a file is interpreted to mean the size in bytes of
-        all disk blocks pointed to by the inode of the file, then shared
-        blocks get double counted, over-reporting the space utilization.
-        This also has the adverse effect that the deletion of a file with
-        shared blocks frees up less than space_used bytes.
-      </t>
-
-      <t>
-        On the other hand, if space_used is interpreted to mean the size in
-        bytes of those disk blocks unique to the inode of the file, then
-        shared blocks are not counted in any file, resulting in
-        under-reporting of the space utilization.
-      </t>
-
-      <t>
-        For example, two files A and B have 10 blocks each.  Let 6 of these
-        blocks be shared between them.  Thus, the combined space utilized by
-        the two files is 14 * BLOCK_SIZE bytes.  In the former case, the
-        combined space utilization of the two files would be reported as 20 *
-        BLOCK_SIZE.  However, deleting either would only result in 4 *
-        BLOCK_SIZE being freed.  Conversely, the latter interpretation would
-        report that the space utilization is only 8 * BLOCK_SIZE.
-      </t>
-
-      <t>
-        Adding another size attribute, space_freed, is helpful in solving
-        this problem. space_freed is the number of blocks that are allocated
-        to the given file that would be freed on its deletion.  In the
-        example, both A and B would report space_freed as 4 * BLOCK_SIZE and
-        space_used as 10 * BLOCK_SIZE.  If A is deleted, B will report
-        space_freed as 10 * BLOCK_SIZE as the deletion of B would result in
-        the deallocation of all 10 blocks.
-      </t>
-
-      <t>
-        The addition of this problem doesn't solve the problem of space being
-        over-reported.  However, over-reporting is better than under-reporting.
-      </t>
-    </section>
-
-    <section anchor="ss:space:ops" title="Operations and attributes">
-      <t>
-        In the sections that follow, one operation and three attributes are
-        defined that together provide the space management facilities
-        outlined earlier in the document.  The operation is intended to be
-        OPTIONAL and the attributes RECOMMENDED as defined in section 17 of
-        <xref target="ref:RFC5661" />.
-      </t>
-    </section>
-
-    <section anchor="ss:space:ops:sr" title="Attribute 77: space_reserved">
-      <t>
-        The space_reserve attribute is a read/write attribute of type
-        boolean.  It is a per file attribute.  When the space_reserved
-        attribute is set via SETATTR, the server must ensure that there is
-        disk space to accommodate every byte in the file before it can return
-        success.  If the server cannot guarantee this, it must return
-        NFS4ERR_NOSPC.
-      </t>
-
-      <t>
-        If the client tries to grow a file which has the space_reserved
-        attribute set, the server must guarantee that there is disk space to
-        accommodate every byte in the file with the new size before it can
-        return success.  If the server cannot guarantee this, it must return
-        NFS4ERR_NOSPC.
-      </t>
-
-      <t>
-        It is not required that the server allocate the space to the file
-        before returning success.  The allocation can be deferred, however,
-        it must be guaranteed that it will not fail for lack of space.
-      </t>
-
-      <t>
-        The value of space_reserved can be obtained at any time through
-        GETATTR.
-      </t>
-
-      <t>
-        In order to avoid ambiguity, the space_reserve bit cannot be set
-        along with the size bit in SETATTR.  Increasing the size of a file
-        with space_reserve set will fail if space reservation cannot be
-        guaranteed for the new size.  If the file size is decreased, space
-        reservation is only guaranteed for the new size and the extra blocks
-        backing the file can be released.
-      </t>
-    </section>
-
-    <section anchor="ss:space:ops:sf" title="Attribute 78: space_freed">
-
-      <t>
-        space_freed gives the number of bytes freed if the file is deleted.
-        This attribute is read only and is of type length4.  It is a per file
-        attribute.
-      </t>
-    </section>
-
-    <section anchor="ss:space:ops:mhp" title="Attribute 79: max_hole_punch">
-      <t>
-        max_hole_punch specifies the maximum size of a hole that the
-        HOLE_PUNCH operation can handle.  This attribute is read only and of
-        type length4.  It is a per filesystem attribute.  This attribute MUST
-        be implemented if HOLE_PUNCH is implemented.
-      </t>
-    </section>
-
-    <section anchor="ss:space:ops:zero" title="Operation 64: HOLE_PUNCH - Zero and deallocate blocks backing the
-      file in the specified range.">
-
-     <t>
-       WARNING: Most of this section is now obsolete. Parts
-       of it need to be scavanged for the ADB discussion,
-       but for the most part, it cannot be trusted.
-     </t>
-
-
-     <section title="DESCRIPTION">
-       <t>
-         Whenever a client wishes to deallocate the blocks backing a
-         particular region in the file, it calls the HOLE_PUNCH operation with
-         the current filehandle set to the filehandle of the file in question,
-         start offset and length in bytes of the region set in hpa_offset and
-         hpa_count respectively.  All further reads to this region MUST return
-         zeros until overwritten.  The filehandle specified must be that of a
-         regular file.
-       </t>
-
-       <t>
-         Situations may arise where hpa_offset and/or hpa_offset + hpa_count
-         will not be aligned to a boundary that the server does allocations/
-         deallocations in.  For most filesystems, this is the block size of
-         the file system.  In such a case, the server can deallocate as many
-         bytes as it can in the region.  The blocks that cannot be deallocated
-         MUST be zeroed.  Except for the block deallocation and maximum hole
-         punching capability, a HOLE_PUNCH operation is to be treated similar
-         to a write of zeroes.
-       </t>
-
-       <t>
-         The server is not required to complete deallocating the blocks
-         specified in the operation before returning.  It is acceptable to
-         have the deallocation be deferred.  In fact, HOLE_PUNCH is merely a
-         hint; it is valid for a server to return success without ever doing
-         anything towards deallocating the blocks backing the region
-         specified.  However, any future reads to the region MUST return
-         zeroes.
-       </t>
-
-       <t>
-         HOLE_PUNCH will result in the space_used attribute being decreased by
-         the number of bytes that were deallocated.  The space_freed attribute
-         may or may not decrease, depending on the support and whether the
-         blocks backing the specified range were shared or not.  The size
-         attribute will remain unchanged.
-       </t>
-
-       <t>
-         The HOLE_PUNCH operation MUST NOT change the space reservation
-         guarantee of the file.  While the server can deallocate the blocks
-         specified by hpa_offset and hpa_count, future writes to this region
-         MUST NOT fail with NFSERR_NOSPC.
-       </t>
-
-       <t>
-         The HOLE_PUNCH operation may fail for the following reasons (this is
-         a partial list):
-       </t>
-
-       <t>
-          <list style="hanging">
-            <t hangText="NFS4ERR_NOTSUPP">
-              The Hole punch operations are not supported by the
-              NFS server receiving this request.
-            </t>
-
-            <t hangText="NFS4ERR_DIR">
-              The current filehandle is of type NF4DIR.
-            </t>
-
-            <t hangText="NFS4ERR_SYMLINK">
-              The current filehandle is of type NF4LNK.
-            </t>
-
-            <t hangText="NFS4ERR_WRONG_TYPE">
-              The current filehandle does not designate an ordinary file.
-            </t>
-          </list>
-        </t>
-      </section>
-    </section>
+  <section anchor="ss:space:ops:mhp" title="Attribute 79: max_hole_punch">
+    <t>
+      max_hole_punch specifies the maximum size of a hole that the
+      INITIALIZE operation can handle.  This attribute is read only and of
+      type length4.  It is a per filesystem attribute.  This attribute MUST
+      be implemented if INITIALIZE is implemented.
+      <cref anchor='AIX1' source='TH'>
+        max_hole_punch when doing ADB initialization?
+      </cref>
+    </t>
   </section>
 </section>

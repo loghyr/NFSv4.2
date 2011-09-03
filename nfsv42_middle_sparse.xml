@@ -2,27 +2,22 @@
 <!-- Copyright (C) The Internet Society (2011) -->
 
 <section anchor="sec:sparse" title="Sparse Files">
-  <t>
-    WARNING: Some of this section needs to be reworked because
-    of the work going on in the ADB section.
-  </t>
-
   <section anchor="ss:sparse:intro" title="Introduction">
     <t>
       A sparse file is a common way of representing a large file without
       having to utilize all of the disk space for it.  Consequently, a
-      sparse file uses less physical space than its size indicates.  This means the
-      file contains 'holes', byte ranges within the file that contain no
-      data.  Most modern file systems support sparse files, including most
-      UNIX file systems and NTFS, but notably not Apple's HFS+.  Common
-      examples of sparse files include Virtual Machine (VM) OS/disk
-      images, database files, log files, and even checkpoint recovery
-      files most commonly used by the HPC community.
+      sparse file uses less physical space than its size indicates.  This
+      means the file contains 'holes', byte ranges within the file that
+      contain no data.  Most modern file systems support sparse files,
+      including most UNIX file systems and NTFS, but notably not Apple's
+      HFS+.  Common examples of sparse files include Virtual Machine (VM)
+      OS/disk images, database files, log files, and even checkpoint
+      recovery files most commonly used by the HPC community.
     </t>
 
     <t>
       If an application reads a hole in a sparse file, the file system must
-      returns all zeros to the application.   For local data access there
+      return all zeros to the application.   For local data access there
       is little penalty, but with NFS these zeroes must be transferred back
       to the client.  If an application uses the NFS client to read data
       into memory, this wastes time and bandwidth as the application waits
@@ -40,29 +35,9 @@
     </t>
 
     <t>
-      Other applications want to initialize a file to patterns
-      other than zero. The problem with initializing to zero
-      is that it is often difficult to distinguish a byte-range of
-      initialized to all zeroes from data corruption, since a pattern of
-      zeroes is a probable pattern for corruption.  Instead, some
-      applications, such as database management systems, use pattern
-      consisting of bytes or words of non-zero values.
-    </t>
-
-    <t>
-      Besides reading sparse files and initializing them, applications
-      might want to hole punch, which is the deallocation of the data
-      blocks which back a region of the file. At such time, the affected
-      blocks are reinitialized to a pattern.
-    </t>
-
-    <t>
-      This section introduces a new operation to read patterns from
-      a file, READ_PLUS, and a new operation to both initialize patterns
-      and to punch pattern holes into a file, WRITE_PLUS.
-      READ_PLUS supports all the features of READ but includes an extension
-      to support sparse pattern files.  
-      READ_PLUS is guaranteed to perform
+      This section introduces a new operation READ_PLUS which supports
+      all the features of READ but includes an extension to support sparse
+      pattern files.  READ_PLUS is guaranteed to perform
       no worse than READ, and can dramatically improve performance with
       sparse files.  READ_PLUS does not depend on pNFS protocol features,
       but can be used by pNFS to support sparse files.
@@ -97,122 +72,13 @@
     </t>
   </section>
 
-  <section anchor="ss:sparse:apps" title="Applications and Sparse Files">
-    <t>
-      Applications may cause an NFS client to read holes in a file for
-      several reasons.  This section describes three different application
-      workloads that cause the NFS client to transfer data unnecessarily.
-      These workloads are simply examples, and there are probably many more
-      workloads that are negatively impacted by sparse files.
-    </t>
-
-    <t>
-      The first workload that can cause holes to be read is sequential
-      reads within a sparse file.  When this happens, the NFS client may
-      perform read requests ("readahead") into sections of the file not
-      explicitly requested by the application.  Since the NFS client cannot
-      differentiate between holes and non-holes, the NFS client may
-      prefetch empty sections of the file.
-    </t>
-
-    <t>
-      This workload is exemplified by Virtual Machines and their associated
-      file system images, e.g., VMware .vmdk files, which are large sparse
-      files encapsulating an entire operating system.  If a VM reads files
-      within the file system image, this will translate to sequential NFS
-      read requests into the much larger file system image file.  Since NFS
-      does not understand the internals of the file system image, it ends
-      up performing readahead file holes.
-    </t>
-
-    <t>
-      The second workload is generated by copying a file from a directory
-      in NFS to either the same NFS server, to another file system, e.g.,
-      another NFS or Samba server, to a local ext3 file system, or even a
-      network socket.  In this case, bandwidth and server resources are
-      wasted as the entire file is transferred from the NFS server to the
-      NFS client.   Once a byte range of the file has been transferred to
-      the client, it is up to the client application, e.g., rsync, cp, scp,
-      on how it writes the data to the target location.  For example, cp
-      supports sparse files and will not write all zero regions, whereas
-      scp does not support sparse files and will transfer every byte of the
-      file.
-    </t>
-
-    <t>
-      The third workload is generated by applications that do not utilize
-      the NFS client cache, but instead use direct I/O and manage cached
-      data independently, e.g., databases.  These applications may perform
-      whole file caching with sparse files, which would mean that even the
-      holes will be transferred to the clients and cached.
-    </t>
-  </section>
-
   <section anchor="ss:sparse:overiew" title="Overview of Sparse Files and NFSv4">
     <t>
-      This proposal seeks to provide sparse file support to the largest
+      This section provides sparse file support to the largest
       number of NFS client and server implementations, and as such proposes
-      to add a new return code to the mandatory NFSv4.1 READ_PLUS operation
+      to add a new return code to the READ_PLUS operation
       instead of proposing additions or extensions of new or existing
       optional features (such as pNFS).
-    </t>
-
-    <t>
-      As well, this document seeks to ensure that the proposed extensions
-      are simple and do not transfer data between the client and server
-      unnecessarily. For example, one possible way to implement sparse file
-      read support would be to have the client, on the first hole
-      encountered or at OPEN time, request a Data Region Map from the
-      server.  A Data Region Map would specify all zero and non-zero
-      regions in a file.  While this option seems simple, it is less useful
-      and can become inefficient and cumbersome for several reasons:
-    </t>
-
-    <t>
-      <list style="symbols">
-        <t>
-          Data Region Maps can be large, and transferring them can reduce
-          overall read performance.  For example, VMware's .vmdk files can
-          have a file size of over 100 GBs and have a map well over several
-          MBs.
-        </t>
-
-        <t>
-	        Data Region Maps can change frequently, and become
-	        invalidated on every write to the file.  NFSv4 has a
-	        single change attribute, which means any change to any
-	        region of a file will invalidate all Data Region Maps.
-	        This can result in the map being transferred multiple times
-	        with each update to the file.  For example, a VM that
-	        updates a config file in its file system image would
-	        invalidate the Data Region Map not only for itself, but
-	        for all other clients accessing the same file system
-	        image.
-        </t>
-
-        <t>
-          Data Region Maps do not handle all zero-filled sections of the
-          file, reducing the effectiveness of the solution. While it may be
-          possible to modify the maps to handle zero-filled sections (at
-          possibly great effort to the server), it is almost impossible with
-          pNFS.  With pNFS, the owner of the Data Region Map is the metadata
-          server, which is not in the data path and has no knowledge of the
-          contents of a data region.
-        </t>
-      </list>
-    </t>
-
-    <t>
-      Another way to handle holes is compression, but this not ideal since
-      it requires all implementations to agree on a single compression
-      algorithm and requires a fair amount of computational overhead.
-    </t>
-
-    <t>
-      Note that supporting writing to a sparse file does not require
-      changes to the protocol.  Applications and/or NFS implementations can
-      choose to ignore WRITE requests of all zeroes to the NFS server
-      without consequence.
     </t>
   </section>
 

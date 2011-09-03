@@ -3,6 +3,11 @@
 
 <section anchor='ss:adb:init' title='Operation 64: INITIALIZE'>
   <t>
+    This operation can be used to initialize the structure imposed
+    by an application onto a file and to punch a hole into a file.
+  </t>
+
+  <t>
     The server has no concept of the structure imposed
     by the application. It is only when the application
     writes to a section of the file does order get imposed.
@@ -108,5 +113,81 @@
         Need to flesh this out.
       </cref>
     </t>
+
+    <section title="Hole punching">
+      <t>
+        Whenever a client wishes to deallocate the blocks backing a
+        particular region in the file, it calls the INITIALIZE operation with
+        the current filehandle set to the filehandle of the file in question,
+        start offset and length in bytes of the region set in hpa_offset and
+        hpa_count respectively.  All further reads to this region MUST return
+        zeros until overwritten.  The filehandle specified must be that of a
+        regular file.
+      </t>
+
+      <t>
+        Situations may arise where ia_hole.hi_offset and/or
+        ia_hole.hi_offset + ia_hole.hi_length will not be aligned to a
+        boundary that the server does allocations/
+        deallocations in.  For most filesystems, this is the block size of
+        the file system.  In such a case, the server can deallocate as many
+        bytes as it can in the region.  The blocks that cannot be deallocated
+        MUST be zeroed.  Except for the block deallocation and maximum hole
+        punching capability, a INITIALIZE operation is to be treated similar
+        to a write of zeroes.
+      </t>
+
+      <t>
+        The server is not required to complete deallocating the blocks
+        specified in the operation before returning.  It is acceptable to
+        have the deallocation be deferred.  In fact, INITIALIZE is merely a
+        hint; it is valid for a server to return success without ever doing
+        anything towards deallocating the blocks backing the region
+        specified.  However, any future reads to the region MUST return
+        zeroes.
+      </t>
+
+      <t>
+        If used to hole punch, INITIALIZE will result in the space_used
+        attribute being decreased by the number of bytes that were
+        deallocated.  The space_freed attribute
+        may or may not decrease, depending on the support and whether the
+        blocks backing the specified range were shared or not.  The size
+        attribute will remain unchanged.
+      </t>
+
+      <t>
+        The INITIALIZE operation MUST NOT change the space reservation
+        guarantee of the file.  While the server can deallocate the blocks
+        specified by hpa_offset and hpa_count, future writes to this region
+        MUST NOT fail with NFSERR_NOSPC.
+      </t>
+
+      <t>
+        The INITIALIZE operation may fail for the following reasons (this is
+        a partial list):
+      </t>
+
+      <t>
+        <list style="hanging">
+          <t hangText="NFS4ERR_NOTSUPP">
+            The Hole punch operations are not supported by the
+            NFS server receiving this request.
+          </t>
+
+          <t hangText="NFS4ERR_DIR">
+            The current filehandle is of type NF4DIR.
+          </t>
+
+          <t hangText="NFS4ERR_SYMLINK">
+            The current filehandle is of type NF4LNK.
+          </t>
+
+          <t hangText="NFS4ERR_WRONG_TYPE">
+            The current filehandle does not designate an ordinary file.
+          </t>
+        </list>
+      </t>
+    </section>
   </section>
 </section>
