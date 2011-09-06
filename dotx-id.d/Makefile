@@ -5,8 +5,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=04
-VERS=05
+PREVVERS=05
+VERS=06
 VPATH = ../../dotx.d
 
 all: txt filelist
