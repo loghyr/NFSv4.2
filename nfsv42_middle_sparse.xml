@@ -61,7 +61,7 @@
           unallocated region of the file.
         </t>
 
-        <t hangText='Hole Threshold'>
+        <t hangText='Hole Threshold:'>
           The minimum length of a Hole as determined by the server.
           If a server chooses to define a Hole Threshold, then it
           would not return hole information (nfs_readplusreshole)
