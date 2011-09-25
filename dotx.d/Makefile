@@ -121,7 +121,9 @@ FORE_OPS_AS_IS2 = \
 		initialize_args.x \
 		initialize_res.x \
 		read_plus_args.x \
-		read_plus_res.x
+		read_plus_res.x \
+		seek_args.x \
+		seek_res.x
 
 FORE_OPS = $(FORE_OPS_AS_IS1) open_args_gen.x $(FORE_OPS_AS_IS2)
 
@@ -228,6 +230,7 @@ SPITGEN =	basic_types.x \
 		copy_from_auth.x \
 		copy_to_auth.x \
 		app_data_block4.x \
+		data_info4.x \
 		hole_info4.x \
 		data_content4.x \
 		type_chattr_type.x \

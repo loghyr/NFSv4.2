@@ -389,6 +389,8 @@ AUTOGEN =	\
 		autogen/secinfo_no_name_args.xml \
 		autogen/secinfo_no_name_res.xml \
 		autogen/secinfo_res.xml \
+		autogen/seek_args.xml \
+		autogen/seek_res.xml \
 		autogen/sequence_args.xml \
 		autogen/sequence_res.xml \
 		autogen/set_ssv_args.xml \
@@ -431,6 +433,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_initialize.xml \
 	nfsv42_middle_op_layoutreturn.xml \
 	nfsv42_middle_op_read_plus.xml \
+	nfsv42_middle_op_seek.xml \
 	nfsv42_middle_op_zzz.xml \
 	nfsv42_middle_op_cb_aaa.xml \
 	nfsv42_middle_op_cb_attr_changed.xml \

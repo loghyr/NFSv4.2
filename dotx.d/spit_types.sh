@@ -1001,6 +1001,7 @@ enum nfs_opnum4 {
  OP_COPY_STATUS		= 63,
  OP_INITIALIZE		= 64,
  OP_READ_PLUS		= 65,
+ OP_SEEK		= 66,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1119,6 +1120,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY_STATUS:	COPY_STATUS4args opcopy_status;
  case OP_INITIALIZE:	INITIALIZE4args opinitialize;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
+ case OP_SEEK:		SEEK4args opseek;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	void;
@@ -1247,6 +1249,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_COPY_STATUS:	COPY_STATUS4res opcopy_status;
  case OP_INITIALIZE:	INITIALIZE4res opinitialize;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
+ case OP_SEEK:		SEEK4res opseek;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	ILLEGAL4res opillegal;
@@ -1370,6 +1373,17 @@ struct app_data_block4 {
 	count4		adb_block_num;
 	length4		adb_reloff_pattern;
 	opaque		adb_pattern<>;
+};
+EOF
+
+	;;
+
+	data_info4.x )
+
+cat << EOF > $i
+struct data_info4 {
+	offset4		di_offset;
+	length4		di_length;
 };
 EOF
 

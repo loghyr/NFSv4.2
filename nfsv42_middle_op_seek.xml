@@ -1,0 +1,24 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
+<section anchor='ss:ops:seek' title='Operation 66: SEEK'>
+  <t>
+    XXX
+  </t>
+
+  <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/seek_args.xml'?>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/seek_res.xml'?>
+  </section>
+
+  <section toc='exclude' title="DESCRIPTION">
+    <t>
+      Over the given range, SEEK will return ranges for all data,
+      holes, and ADBs found as an array of seek_content. It does
+      not return actual data.
+    </t>
+  </section>
+</section>
