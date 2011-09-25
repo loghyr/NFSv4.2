@@ -407,8 +407,6 @@ include(app_data_block4.x)
 
 include(data_info4.x)
 
-include(hole_info4.x)
-
 include(data_content4.x)
 
 /*

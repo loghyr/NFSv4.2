@@ -5,7 +5,7 @@ case NFS4_CONTENT_DATA:
 case NFS4_CONTENT_APP_BLOCK:
 	app_data_block4	rpc_block;
 case NFS4_CONTENT_HOLE:
-	hole_info4	rpc_hole;
+	data_info4	rpc_hole;
 default:
 	void;
 };

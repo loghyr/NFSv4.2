@@ -1384,17 +1384,7 @@ cat << EOF > $i
 struct data_info4 {
 	offset4		di_offset;
 	length4		di_length;
-};
-EOF
-
-	;;
-
-	hole_info4.x )
-
-cat << EOF > $i
-struct hole_info4 {
-	offset4		hi_offset;
-	length4		hi_length;
+	bool		di_allocated;
 };
 EOF
 

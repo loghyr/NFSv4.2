@@ -8,7 +8,7 @@ union initialize_arg4 switch (data_content4 content) {
 case NFS4_CONTENT_APP_BLOCK:
 	app_data_block4	ia_adb;
 case NFS4_CONTENT_HOLE:
-	hole_info4	ia_hole;
+	data_info4	ia_hole;
 default:
 	void;
 };

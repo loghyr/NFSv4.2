@@ -231,7 +231,6 @@ SPITGEN =	basic_types.x \
 		copy_to_auth.x \
 		app_data_block4.x \
 		data_info4.x \
-		hole_info4.x \
 		data_content4.x \
 		type_chattr_type.x \
 		type_label_format.x
