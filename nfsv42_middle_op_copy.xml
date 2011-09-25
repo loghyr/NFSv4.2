@@ -231,7 +231,6 @@
       <c>maxname</c>           <c>29</c><c>no</c>
       <c>maxread</c>           <c>30</c><c>no</c>
       <c>maxwrite</c>          <c>31</c><c>no</c>
-      <c>max_hole_punch</c>    <c>31</c><c>no</c>
       <c>mdsthreshold</c>      <c>68</c><c>no</c>
       <c>mimetype</c>          <c>32</c><c>MUST</c>
       <c>mode</c>              <c>33</c><c>MUST</c>

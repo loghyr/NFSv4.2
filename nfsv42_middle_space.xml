@@ -91,11 +91,6 @@
           deleted, taking block sharing into consideration.
         </t>
 
-        <t hangText="max_hole_punch">
-          This attribute specifies the maximum sized hole that
-          can be punched on the filesystem.
-        </t>
-
         <t hangText="INITIALIZED">
           This operation zeroes and/or deallocates the blocks
           backing a region of the file.
@@ -198,18 +193,6 @@
       space_freed gives the number of bytes freed if the file is deleted.
       This attribute is read only and is of type length4.  It is a per file
       attribute.
-    </t>
-  </section>
-
-  <section anchor="ss:space:ops:mhp" title="Attribute 79: max_hole_punch">
-    <t>
-      max_hole_punch specifies the maximum size of a hole that the
-      INITIALIZE operation can handle.  This attribute is read only and of
-      type length4.  It is a per filesystem attribute.  This attribute MUST
-      be implemented if INITIALIZE is implemented.
-      <cref anchor='AIX1' source='TH'>
-        max_hole_punch when doing ADB initialization?
-      </cref>
     </t>
   </section>
 </section>
