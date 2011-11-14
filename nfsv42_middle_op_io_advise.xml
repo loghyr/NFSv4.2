@@ -1,0 +1,407 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
+<section anchor='sec:io_advise' title='Operation 67: IO_ADVISE - Application I/O access pattern hints'>
+
+  <t>
+    This section introduces a new operation, named IO_ADVISE, which allows
+    NFS clients to communicate application I/O access pattern hints to
+    the NFS server.  This new operation will allow hints to be sent to
+    the server when applications use posix_fadvise, direct I/O, or at any
+    other point at which the client finds useful.
+  </t>
+
+  <section toc='exclude' title="ARGUMENT">
+   <?rfc include='autogen/io_advise_args.xml'?>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/io_advise_res.xml'?>
+  </section>
+
+  <section toc='exclude' title="DESCRIPTION">
+    <t>
+      The IO_ADVISE operation sends an I/O access pattern hint to the
+      server for the owner of stated for a given byte range specified by
+      iar_offset and iar_count.  The byte range specified by iar_offset and iar_count need
+      not currently exist in the file, but the iar_hints will apply to the byte
+      range when it does exist.  If iar_count is 0, all data following
+      iar_offset is specified.  The server MAY ignore the advice.
+    </t>
+
+    <t>
+      The following are the possible hints:
+    </t>
+
+    <t>
+      <list style='hanging'>
+        <t hangText='IO_ADVISE4_NORMAL'>
+          Specifies that the application has no advice
+          to give on its behavior with respect to the specified data. It is
+          the default characteristic if no advice is given.
+        </t>
+
+        <t hangText='IO_ADVISE4_SEQUENTIAL'>
+          Specifies that the stated holder expects
+          to access the specified data sequentially from lower offsets to
+          higher offsets.
+        </t>
+
+        <t hangText='IO_ADVISE4_SEQUENTIAL BACKWARDS'>
+          Specifies that the stated holder
+          expects to access the specified data sequentially from higher
+          offsets to lower offsets.
+        </t>
+
+        <t hangText='IO_ADVISE4_RANDOM'>
+          Specifies that the stated holder expects to
+          access the specified data in a random order.
+        </t>
+
+        <t hangText='IO_ADVISE4_WILLNEED'>
+          Specifies that the stated holder expects to
+          access the specified data in the near future.
+        </t>
+
+        <t hangText='IO_ADVISE4_WILLNEED_OPPORTUNISTIC'>
+          Specifies that the stated
+          holder expects to possibly access the data in the near future.
+          This is a speculative hint, and therefore the server should
+          prefetch data or indirect blocks only if it can be done at a
+          marginal cost.
+        </t>
+
+        <t hangText='IO_ADVISE_DONTNEED'>
+          Specifies that the stated holder expects that
+          it will not access the specified data in the near future.
+        </t>
+
+        <t hangText='IO_ADVISE_NOREUSE'>
+          Specifies that the stated holder expects to
+          access the specified data once and then not reuse it thereafter.
+        </t>
+
+        <t hangText='IO_ADVISE4_READ'>
+          Specifies that the stated holder expects to read
+          the specified data in the near future.
+        </t>
+
+        <t hangText='IO_ADVISE4_WRITE'>
+          Specifies that the stated holder expects to
+          write the specified data in the near future.
+        </t>
+      </list>
+    </t>
+
+    <t>
+      The server will return success if the operation is properly formed,
+      otherwise the server will return an error.  The server MUST NOT
+      return an error if it does not recognize or does not support the
+      requested advice.  This is also true even if the client sends
+      contradictory hints to the server, e.g., IO_ADVISE4_SEQUENTIAL and
+      IO_ADVISE4_RANDOM in a single IO_ADVISE operation.  In this case, the
+      server MUST return success and a ior_hints value that indicates the
+      hint it intends to optimize. For contradictory hints, this may mean
+      simply returning IO_ADVISE4_NORMAL for example.
+    </t>
+
+    <t>
+      The ior_hints returned by the server is primarily for debugging
+      purposes since the server is under no obligation to carry out the
+      hints that it describes in the ior_hints result.  In addition, while
+      the server may have intended to implement the hints returned in
+      ior_hints, as time progresses, the server may need to change its
+      handling of a given file due to several reasons including, but not
+      limited to, memory pressure, additional IO_ADVISE hints sent by other
+      clients, and heuristically detected file access patterns.
+    </t>
+
+    <t>
+      The server MAY return different advice than what the client
+      requested.  If it does, then this might be due to one of several
+      conditions, including, but not limited to another client advising of
+      a different I/O access pattern; a different I/O access pattern from
+      another client that that the server has heuristically detected; or
+      the server is not able to support the requested I/O access pattern,
+      perhaps due to a temporary resource limitation.
+    </t>
+
+    <t>
+      Each issuance of the IO_ADVISE operation overrides all previous
+      issuances of IO_ADVISE for a given byte range.  This effectively
+      follows a strategy of last hint wins for a given stated and byte
+      range.
+    </t>
+
+    <t>
+      Clients should assume that hints included in an IO_ADVISE operation
+      will be forgotten once the file is closed.
+    </t>
+  </section>
+
+  <section toc='exclude' title="IMPLEMENTATION">
+    <t>
+      The NFS client may choose to issue and IO_ADVISE operation to the
+      server in several different instances.
+    </t>
+
+    <t>
+      The most obvious is in direct response to an applications execution
+      of posix_fadvise.  In this case, IO_ADVISE4_WRITE and IO_ADVISE4_READ
+      may be set based upon the type of file access specified when the file
+      was opened.
+    </t>
+
+    <t>
+      Another useful point would be when an application indicates it is
+      using direct I/O.  Direct I/O may be specified at file open, in which
+      case a IO_ADVISE may be included in the same compound as the OPEN
+      operation with the IO_ADVISE4_NOREUSE flag set.  Direct I/O may also
+      be specified separately, in which case a IO_ADVISE operation can be
+      sent to the server separately. As above, IO_ADVISE4_WRITE and
+      IO_ADVISE4_READ may be set based upon the type of file access
+      specified when the file was opened.
+    </t>
+  </section>
+
+  <section toc='exclude' title="pNFS File Layout Data Type Considerations">
+    <t>
+      The IO_ADVISE considerations for pNFS are very similar to the COMMIT
+      considerations for pNFS. That is, as with COMMIT, some NFS server
+      implementations prefer IO_ADVISE be done on the DS, and some prefer
+      it be done on the MDS.
+    </t>
+
+    <t>
+      So for the file's layout type, it is proposed that NFSv4.2 include an
+      additional hint NFL42_CARE_IO_ADVISE_THRU_MDS which 
+      is valid only on NFSv4.2 or higher. Any file's layout
+      obtained with NFSv4.1 MUST NOT have NFL42_UFLG_IO_ADVISE_THRU_MDS
+      set. Any file's layout obtained with NFSv4.2 MAY have
+      NFL42_UFLG_IO_ADVISE_THRU_MDS set. If the client does not implement
+      IO_ADVISE, then it MUST ignore NFL42_UFLG_IO_ADVISE_THRU_MDS.
+    </t>
+
+    <t>
+      If NFL42_UFLG_IO_ADVISE_THRU_MDS is set, then if the client
+      implements IO_ADVISE, then if it wants the DS to honor IO_ADVISE, the
+      client MUST send the operation to the MDS, and the server will
+      communicate the advice back each DS. If the client sends IO_ADVISE to
+      the DS, then the server MAY return NFS4ERR_NOTSUPP.
+    </t>
+
+    <t>
+      If NFL42_UFLG_IO_ADVISE_THRU_MDS is not set, then this indicates to
+      client that if wants to inform the server via IO_ADVISE of the
+      client's intended use of the file, then the client SHOULD send an
+      IO_ADVISE to each DS. While the client MAY always send IO_ADVISE to
+      the MDS, if the server has not set NFL42_UFLG_IO_ADVISE_THRU_MDS, the
+      client should expect that such an IO_ADVISE is futile. Note that a
+      client SHOULD use the same set of arguments on each IO_ADVISE sent to
+      a DS for the same open file reference.
+    </t>
+
+    <t>
+      The server is not required to support different advice for different
+      DS's with the same open file reference.
+    </t>
+
+    <section toc='exclude' title="Dense and Sparse Packing Considerations">
+      <t>
+        The IO_ADVISE operation MUST use the iar_offset and byte range as
+        dictated by the presence or absence of NFL4_UFLG_DENSE.
+      </t>
+     
+      <t>
+        E.g., if NFL4_UFLG_DENSE is present, and a READ or WRITE to the DS
+        for iar_offset 0 really means iar_offset 10000 in the logical file, then
+        an IO_ADVISE for iar_offset 0 means iar_offset 10000.
+      </t>
+     
+      <t>
+        E.g., if NFL4_UFLG_DENSE is absent, then a READ or WRITE to the DS
+        for iar_offset 0 really means iar_offset 0 in the logical file, then an
+        IO_ADVISE for iar_offset 0 means iar_offset 0 in the logical file.
+      </t>
+     
+      <t>
+        E.g., if NFL4_UFLG_DENSE is present, the stripe unit is 1000 bytes and
+        the stripe count is 10, and the dense DS file is serving iar_offset 0.
+        A  READ or WRITE to the DS for iar_offsets 0, 1000, 2000, and 3000,
+        really mean iar_offsets 10000, 20000, 30000, and 40000 (implying a stripe
+        count of 10 and a stripe unit of 1000), then an IO_ADVISE sent to the
+        same DS with an iar_offset of 500, and a iar_count of 3000 means that the
+        IO_ADVISE applies to these byte ranges of the dense DS file:
+      </t>
+     
+      <figure>
+        <artwork>
+  - 500 to 999
+  - 1000 to 1999
+  - 2000 to 2999
+  - 3000 to 3499
+        </artwork>
+      </figure>
+     
+      <t>
+        I.e., the contiguous range 500 to 3499 as specified in IO_ADVISE.
+      </t>
+     
+      <t>
+        It also applies to these byte ranges of the logical file:
+      </t>
+     
+      <figure>
+        <artwork>
+  - 10500 to 10999 (500 bytes)
+  - 20000 to 20999 (1000 bytes)
+  - 30000 to 30999 (1000 bytes)
+  - 40000 to 40499 (500 bytes)
+  (total            3000 bytes)
+        </artwork>
+      </figure>
+     
+      <t>
+        E.g., if NFL4_UFLG_DENSE is absent, the stripe unit is 250 bytes, the
+        stripe count is 4, and the sparse DS file is serving iar_offset 0.
+        Then a READ or WRITE to the DS for iar_offsets 0, 1000, 2000, and
+        3000, really mean iar_offsets 0, 1000, 2000, and 3000 in the logical
+        file, keeping in mind that on the DS file,. byte ranges 250 to 999,
+        1250 to 1999, 2250 to 2999, and 3250 to 3999 are not accessible. Then
+        an IO_ADVISE sent to the same DS with an iar_offset of 500, and a iar_count
+        of 3000 means that the IO_ADVISE applies to these byte ranges of the
+        logical file and the sparse DS file:
+      </t>
+     
+      <figure>
+        <artwork>
+  - 500 to 999 (500 bytes)   - no effect
+  - 1000 to 1249 (250 bytes) - effective
+  - 1250 to 1999 (750 bytes) - no effect
+  - 2000 to 2249 (250 bytes) - effective
+  - 2250 to 2999 (750 bytes) - no effect
+  - 3000 to 3249 (250 bytes) - effective
+  - 3250 to 3499 (250 bytes) - no effect
+  (subtotal      2250 bytes) - no effect
+  (subtotal       750 bytes) - effective
+  (grand total   3000 bytes) - no effect + effective
+        </artwork>
+      </figure>
+     
+      <t>
+        If neither of the flags NFL42_UFLG_IO_ADVISE_THRU_MDS and
+        NFL4_UFLG_DENSE are set in the layout, then any IO_ADVISE request
+        sent to the data server with a byte range that overlaps stripe unit
+        that the data server does not serve MUST NOT result in the status
+        NFS4ERR_PNFS_IO_HOLE. Instead, the response SHOULD be successful and
+        if the server applies IO_ADVISE hints on any stripe units that
+        overlap with the specified range, those hints SHOULD be indicated in
+        the response.
+      </t>
+    </section>
+  </section>
+
+  <section toc='exclude' title="Number of Supported File Segments">
+    <t>
+      In theory IO_ADVISE allows a client and server to support multiple
+      file segments, meaning that different, possibly overlapping, byte
+      ranges of the same open file reference will support different hints.
+      This is not practical, and in general the server will support just
+      one set of hints, and these will apply to the entire file. However,
+      there are some hints that very ephemeral, and are essentially amount
+      to one time instructions to the NFS server, which will be forgotten
+      momentarily after IO_ADVISE is executed.
+    </t>
+
+    <t>
+      The following hints will always apply to the entire file, regardless of
+      the specified byte range:
+    </t>
+
+    <t>
+      <list style='symbols'>
+        <t>IO_ADVISE4_NORMAL</t>
+        <t>IO_ADVISE4_SEQUENTIAL</t>
+        <t>IO_ADVISE4_SEQUENTIAL_BACKWARDS</t>
+        <t>IO_ADVISE4_RANDOM</t>
+      </list>
+    </t>
+
+
+    <t>
+      The following hints will always apply to specified byte range, and
+      will treated as one time instructions:
+    </t>
+
+    <t>
+      <list style='symbols'>
+        <t>IO_ADVISE4_WILLNEED</t>
+        <t>IO_ADVISE4_WILLNEED_OPPORTUNISTIC</t>
+        <t>IO_ADVISE4_DONTNEED</t>
+        <t>IO_ADVISE4_NOREUSE</t>
+      </list>
+    </t>
+
+    <t>
+      The following hints are modifiers to all other hints, and will apply
+      to the entire file and/or to a one time instruction on the specified
+      byte range:
+    </t>
+
+    <t>
+      <list style='symbols'>
+        <t>IO_ADVISE4_READ</t>
+        <t>IO_ADVISE4_WRITE</t>
+      </list>
+    </t>
+  </section>
+
+  <section toc='exclude' title="Possible Additional Hint - IO_ADVISE4_RECENTLY_USED">
+    <t>
+      <list style='hanging'>
+        <t hangText = 'IO_ADVISE4_RECENTLY_USED'>
+          The client has recently accessed the byte range in
+          its own cache.  This informs the server that the data in the byte
+          range remains important to the client.  When the server reaches
+          resource exhaustion, knowing which data is more important allows the
+          server to make better choices about which data to, for example purge
+          from a cache, or move to secondary storage.  It also informs the
+          server which delegations are more important, since if delegations are
+          working correctly, once delegated to a client, a server might never
+          receive another I/O request for the file.
+        </t>
+      </list>
+    </t>
+
+    <t>
+      A use case for this hint is that of the NFS client or application
+      restart. In the event of restart, the app's/client's cache will be
+      cold and it will need to fill it from the server. If the server is
+      maintaining a list (LRU most likely) of byte ranges tagged with
+      IO_ADVISE4_RECENTLY_USED, then the server could have stored the data
+      in these ranges into a storage medium that is less expensive than
+      DRAM, and faster than random access magnetic or optical media, such
+      as flash. This allows the end to end application to storage system to
+      co-operate to meet a service level agreement/objective contracted to
+      the end user by the IT provider.
+    </t>
+
+    <t>
+      On the other side, this is effectively a hint regarding multi-level
+      caching, and it may be more useful to specify a more formal
+      multi-level caching system.  In addition, the action to be taken by the
+      server file system with this hint, and hence its usefulness, is
+      unclear.  For example, as most clients already cache data that they
+      know is important, having this data cached twice may be unnecessary.
+      In fact, substantial performance improvements have been demonstrated
+      by making caches more exclusive between each other
+      <xref target='ref:my_cache' />, not the other
+      way around.  This means that there is a strong argument to be made
+      that servers should immediately purge the described cached data upon
+      receiving this hint.  Other work showed that even infinite sized
+      secondary caches can be largely ineffective
+      <xref target='ref:multi_cache' />, but this of course
+      is subject to the workload.
+    </t>
+  </section>
+</section>

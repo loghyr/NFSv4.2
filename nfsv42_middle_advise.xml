@@ -1,0 +1,196 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
+<section anchor='sec:ioadvise' title='Support for Application IO Hints'>
+  <section anchor='ss:ioadvise:intro' title='Introduction'>
+    <t>
+      Applications currently have several options for communicating I/O
+      access patterns to the NFS client.  While this can help the NFS
+      client optimize I/O and caching for a file, it does not allow the NFS
+      server and its exported file system to do likewise.  Therefore, here
+      we put forth a proposal for the NFSv4.2 protocol to allow
+      applications to communicate their expected behavior to the server.
+    </t>
+
+    <t>
+      By communicating expected access pattern, e.g., sequential or random,
+      and data re-use behavior, e.g., data range will be read multiple
+      times and should be cached, the server will be able to better
+      understand what optimizations it should implement for access to a
+      file.  For example, if a application indicates it will never read the
+      data more than once, then the file system can avoid polluting the
+      data cache and not cache the data.
+    </t>
+
+    <t>
+      The first application that can issue client I/O hints is the
+      posix_fadvise operation.  For example, on Linux, when an application
+      uses posix_fadvise to specify a file will be read sequentially, Linux
+      doubles the readahead buffer size.
+    </t>
+
+    <t>
+      Another instance where applications provide an indication of their
+      desired I/O behavior is the use of direct I/O.  By specifying direct
+      I/O, clients will no longer cache data, but this information is not
+      passed to the server, which will continue caching data.
+    </t>
+
+    <t>
+      Application specific NFS clients such as those used by hypervisors
+      and databases can also leverage application hints to communicate
+      their specialized requirements.
+    </t>
+
+    <t>
+      This section adds a new IO_ADVISE operation to communicate the
+      client file access patterns to the NFS server.  The NFS server upon
+      receiving a IO_ADVISE operation MAY choose to alter its I/O and
+      caching behavior, but is under no obligation to do so.
+    </t>
+  </section>
+
+  <section anchor='ss:ioadvise:posix' title='POSIX Requirements'>
+    <t>
+      The first key requirement of the IO_ADVISE operation is to support
+      the posix_fadvise function <xref target="ref:posix_fadvise" />,
+      which is supported in Linux and many other operating systems.
+      Examples and guidance on how to use posix_fadvise to improve
+      performance can be found here <xref target='ref:seek_over' />.
+      posix_fadvise is defined as follows,
+    </t>
+
+    <figure>
+      <artwork>
+   int posix_fadvise(int fd, off_t offset, off_t len, int advice);
+      </artwork>
+    </figure>
+
+    <t>
+      The posix_fadvise() function shall advise the implementation on the
+      expected behavior of the application with respect to the data in the
+      file associated with the open file descriptor, fd, starting at offset
+      and continuing for len bytes. The specified range need not currently
+      exist in the file. If len is zero, all data following offset is
+      specified. The implementation may use this information to optimize
+      handling of the specified data. The posix_fadvise() function shall
+      have no effect on the semantics of other operations on the specified
+      data, although it may affect the performance of other operations.
+    </t>
+
+    <t>
+      The advice to be applied to the data is specified by the advice
+      parameter and may be one of the following values:
+    </t>
+
+    <t>
+      <list style='hanging'>
+        <t hangText='POSIX_FADV_NORMAL -'>
+          Specifies that the application has no advice to
+          give on its behavior with respect to the specified data. It is the
+          default characteristic if no advice is given for an open file.
+        </t>
+
+        <t hangText='POSIX_FADV_SEQUENTIAL -'>
+          Specifies that the application expects to
+          access the specified data sequentially from lower offsets to higher
+          offsets.
+        </t>
+
+        <t hangText='POSIX_FADV_RANDOM -'>
+          Specifies that the application expects to access
+          the specified data in a random order.
+        </t>
+
+        <t hangText='POSIX_FADV_WILLNEED -'>
+          Specifies that the application expects to
+          access the specified data in the near future.
+        </t>
+
+        <t hangText='POSIX_FADV_DONTNEED -'>
+          Specifies that the application expects that it
+          will not access the specified data in the near future.
+        </t>
+
+        <t hangText='POSIX_FADV_NOREUSE -'>
+          Specifies that the application expects to access
+          the specified data once and then not reuse it thereafter.
+        </t>
+      </list>
+    </t>
+
+    <t>
+      Upon successful completion, posix_fadvise() shall return zero;
+      otherwise, an error number shall be returned to indicate the error.
+    </t>
+  </section>
+
+  <section anchor='ss:ioadvise:non_posix' title='Additional Requirements'>
+    <t>
+      Many use cases exist for sending application I/O hints to the server
+      that cannot utilize the POSIX supported interface.  This is because
+      some applications may benefit from additional hints not specified by
+      posix_fadvise, and some applications may not use POSIX altogether.
+    </t>
+
+    <t>
+      One use case is "Opportunistic Prefetch", which allows a stateid
+      holder to tell the server that it is possible that it will access the
+      specified data in the near future.  This is similar to
+      POSIX_FADV_WILLNEED, but the client is unsure it will in fact read
+      the specified data, so the server should only prefetch the data if it
+      can be done at a marginal cost.  For example, when a server receives
+      this hint, it could prefetch only the indirect blocks for a file
+      instead of all the data.  This would still improve performance if the
+      client does read the data, but with less pressure on server memory.
+    </t>
+
+    <t>
+      An example use case for this hint is a database that reads in a
+      single record that points to additional records in either other areas
+      of the same file or different files located on the same or different
+      server.  While it is likely that the application may access the
+      additional records, it is far from guaranteed.  Therefore, the
+      database may issue an opportunistic prefetch (instead of
+      POSIX_FADV_WILLNEED) for the data in the other files pointed to by
+      the record.
+    </t>
+
+    <t>
+      Another use case is "Direct I/O", which allows a stated holder to
+      inform the server that it does not wish to cache data.  Today, for
+      applications that only intend to read data once, the use of direct
+      I/O disables client caching, but does not affect server caching.  By
+      caching data that will not be re-read, the server is polluting its
+      cache and possibly causing useful cached data to be evicted.  By
+      informing the server of its expected I/O access, this situation can
+      be avoid.  Direct I/O can be used in Linux and AIX via the open()
+      O_DIRECT parameter, in Solaris via the directio() function, and in
+      Windows via the CreateFile() FILE_FLAG_NO_BUFFERING flag.
+    </t>
+
+    <t>
+      Another use case is "Backward Sequential Read", which allows a stated
+      holder to inform the server that it intends to read the specified
+      data backwards, i.e., back the end to the beginning.  This is
+      different than POSIX_FADV_SEQUENTIAL, whose implied intention was
+      that data will be read from beginning to end.  This hint allows
+      servers to prefetch data at the end of the range first, and then
+      prefetch data sequentially in a backwards manner to the start of the
+      data range.  One example of an application that can make use of this
+      hint is video editing.
+    </t>
+  </section>
+
+  <section anchor='ss:ioadvise:secs' title='Security Considerations'>
+    <t>
+     None.
+    </t>
+  </section>
+
+  <section anchor='ss:ioadvise:iana' title='IANA Considerations'>
+    <t>
+     The IO_ADVISE_type4 will be extended through an IANA registry.
+    </t>
+  </section>
+</section>
