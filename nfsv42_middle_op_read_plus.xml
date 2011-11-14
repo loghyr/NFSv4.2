@@ -1,13 +1,35 @@
 <!-- Copyright (C) The IETF Trust (2011) -->
 <!-- Copyright (C) The Internet Society (2011) -->
 
-<section anchor='ss:adb:read_plus' title='Operation 65: READ_PLUS'>
+<section anchor='op:read_plus' title='Operation 65: READ_PLUS'>
+  <t>
+    The section introduces a new read operation, named READ_PLUS, which
+    allows NFS clients to avoid reading holes in a sparse file and to
+    efficiently transfer ADBs. READ_PLUS is guaranteed to perform no
+    worse than READ, and can dramatically improve performance with
+    sparse files.
+  </t>
+
+  <t>
+    READ_PLUS supports all the features of the existing NFSv4.1 READ
+    operation <xref target="ref:RFC5661" /> and adds a simple yet
+    significant extension to the format of its response.  The
+    change allows the client to avoid returning data for portions of
+    the file which are either initialized nd contain no backing store
+    or if the result would appear to be so. I.e., if the result was
+    a data block composed entirely of zeros, then it is easier to return
+    a hole. Returning data blocks of unitialized data wastes computational
+    and network resources, thus reducing performance.  READ_PLUS uses a new
+    result structure that tells the client that the result is all zeroes
+    AND the byte-range of the hole in which the request was made.
+  </t>
+
   <t>
     If the client sends a READ operation, it is explicitly
-    stating that it is not supporting sparse files. So
-    if a READ occurs on a sparse ADB, then the server must
-    expand such ADBs to be raw bytes. If a READ occurs in
-    the middle of an ADB, the server can only send back
+    stating that it is neither supporting sparse files or ADBs. So
+    if a READ occurs on a sparse ADB or file, then the server must
+    expand such data to be raw bytes. If a READ occurs in
+    the middle of a hole or ADB, the server can only send back
     bytes starting from that offset.
   </t>
 
@@ -53,6 +75,258 @@
       64k and the READ_PLUS was for 128k starting at an
       offset of 32k inside the ADB, then the first 32k
       would be converted to data.
+    </t>
+  </section>
+
+  <section toc='exclude' title="DESCRIPTION">
+    <t>
+      The READ_PLUS operation is based upon the NFSv4.1 READ operation
+      <xref target="ref:RFC5661" />, and similarly reads data from the
+      regular file identified by the current filehandle.
+    </t>
+
+    <t>
+      The client provides an offset of where the READ_PLUS is to start and a
+      count of how many bytes are to be read.  An offset of zero means to
+      read data starting at the beginning of the file.  If offset is
+      greater than or equal to the size of the file, the status NFS4_OK is
+      returned with nfs_readplusrestype4 set to READ_OK, data length set to
+      zero, and eof set to TRUE.  The READ_PLUS is subject to access
+      permissions checking.
+    </t>
+
+    <t>
+      If the client specifies a count value of zero, the READ_PLUS succeeds
+      and returns zero bytes of data, again subject to access permissions
+      checking.  In all situations, the server may choose to return fewer
+      bytes than specified by the client.  The client needs to check for
+      this condition and handle the condition appropriately.
+    </t>
+
+    <t>
+      If the client specifies an offset and count value that is entirely
+      contained within a hole of the file, the status NFS4_OK is returned
+      with nfs_readplusresok4 set to READ_HOLE, and if information is
+      available regarding the hole, a nfs_readplusreshole structure
+      containing the offset and range of the entire hole.  The
+      nfs_readplusreshole structure is considered valid until the file is
+      changed (detected via the change attribute).  The server MUST provide
+      the same semantics for nfs_readplusreshole as if the client read the
+      region and received zeroes; the implied holes contents lifetime MUST
+      be exactly the same as any other read data.
+    </t>
+
+    <t>
+      If the client specifies an offset and count value that begins in a
+      non-hole of the file but extends into hole the server should return a
+      short read with status NFS4_OK, nfs_readplusresok4 set to READ_OK,
+      and data length set to the number of bytes returned.  The client will
+      then issue another READ_PLUS for the remaining bytes, which the server
+      will respond with information about the hole in the file.
+    </t>
+
+    <t>
+      If the server knows that the requested byte range is into a hole of
+      the file, but has no further information regarding the hole, it
+      returns a nfs_readplusreshole structure with holeres4 set to
+      HOLE_NOINFO.
+    </t>
+
+    <t>
+      If hole information is available and can be returned to
+      the client, the server returns a nfs_readplusreshole structure with
+      the value of holeres4 to HOLE_INFO.  The values of hole_offset and
+      hole_length define the byte-range for the current hole in the file.
+      These values represent the information known to the server and may
+      describe a byte-range smaller than the true size of the hole.
+    </t>
+
+    <t>
+      Except when special stateids are used, the stateid value for a
+      READ_PLUS request represents a value returned from a previous byte-
+      range lock or share reservation request or the stateid associated
+      with a delegation.  The stateid identifies the associated owners if
+      any and is used by the server to verify that the associated locks are
+      still valid (e.g., have not been revoked).
+    </t>
+
+    <t>
+      If the read ended at the end-of-file (formally, in a correctly formed
+      READ_PLUS operation, if offset + count is equal to the size of the
+      file), or the READ_PLUS operation extends beyond the size of the file
+      (if offset + count is greater than the size of the file), eof is
+      returned as TRUE; otherwise, it is FALSE.  A successful READ_PLUS of
+      an empty file will always return eof as TRUE.
+    </t>
+
+    <t>
+      If the current filehandle is not an ordinary file, an error will be
+      returned to the client.  In the case that the current filehandle
+      represents an object of type NF4DIR, NFS4ERR_ISDIR is returned.  If
+      the current filehandle designates a symbolic link, NFS4ERR_SYMLINK is
+      returned.  In all other cases, NFS4ERR_WRONG_TYPE is returned.
+    </t>
+
+    <t>
+      For a READ_PLUS with a stateid value of all bits equal to zero, the
+      server MAY allow the READ_PLUS to be serviced subject to mandatory
+      byte-range locks or the current share deny modes for the file.  For a
+      READ_PLUS with a stateid value of all bits equal to one, the server
+      MAY allow READ_PLUS operations to bypass locking checks at the server.
+    </t>
+
+    <t>
+      On success, the current filehandle retains its value.
+    </t>
+  </section>
+
+  <section toc='exclude' title="IMPLEMENTATION">
+    <t>
+      If the server returns a "short read" (i.e., fewer data than requested
+      and eof is set to FALSE), the client should send another READ_PLUS to
+      get the remaining data.  A server may return less data than requested
+      under several circumstances.  The file may have been truncated by
+      another client or perhaps on the server itself, changing the file
+      size from what the requesting client believes to be the case.  This
+      would reduce the actual amount of data available to the client.  It
+      is possible that the server reduce the transfer size and so return a
+      short read result.  Server resource exhaustion may also occur in a
+      short read.
+    </t>
+
+    <t>
+      If mandatory byte-range locking is in effect for the file, and if the
+      byte-range corresponding to the data to be read from the file is
+      WRITE_LT locked by an owner not associated with the stateid, the
+      server will return the NFS4ERR_LOCKED error.  The client should try
+      to get the appropriate READ_LT via the LOCK operation before re-
+      attempting the READ_PLUS.  When the READ_PLUS completes, the client
+      should release the byte-range lock via LOCKU. In addition, the
+      server MUST return a nfs_readplusreshole structure with values of
+      hole_offset and hole_length that are within the owner’s locked
+      byte range.
+    </t>
+
+    <t>
+      If another client has an OPEN_DELEGATE_WRITE delegation for the file
+      being read, the delegation must be recalled, and the operation cannot
+      proceed until that delegation is returned or revoked.  Except where
+      this happens very quickly, one or more NFS4ERR_DELAY errors will be
+      returned to requests made while the delegation remains outstanding.
+      Normally, delegations will not be recalled as a result of a READ_PLUS
+      operation since the recall will occur as a result of an earlier OPEN.
+      However, since it is possible for a READ_PLUS to be done with a
+      special stateid, the server needs to check for this case even though
+      the client should have done an OPEN previously.
+    </t>
+
+    <section toc='exclude' title="Additional pNFS Implementation Information">
+
+      <t>
+        With pNFS, the semantics of using READ_PLUS remains the same.  Any
+        data server MAY return a READ_HOLE result for a READ_PLUS request that
+        it receives.
+      </t>
+
+      <t>
+        When a data server chooses to return a READ_HOLE result, it has the
+        option of returning hole information for the data stored on that
+        data server (as defined by the data layout), but it MUST not return
+        a nfs_readplusreshole structure with a byte range that includes
+        data managed by another data server.
+      </t>
+
+      <t>
+        <list style="numbers">
+          <t>
+            Data servers that cannot determine hole information
+            SHOULD return HOLE_NOINFO.
+          </t>
+
+          <t>
+            Data servers that can obtain hole information for the
+            parts of the file stored on that data server, the data
+            server SHOULD return HOLE_INFO and the byte range of
+            the hole stored on that data server.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        A data server should do its best to return as much information about
+        a hole as is feasible without having to contact the metadata server.
+        If communication with the metadata server is required, then every
+        attempt should be taken to minimize the number of requests.
+      </t>
+        
+      <t>
+        If mandatory locking is enforced, then the data server must also
+        ensure that to return only information for a Hole that is within
+        the owner’s locked byte range.
+      </t>
+    </section>
+  </section>
+
+  <section toc='exclude' title="READ_PLUS with Sparse Files Example">
+
+    <t>
+      To see how the return value READ_HOLE will work, the following table
+      describes a sparse file.  For each byte range, the file contains
+      either non-zero data or a hole. In addition, the server in this
+      example uses a hole threshold of 32K.
+    </t>
+
+    <texttable anchor="space_example">
+      <ttcol align='left' >Byte-Range</ttcol>
+      <ttcol align='left' >Contents</ttcol>
+
+      <c>0-15999    </c> <c>Hole    </c>
+      <c>16K-31999  </c> <c>Non-Zero</c>
+      <c>32K-255999 </c> <c>Hole    </c>
+      <c>256K-287999</c> <c>Non-Zero</c>
+      <c>288K-353999</c> <c>Hole    </c>
+      <c>354K-417999</c> <c>Non-Zero</c>
+    </texttable>
+
+    <t>
+      Under the given circumstances, if a client was to read the file from
+      beginning to end with a max read size of 64K, the following will be
+      the result.  This assumes the client has already opened the file and
+      acquired a valid stateid and just needs to issue READ_PLUS requests.
+    </t>
+
+    <t>
+      <list style="numbers">
+        <t>
+          READ_PLUS(s, 0, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof =
+          false, data&lt;&gt;[32K].  Return a short read, as the last half of the
+          request was all zeroes. Note that the first hole is read back as
+          all zeros as it is below the hole threshhold.
+        </t>
+
+        <t>
+          READ_PLUS(s, 32K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
+          nfs_readplusreshole(HOLE_INFO)(32K, 224K). The requested range was
+          all zeros, and the current hole begins at offset 32K and is 224K
+          in length.
+        </t>
+
+        <t>
+          READ_PLUS(s, 256K, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof
+          = false, data&lt;&gt;[32K].  Return a short read, as the last half of
+          the request was all zeroes.
+        </t>
+
+        <t>
+          READ_PLUS(s, 288K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
+          nfs_readplusreshole(HOLE_INFO)(288K, 66K).
+        </t>
+
+        <t>
+         READ_PLUS(s, 354K, 64K) --> NFS_OK, readplusrestype4 = READ_OK,
+         eof = true, data&lt;&gt;[64K].
+        </t>
+      </list>
     </t>
   </section>
 </section>

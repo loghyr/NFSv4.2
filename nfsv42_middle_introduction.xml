@@ -60,6 +60,14 @@
       <cref anchor="TBD2" source="TH">This needs fleshing out!</cref>
     </t>
 
+    <section title="Sparse Files">
+      <t>
+        Two new operations are defined to support the reading of sparse
+        files (READ_PLUS) and the punching of holes to remove backing
+        storage (INITIALIZE).
+      </t>
+    </section>
+
     <section title="Application I/O Advise">
       <t>
         We propose a new IO_ADVISE operation for NFSv4.2 that
