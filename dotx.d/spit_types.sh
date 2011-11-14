@@ -291,11 +291,11 @@ EOF
 	type_nfl_util4.x )
 
 cat << EOF > $i
-const NFL4_UFLG_MASK		= 0x0000003F;
-const NFL4_UFLG_DENSE		= 0x00000001;
-const NFL4_UFLG_COMMIT_THRU_MDS	= 0x00000002;
-const NFL4_UFLG_STRIPE_UNIT_SIZE_MASK
-				= 0xFFFFFFC0;
+const NFL4_UFLG_MASK			= 0x0000003F;
+const NFL4_UFLG_DENSE			= 0x00000001;
+const NFL4_UFLG_COMMIT_THRU_MDS		= 0x00000002;
+const NFL42_UFLG_IO_ADVISE_THRU_MDS	= 0x00000004;
+const NFL4_UFLG_STRIPE_UNIT_SIZE_MASK	= 0xFFFFFFC0;
 
 typedef uint32_t nfl_util4;
 EOF
@@ -309,6 +309,9 @@ enum filelayout_hint_care4 {
 
 	NFLH4_CARE_COMMIT_THRU_MDS
 				= NFL4_UFLG_COMMIT_THRU_MDS,
+
+	NFL42_CARE_IO_ADVISE_THRU_MDS
+				= NFL42_UFLG_IO_ADVISE_THRU_MDS,
 
 	NFLH4_CARE_STRIPE_UNIT_SIZE
 				= 0x00000040,
@@ -1002,6 +1005,7 @@ enum nfs_opnum4 {
  OP_INITIALIZE		= 64,
  OP_READ_PLUS		= 65,
  OP_SEEK		= 66,
+ OP_IO_ADVISE		= 67,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1121,6 +1125,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_INITIALIZE:	INITIALIZE4args opinitialize;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
  case OP_SEEK:		SEEK4args opseek;
+ case OP_IO_ADVISE:	IO_ADVISE4args opio_advise;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	void;
@@ -1250,6 +1255,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_INITIALIZE:	INITIALIZE4res opinitialize;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
  case OP_SEEK:		SEEK4res opseek;
+ case OP_IO_ADVISE:	IO_ADVISE4res opio_advise;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	ILLEGAL4res opillegal;

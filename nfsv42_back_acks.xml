@@ -15,8 +15,8 @@
   <t>
     For the NFS Server-side Copy, the original draft was by
     James Lentini, Mike Eisler, Deepak Kenchammana, Anshul Madan,
-    and Rahul Iyer. Talpey co-authored an unpublished version of that document.
-    It was also was reviewed by a number of individuals:
+    and Rahul Iyer. Tom Talpey co-authored an unpublished version
+    of that document.  It was also was reviewed by a number of individuals:
     Pranoop Erasani, Tom Haynes, Arthur Lent, Trond Myklebust,
     Dave Noveck, Theresa Lingutla-Raj, Manjunath Shankararao, Satyam
     Vaghani, and Nico Williams.
@@ -30,6 +30,11 @@
     and Marc Eshel. Valuable input and advice was received from Sorin
     Faibish, Bruce Fields, Benny Halevy, Trond Myklebust, and Richard
     Scheffenegger.
+  </t>
+  <t>
+    For the Application IO Hints, the original draft was by Dean Hildebrand,
+    Mike Eisler, Trond Myklebust, and Sam Falkner. Some early reviwers
+    included Benny Halevy and Pranoop Erasani.
   </t>
   <t>
     For Labeled NFS, the original draft was by David Quigley, James Morris,

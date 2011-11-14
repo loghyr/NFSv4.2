@@ -247,6 +247,18 @@ specifications of each URI scheme.
       <seriesInfo name="draft-williams-rpcsecgssv3" value="(work in progress)"/>
     </reference>
 
+    <reference anchor="ref:posix_fadvise">
+      <front>
+     <title>Section 'posix_fadvise()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
+     </title>
+  <author>
+    <organization>The Open Group
+    </organization>
+  </author>
+  <date year="2004" />
+      </front>
+    </reference>
+
   </references>
 
   <references title="Informative References">
@@ -260,8 +272,7 @@ specifications of each URI scheme.
    <author initials='H.' surname='Alvestrand' fullname='H. Alvestrand'>
    <organization /></author>
    <date year='2008' month='May' />
-   <abstract>
-   <t>Many protocols make use of identifiers consisting of constants and other well-known values. Even after a protocol has been defined and deployment has begun, new values may need to be assigned (e.g., for a new option type in DHCP, or a new encryption or authentication transform for IPsec). To ensure that such quantities have consistent values and interpretations across all implementations, their assignment must be administered by a central authority. For IETF protocols, that role is provided by the Internet Assigned Numbers Authority (IANA).&lt;/t>&lt;t> In order for IANA to manage a given namespace prudently, it needs guidelines describing the conditions under which new values can be assigned or when modifications to existing values can be made. If IANA is expected to play a role in the management of a namespace, IANA must be given clear and concise instructions describing that role. This document discusses issues that should be considered in formulating a policy for assigning values to a namespace and provides guidelines for authors on the specific text that must be included in documents that place demands on IANA.&lt;/t>&lt;t> This document obsoletes RFC 2434. This document specifies an Internet Best Current Practices for the Internet Community, and requests discussion and suggestions for improvements.</t></abstract></front>
+   </front>
 
    <seriesInfo name='BCP' value='26' />
    <seriesInfo name='RFC' value='5226' />
@@ -333,8 +344,7 @@ specifications of each URI scheme.
 <facsimile>+1 415 336 6015</facsimile>
 <email>peter.staubach@eng.sun.com</email></address></author>
 <date year='1995' month='June' />
-<abstract>
-<t>This paper describes the NFSv3 protocol.  This paper is provided so that people can write compatible implementations.</t></abstract></front>
+</front>
 
 <seriesInfo name='RFC' value='1813' />
 <format type='TXT' octets='229793' target='ftp://ftp.isi.edu/in-notes/rfc1813.txt' />
@@ -849,6 +859,37 @@ document are to be interpreted as described in RFC
     </front>
     <format type='HTML' target='http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/ht
 ml/Deployment_Guide/sec-mls-ov.html' />
+  </reference>
+
+  <reference anchor='ref:seek_over'>
+    <front>
+      <title>Reducing Seek Overhead with Application-Directed Prefetching </title>
+      <author initials="S." surname ="VanDeBogart" />
+      <author initials="C." surname ="Frost" />
+      <author initials="E." surname ="Kohler" />
+      <date month="June" year="2009" />
+    </front>
+    <seriesInfo name="Proceedings of USENIX Annual Technical Conference" value="" />
+  </reference>
+
+  <reference anchor='ref:multi_cache'>
+    <front>
+      <title>Multi-level Caching in Distributed File Systems</title>
+      <author initials="D." surname="Muntz" />
+      <author initials="P." surname="Honeyman" />
+      <date year="1992" />
+    </front>
+    <seriesInfo name="Proceedings of USENIX Annual Technical Conference" value="" />
+  </reference>
+
+  <reference anchor='ref:my_cache'>
+    <front>
+      <title>My cache or yours? Making storage more exclusive</title>
+      <author initials="T.M." surname="Wong" />
+      <author initials="J." surname="Wilkes" />
+      <date year="2002" />
+    </front>
+    <seriesInfo name="Proceedings of the USENIX Annual Technical Conference" value="" />
   </reference>
 
 

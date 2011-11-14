@@ -120,6 +120,8 @@ FORE_OPS_AS_IS2 = \
                 copy_status_res.x \
 		initialize_args.x \
 		initialize_res.x \
+		io_advise_args.x \
+		io_advise_res.x \
 		read_plus_args.x \
 		read_plus_res.x \
 		seek_args.x \

@@ -5,8 +5,8 @@ struct ACCESS4resok {
 
 union ACCESS4res switch (nfsstat4 status) {
  case NFS4_OK:
-	 ACCESS4resok	resok4;
+	ACCESS4resok	resok4;
  default:
-	 void;
+	void;
 };
 

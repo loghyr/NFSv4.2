@@ -341,6 +341,8 @@ AUTOGEN =	\
 		autogen/illegal_res.xml \
 		autogen/initialize_args.xml \
 		autogen/initialize_res.xml \
+		autogen/io_advise_args.xml \
+		autogen/io_advise_res.xml \
 		autogen/layoutcommit_args.xml \
 		autogen/layoutcommit_res.xml \
 		autogen/layoutget_args.xml \
@@ -418,6 +420,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_copy.xml \
 	nfsv42_middle_sparse.xml \
 	nfsv42_middle_space.xml \
+	nfsv42_middle_advise.xml \
 	nfsv42_middle_application.xml \
 	nfsv42_middle_lnfs.xml \
 	nfsv42_middle_chattr.xml \
@@ -431,6 +434,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_copy_status.xml \
 	nfsv42_middle_op_exchange_id.xml \
 	nfsv42_middle_op_initialize.xml \
+	nfsv42_middle_op_io_advise.xml \
 	nfsv42_middle_op_layoutreturn.xml \
 	nfsv42_middle_op_read_plus.xml \
 	nfsv42_middle_op_seek.xml \

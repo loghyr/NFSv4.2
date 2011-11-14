@@ -16,7 +16,7 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      Over the given range, SEEK will return ranges for all data,
+      Over the given range, SEEK will return a range for all data,
       holes, and ADBs found as an array of seek_content. It does
       not return actual data.
     </t>

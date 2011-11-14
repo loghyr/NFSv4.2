@@ -14,8 +14,8 @@ default:
  * Allow a return of an array of contents.
  */
 struct seek_res4 {
-	bool		sr_eof;
-	seek_content	sr_contents<>;
+	bool			sr_eof;
+	seek_content		sr_contents;
 };
 
 union SEEK4res switch (nfsstat4 status) {
