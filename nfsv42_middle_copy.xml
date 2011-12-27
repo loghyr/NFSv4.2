@@ -958,15 +958,15 @@
         </t>
 
         <t>
-          When the client sends the source server the COPY_NOTIFY
-          operation, the source server may reply to the client with a
-          list of target addresses, names, and/or URLs and assign them
-          to the unique triple: &lt;source fh, user ID, destination address Y&gt;.
-          If the destination uses one of these target netlocs to contact
-          the source server, the source server will be able to uniquely
-          identify the destination server, even if the destination server
-          does not connect from the address specified by the client in
-          COPY_NOTIFY.
+          When the client sends the source server the COPY_NOTIFY operation,
+          the source server may reply to the client with a list of target
+          addresses, names, and/or URLs and assign them to the unique quadruple:
+          &lt;random number, source fh, user ID, destination address Y&gt;.  If the destination
+          uses one of these target netlocs to contact the source server, the source
+          server will be able to uniquely identify the destination server, even
+          if the destination server does not connect from the address specified
+          by the client in COPY_NOTIFY.  The level of assurance in this identification
+          depends on the unpredictability, strength and secrecy of the random number.
         </t>
 
         <t>
@@ -978,9 +978,14 @@
 
         <t>
           <list style="empty">
-            <t> nfs://10.11.78.18//_COPY/10.11.78.56/_FH/0x12345 </t>
-            <t> nfs://192.168.33.18//_COPY/10.11.78.56/_FH/0x12345 </t>
+            <t>nfs://10.11.78.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/10.11.78.56/_FH/0x12345</t>
+            <t>nfs://192.168.33.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/10.11.78.56/_FH/0x12345</t>
           </list>
+        </t>
+
+        <t>
+          The name component after _COPY is 24 characters of base 64, more than enough
+          to encode a 128 bit random number.
         </t>
 
         <t>
@@ -994,16 +999,23 @@
 
         <t>
           <list style="hanging">
-            <t hangText="COMPOUND"> { PUTROOTFH, LOOKUP "_COPY" ; LOOKUP "10.11.78.56";
+            <t hangText="COMPOUND"> { PUTROOTFH, LOOKUP "_COPY" ;
+              LOOKUP "FvhH1OKbu8VrxvV1erdjvR7N" ;
+              LOOKUP "10.11.78.56";
               LOOKUP "_FH" ; OPEN "0x12345" ; GETFH }
             </t>
           </list>
         </t>
 
         <t>
-          The source server will therefore know that these NFSv4.1
-          operations are being issued by the destination server identified
-          in the COPY_NOTIFY.
+          Provided that the random number is unpredictable and has been kept secret
+          by the parties involved, the source server will therefore know that these
+          NFSv4.x operations are being issued by the destination server identified
+          in the COPY_NOTIFY.  This random number technique only provides initial
+          authentication of the destination server, and cannot defend against
+          man-in-the-middle attacks after authentication or an eavesdropper that
+          observes the random number on the wire. Other secure communication
+          techniques (e.g., IPsec) are necessary to block these attacks. 
         </t>
       </section>
 
