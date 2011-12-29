@@ -10,9 +10,6 @@ default:
 	void;
 };
 
-/*
- * Allow a return of an array of contents.
- */
 struct seek_res4 {
 	bool			sr_eof;
 	seek_content		sr_contents;

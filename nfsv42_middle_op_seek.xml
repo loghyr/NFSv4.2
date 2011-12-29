@@ -3,7 +3,8 @@
 
 <section anchor='ss:ops:seek' title='Operation 66: SEEK'>
   <t>
-    XXX
+    SEEK is an operation that allows a client to determine the location of
+    the next data_content4 in a file.
   </t>
 
   <section toc='exclude' title="ARGUMENT">
@@ -16,9 +17,10 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      Over the given range, SEEK will return a range for all data,
-      holes, and ADBs found as an array of seek_content. It does
-      not return actual data.
+      From the given sa_offset, find the next data_content4 of type
+      sa_what in the file. For either a hole or ADB, this must return
+      the data_content4 in its entirety. For data, it must not return
+      the actual data.
     </t>
   </section>
 </section>

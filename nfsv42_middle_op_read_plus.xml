@@ -3,7 +3,7 @@
 
 <section anchor='op:read_plus' title='Operation 65: READ_PLUS'>
   <t>
-    The section introduces a new read operation, named READ_PLUS, which
+    READ_PLUS is a new read operation which
     allows NFS clients to avoid reading holes in a sparse file and to
     efficiently transfer ADBs. READ_PLUS is guaranteed to perform no
     worse than READ, and can dramatically improve performance with
