@@ -22,5 +22,16 @@
       the data_content4 in its entirety. For data, it must not return
       the actual data.
     </t>
+
+    <t>
+      SEEK must follow the same rules for stateids as READ_PLUS
+      (<xref target='op:read_plus:desc' />).
+    </t>
+
+    <t>
+      If the server could not find a corresponding sa_what, then the status
+      would still be NFS4_OK, but sr_eof would be TRUE. The sr_contents
+      would contain a zero-ed out content of the appropriate type.
+    </t>
   </section>
 </section>

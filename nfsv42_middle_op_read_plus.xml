@@ -49,7 +49,7 @@
     <?rfc include='autogen/read_plus_res.xml'?>
   </section>
 
-  <section toc='exclude' title="DESCRIPTION">
+  <section toc='exclude' anchor='op:read_plus:desc'  title="DESCRIPTION">
     <t>
       The READ_PLUS operation is based upon the NFSv4.1 READ operation
       <xref target="ref:RFC5661" />, and similarly reads data from the
