@@ -55,6 +55,10 @@
         Do we want to support an asynchronous INITIALIZE?
         Do we have to?
       </cref>
+
+      <cref anchor='AI6' source='TH'>
+        Need to document union arm error code.
+      </cref>
     </t>
 
     <t>
