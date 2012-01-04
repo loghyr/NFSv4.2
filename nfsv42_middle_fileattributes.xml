@@ -1,0 +1,53 @@
+<!-- Copyright (C) The IETF Trust (2011) -->
+<!-- Copyright (C) The Internet Society (2011) -->
+
+<section anchor="sec:file_attributes" title="File Attributes">
+  <section anchor="ss:file_attributes:AD" title="Attribute Definitions">
+    <section toc='exclude' anchor="ss:space:ops:sr" title="Attribute 77: space_reserved">
+      <t>
+        The space_reserve attribute is a read/write attribute of type
+        boolean.  It is a per file attribute.  When the space_reserved
+        attribute is set via SETATTR, the server must ensure that there is
+        disk space to accommodate every byte in the file before it can return
+        success.  If the server cannot guarantee this, it must return
+        NFS4ERR_NOSPC.
+      </t>
+
+      <t>
+        If the client tries to grow a file which has the space_reserved
+        attribute set, the server must guarantee that there is disk space to
+        accommodate every byte in the file with the new size before it can
+        return success.  If the server cannot guarantee this, it must return
+        NFS4ERR_NOSPC.
+      </t>
+
+      <t>
+        It is not required that the server allocate the space to the file
+        before returning success.  The allocation can be deferred, however,
+        it must be guaranteed that it will not fail for lack of space.
+      </t>
+
+      <t>
+        The value of space_reserved can be obtained at any time through
+        GETATTR.
+      </t>
+
+      <t>
+        In order to avoid ambiguity, the space_reserve bit cannot be set
+        along with the size bit in SETATTR.  Increasing the size of a file
+        with space_reserve set will fail if space reservation cannot be
+        guaranteed for the new size.  If the file size is decreased, space
+        reservation is only guaranteed for the new size and the extra blocks
+        backing the file can be released.
+      </t>
+    </section>
+
+    <section toc='exclude' anchor="ss:space:ops:sf" title="Attribute 78: space_freed">
+      <t>
+        space_freed gives the number of bytes freed if the file is deleted.
+        This attribute is read only and is of type length4.  It is a per file
+        attribute.
+      </t>
+    </section>
+  </section>
+</section>
