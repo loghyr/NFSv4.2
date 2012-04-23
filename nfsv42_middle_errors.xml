@@ -53,6 +53,10 @@
       <c>10049</c>
       <c><xref target="err_BADIOMODE" /></c>
 
+      <c>NFS4ERR_BADLABEL</c>
+      <c>10093</c>
+      <c><xref target="err_BADLABEL" /></c>
+
       <c>NFS4ERR_BADLAYOUT</c>
       <c>10050</c>
       <c><xref target="err_BADLAYOUT" /></c>
@@ -229,6 +233,14 @@
       <c>10028</c>
       <c><xref target="err_LOCK_RANGE" /></c>
 
+      <c>NFS4ERR_MAC_ACCESS</c>
+      <c>10094</c>
+      <c><xref target="err_MAC_ACCESS" /></c>
+
+      <c>NFS4ERR_METADATA_NOTSUPP</c>
+      <c>10090</c>
+      <c><xref target="err_METADATA_NOTSUPP" /></c>
+
       <c>NFS4ERR_MINOR_VERS_MISMATCH</c>
       <c>10021</c>
       <c><xref target="err_MINOR_VERS_MISMATCH" /></c>
@@ -289,6 +301,10 @@
       <c>6</c>
       <c><xref target="err_NXIO" /></c>
 
+      <c>NFS4ERR_OFFLOAD_DENIED</c>
+      <c>10091</c>
+      <c><xref target="err_OFFLOAD_DENIED" /></c>
+
       <c>NFS4ERR_OLD_STATEID</c>
       <c>10024</c>
       <c><xref target="err_OLD_STATEID" /></c>
@@ -304,6 +320,14 @@
       <c>NFS4ERR_OP_NOT_IN_SESSION</c>
       <c>10071</c>
       <c><xref target="err_OP_NOT_IN_SESSION" /></c>
+
+      <c>NFS4ERR_PARTNER_NO_AUTH</c>
+      <c>10089</c>
+      <c><xref target="err_PARTNER_NO_AUTH" /></c>
+
+      <c>NFS4ERR_PARTNER_NOTSUPP</c>
+      <c>10088</c>
+      <c><xref target="err_PARTNER_NOTSUPP" /></c>
 
       <c>NFS4ERR_PERM</c>
       <c>1</c>
@@ -409,6 +433,10 @@
       <c>10070</c>
       <c><xref target="err_TOO_MANY_OPS" /></c>
 
+      <c>NFS4ERR_UNION_NOTSUPP</c>
+      <c>10095</c>
+      <c><xref target="err_UNION_NOTSUPP" /></c>
+
       <c>NFS4ERR_UNKNOWN_LAYOUTTYPE</c>
       <c>10062</c>
       <c><xref target="err_UNKNOWN_LAYOUTTYPE" /></c>
@@ -424,6 +452,10 @@
       <c>NFS4ERR_WRONG_CRED</c>
       <c>10082</c>
       <c><xref target="err_WRONG_CRED" /></c>
+
+      <c>NFS4ERR_WRONG_LFS</c>
+      <c>10092</c>
+      <c><xref target="err_WRONG_LFS" /></c>
 
       <c>NFS4ERR_WRONG_TYPE</c>
       <c>10083</c>
@@ -587,7 +619,7 @@
         The client may obtain the new file system location by obtaining 
         the "fs_locations" or "fs_locations_info" attribute for the 
         current filehandle.  For further discussion, refer to 
-        <xref target="presence_or_absence" /> 
+        Section 11.2 of <xref target="ref:RFC5661" /> 
       </t>
     </section>
     <section title="NFS4ERR_NOFILEHANDLE (Error Code 10020)" 
@@ -596,7 +628,7 @@
         The logical current or saved filehandle value is required by 
         the current operation and is not set.
         This may be a result of a malformed COMPOUND
-        operation (i.e. no PUTFH or PUTROOTFH before an operation that
+        operation (i.e., no PUTFH or PUTROOTFH before an operation that
         requires the current filehandle be set).
       </t>
     </section>
@@ -634,6 +666,10 @@
         that applies.  Note that in NFSv4.0, such situations generally
         resulted in the less specific error NFS4ERR_INVAL.
       </t>
+    </section>
+
+    <section title="NFS4ERR_UNION_NOTSUPP (Error Code 10095)"
+      anchor="err_UNION_NOTSUPP">
     </section>
   </section>
 
@@ -890,8 +926,7 @@
              anchor="err_BAD_STATEID">
       <t>
         A stateid does not properly designate any valid 
-        state.  See <xref target="stateid_lifetime" /> and 
-        <xref target="special_stateid" />
+        state.  See Sections 8.2.4 and 8.2.3 of <xref target="ref:RFC5661" /> 
         for a discussion of how stateids are validated.
       </t>
     </section>
@@ -1019,7 +1054,7 @@
         server.  E.g., this error results when a server
         which only supports 32-bit ranges receives a range that
         cannot be handled by that server.  (See 
-        <xref target="OP_LOCK_DESCRIPTION" />).
+        Section 18.10.3 of <xref target="ref:RFC5661" />).
 
       </t>
     </section>
@@ -1037,7 +1072,7 @@
         temporary condition, the client is encouraged to re-send the lock
         request (but not with the same slot ID and
         sequence ID; one or both MUST be different on the re-send) until the lock is accepted.  See 
-        <xref target="blocking_locks" /> for a discussion of the re-send.
+        Section 9.6 of <xref target="ref:RFC5661" /> for a discussion of the re-send.
       </t>
     </section>
     <section title="NFS4ERR_LOCKED (Error Code 10012)" 
@@ -1079,9 +1114,8 @@
         precisely match a single such lock where the server 
         does not support this type of request, and thus does not 
         implement POSIX locking semantics. See
-        <xref target="OP_LOCK_IMPLEMENTATION" />,
-        <xref target="OP_LOCKT_IMPLEMENTATION" />, and
-        <xref target="OP_LOCKU_IMPLEMENTATION" /> for a discussion of
+        Sections 18.10.4, 18.11.4, and 18.12.4 of <xref target="ref:RFC5661" />
+        for a discussion of
         how this applies to LOCK, LOCKT, and LOCKU respectively.
       </t>
     </section>
@@ -1089,7 +1123,7 @@
              anchor="err_OPENMODE">
       <t>
         The client attempted a READ, WRITE, LOCK or other operation
-        not sanctioned by the stateid passed (e.g. writing to a file
+        not sanctioned by the stateid passed (e.g., writing to a file
         opened only for read).
       </t>
     </section>
@@ -1206,7 +1240,7 @@
       <t>
         The pNFS client has attempted to read from or write to an
         illegal hole of a file of a data server that is using
-        sparse packing. See <xref target="sparse_dense" />.
+        sparse packing. See Section 13.4.4 of <xref target="ref:RFC5661" />.
       </t>
     </section>
     <section title="NFS4ERR_PNFS_NO_LAYOUT (Error Code 10080)" 
@@ -1224,7 +1258,7 @@
         A layout
         is unavailable due to an attempt to perform the LAYOUTGET
         before a pending LAYOUTRETURN on the file has been received.
-        See <xref target="layout_server_consider" />.
+        See Section 12.5.5.2.1.3 of <xref target="ref:RFC5661" />.
 
       </t>
     </section>
@@ -1273,7 +1307,7 @@
         the callback path. The function of this error has
         been mostly superseded by the use of
         status flags in the reply to the SEQUENCE
-        operation (see <xref target="OP_SEQUENCE" />).
+        operation (see Section 18.46 of <xref target="ref:RFC5661" />).
 
       </t>
     </section>
@@ -1467,6 +1501,46 @@
     </section>
   </section>
 
+  <section title="Server to Server Copy Errors" anchor="errors_s2s">
+    <t>
+      These errors deal with the interaction between server to server copies.
+    </t>
+
+    <section title="NFS4ERR_METADATA_NOTSUPP (Error Code 10090)"
+      anchor="err_METADATA_NOTSUPP">
+    </section>
+
+    <section title="NFS4ERR_OFFLOAD_DENIED (Error Code 10091)"
+      anchor="err_OFFLOAD_DENIED">
+    </section>
+
+    <section title="NFS4ERR_PARTNER_NO_AUTH (Error Code 10089)"
+      anchor="err_PARTNER_NO_AUTH">
+    </section>
+
+    <section title="NFS4ERR_PARTNER_NOTSUPP (Error Code 10088)"
+      anchor="err_PARTNER_NOTSUPP">
+    </section>
+  </section>
+
+  <section title="Labeled NFS Errors" anchor="errors_lnfs">
+    <t>
+      These errors are used in LNFS.
+    </t>
+
+    <section title="NFS4ERR_BADLABEL (Error Code 10093)"
+      anchor="err_BADLABEL">
+    </section>
+
+    <section title="NFS4ERR_MAC_ACCESS (Error Code 10094)"
+      anchor="err_MAC_ACCESS">
+    </section>
+
+    <section title="NFS4ERR_WRONG_LFS (Error Code 10092)"
+      anchor="err_WRONG_LFS">
+    </section>
+  </section>
+
   <section title="Obsoleted Errors" anchor="errors_obs">
     <t>
       These errors MUST NOT be generated by any NFSv4.1 operation.
@@ -1502,7 +1576,7 @@
         A lease being renewed is associated with a file system 
         that has been migrated to a new server. The error has
         been superseded by the SEQ4_STATUS_LEASE_MOVED status bit
-        (see <xref target="OP_SEQUENCE" />).          
+        (see Section 18.46 of <xref target="ref:RFC5661" />).
       </t>
     </section>
     <section title="NFS4ERR_NXIO (Error Code 5)" 
