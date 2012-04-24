@@ -425,6 +425,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_lnfs.xml \
 	nfsv42_middle_chattr.xml \
         nfsv42_middle_security.xml \
+	nfsv42_middle_new_errors.xml \
         nfsv42_middle_fileattributes.xml \
 	nfsv42_middle_op_mandlist.xml \
 	nfsv42_middle_op_aaa.xml \

@@ -1,0 +1,107 @@
+<!-- Copyright (C) The IETF Trust (2012) -->
+<!-- Copyright (C) The Internet Society (2012) -->
+
+<section title="Error Values">
+  <t>
+    NFS error numbers are assigned to failed operations within a
+    Compound (COMPOUND or CB_COMPOUND) request.  A Compound request
+    contains a number of NFS operations that have their results
+    encoded in sequence in a Compound reply.  The results of successful
+    operations will consist of an NFS4_OK status followed by the
+    encoded results of the operation.  If an NFS operation fails, an
+    error status will be entered in the reply and the Compound
+    request will be terminated.
+  </t>
+
+  <section title="Error Definitions">
+    <texttable anchor='error_definitions'>
+      <preamble>Protocol Error Definitions</preamble>
+      <ttcol align='left'>Error</ttcol>
+      <ttcol align='left'>Number</ttcol>
+      <ttcol align='left'>Description</ttcol>
+
+      <c>NFS4ERR_BADLABEL</c>
+      <c>10093</c>
+      <c><xref target="err_BADLABEL" /></c>
+
+      <c>NFS4ERR_MAC_ACCESS</c>
+      <c>10094</c>
+      <c><xref target="err_MAC_ACCESS" /></c>
+
+      <c>NFS4ERR_METADATA_NOTSUPP</c>
+      <c>10090</c>
+      <c><xref target="err_METADATA_NOTSUPP" /></c>
+
+      <c>NFS4ERR_OFFLOAD_DENIED</c>
+      <c>10091</c>
+      <c><xref target="err_OFFLOAD_DENIED" /></c>
+
+      <c>NFS4ERR_PARTNER_NO_AUTH</c>
+      <c>10089</c>
+      <c><xref target="err_PARTNER_NO_AUTH" /></c>
+
+      <c>NFS4ERR_PARTNER_NOTSUPP</c>
+      <c>10088</c>
+      <c><xref target="err_PARTNER_NOTSUPP" /></c>
+
+      <c>NFS4ERR_UNION_NOTSUPP</c>
+      <c>10095</c>
+      <c><xref target="err_UNION_NOTSUPP" /></c>
+
+      <c>NFS4ERR_WRONG_LFS</c>
+      <c>10092</c>
+      <c><xref target="err_WRONG_LFS" /></c>
+    </texttable>
+
+    <section title="General Errors" anchor="errors_gen">
+      <t>
+        This section deals with errors that are applicable to a broad
+        set of different purposes.
+      </t>
+
+      <section title="NFS4ERR_UNION_NOTSUPP (Error Code 10095)"
+        anchor="err_UNION_NOTSUPP">
+      </section>
+    </section>
+
+    <section title="Server to Server Copy Errors" anchor="errors_s2s">
+      <t>
+        These errors deal with the interaction between server to server copies.
+      </t>
+
+      <section title="NFS4ERR_METADATA_NOTSUPP (Error Code 10090)"
+        anchor="err_METADATA_NOTSUPP">
+      </section>
+
+      <section title="NFS4ERR_OFFLOAD_DENIED (Error Code 10091)"
+        anchor="err_OFFLOAD_DENIED">
+      </section>
+
+      <section title="NFS4ERR_PARTNER_NO_AUTH (Error Code 10089)"
+        anchor="err_PARTNER_NO_AUTH">
+      </section>
+
+      <section title="NFS4ERR_PARTNER_NOTSUPP (Error Code 10088)"
+        anchor="err_PARTNER_NOTSUPP">
+      </section>
+    </section>
+
+    <section title="Labeled NFS Errors" anchor="errors_lnfs">
+      <t>
+        These errors are used in LNFS.
+      </t>
+
+      <section title="NFS4ERR_BADLABEL (Error Code 10093)"
+        anchor="err_BADLABEL">
+      </section>
+
+      <section title="NFS4ERR_MAC_ACCESS (Error Code 10094)"
+        anchor="err_MAC_ACCESS">
+      </section>
+
+      <section title="NFS4ERR_WRONG_LFS (Error Code 10092)"
+        anchor="err_WRONG_LFS">
+      </section>
+    </section>
+  </section>
+</section>
