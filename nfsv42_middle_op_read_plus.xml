@@ -5,12 +5,7 @@
   <t>
     READ_PLUS is a new read operation which
     allows NFS clients to avoid reading holes in a sparse file and to
-    efficiently transfer ADBs. READ_PLUS is guaranteed to perform no
-    worse than READ, and can dramatically improve performance with
-    sparse files.
-  </t>
-
-  <t>
+    efficiently transfer ADBs.
     READ_PLUS supports all the features of the existing NFSv4.1 READ
     operation <xref target="ref:RFC5661" /> and adds a simple yet
     significant extension to the format of its response.  The
@@ -37,8 +32,8 @@
     Such an operation is inefficient for transfer of sparse
     sections of the file. As such, READ is marked as OBSOLETE in
     NFSv4.2. Instead, a client should issue READ_PLUS. Note that
-    as the client has no a priori knowledge of whether an ADB
-    is present or not, it should always use READ_PLUS.
+    as the client has no a priori knowledge of whether either an ADB
+    or a hole is present or not, it should always use READ_PLUS.
   </t>
 
   <section toc='exclude' title="ARGUMENT">
@@ -52,7 +47,7 @@
   <section toc='exclude' anchor='op:read_plus:desc'  title="DESCRIPTION">
     <t>
       The READ_PLUS operation is based upon the NFSv4.1 READ operation
-      <xref target="ref:RFC5661" />, and similarly reads data from the
+      <xref target="ref:RFC5661" /> and similarly reads data from the
       regular file identified by the current filehandle.
     </t>
 
@@ -206,36 +201,21 @@
     </t>
 
     <section toc='exclude' title="Additional pNFS Implementation Information">
-
       <t>
-<cref anchor="TBD4" source="TH">We need to go over this section.</cref>
         With pNFS, the semantics of using READ_PLUS remains the same.  Any
-        data server MAY return a READ_HOLE result for a READ_PLUS request that
+        data server MAY return a hole or ADB result for a READ_PLUS request that
         it receives.
       </t>
 
       <t>
-        When a data server chooses to return a READ_HOLE result, it has the
+        When a data server chooses to return a hole result, it has the
         option of returning hole information for the data stored on that
         data server (as defined by the data layout), but it MUST not return
-        a nfs_readplusreshole structure with a byte range that includes
-        data managed by another data server.
-      </t>
-
-      <t>
-        <list style="numbers">
-          <t>
-            Data servers that cannot determine hole information
-            SHOULD return HOLE_NOINFO.
-          </t>
-
-          <t>
-            Data servers that can obtain hole information for the
-            parts of the file stored on that data server, the data
-            server SHOULD return HOLE_INFO and the byte range of
-            the hole stored on that data server.
-          </t>
-        </list>
+        results for a byte range that includes data managed by another data server.
+        Data servers that can obtain hole information for the
+        parts of the file stored on that data server, the data
+        server SHOULD return HOLE_INFO and the byte range of
+        the hole stored on that data server.
       </t>
 
       <t>
@@ -254,12 +234,10 @@
   </section>
 
   <section toc='exclude' title="READ_PLUS with Sparse Files Example">
-
     <t>
       The following table describes a sparse file.  For each byte
-      range, the file contains
-      either non-zero data or a hole. In addition, the server in this
-      example uses a Hole Threshold of 32K.
+      range, the file contains either non-zero data or a hole. In addition,
+      the server in this example uses a Hole Threshold of 32K.
     </t>
 
     <texttable anchor="space_example">
@@ -275,43 +253,37 @@
     </texttable>
 
     <t>
-      Under the given circumstances, if a client was to read the file from
-      beginning to end with a max read size of 64K, the following will be
-      the result.  This assumes the client has already opened the file,
+      Under the given circumstances, if a client was to read from the file
+      with a max read size of 64K, the following will be
+      the results for the given READ_PLUS calls.  This assumes the client has already opened the file,
       acquired a valid stateid ('s' in the example), and just needs to issue READ_PLUS requests.
-<cref anchor="TBD5" source="TH">Change the results to match array results.</cref>
     </t>
 
     <t>
       <list style="numbers">
         <t>
-          READ_PLUS(s, 0, 64K) --> NFS_OK, eof =
-          false, data&lt;&gt;[32K].  Return a short read, as the last half of the
-          request was all zeroes. Note that the first hole is read back as
-          all zeros as it is below the Hole Threshhold.
+          READ_PLUS(s, 0, 64K) --> NFS_OK, eof = false, &lt;data[0,32K], hole[32K,224K]&gt;.
+          Since the first hole is less than the server's Hole Threshhold, the
+          first 32K of the file is returned as data and the remaining 32K is
+          returned as a hole which actually extends to 256K.
         </t>
 
         <t>
-          READ_PLUS(s, 32K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
-          nfs_readplusreshole(HOLE_INFO)(32K, 224K). The requested range was
-          all zeros, and the current hole begins at offset 32K and is 224K
-          in length.
+          READ_PLUS(s, 32K, 64K) --> NFS_OK, eof = false, &lt;hole[32K,224K]&gt;
+          The requested range was all zeros, and the current hole begins at offset 32K and is 224K
+          in length. Note that the client should not have followed up the previous
+          READ_PLUS request with this one as the hole information from the previous
+          call extended past what the client was requesting.
         </t>
 
         <t>
-          READ_PLUS(s, 256K, 64K) --> NFS_OK, readplusrestype4 = READ_OK, eof
-          = false, data&lt;&gt;[32K].  Return a short read, as the last half of
-          the request was all zeroes.
+          READ_PLUS(s, 256K, 64K) --> NFS_OK, eof = false, &lt;data[256K, 288K], hole[288K, 354K]&gt;.
+          Returns an array of the 32K data and the hole which extends to 354K.
         </t>
 
         <t>
-          READ_PLUS(s, 288K, 64K) --> NFS_OK, readplusrestype4 = READ_HOLE,
-          nfs_readplusreshole(HOLE_INFO)(288K, 66K).
-        </t>
-
-        <t>
-         READ_PLUS(s, 354K, 64K) --> NFS_OK, readplusrestype4 = READ_OK,
-         eof = true, data&lt;&gt;[64K].
+          READ_PLUS(s, 354K, 64K) --> NFS_OK, eof = true, &lt;data[354K, 418K]&gt;.
+          Returns the final 64K of data and informs the client there is no more data in the file.
         </t>
       </list>
     </t>
