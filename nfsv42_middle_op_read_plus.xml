@@ -26,7 +26,7 @@
 
   <t>
     If the client sends a READ operation, it is explicitly
-    stating that it is neither supporting sparse files or ADBs. So
+    stating that it is neither supporting sparse files nor ADBs. So
     if a READ occurs on a sparse ADB or file, then the server must
     expand such data to be raw bytes. If a READ occurs in
     the middle of a hole or ADB, the server can only send back
@@ -69,9 +69,17 @@
       The READ_PLUS result is comprised of an array of rpr_contents, each of
       which describe a data_content4 type of data. For NFSv4.2, the allowed
       values are data, ADB, and hole. A server is required to support the
-      data type, but not ADB nor hole. Both an ADB and a hole must be
+      data type, but neither ADB nor hole. Both an ADB and a hole must be
       returned in its entirety - clients must be prepared to get more
       information than they requested.
+    </t>
+
+    <t>
+      READ_PLUS has to support all of the errors which are returned by READ
+      plus NFS4ERR_UNION_NOTSUPP. If the client asks for a hole and the server
+      does not support that arm of the discriminated union, but does support
+      one or more additional arms, it can signal to the client that it supports
+      the operation, but not the arm with NFS4ERR_UNION_NOTSUPP.
     </t>
 
     <t>

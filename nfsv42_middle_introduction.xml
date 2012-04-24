@@ -84,7 +84,19 @@
 
   <section title="Differences from NFSv4.1">
     <t>
-      <cref anchor="TBD3" source="TH">This needs fleshing out!</cref>
+      In NFSv4.1, the only way to introduce new variants of an operation was
+      to introduce a new operation. I.e., READ becomes either READ2 or READ_PLUS.
+      With the use of discriminated unions as parameters to such functions in
+      NFSv4.2, it is possible to add a new arm in a subsequent minor version. And
+      it is also possible to move such an operation from OPTIONAL/RECOMMENDED to
+      REQUIRED. Forcing an implementation to adopt each arm of a discriminated
+      union at such a time does not meet the spirit of the minor versioning rules.
+      As such, new arms of a discriminated union MUST follow the same guidelines
+      for minor versioning as operations in NFSv4.1 - i.e., they may not be
+      made REQUIRED. To support this, a new error code, NFS4ERR_UNION_NOTSUPP, is
+      introduced which allows the server to communicate to the client that the
+      operation is supported, but the specific arm of the discriminated union
+      is not.
     </t>
   </section>
 </section>
