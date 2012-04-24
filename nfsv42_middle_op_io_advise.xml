@@ -91,7 +91,7 @@
           write the specified data in the near future.
         </t>
 
-        <t hangText = 'IO_ADVISE4_RECENTLY_USED'>
+        <t hangText = 'IO_ADVISE4_INIT_PROXIMITY'>
           The client has recently accessed the byte range in
           its own cache.  This informs the server that the data in the byte
           range remains important to the client.  When the server reaches
