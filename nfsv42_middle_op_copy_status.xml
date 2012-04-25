@@ -49,20 +49,10 @@
     </t>
 
     <t>
-      <list style="hanging">
-
-        <t hangText="NFS4ERR_NOTSUPP:">
-          The copy status operation is not supported by
-          the NFS server receiving this request.
-        </t>
-
-        <t hangText="NFS4ERR_BAD_STATEID:">
-          The stateid is not valid (see <xref target="copy_stateid" /> below).
-        </t>
-
-        <t hangText="NFS4ERR_EXPIRED:">
-          The stateid has expired (see Copy Offload Stateid section below).
-        </t>
+      <list style="symbols">
+        <t>NFS4ERR_NOTSUPP</t>
+        <t>NFS4ERR_BAD_STATEID</t>
+        <t>NFS4ERR_EXPIRED</t>
       </list>
     </t>
   </section>

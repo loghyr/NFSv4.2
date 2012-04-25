@@ -364,78 +364,20 @@
     </t>
 
     <t>
-      <list style="hanging">
-        <t hangText="NFS4ERR_MOVED:">
-          The file system which contains the
-          source file, or the destination file or directory is not present.
-          The client can determine the correct location and reissue the
-          operation with the correct location.
-        </t>
-
-        <t hangText="NFS4ERR_NOTSUPP:">
-          The copy offload operation is not supported by
-          the NFS server receiving this request.
-        </t>
-
-        <t hangText="NFS4ERR_PARTNER_NOTSUPP:">
-          The remote server does not support the
-          server-to-server copy offload protocol.
-        </t>
-
-        <t hangText="NFS4ERR_OFFLOAD_DENIED:">
-          The copy offload operation is supported by both the source and
-          the destination, but the destination is not allowing it for this
-          file. If the client sees this error, it should fall back to
-          the normal copy semantics.
-        </t>
-
-        <t hangText="NFS4ERR_PARTNER_NO_AUTH:">
-          The remote server does not authorize
-          a server-to-server copy offload operation. This may be due to the
-          client's failure to send the COPY_NOTIFY operation to the remote server,
-          the remote server receiving a server-to-server copy offload request
-          after the copy lease time expired, or for some other permission problem.
-        </t>
-
-        <t hangText="NFS4ERR_FBIG:">
-          The copy operation would have caused the file
-          to grow beyond the server's limit.
-        </t>
-
-        <t hangText="NFS4ERR_NOTDIR:">
-          The CURRENT_FH is a file and ca_destination
-          has non-zero length.
-        </t>
-
-        <t hangText="NFS4ERR_WRONG_TYPE:">
-          The SAVED_FH is not a regular file.
-        </t>
-
-        <t hangText="NFS4ERR_ISDIR:">
-          The CURRENT_FH is a directory and ca_destination
-          has zero length.
-        </t>
-
-        <t hangText="NFS4ERR_INVAL:">
-          The source offset or offset plus count are
-          greater than or equal to the size of the source file.
-        </t>
-
-        <t hangText="NFS4ERR_DELAY:">
-          The server does not have the resources to
-          perform the copy operation at the current time. The client should
-          retry the operation sometime in the future.
-        </t>
-
-        <t hangText="NFS4ERR_METADATA_NOTSUPP:">
-          The destination file cannot
-          support the same metadata as the source file.
-        </t>
-
-        <t hangText="NFS4ERR_WRONGSEC:">
-          The security mechanism being used by the client
-          does not match the server's security policy.
-        </t>
+      <list style="symbols">
+        <t>NFS4ERR_MOVED</t>
+        <t>NFS4ERR_NOTSUPP</t>
+        <t>NFS4ERR_PARTNER_NOTSUPP</t>
+        <t>NFS4ERR_OFFLOAD_DENIED</t>
+        <t>NFS4ERR_PARTNER_NO_AUTH</t>
+        <t>NFS4ERR_FBIG</t>
+        <t>NFS4ERR_NOTDIR</t>
+        <t>NFS4ERR_WRONG_TYPE</t>
+        <t>NFS4ERR_ISDIR</t>
+        <t>NFS4ERR_INVAL</t>
+        <t>NFS4ERR_DELAY</t>
+        <t>NFS4ERR_METADATA_NOTSUPP</t>
+        <t>NFS4ERR_WRONGSEC</t>
       </list>
     </t>
   </section>

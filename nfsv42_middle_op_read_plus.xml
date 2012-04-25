@@ -7,9 +7,8 @@
     allows NFS clients to avoid reading holes in a sparse file and to
     efficiently transfer ADBs.
     READ_PLUS supports all the features of the existing NFSv4.1 READ
-    operation <xref target="ref:RFC5661" /> and adds a simple yet
-    significant extension to the format of its response.  The
-    change allows the client to avoid returning data for portions of
+    operation <xref target="ref:RFC5661" /> but also extends the response
+    to avoid returning data for portions of
     the file which are either initialized and contain no backing store
     or if the result would appear to be so. I.e., if the result was
     a data block composed entirely of zeros, then it is easier to return

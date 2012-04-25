@@ -119,22 +119,10 @@
     </t>
 
     <t>
-      <list style="hanging">
-        <t hangText="NFS4ERR_MOVED:">
-          The file system which contains the source file
-          is not present on the source server. The client can determine the
-          correct location and reissue the operation with the correct location.
-        </t>
-
-        <t hangText="NFS4ERR_NOTSUPP:">
-          The copy offload operation is not supported by
-          the NFS server receiving this request.
-        </t>
-
-        <t hangText="NFS4ERR_WRONGSEC:">
-          The security mechanism being used by the client
-          does not match the server's security policy.
-        </t>
+      <list style="symbols">
+        <t>NFS4ERR_MOVED</t>
+        <t>NFS4ERR_NOTSUPP</t>
+        <t>NFS4ERR_WRONGSEC</t>
       </list>
     </t>
   </section>

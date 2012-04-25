@@ -60,10 +60,12 @@
       </t>
 
       <section title="NFS4ERR_UNION_NOTSUPP (Error Code 10095)" anchor="err_UNION_NOTSUPP">
-        One of the arguments to the operation is a discriminated union and
-        while the server supports the given operation, it does not support
-        the selected arm of the discriminated union. For an example, see
-        READ_PLUS (<xref target="op:read_plus" />).
+        <t>
+          One of the arguments to the operation is a discriminated union and
+          while the server supports the given operation, it does not support
+          the selected arm of the discriminated union. For an example, see
+          READ_PLUS (<xref target="op:read_plus" />).
+        </t>
       </section>
     </section>
 
@@ -73,27 +75,35 @@
       </t>
 
       <section title="NFS4ERR_METADATA_NOTSUPP (Error Code 10090)" anchor="err_METADATA_NOTSUPP">
-        The destination file cannot support the same metadata as the source file.
+        <t>
+          The destination file cannot support the same metadata as the source file.
+        </t>
       </section>
 
       <section title="NFS4ERR_OFFLOAD_DENIED (Error Code 10091)" anchor="err_OFFLOAD_DENIED">
-        The copy offload operation is supported by
-        both the source and the destination, but the destination is not
-        allowing it for this file.  If the client sees this error, it
-        should fall back to the normal copy semantics.
+        <t>
+          The copy offload operation is supported by
+          both the source and the destination, but the destination is not
+          allowing it for this file.  If the client sees this error, it
+          should fall back to the normal copy semantics.
+        </t>
       </section>
 
       <section title="NFS4ERR_PARTNER_NO_AUTH (Error Code 10089)" anchor="err_PARTNER_NO_AUTH">
-        The remote server does not authorize a
-        server-to-server copy offload operation.  This may be due to the
-        client's failure to send the COPY_NOTIFY operation to the remote
-        server, the remote server receiving a server-to-server copy
-        offload request after the copy lease time expired, or for some
-        other permission problem.
+        <t>
+          The remote server does not authorize a
+          server-to-server copy offload operation.  This may be due to the
+          client's failure to send the COPY_NOTIFY operation to the remote
+          server, the remote server receiving a server-to-server copy
+          offload request after the copy lease time expired, or for some
+          other permission problem.
+        </t>
       </section>
 
       <section title="NFS4ERR_PARTNER_NOTSUPP (Error Code 10088)" anchor="err_PARTNER_NOTSUPP">
-        The remote server does not support the server-to-server copy offload protocol.
+        <t>
+          The remote server does not support the server-to-server copy offload protocol.
+        </t>
       </section>
     </section>
 

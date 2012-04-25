@@ -484,7 +484,7 @@
       </t>
     </section>
 
-    <section title="Copy Offload Stateids" anchor="copy_stateid">
+    <section title="Copy Offload Stateids" anchor="ss:copy:stateid">
       <t>
         A server may perform a copy offload operation asynchronously. An
         asynchronous copy is tracked using a copy offload stateid. Copy
@@ -500,7 +500,7 @@
 
       <t>
         A copy offload stateid will be valid until either (A) the client
-        or server restart or (B) the client returns the resource by
+        or server restarts or (B) the client returns the resource by
         issuing a COPY_ABORT operation or the client replies to a
         CB_COPY operation.
       </t>
@@ -1015,7 +1015,7 @@
           authentication of the destination server, and cannot defend against
           man-in-the-middle attacks after authentication or an eavesdropper that
           observes the random number on the wire. Other secure communication
-          techniques (e.g., IPsec) are necessary to block these attacks. 
+          techniques (e.g., IPsec) are necessary to block these attacks.
         </t>
       </section>
 
