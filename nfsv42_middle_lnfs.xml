@@ -1,6 +1,6 @@
 <!-- Copyright (C) The IETF Trust (2011) -->
 <!-- Copyright (C) The Internet Society (2011) -->
-  
+
 <section anchor="sec:lnfs" title="Labeled NFS">
   <section anchor="ss:lnfs:intro" title="Introduction">
     <t>
@@ -18,7 +18,7 @@
       users do not have the ability to override.  In this section, we add
       a MAC model to NFSv4.
     </t>
-  
+
     <t>
       The first change necessary is to devise a method for transporting
       and storing security label data on NFSv4 file objects.  Security
@@ -32,7 +32,7 @@
       enforce additional policy on what subjects may modify security label
       information.
     </t>
-  
+
     <t>
       The second change is to provide a method for the server to
       notify the client that the attribute changed on an open
@@ -43,7 +43,7 @@
       need for the client to provide sufficient access rights to
       the attribute.
     </t>
-  
+
     <t>
       The final change necessary is a modification to the RPC layer used
       in NFSv4 in the form of a new version of the
@@ -58,7 +58,7 @@
       bound to all RPC requests that make use of that context.
     </t>
   </section>
-  
+
   <section anchor='ss:lnfs:defs' title='Definitions'>
     <t>
       <list style='hanging'>
@@ -68,31 +68,31 @@
           of its components.  These specifiers exist in a registry associated
           with documents describing the format and semantics of the label.
         </t>
-  
+
         <t hangText='Label Format Registry:'>
           is the IANA registry containing all registered
           LFS along with references to the documents that
           describe the syntactic format and semantics of the security label.
         </t>
-  
+
         <t hangText='Policy Identifier (PI):'>
           is an optional part of the definition of a Label
           Format Specifier which allows for clients and server to identify
           specific security policies.
         </t>
-  
+
         <t hangText='Object:'>
           is a passive resource within the system that we
           wish to be protected.  Objects can be entities such as files,
           directories, pipes, sockets, and many other system resources relevant
           to the protection of the system state.
         </t>
-  
+
         <t hangText='Subject:'>
           A subject is an active entity usually a process which is
           requesting access to an object.
         </t>
-    
+
         <t hangText='Multi-Level Security (MLS):'>
           is a traditional model where objects are given a sensitivity
           level (Unclassified, Secret, Top Secret,  etc) and a category set
@@ -101,7 +101,7 @@
       </list>
     </t>
   </section>
-  
+
   <section anchor="ss:lnfs:macsec" title="MAC Security Attribute">
     <t>
       MAC models base access decisions on security attributes bound to
@@ -112,30 +112,30 @@
       security attribute remain the same.  The semantics required by the
       security attributes are listed below:
     </t>
-  
+
     <t>
       <list style='symbols'>
         <t>
           Must provide flexibility with respect to MAC model.
         </t>
-  
+
         <t>
           Must provide the ability to atomically set security information
-          upon object creation
+          upon object creation.
         </t>
-  
+
         <t>
           Must provide the ability to enforce access control decisions both
-          on the client and the server
+          on the client and the server.
         </t>
-  
+
         <t>
           Must not expose an object to either the client or server name
           space before its security information has been bound to it.
         </t>
       </list>
     </t>
-  
+
     <t>
       NFSv4 implements the security attribute as a
       recommended attribute.  These attributes have a fixed format
@@ -156,23 +156,23 @@
       requirements.  The recommended attribute FATTR4_SEC_LABEL will
       be used to satisfy this requirement.
     </t>
-  
+
     <section anchor='ss:macss:lnfs:interpret' title='Interpreting FATTR4_SEC_LABEL'>
       <t>
         The XDR <xref target='ref:RFC4506' /> necessary to implement Labeled
         NFSv4 is presented below:
       </t>
-  
+
       <figure anchor='fig:xdr'>
         <artwork>
 const FATTR4_SEC_LABEL   = 81;
-  
+
 typedef uint32_t  policy4;
         </artwork>
       </figure>
 
       <?rfc include='autogen/type_label_format.xml'?>
-  
+
       <t>
         The FATTR4_SEC_LABEL contains an array of two components with the first
         component being an LFS.  It serves to provide the receiving end
@@ -197,7 +197,7 @@ typedef uint32_t  policy4;
         of a specific MAC model, the client will be aware of the size.
       </t>
     </section>
-  
+
     <section anchor='ss:macss:lnfs:delegs' title='Delegations'>
       <t>
         In the event that a security attribute is changed on the server while
@@ -206,7 +206,7 @@ typedef uint32_t  policy4;
         all changes back to the server and relinquish the delegation.
       </t>
     </section>
-  
+
     <section anchor='ss:macss:lnfs:perms' title='Permission Checking'>
       <t>
         It is not feasible to enumerate all possible MAC models and even
@@ -221,7 +221,7 @@ typedef uint32_t  policy4;
         particular MAC model.
       </t>
     </section>
-  
+
     <section anchor='ss:macss:lnfs:objects' title='Object Creation'>
       <t>
         When creating files in NFSv4 the OPEN and CREATE operations are used.
@@ -236,7 +236,7 @@ typedef uint32_t  policy4;
         <xref target='ss:lnfs:modes' />.
       </t>
     </section>
-  
+
     <section anchor='ss:macss:lnfs:existing' title='Existing Objects'>
       <t>
         Note that under the MAC model, all objects must have labels.
@@ -248,7 +248,7 @@ typedef uint32_t  policy4;
         return labels which are set to an empty value.
       </t>
     </section>
-  
+
     <section anchor='ss:macss:lnfs:changes' title='Label Changes'>
       <t>
         As per the requirements, when a file's security label is
@@ -261,14 +261,14 @@ typedef uint32_t  policy4;
         the request in whole or return NFS4ERR_DELAY to the
         SETATTR operation.
       </t>
-  
+
       <t>
         If there are open delegations on the file
         belonging to client other than the one making the label
         change, then the process described in
         <xref target='ss:macss:lnfs:delegs' /> must be followed.
       </t>
-  
+
       <t>
         As the server is always presented with the subject
         label from the client, it does not necessarily need to
@@ -282,15 +282,15 @@ typedef uint32_t  policy4;
         very useful. It allows the server to inform the clients
         that the cached security attribute is now stale.
       </t>
-  
+
       <t>
         Consider a system in which the clients enforce MAC checks and
         and the server has a very simple security
         system which just stores the labels. In this system, the
         MAC label check always allows access, regardless of the
-        subject label. 
+        subject label.
       </t>
-  
+
       <t>
         The way in which MAC labels are enforced is by the
         client. So if client A changes a security label on a file,
@@ -301,13 +301,13 @@ typedef uint32_t  policy4;
       </t>
     </section>
   </section>
-  
+
   <section anchor='ss:lnfs:pnfs' title='pNFS Considerations'>
     <t>
       This section examines the issues in deploying LNFS in
       a pNFS community of servers.
     </t>
-  
+
     <section toc='exclude' anchor="ss:pnfs:checks" title="MAC Label Checks">
       <t>
         The new FATTR4_SEC_LABEL attribute is metadata information
@@ -318,15 +318,15 @@ typedef uint32_t  policy4;
         the subject label presented by the client, it SHOULD
         utilize this mechanism.
       </t>
-  
+
       <t>
         If a file's FATTR4_SEC_LABEL is changed, then the MDS
         should utilize CB_ATTR_CHANGED to inform the client
-        of that fact. If the MDS is maintaining 
+        of that fact. If the MDS is maintaining
       </t>
-    </section> 
+    </section>
   </section>
-  
+
   <section anchor='ss:lnfs:discovery' title='Discovery of Server LNFS Support'>
     <t>
       The server can easily determine that a client supports LNFS
@@ -335,20 +335,20 @@ typedef uint32_t  policy4;
       indicates LNFS support. The client might need to discover
       which LFS the server supports.
     </t>
-  
+
     <t>
       A server which supports LNFS MUST allow a client with any subject
       label to retrieve the FATTR4_SEC_LABEL attribute for the root
       filehandle, ROOTFH. The following compound must always succeed
       as far as a MAC label check is concerned:
     </t>
-  
+
     <figure>
       <artwork>
      PUTROOTFH, GETATTR {FATTR4_SEC_LABEL}
       </artwork>
     </figure>
-  
+
     <t>
       Note that the server might have imposed a security flavor on
       the root that precludes such access. I.e., if the server
@@ -359,7 +359,7 @@ typedef uint32_t  policy4;
       with the supported LFS filled in.
     </t>
   </section>
-  
+
   <section anchor='ss:lnfs:modes' title='MAC Security NFS Modes of Operation'>
     <t>
       A system using Labeled NFS may operate in two modes.  The first
@@ -369,7 +369,7 @@ typedef uint32_t  policy4;
       the "guest mode" and in this mode one end of the connection is not
       implementing a MAC model and thus offers less protection than full mode.
     </t>
-  
+
     <section anchor='ss:modes:full' title='Full Mode'>
       <t>
         Full mode environments consist of MAC aware NFSv4 servers and clients
@@ -382,7 +382,7 @@ typedef uint32_t  policy4;
         at the RPC layer using the mechanism described in RPCSECGSSv3
         <xref target='ref:rpcsecgssv3' />.
       </t>
-  
+
       <section anchor='ss:modes:fm_ilt' title='Initial Labeling and Translation'>
         <t>
           The ability to create a file is an action that a MAC model may wish
@@ -393,7 +393,7 @@ typedef uint32_t  policy4;
           the server receives the creation request from the client it may
           choose to evaluate if the security attribute is acceptable.
         </t>
-  
+
         <t>
           Security attributes on the client and server may vary based on MAC
           model and policy.  To handle this the security attribute field has an
@@ -409,7 +409,7 @@ typedef uint32_t  policy4;
           mapping for unknown security attributes.
         </t>
       </section>
-  
+
       <section anchor='ss:modes:fm_pe' title='Policy Enforcement'>
         <t>
           In full mode access control decisions are made by both the clients
@@ -420,7 +420,7 @@ typedef uint32_t  policy4;
           RPC call to the server is never made.  If however the access is
           allowed the client will make a call to the NFS server.
         </t>
-  
+
         <t>
           When the server receives the request from the client it extracts the
           security attribute conveyed in the RPC request.  The server then uses
@@ -429,7 +429,7 @@ typedef uint32_t  policy4;
           policy allows this access it will fulfill the client's request,
           otherwise it will return NFS4ERR_ACCESS.
         </t>
-  
+
         <t>
           Implementations MAY validate security attributes supplied over the
           network to ensure that they are within a set of attributes permitted
@@ -438,7 +438,7 @@ typedef uint32_t  policy4;
           peer.
         </t>
       </section>
-  
+
       <section anchor='ss:modes:lfs0' title='Label Aware Only Server'>
         <t>
           If the LFS is 0, then it indicates a server which is label aware,
@@ -450,7 +450,7 @@ typedef uint32_t  policy4;
         </t>
       </section>
     </section>
-  
+
     <section anchor='ss:modes:guest' title='Guest Mode'>
       <t>
         Guest mode implies that either the client or the server does not
@@ -468,17 +468,17 @@ typedef uint32_t  policy4;
       </t>
     </section>
   </section>
-  
+
   <section anchor="ss:lnfs:security" title="Security Considerations">
     <t>
       This entire document deals with security issues.
     </t>
-  
+
     <t>
       Depending on the level of protection the MAC system offers there may
       be a requirement to tightly bind the security attribute to the data.
     </t>
-  
+
     <t>
       When only one of the client or server enforces labels,
       it is important to realize that the other side is
@@ -487,7 +487,7 @@ typedef uint32_t  policy4;
       and care should be taken to identify and mitigate threats from
       possible tampering outside of these methods.
     </t>
-  
+
     <t>
       An example of this is that a server that modifies READDIR
       or LOOKUP results based on the client's subject label might want
