@@ -71,7 +71,6 @@
       <c>NFS4ERR_LOCKS_HELD                </c> <c> 10037  </c> <c> <xref target="ss:error_values:NC142" /> </c>
       <c>NFS4ERR_LOCK_NOTSUPP              </c> <c> 10043  </c> <c> <xref target="ss:error_values:NC143" /> </c>
       <c>NFS4ERR_LOCK_RANGE                </c> <c> 10028  </c> <c> <xref target="ss:error_values:NC144" /> </c>
-      <c>NFS4ERR_MAC_ACCESS                </c> <c> 10094  </c> <c> <xref target="ss:error_values:NC189" /> </c>
       <c>NFS4ERR_METADATA_NOTSUPP          </c> <c> 10090  </c> <c> <xref target="ss:error_values:NC190" /> </c>
       <c>NFS4ERR_MINOR_VERS_MISMATCH       </c> <c> 10021  </c> <c> <xref target="ss:error_values:Nc1" /> </c>
       <c>NFS4ERR_MLINK                     </c> <c> 31     </c> <c> <xref target="ss:error_values:NC3" /> </c>
@@ -121,7 +120,7 @@
       <c>NFS4ERR_SYMLINK                   </c> <c> 10029  </c> <c> <xref target="ss:error_values:NC110" /> </c>
       <c>NFS4ERR_TOOSMALL                  </c> <c> 10005  </c> <c> <xref target="ss:error_values:NC15" /> </c>
       <c>NFS4ERR_TOO_MANY_OPS              </c> <c> 10070  </c> <c> <xref target="ss:error_values:NC120" /></c>
-      <c>NFS4ERR_UNION_NOTSUPP             </c> <c> 10095  </c> <c> <xref target="ss:error_values:NC194" /></c>
+      <c>NFS4ERR_UNION_NOTSUPP             </c> <c> 10094  </c> <c> <xref target="ss:error_values:NC194" /></c>
       <c>NFS4ERR_UNKNOWN_LAYOUTTYPE        </c> <c> 10062  </c> <c> <xref target="ss:error_values:NC160" /></c>
       <c>NFS4ERR_UNSAFE_COMPOUND           </c> <c> 10069  </c> <c> <xref target="ss:error_values:NC121" /></c>
       <c>NFS4ERR_WRONG_LFS                 </c> <c> 10092  </c> <c> <xref target="ss:error_values:NC195" /></c>
@@ -239,7 +238,7 @@
         </t>
       </section>
 
-      <section title="NFS4ERR_UNION_NOTSUPP (Error Code 10095)" anchor="err_UNION_NOTSUPP">
+      <section title="NFS4ERR_UNION_NOTSUPP (Error Code 10094)" anchor="err_UNION_NOTSUPP">
         <t>
           One of the arguments to the operation is a discriminated union and
           while the server supports the given operation, it does not support
@@ -1207,9 +1206,6 @@
       </t>
 
       <section title="NFS4ERR_BADLABEL (Error Code 10093)" anchor="err_BADLABEL">
-      </section>
-
-      <section title="NFS4ERR_MAC_ACCESS (Error Code 10094)" anchor="err_MAC_ACCESS">
       </section>
 
       <section title="NFS4ERR_WRONG_LFS (Error Code 10092)" anchor="err_WRONG_LFS">

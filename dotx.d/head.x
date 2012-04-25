@@ -180,8 +180,7 @@ enum nfsstat4 {
  NFS4ERR_OFFLOAD_DENIED = 10091,/* dest not allowing copy  */
  NFS4ERR_WRONG_LFS      = 10092,/* LFS not supported       */
  NFS4ERR_BADLABEL       = 10093,/* incorrect label         */
- NFS4ERR_MAC_ACCESS     = 10094,/* No MAC access allowed   */
- NFS4ERR_UNION_NOTSUPP  = 10095 /* Arm of union not supp   */
+ NFS4ERR_UNION_NOTSUPP  = 10094 /* Arm of union not supp   */
 };
 
 /*
