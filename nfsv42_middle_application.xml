@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='sec:adb' title='Application Data Block Support'>
   <t>
@@ -92,7 +92,7 @@
       The guard pattern can be used to represent the state of
       the block, to protect against corruption, or both. Again,
       it needs to be able to be placed anywhere within the
-      ADB. 
+      ADB.
     </t>
 
     <t>
@@ -163,12 +163,12 @@
 
       <cref anchor='AI4' source='TH'>
         Need to discuss what happens if after the file is
-        being written to and an INITIALIZE occurs? 
+        being written to and an INITIALIZE occurs?
       </cref>
 
       Perhaps instead of the DS pulling from the MDS, the MDS
       pushes to the DS? Thus an INITIALIZE causes a new push?
-  
+
       <cref anchor='AI5' source='TH'>
         Still need to consider race cases of the DS getting
         a WRITE and the MDS getting an INITIALIZE.

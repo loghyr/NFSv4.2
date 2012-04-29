@@ -223,7 +223,7 @@
         If communication with the metadata server is required, then every
         attempt should be taken to minimize the number of requests.
       </t>
-        
+
       <t>
         If mandatory locking is enforced, then the data server must also
         ensure that to return only information for a Hole that is within

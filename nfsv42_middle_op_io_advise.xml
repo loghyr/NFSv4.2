@@ -2,7 +2,6 @@
 <!-- Copyright (C) The Internet Society (2011) -->
 
 <section anchor='sec:io_advise' title='Operation 67: IO_ADVISE - Application I/O access pattern hints'>
-
   <t>
     This section introduces a new operation, named IO_ADVISE, which allows
     NFS clients to communicate application I/O access pattern hints to
@@ -186,7 +185,7 @@
 
     <t>
       So for the file's layout type, it is proposed that NFSv4.2 include an
-      additional hint NFL42_CARE_IO_ADVISE_THRU_MDS which 
+      additional hint NFL42_CARE_IO_ADVISE_THRU_MDS which
       is valid only on NFSv4.2 or higher. Any file's layout
       obtained with NFSv4.1 MUST NOT have NFL42_UFLG_IO_ADVISE_THRU_MDS
       set. Any file's layout obtained with NFSv4.2 MAY have
@@ -223,19 +222,19 @@
         The IO_ADVISE operation MUST use the iar_offset and byte range as
         dictated by the presence or absence of NFL4_UFLG_DENSE.
       </t>
-     
+
       <t>
         E.g., if NFL4_UFLG_DENSE is present, and a READ or WRITE to the DS
         for iar_offset 0 really means iar_offset 10000 in the logical file, then
         an IO_ADVISE for iar_offset 0 means iar_offset 10000.
       </t>
-     
+
       <t>
         E.g., if NFL4_UFLG_DENSE is absent, then a READ or WRITE to the DS
         for iar_offset 0 really means iar_offset 0 in the logical file, then an
         IO_ADVISE for iar_offset 0 means iar_offset 0 in the logical file.
       </t>
-     
+
       <t>
         E.g., if NFL4_UFLG_DENSE is present, the stripe unit is 1000 bytes and
         the stripe count is 10, and the dense DS file is serving iar_offset 0.
@@ -245,7 +244,7 @@
         same DS with an iar_offset of 500, and a iar_count of 3000 means that the
         IO_ADVISE applies to these byte ranges of the dense DS file:
       </t>
-     
+
       <figure>
         <artwork>
   - 500 to 999
@@ -254,15 +253,15 @@
   - 3000 to 3499
         </artwork>
       </figure>
-     
+
       <t>
         I.e., the contiguous range 500 to 3499 as specified in IO_ADVISE.
       </t>
-     
+
       <t>
         It also applies to these byte ranges of the logical file:
       </t>
-     
+
       <figure>
         <artwork>
   - 10500 to 10999 (500 bytes)
@@ -272,7 +271,7 @@
   (total            3000 bytes)
         </artwork>
       </figure>
-     
+
       <t>
         E.g., if NFL4_UFLG_DENSE is absent, the stripe unit is 250 bytes, the
         stripe count is 4, and the sparse DS file is serving iar_offset 0.
@@ -284,7 +283,7 @@
         of 3000 means that the IO_ADVISE applies to these byte ranges of the
         logical file and the sparse DS file:
       </t>
-     
+
       <figure>
         <artwork>
   - 500 to 999 (500 bytes)   - no effect
@@ -299,7 +298,7 @@
   (grand total   3000 bytes) - no effect + effective
         </artwork>
       </figure>
-     
+
       <t>
         If neither of the flags NFL42_UFLG_IO_ADVISE_THRU_MDS and
         NFL4_UFLG_DENSE are set in the layout, then any IO_ADVISE request

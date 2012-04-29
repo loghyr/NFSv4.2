@@ -38,8 +38,8 @@
   </t>
   <t>
     For Labeled NFS, the original draft was by David Quigley, James Morris,
-    Jarret Lu, and Tom Haynes. Peter Staubach, Trond Myklebust, Sorrin
-    Faibish, Nico Williams, and David Black also contributed in the
+    Jarret Lu, and Tom Haynes. Peter Staubach, Trond Myklebust, Stephen Smalley,
+    Sorrin Faibish, Nico Williams, and David Black also contributed in the
     final push to get this accepted.
   </t>
 </section>

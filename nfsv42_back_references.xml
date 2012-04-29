@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
   <references title="Normative References">
 
@@ -18,7 +18,7 @@
 	<date year="2010" month="January"/>
       </front>
       <seriesInfo name="RFC" value="5661"/>
-      <format type="TXT" octets="600988" 
+      <format type="TXT" octets="600988"
 	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
@@ -70,7 +70,7 @@
     </reference>
 
     <reference anchor='ref:RFC2203'>
-    
+
       <front>
       <title>RPCSEC_GSS Protocol Specification</title>
 
@@ -84,7 +84,7 @@
         <street>CA 94043</street></postal>
         <phone>+1 (719) 599-9026</phone>
         <email>mre@eng.sun.com</email></address></author>
-  
+
         <author initials='A.' surname='Chiu' fullname='Alex Chiu'>
         <organization>Sun Microsystems, Inc.</organization>
         <address>
@@ -95,7 +95,7 @@
         <street>CA 94043</street></postal>
         <phone>+1 (415) 786-6465</phone>
         <email>hacker@eng.sun.com</email></address></author>
-  
+
         <author initials='L.' surname='Ling' fullname='Lin Ling'>
         <organization>Sun Microsystems, Inc.</organization>
         <address>
@@ -118,7 +118,7 @@
          protocols to access the Generic Security Services Application
          Programming Interface (referred to henceforth as GSS-API).
       </t></abstract></front>
-      
+
       <seriesInfo name='RFC' value='2203' />
       <format type='TXT' octets='50937' target='ftp://ftp.isi.edu/in-notes/rfc2203.txt' />
       <format type='HTML' octets='64234' target='http://xml.resource.org/public/rfc/html/rfc2203.html' />

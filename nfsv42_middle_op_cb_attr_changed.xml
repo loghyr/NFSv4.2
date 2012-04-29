@@ -1,6 +1,6 @@
 <!-- Copyright (C) The IETF Trust (2011) -->
 <!-- Copyright (C) The Internet Society (2011) -->
-  
+
 <section anchor='ss:cb:lc' title="Procedure 16: CB_ATTR_CHANGED - Notify Client that the File's Attributes Changed">
   <section toc='exclude' anchor="ss:cbac:args" title="ARGUMENTS">
     <?rfc include='autogen/cb_attr_changed_args.xml'?>

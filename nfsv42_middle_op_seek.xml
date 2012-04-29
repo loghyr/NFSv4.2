@@ -1,10 +1,12 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='ss:ops:seek' title='Operation 66: SEEK'>
   <t>
     SEEK is an operation that allows a client to determine the location of
-    the next data_content4 in a file.
+    the next data_content4 in a file. It allows an implementation of the
+    emerging extension to lseek(2) to allow clients to determine SEEK_HOLE and
+    SEEK_DATA.
   </t>
 
   <section toc='exclude' title="ARGUMENT">

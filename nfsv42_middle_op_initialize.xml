@@ -104,7 +104,7 @@
         utilizes the file, the application will want to initialize
         a range of ADBs using INITIALIZE.
       </t>
-        
+
       <t>
         For ADBs, when the client invokes the INITIALIZE operation, it has
         two desired results:

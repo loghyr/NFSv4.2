@@ -7,8 +7,8 @@
 
 <!-- XML source for the NFSv4 internet draft document -->
 
-<!-- To generate text with the xml2rfc tool tclsh8.3 xml2rfc.tcl 
-     xml2rfc this_file.xml that_file.txt which puts the formatted 
+<!-- To generate text with the xml2rfc tool tclsh8.3 xml2rfc.tcl
+     xml2rfc this_file.xml that_file.txt which puts the formatted
      text into that_file.txt -->
 
 <!-- processing instructions (for a complete list and description,
@@ -25,9 +25,9 @@
                                 otherwise, put inline -->
 <?rfc editing="no" ?>   <!-- when yes, insert editing marks -->
 
-<!-- create table of contents (set it options).  
+<!-- create table of contents (set it options).
      Note the table of contents may be omitted
-     for very short documents --> 
+     for very short documents -->
 
 <?rfc toc="yes"?>
 <?rfc tocompact="yes"?>
@@ -35,7 +35,7 @@
 
 <!-- choose the options for the references. Some like
      symbolic tags in the references (and citations)
-     and others prefer numbers. --> 
+     and others prefer numbers. -->
 
 <?rfc symrefs="no"?>
 <?rfc sortrefs="yes" ?>

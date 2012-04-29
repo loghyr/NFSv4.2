@@ -89,9 +89,16 @@
       </t>
 
       <section title="NFS4ERR_BADLABEL (Error Code 10093)" anchor="err_BADLABEL">
+        <t>
+          The label specified is invalid in some manner.
+        </t>
       </section>
 
       <section title="NFS4ERR_WRONG_LFS (Error Code 10092)" anchor="err_WRONG_LFS">
+        <t>
+          The LFS specified in the subject label is not compatible with the LFS in
+          object label.
+        </t>
       </section>
     </section>
   </section>
