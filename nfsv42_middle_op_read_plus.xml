@@ -115,7 +115,7 @@
       If the client specifies an rpa_offset and rpa_count value that
       begins in a non-hole of the file but extends into hole the server
       should return an array comprised of both data and a hole. The
-      client MUST be prepared for the server to reurn a short read
+      client MUST be prepared for the server to return a short read
       describing just the data.  The client will
       then issue another READ_PLUS for the remaining bytes, which the server
       will respond with information about the hole in the file.
@@ -162,41 +162,10 @@
 
   <section toc='exclude' title="IMPLEMENTATION">
     <t>
-      If the server returns a short read, then the client should send
-      another READ_PLUS to
-      get the remaining data.  A server may return less data than requested
-      under several circumstances.  The file may have been truncated by
-      another client or perhaps on the server itself, changing the file
-      size from what the requesting client believes to be the case.  This
-      would reduce the actual amount of data available to the client.  It
-      is possible that the server reduced the transfer size and so return a
-      short read result.  Server resource exhaustion may also occur in a
-      short read.
-    </t>
-
-    <t>
-      If mandatory byte-range locking is in effect for the file, and if the
-      byte-range corresponding to the data to be read from the file is
-      WRITE_LT locked by an owner not associated with the stateid, the
-      server will return the NFS4ERR_LOCKED error.  The client should try
-      to get the appropriate READ_LT via the LOCK operation before
-      re-attempting the READ_PLUS.  When the READ_PLUS completes, the client
-      should release the byte-range lock via LOCKU. In addition, the
-      server MUST return an array of rpr_contents with values of
-      that are within the owner’s locked byte range.
-    </t>
-
-    <t>
-      If another client has an OPEN_DELEGATE_WRITE delegation for the file
-      being read, the delegation must be recalled, and the operation cannot
-      proceed until that delegation is returned or revoked.  Except where
-      this happens very quickly, one or more NFS4ERR_DELAY errors will be
-      returned to requests made while the delegation remains outstanding.
-      Normally, delegations will not be recalled as a result of a READ_PLUS
-      operation since the recall will occur as a result of an earlier OPEN.
-      However, since it is possible for a READ_PLUS to be done with a
-      special stateid, the server needs to check for this case even though
-      the client should have done an OPEN previously.
+      In general, the IMPLEMENTATION notes for READ in Section 18.22.4 of
+      <xref target="ref:RFC5661" /> also apply to READ_PLUS. One delta is
+      that when the owner has a locked byte range, the server
+      MUST return an array of rpr_contents with values inside that range.
     </t>
 
     <section toc='exclude' title="Additional pNFS Implementation Information">

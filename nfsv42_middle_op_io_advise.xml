@@ -157,7 +157,7 @@
     </t>
 
     <t>
-      The most obvious is in direct response to an applications execution
+      The most obvious is in direct response to an application's execution
       of posix_fadvise.  In this case, IO_ADVISE4_WRITE and IO_ADVISE4_READ
       may be set based upon the type of file access specified when the file
       was opened.

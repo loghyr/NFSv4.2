@@ -647,7 +647,7 @@
               <?rfc include='autogen/copy_from_auth.xml'?>
               <vspace blankLines="1" />
 
-              cap_shared_secret is a secret value the user
+              cfp_shared_secret is a secret value the user
               principal generates.
             </t>
 
