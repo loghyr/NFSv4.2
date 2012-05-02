@@ -26,6 +26,8 @@ Even though these files are in essence pulled into other .xml files, do not worr
 
 5) git, a very short primer
 
+A popular resource seems to be: http://schacon.github.com/git/user-manual.html
+
 a) Get a copy of the source
 
 $ git clone git@github.com:loghyr/NFSv4.2.git
@@ -35,6 +37,8 @@ remote: Compressing objects: 100% (899/899), done.
 remote: Total 1215 (delta 791), reused 622 (delta 299)
 Receiving objects: 100% (1215/1215), 2.50 MiB | 198 KiB/s, done.
 Resolving deltas: 100% (791/791), done.
+
+http://schacon.github.com/git/user-manual.html#telling-git-your-name
 
 $ vi ~/.gitconfig
 [user]
@@ -49,4 +53,10 @@ Confirm your changes do not break anything:
 
 $ make
 
-$ git commit -am "Fixed a minor spelling error"
+$ git add review.txt editing.txt 
+$ git diff
+$ git commit -am "Added the review list and editing guidelines"
+[master 521bc97] Added the review list and editing guidelines
+ 1 files changed, 52 insertions(+), 0 deletions(-)
+ create mode 100644 editing.txt
+
