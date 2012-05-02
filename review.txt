@@ -4,18 +4,18 @@ Section 13.6: EXCHANGE_ID
 Chapter 7: Labeled NFS
 Section 10.1.3: Labeled NFS Errors
 Section 14.1: CB_ATTR_CHANGED
-Chapter 2: NFS Server-side Copy
+Chapter 2: Server-side Copy
 Section 13.1: COPY
 Section 13.2: COPY_ABORT
 Section 13.3: COPY_NOTIFY
 Section 13.4: COPY_REVOKE
 Section 13.5: COPY_STATUS
 Section 14.2: CB_COPY
-Section 10.1.2: Server to Server Copy Errors
-Chapter 5: Support for Application IO Hints
+Section 10.1.2: Server-side Copy Errors
+Chapter 3: Support for Application IO Hints
 Section 13.8: IO_ADVISE
-Chapter 3: Sparse Files
-Chapter 4: Space Reservation
+Chapter 4: Sparse Files
+Chapter 5: Space Reservation
 Chapter 6: Application Data Block Support
 Section 13.7: INITIALIZE
 Section 13.10: READ_PLUS
