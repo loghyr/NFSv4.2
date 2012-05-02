@@ -1,0 +1,52 @@
+1) Any change to the contents of the dotx.d directory require the following targets to be executed:
+
+$ make clean clobber
+$ make testx
+
+If it does not pass testx, the changes will not be accepted.
+
+2) Indentation
+a) Do not use tabs in any of the .x or .xml files.
+b) Do use 2 spaces per level. I.e.,
+
+<section anchor="sec:copy" title="NFS Server-side Copy">
+  <section title="Introduction">
+    <t>
+      This section describes a server-side copy feature for
+      the NFS protocol.
+    </t>
+  </section>
+<section>
+
+Even though these files are in essence pulled into other .xml files, do not worry about their indentation in those files.
+
+3) Do not add spaces or tabs at the end of lines.
+
+4) ispell, aspell, spell, whatever, run it on your changes.
+
+5) git, a very short primer
+
+a) Get a copy of the source
+
+$ git clone git@github.com:loghyr/NFSv4.2.git
+Cloning into NFSv4.2...
+remote: Counting objects: 1215, done.
+remote: Compressing objects: 100% (899/899), done.
+remote: Total 1215 (delta 791), reused 622 (delta 299)
+Receiving objects: 100% (1215/1215), 2.50 MiB | 198 KiB/s, done.
+Resolving deltas: 100% (791/791), done.
+
+$ vi ~/.gitconfig
+[user]
+        name = Tom Haynes
+        email = mr.x@netapp.com
+
+$ cd NFSv4.2
+
+Make your changes.
+
+Confirm your changes do not break anything:
+
+$ make
+
+$ git commit -am "Fixed a minor spelling error"
