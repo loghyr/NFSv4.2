@@ -38,7 +38,7 @@ remote: Total 1215 (delta 791), reused 622 (delta 299)
 Receiving objects: 100% (1215/1215), 2.50 MiB | 198 KiB/s, done.
 Resolving deltas: 100% (791/791), done.
 
-http://schacon.github.com/git/user-manual.html#telling-git-your-name
+b) http://schacon.github.com/git/user-manual.html#telling-git-your-name
 
 $ vi ~/.gitconfig
 [user]
@@ -47,11 +47,7 @@ $ vi ~/.gitconfig
 
 $ cd NFSv4.2
 
-Make your changes.
-
-Confirm your changes do not break anything:
-
-$ make
+c) Make your changes.
 
 $ git add review.txt editing.txt 
 $ git diff
@@ -60,3 +56,42 @@ $ git commit -am "Added the review list and editing guidelines"
  1 files changed, 52 insertions(+), 0 deletions(-)
  create mode 100644 editing.txt
 
+d) Confirm your changes do not break anything:
+
+$ make
+
+
+e) Make a patch set:
+
+$ git format-patch origin
+
+This spits out a bunch of files like
+
+	0001-first-patch-description
+	0002-second-patch-description
+	...
+
+f) Mail them by running:
+
+$ git send-email --to "Tom Haynes <Tom.Haynes@netapp.com>" --cc "nfsv4@ietf.org" 00*
+
+That will send the patches, one to an email.  If you have a bunch of
+logically related patches and would like to preface them by an
+introductory email, add "--compose" to the send-email command line.
+
+g) Once I accept them, I will post it on the mailing list, you can then pull down the changes made by others via:
+
+$ git pull
+remote: Counting objects: 10, done.
+remote: Compressing objects: 100% (5/5), done.
+remote: Total 9 (delta 4), reused 9 (delta 4)
+Unpacking objects: 100% (9/9), done.
+From github.com:loghyr/NFSv4.2
+   ce8ebac..2aee60a  master     -> origin/master
+Updating ce8ebac..2aee60a
+Fast-forward
+ editing.txt |   62 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ review.txt  |   28 ++++++++++++++++++++++++++
+ 2 files changed, 90 insertions(+), 0 deletions(-)
+ create mode 100644 editing.txt
+ create mode 100644 review.txt
