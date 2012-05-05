@@ -418,9 +418,9 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_start.xml \
 	nfsv42_middle_introduction.xml \
 	nfsv42_middle_copy.xml \
+	nfsv42_middle_advise.xml \
 	nfsv42_middle_sparse.xml \
 	nfsv42_middle_space.xml \
-	nfsv42_middle_advise.xml \
 	nfsv42_middle_application.xml \
 	nfsv42_middle_lnfs.xml \
 	nfsv42_middle_chattr.xml \

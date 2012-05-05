@@ -58,7 +58,7 @@
         <t>
           When DESTROY_CLIENTID is invoked, if there are sessions (both idle
           and non-idle), opens, locks, delegations, layouts, and/or wants
-          (Section 18.49) associated with the client ID are removed.
+          (Section 18.49 of  <xref target="ref:RFC5661" />) associated with the client ID are removed.
           Pending operations will be completed or aborted before the
           sessions, opens, locks, delegations, layouts, and/or wants are
           deleted.

@@ -23,7 +23,7 @@
       been issued in parallel, how does the client determine
       which of the two change attribute values
       returned in the replies to the GETATTR requests
-      corresponds to the most recent state of the file? In
+      correspond to the most recent state of the file? In
       some cases, the only recourse may be to send another
       COMPOUND containing a third GETATTR that is fully
       serialised with the first two.
