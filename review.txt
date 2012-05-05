@@ -21,8 +21,8 @@ Section 13.7: INITIALIZE
 Section 13.10: READ_PLUS
 Section 13.11: SEEK
 Chapter 11: File Attributes
-Chpater 12: Operations
+Chapter 12: Operations
 Chapter 9: Security Considerations
-Chpater 15: IANA Considerations
+Chapter 15: IANA Considerations
 Chapter 16: References
 Chapter 1: Introduction
