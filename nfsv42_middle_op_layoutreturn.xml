@@ -1,11 +1,11 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor="sec:pLeh:LAYOUTRETURN" title="Changes to Operation 51: LAYOUTRETURN">
   <section anchor="sec:pLeh:intro" toc='exclude' title="Introduction">
     <t>
       In the pNFS description provided in <xref target="ref:RFC5661" />,
-      the client is not enabled to relay an error code from the
+      the client is not capable to relay an error code from the
       DS to the MDS. In the specification of the Objects-Based
       Layout protocol <xref target='ref:RFC5664' />, use is made of the
       opaque lrf_body field of the LAYOUTRETURN argument to
@@ -22,14 +22,35 @@
       report persistent errors. It MUST be able to deal with transient
       issues by itself. Also, while the client might consider an issue
       to be persistent, it MUST be prepared for the MDS to consider
-      such issues to be persistent. A prime example of this is if
+      such issues to be transient. A prime example of this is if
       the MDS fences off a client from either a stateid or a filehandle.
       The client will get an error from the DS and might relay either
-      NFS4ERR_ACCESS or NFS4ERR_STALE_STATEID back to the MDS, with the
-      belief that this is a hard error. The MDS on the other hand, is
-      waiting for the client to report such an error. For it, the mission
-      is accomplished in that the client has returned a layout that
-      the MDS had most likley recalled.
+      NFS4ERR_ACCESS or NFS4ERR_BAD_STATEID back to the MDS, with the
+      belief that this is a hard error. If the MDS is informed by
+      the client that there is an error, it can safely ignore that.
+      For it, the mission is accomplished in that the client has
+      returned a layout that the MDS had most likley recalled.
+    </t>
+
+    <t>
+      The client might also need to inform the MDS that it cannot
+      reach one or more of the DSes. While the MDS can detect the
+      connectivity of both of these paths:
+
+      <list style='symbols'>
+        <t>
+          MDS to DS
+        </t>
+
+        <t>
+          MDS to client
+        </t>
+      </list>
+
+      it cannot determine if the client and DS path is working. As with
+      the case of the DS passing errors to the client, it must be
+      prepared for the MDS to consider such outages as being
+      transistory.
     </t>
 
     <t>
@@ -65,13 +86,13 @@
     </t>
 
     <t>
-      When a client used LAYOUTRETURN with a type of LAYOUTRETURN4_FILE,
+      When a client uses LAYOUTRETURN with a type of LAYOUTRETURN4_FILE,
       then if the lrf_body field is NULL, it indicates to the MDS
       that the client experienced no errors. If lrf_body is non-NULL,
       then the field references error information which is layout type
       specific. I.e., the Objects-Based Layout protocol
       can continue to utilize lrf_body as specified in <xref target='ref:RFC5664' />.
-      For both Files-Based Layouts, the field references a
+      For both Files-Based and Block-Based Layouts, the field references a
       layoutreturn_device_error4, which contains an array of layoutreturn_device_error4.
     </t>
 
@@ -86,10 +107,6 @@
 
     <t>
       <list style='hanging'>
-        <t hangText='NFS4_OKAY:'>
-          No issues were found for this device.
-        </t>
-
         <t hangText='NFS4ERR_NXIO:'>
           The client was unable to establish any communication with the DS.
         </t>
@@ -110,21 +127,10 @@
     </t>
 
     <t>
-      A client that expects to use pNFS for a mounted filesystem SHOULD
-      check for pNFS support at mount time. This check SHOULD be performed
-      by sending a GETDEVICELIST operation, followed by layout-type-specific
-      checks for accessibility of each storage device returned by
-      GETDEVICELIST.  If the NFS server does not support pNFS, the
-      GETDEVICELIST operation will be rejected with an NFS4ERR_NOTSUPP
-      error; in this situation it is up to the client to determine whether
-      it is acceptable to proceed with NFS-only access.
-    </t>
-
-    <t>
       Clients are expected to tolerate transient storage device errors, and
       hence clients SHOULD NOT use the LAYOUTRETURN error handling for
       device access problems that may be transient. The methods by which a
-      client decides whether an access problem is transient vs. persistent
+      client decides whether a device access problem is transient vs. persistent
       are implementation-specific, but may include retrying I/Os to a data
       server under appropriate conditions.
     </t>
@@ -134,9 +140,12 @@
       client SHOULD retry the failed I/O via the MDS. In this situation,
       before retrying the I/O, the client SHOULD return the layout, or
       the affected portion thereof, and SHOULD indicate which storage
-      device or devices was problematic. If the client does not do
-      this, the MDS may issue a layout recall callback in order to perform
-      the retried I/O.
+      device or devices was problematic. The client needs to do this
+      when the DS is being unresponsive in order to fence off any failed
+      write attempts, and ensure that they do not end up overwriting any
+      later data being written through the MDS.  If the client does not
+      do this, the MDS MAY issue a layout recall callback in order
+      to perform the retried I/O.
     </t>
 
     <t>
@@ -153,33 +162,22 @@
       the MDS SHOULD NOT include that storage device in any pNFS layouts
       sent to that client. If the MDS is aware that a storage device is
       affecting many clients, then the MDS SHOULD NOT include that
-      storage device in any pNFS layouts sent out.  Clients must still be
-      aware that the MDS might not have any choice in using the storage
+      storage device in any pNFS layouts sent out.  If a client asks
+      for a new layout for the file from the MDS, it MUST be prepared
+      for the MDS to return that storage device in the layout. The
+      MDS might not have any choice in using the storage
       device, i.e., there might only be one possible layout for the system.
-    </t>
-
-    <t>
-      Another interesting complication is that for existing files, the
+      Also, in the case of existing files, the
       MDS might have no choice in which storage devices to hand out to
-      clients. The MDS might try to restripe a file across a different
-      storage device, but clients need to be aware that not all
-      implementations have restriping support.
+      clients.
     </t>
 
     <t>
-      An MDS SHOULD react to a client return of
-      layouts with errors by not using the problematic storage devices in
-      layouts for that client, but the MDS is not required to indefinitely
+      The MDS is not required to indefinitely
       retain per-client storage device error information. An MDS
       is also not required to automatically reinstate use of a previously
       problematic storage device; administrative intervention may be
       required instead.
-    </t>
-
-    <t>
-      A client MAY perform I/O via the MDS even when the client holds a
-      layout that covers the I/O; servers MUST support this client
-      behavior, and MAY recall layouts as needed to complete I/Os.
     </t>
   </section>
 </section>
