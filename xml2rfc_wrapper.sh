@@ -8,8 +8,7 @@
 # has /u/mre/bin/rfc at the start of his XML2RFCPATH
 # variables.
 
-if [ "$XML2RFCPATH" != "" ]
-then
+if [ -z "$XML2RFCPATH" ]; then
 	PATH=$XML2RFCPATH
 	export PATH
 fi
