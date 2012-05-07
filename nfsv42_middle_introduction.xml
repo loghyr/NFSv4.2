@@ -51,7 +51,24 @@
 
   <section title="NFSv4.2 Goals">
     <t>
-      <cref anchor="TBD1" source="TH">This needs fleshing out!</cref>
+      The goal of the design of NFSv4.2 is to take common local filesystem
+      features and offer them remotely.  These features might
+      <list style='symbols'>
+        <t>
+          already be available on the servers, e.g., sparse files
+        </t>
+
+        <t>
+          be under development as a new standard, e.g., SEEK_HOLE and SEEK_DATA
+        </t>
+
+        <t>
+          be used by clients with the servers via some proprietary means, e.g.,
+          Labeled NFS
+        </t>
+      </list>
+      but the clients are not able to leverage them on the server within the
+      confines of the NFS protocol.
     </t>
   </section>
 
