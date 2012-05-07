@@ -35,10 +35,12 @@
     </t>
 
     <t>
-      This section introduces a new operation
-      READ_PLUS (<xref target="op:read_plus" />) which supports
-      all the features of READ but includes an extension to support sparse
-      pattern files.  READ_PLUS is guaranteed to perform
+      Two new operations INITIALIZE (<xref target="op:initialize" />)
+      and READ_PLUS (<xref target="op:read_plus" />) are introduced.
+      INITIALIZE allows for the creation of a sparse file and for hole
+      punching.  An application might want to zero out a range of the file.
+      READ_PLUS supports all the features of READ but includes an extension to support sparse
+      pattern files (<xref target="ss:adb:dc" />_.  READ_PLUS is guaranteed to perform
       no worse than READ, and can dramatically improve performance with
       sparse files.  READ_PLUS does not depend on pNFS protocol features,
       but can be used by pNFS to support sparse files.

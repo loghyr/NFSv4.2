@@ -1,21 +1,22 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='op:read_plus' title='Operation 65: READ_PLUS'>
   <t>
-    READ_PLUS is a new read operation which
-    allows NFS clients to avoid reading holes in a sparse file and to
-    efficiently transfer ADBs.
-    READ_PLUS supports all the features of the existing NFSv4.1 READ
-    operation <xref target="ref:RFC5661" /> but also extends the response
+    READ_PLUS is a new variant of the NFSv4.1 READ
+    operation <xref target="ref:RFC5661" />. Besides being able
+    to support all of the data semantics of READ, it can also be
+    used by the server to return either holes or ADBs to the
+    client.  For holes, READ_PLUS extends the response
     to avoid returning data for portions of
     the file which are either initialized and contain no backing store
     or if the result would appear to be so. I.e., if the result was
     a data block composed entirely of zeros, then it is easier to return
     a hole. Returning data blocks of unitialized data wastes computational
-    and network resources, thus reducing performance.  READ_PLUS uses a new
-    result structure that tells the client that the result is all zeroes
-    AND the byte-range of the hole in which the request was made.
+    and network resources, thus reducing performance.
+    For ADBs, READ_PLUS is used to return the metadata describing the
+    portions of the file which are either initialized and contain no backing
+    store.
   </t>
 
   <t>
@@ -24,13 +25,16 @@
     if a READ occurs on a sparse ADB or file, then the server must
     expand such data to be raw bytes. If a READ occurs in
     the middle of a hole or ADB, the server can only send back
-    bytes starting from that offset.
+    bytes starting from that offset. In contrast, if a READ_PLUS
+    occurs in the middle of a hole or ADB, the server can send
+    back a range which starts before the offset and extends past
+    the range.
   </t>
 
   <t>
-    Such an operation is inefficient for transfer of sparse
-    sections of the file. As such, READ is marked as OBSOLETE in
-    NFSv4.2. Instead, a client should issue READ_PLUS. Note that
+    READ is inefficient for transfer of sparse sections of the file. As
+    such, READ is marked as OBSOLETE in NFSv4.2. Instead, a client
+    should issue READ_PLUS. Note that
     as the client has no a priori knowledge of whether either an ADB
     or a hole is present or not, it should always use READ_PLUS.
   </t>
@@ -56,12 +60,13 @@
       read data starting at the beginning of the file.  If rpa_offset is
       greater than or equal to the size of the file, the status NFS4_OK is
       returned with di_length (the data length) set to zero and eof
-      set to TRUE.  READ_PLUS is subject to access permissions checking.
+      set to TRUE.
     </t>
 
     <t>
       The READ_PLUS result is comprised of an array of rpr_contents, each of
-      which describe a data_content4 type of data. For NFSv4.2, the allowed
+      which describe a data_content4 type of data (<xref target="ss:adb:dc" />).
+      For NFSv4.2, the allowed
       values are data, ADB, and hole. A server is required to support the
       data type, but neither ADB nor hole. Both an ADB and a hole must be
       returned in its entirety - clients must be prepared to get more
@@ -95,8 +100,8 @@
 
     <t>
       If the client specifies a rpa_count value of zero, the READ_PLUS succeeds
-      and returns zero bytes of data, again subject to access permissions
-      checking.  In all situations, the server may choose to return fewer
+      and returns zero bytes of data.  In all situations, the server may choose
+      to return fewer
       bytes than specified by the client.  The client needs to check for
       this condition and handle the condition appropriately.
     </t>
@@ -106,7 +111,7 @@
       contained within a hole of the file, then the di_offset and di_length
       returned must be for the entire hole.  This result is considered valid
       until the file is changed (detected via the change attribute).  The
-      server MUST provide the same semantics for the hole  as if the client
+      server MUST provide the same semantics for the hole as if the client
       read the region and received zeroes; the implied holes contents
       lifetime MUST be exactly the same as any other read data.
     </t>
@@ -180,9 +185,9 @@
         option of returning hole information for the data stored on that
         data server (as defined by the data layout), but it MUST not return
         results for a byte range that includes data managed by another data server.
-        Data servers that can obtain hole information for the
-        parts of the file stored on that data server, the data
-        server SHOULD return HOLE_INFO and the byte range of
+        For a data server that can obtain hole information for the
+        parts of the file stored on that data server, it
+        SHOULD return HOLE_INFO and the byte range of
         the hole stored on that data server.
       </t>
 

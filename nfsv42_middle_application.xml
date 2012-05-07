@@ -65,9 +65,7 @@
     a given ADB implementation, and describe the model for
     how the client and server can support efficient initialization
     of ADBs, reading of ADB holes, punching holes in ADBs, and space
-    reservation. Further, we need to be able to extend this model
-    to applications which do not support ADBs, but wish to be able
-    to handle sparse files, hole punching, and space reservation.
+    reservation.
   </t>
 
   <section anchor='ss:adb:framework' title='Generic Framework'>
@@ -83,7 +81,7 @@
       and then have a guard pattern to detect corruption
       <xref target='ref:solaris:corruption' />. The next
       might store the ADBN at an offset of 100 bytes within the
-      block and have no guard pattern at all. The point is that
+      block and have no guard pattern at all.  I.e., 
       existing applications might already have well defined
       formats for their data blocks.
     </t>
@@ -149,30 +147,13 @@
     </t>
 
     <t>
-      Furthermore, each DS MUST not report to a client either a sparse
-      ADB or data which belongs to another DS. One implication
+      Furthermore, each DS MUST not report to a client a sparse
+      ADB which belongs to another DS. One implication
       of this requirement is that the app_data_block4's adb_block_size
       MUST be either be the stripe width or the stripe width
-      must be an even multiple of it.
-    </t>
-
-    <t>
-      The second implication here is that the DS must be able
-      to use the Control Protocol to determine from the MDS
-      where the sparse ADBs occur.
-
-      <cref anchor='AI4' source='TH'>
-        Need to discuss what happens if after the file is
-        being written to and an INITIALIZE occurs?
-      </cref>
-
-      Perhaps instead of the DS pulling from the MDS, the MDS
-      pushes to the DS? Thus an INITIALIZE causes a new push?
-
-      <cref anchor='AI5' source='TH'>
-        Still need to consider race cases of the DS getting
-        a WRITE and the MDS getting an INITIALIZE.
-      </cref>
+      must be an even multiple of it.  The second implication here
+      is that the DS must be able to use the Control Protocol
+      to determine from the MDS where the sparse ADBs occur.
     </t>
   </section>
 
