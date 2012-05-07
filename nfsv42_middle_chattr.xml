@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor="sec:chattr" title="Sharing change attribute implementation details with NFSv4 clients">
   <section title="Introduction">
@@ -37,20 +37,10 @@
       server, is the most recent.
     </t>
   </section>
-  <section title="Definition of the 'change_attr_type' per-file system attribute">
+
+  <section anchor="ss:chattr:defn" title="Definition of the 'change_attr_type' per-file system attribute">
 
     <?rfc include='autogen/type_chattr_type.xml'?>
-
-    <texttable>
-      <ttcol align="left">Name</ttcol>
-      <ttcol align="center">Id</ttcol>
-      <ttcol align="left">Data Type</ttcol>
-      <ttcol align="left">Acc</ttcol>
-      <c>change_attr_type</c>
-      <c>XX</c>
-      <c>enum change_attr_typeinfo</c>
-      <c>R</c>
-    </texttable>
 
     <t>
       The solution enables the NFS server to
@@ -58,7 +48,7 @@
       expects the change attribute value to evolve after
       the file data or metadata has changed.
       'change_attr_type' is defined as a new recommended attribute,
-      and takes values from enum change_attr_typeinfo as follows:
+      and the following evolutions of the change attribute are supported:
     </t>
     <t>
       <list style="hanging">

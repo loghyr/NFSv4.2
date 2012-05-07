@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) The IETF Trust (2007-2011)
+ *  Copyright (C) The IETF Trust (2007-2012)
  *  All Rights Reserved.
  *
  *  Copyright (C) The Internet Society (1998-2006).
@@ -495,10 +495,9 @@ typedef change_policy4	fattr4_change_policy;
  */
 typedef bool		fattr_space_reserved;
 typedef uint64_t	fattr_space_freed;
-typedef change_attr_typeinfo
+typedef change_attr_type4
 		fattr4_change_attr_type;
-typedef sec_label_attr_info
-		fattr_sec_label<>;
+typedef sec_label4	fattr_sec_label<>;
 
 %/*
 % * REQUIRED Attributes

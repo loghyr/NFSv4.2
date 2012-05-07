@@ -165,7 +165,7 @@
     </t>
 
     <t>
-      For NFSv4.1, <xref target="req_attr_tbl" /> and
+      For NFSv4.2, <xref target="req_attr_tbl" /> and
       <xref target="rec_attr_tbl" /> list the REQUIRED and
       RECOMMENDED attributes respectively. A "MUST" in the
       "Copy to destination file?" column indicates that the
@@ -206,6 +206,7 @@
       <c>cansettime</c>        <c>15</c><c>no</c>
       <c>case_insensitive</c>  <c>16</c><c>no</c>
       <c>case_preserving</c>   <c>17</c><c>no</c>
+      <c>change_attr_type</c>  <c>79</c><c>no</c>
       <c>change_policy</c>     <c>60</c><c>no</c>
       <c>chown_restricted</c>  <c>18</c><c>MUST</c>
       <c>dacl</c>              <c>58</c><c>MUST</c>
@@ -250,6 +251,7 @@
       <c>retention_hold</c>    <c>73</c><c>MUST</c>
       <c>retention_set</c>     <c>70</c><c>no</c>
       <c>sacl</c>              <c>59</c><c>MUST</c>
+      <c>sec_label</c>         <c>80</c><c>MUST</c>
       <c>space_avail</c>       <c>42</c><c>no</c>
       <c>space_free</c>        <c>43</c><c>no</c>
       <c>space_freed</c>       <c>78</c><c>no</c>

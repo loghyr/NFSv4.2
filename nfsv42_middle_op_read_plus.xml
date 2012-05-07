@@ -177,30 +177,22 @@
       <t>
         With pNFS, the semantics of using READ_PLUS remains the same.  Any
         data server MAY return a hole or ADB result for a READ_PLUS request that
-        it receives.
-      </t>
-
-      <t>
-        When a data server chooses to return a hole result, it has the
-        option of returning hole information for the data stored on that
+        it receives.  When a data server chooses to return such a result, it has the
+        option of returning information for the data stored on that
         data server (as defined by the data layout), but it MUST not return
         results for a byte range that includes data managed by another data server.
-        For a data server that can obtain hole information for the
-        parts of the file stored on that data server, it
-        SHOULD return HOLE_INFO and the byte range of
-        the hole stored on that data server.
       </t>
 
       <t>
         A data server should do its best to return as much information about
-        a hole as is feasible without having to contact the metadata server.
+        a hole ADB as is feasible without having to contact the metadata server.
         If communication with the metadata server is required, then every
         attempt should be taken to minimize the number of requests.
       </t>
 
       <t>
         If mandatory locking is enforced, then the data server must also
-        ensure that to return only information for a Hole that is within
+        ensure that to return only information that is within
         the owner’s locked byte range.
       </t>
     </section>

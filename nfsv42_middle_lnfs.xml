@@ -165,8 +165,6 @@
 
       <figure anchor='fig:xdr'>
         <artwork>
-const FATTR4_SEC_LABEL   = 81;
-
 typedef uint32_t  policy4;
         </artwork>
       </figure>

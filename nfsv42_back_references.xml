@@ -253,6 +253,17 @@ specifications of each URI scheme.
    <format type='TXT' octets='66160' target='ftp://ftp.isi.edu/in-notes/rfc5226.txt' />
    </reference>
 
+
+  <reference anchor='IESG08'>
+   <front>
+     <title>IESG Processing of RFC Errata for the IETF Stream</title>
+     <author>
+       <organization>ISEG</organization>
+     </author>
+     <date year="2008" />
+   </front>
+  </reference>
+
   <reference anchor='ref:RFC4506'>
     <front>
       <title>XDR: External Data Representation Standard</title>

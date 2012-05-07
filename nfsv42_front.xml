@@ -1,9 +1,9 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <front>
     <title abbrev="NFSv4.2">
-    NFS Version 4 Minor Version 2
+      NFS Version 4 Minor Version 2
     </title>
 
     <author fullname="Thomas Haynes"
@@ -32,11 +32,11 @@
     <abstract>
       <t>
         This Internet-Draft describes NFS version 4 minor version two,
-        focusing mainly on the protocol extensions made from NFS version
-	4 minor version 0 and NFS version 4
-        minor version 1. Major extensions
-        introduced in NFS version 4 minor version two include: Server-side
-	Copy, Space Reservations, and Support for Sparse Files.
+        focusing mainly on the protocol extensions made from NFS
+        version 4 minor version 0 and NFS version 4 minor version 1. Major extensions
+        introduced in NFS version 4 minor version two include:
+        Server-side Copy, Application I/O Advise, Space Reservations,
+        Sparse Files, Application Data Blocks, and Labeled NFS.
       </t>
     </abstract>
 

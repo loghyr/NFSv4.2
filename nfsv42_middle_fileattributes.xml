@@ -1,7 +1,65 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="sec:file_attributes" title="File Attributes">
+<section anchor="sec:file_attributes" title="New File Attributes">
+  <section anchor="ss:file_attributes:REC" title="New RECOMMENDED Attributes - List and Definition References">
+    <t>
+      The list of new RECOMMENDED attributes appears in <xref target="tbl:rec_attr" />.  The meaning of
+      the columns of the table are:
+    </t>
+
+    <t>
+      <list style='hanging'>
+        <t hangText='Name:'>
+          The name of the attribute.
+        </t>
+
+        <t hangText='Id:'>
+          The number assigned to the attribute.  In the event of
+          conflicts between the assigned number and <xref target="ref:4.2xdr" />, the latter is
+          likely authoritative, but should be resolved with Errata to this
+          document and/or <xref target="ref:4.2xdr" />.  See <xref target="IESG08" /> for the Errata process.
+        </t>
+
+        <t hangText='Data Type:'>
+          The XDR data type of the attribute.
+        </t>
+
+        <t hangText='Acc:'>
+          Access allowed to the attribute.
+          <list style='hanging'>
+            <t hangText='R'>
+              means read-only (GETATTR may retrieve, SETATTR may not set).
+            </t>
+            <t hangText='W '>
+             means write-only (SETATTR may set, GETATTR may not retrieve).
+            </t>
+            <t hangText='R W '>
+             means read/write (GETATTR may retrieve, SETATTR may set).
+            </t>
+          </list>
+        </t>
+
+        <t hangText='Defined in:'>
+          The section of this specification that describes the
+          attribute.
+        </t>
+      </list>
+    </t>
+
+    <texttable anchor="tbl:rec_attr">
+      <ttcol align="left">Name</ttcol>
+      <ttcol align="left">Id</ttcol>
+      <ttcol align="left">Data Type</ttcol>
+      <ttcol align="left">Acc</ttcol>
+      <ttcol align="left">Defined in</ttcol>
+      <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:chattr:defn" /></c>
+      <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:macss:lnfs:interpret" /></c>
+      <c>space_reserved</c>   <c>77</c> <c>boolean</c>            <c>R W</c> <c><xref target="ss:space:ops:sr" /></c>
+      <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:space:ops:sf" /></c>
+    </texttable>
+  </section>
+
   <section anchor="ss:file_attributes:AD" title="Attribute Definitions">
     <section toc='exclude' anchor="ss:space:ops:sr" title="Attribute 77: space_reserved">
       <t>

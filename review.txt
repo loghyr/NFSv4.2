@@ -11,6 +11,8 @@ Section 13.3: COPY_NOTIFY
 Section 13.4: COPY_REVOKE
 Section 13.5: COPY_STATUS
 Section 14.2: CB_COPY
+Section 11.2.1: Attribute 77: space_reserved
+Section 11.2.2: Attribute 78: space_freed
 Section 10.1.2: Server-side Copy Errors
 Chapter 3: Support for Application IO Hints
 Section 13.8: IO_ADVISE
@@ -20,7 +22,7 @@ Chapter 6: Application Data Block Support
 Section 13.7: INITIALIZE
 Section 13.10: READ_PLUS
 Section 13.11: SEEK
-Chapter 11: File Attributes
+Chapter 11.1: New File Attributes
 Chapter 12: Operations
 Chapter 9: Security Considerations
 Chapter 15: IANA Considerations

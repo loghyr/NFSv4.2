@@ -1314,7 +1314,7 @@ EOF
 	type_chattr_type.x )
 
 cat << EOF > $i
-enum change_attr_typeinfo {
+enum change_attr_type4 {
            NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR         = 0,
            NFS4_CHANGE_TYPE_IS_VERSION_COUNTER        = 1,
            NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS = 2,
@@ -1419,7 +1419,7 @@ struct labelformat_spec4 {
 	policy4	lfs_pi;
 };
 
-struct sec_label_attr_info {
+struct sec_label4 {
 	labelformat_spec4	slai_lfs;
 	opaque			slai_data<>;
 };

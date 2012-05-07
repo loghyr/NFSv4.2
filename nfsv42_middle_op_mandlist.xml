@@ -5,7 +5,11 @@
   <t>
     The following tables summarize the operations of the NFSv4.2 protocol
     and the corresponding designation of REQUIRED, RECOMMENDED, and
-    OPTIONAL to implement or MUST NOT implement.  The designation of MUST
+    OPTIONAL to implement or either OBSOLETE if implemented or MUST NOT implement.
+    The designation of OBSOLETE if implemented is reserved for those
+    operations which are defined in either NFSv4.0 or NFSV4.1, can
+    be implemented in NFSv4.2, and are intended to be MUST NOT be
+    implemented in NFSv4.3.  The designation of MUST
     NOT implement is reserved for those operations that were defined in
     either NFSv4.0 or NFSV4.1 and MUST NOT be implemented in NFSv4.2.
   </t>
@@ -55,6 +59,10 @@
 
       <t hangText='OPT'>
         OPTIONAL to implement
+      </t>
+
+      <t hangText='OBS'>
+        MUST NOT implement
       </t>
 
       <t hangText='MNI'>
@@ -149,7 +157,7 @@
       <c>PUTFH                </c> <c> REQ </c> <c>              </c>
       <c>PUTPUBFH             </c> <c> REQ </c> <c>              </c>
       <c>PUTROOTFH            </c> <c> REQ </c> <c>              </c>
-      <c>READ                 </c> <c> OPT </c> <c>              </c>
+      <c>READ                 </c> <c> OBS </c> <c>              </c>
       <c>READDIR              </c> <c> REQ </c> <c>              </c>
       <c>READLINK             </c> <c> OPT </c> <c>              </c>
       <c>READ_PLUS            </c> <c> OPT </c> <c> ADB (REQ)    </c>
