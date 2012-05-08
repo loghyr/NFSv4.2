@@ -6,8 +6,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=09
-VERS=10
+PREVVERS=10
+VERS=11
 VPATH=dotx.d
 
 autogen/%.xml : %.x
