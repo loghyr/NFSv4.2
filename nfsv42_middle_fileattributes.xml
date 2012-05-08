@@ -53,15 +53,133 @@
       <ttcol align="left">Data Type</ttcol>
       <ttcol align="left">Acc</ttcol>
       <ttcol align="left">Defined in</ttcol>
-      <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:chattr:defn" /></c>
-      <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:macss:lnfs:interpret" /></c>
-      <c>space_reserved</c>   <c>77</c> <c>boolean</c>            <c>R W</c> <c><xref target="ss:space:ops:sr" /></c>
-      <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:space:ops:sf" /></c>
+      <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
+      <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
+      <c>space_reserved</c>   <c>77</c> <c>boolean</c>            <c>R W</c> <c><xref target="ss:fattr:sr" /></c>
+      <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
     </texttable>
   </section>
 
   <section anchor="ss:file_attributes:AD" title="Attribute Definitions">
-    <section toc='exclude' anchor="ss:space:ops:sr" title="Attribute 77: space_reserved">
+    <section toc='exclude' anchor="ss:fattr:chattr" title="Attribute 79: change_attr_type">
+
+      <?rfc include='autogen/type_chattr_type.xml'?>
+
+      <t>
+        change_attr_type is a per filesystem attribute which
+        enables the NFSv4.2 server to
+        provide additional information about how it
+        expects the change attribute value to evolve after
+        the file data or metadata has changed.
+      </t>
+
+      <t>
+        <list style="hanging">
+          <t hangText="NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR:">
+            The change attribute value MUST monotonically
+            increase for every atomic change to the
+            file attributes, data or directory contents.
+          </t>
+
+          <t hangText="NFS4_CHANGE_TYPE_IS_VERSION_COUNTER:">
+            The change attribute value MUST be incremented
+            by one unit for every atomic change to the
+            file attributes, data or directory
+            contents. This property is preserved
+            when writing to pNFS data servers.
+          </t>
+
+          <t hangText="NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS:">
+            The change attribute value MUST be incremented
+            by one unit for every atomic change to the
+            file attributes, data or directory
+            contents. In the case where the client
+            is writing to pNFS data servers, the
+            number of increments is not guaranteed
+            to exactly match the number of writes.
+          </t>
+
+          <t hangText="NFS4_CHANGE_TYPE_IS_TIME_METADATA:">
+            The change attribute is implemented as
+            suggested in the NFSv4 spec
+            <xref target="ref:RFC3530bis" /> in terms of
+            the time_metadata attribute.
+          </t>
+
+          <t hangText="NFS4_CHANGE_TYPE_IS_UNDEFINED:">
+            The change attribute does not take
+            values that fit into any of these
+            categories.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        If either NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR,
+        NFS4_CHANGE_TYPE_IS_VERSION_COUNTER, or
+        NFS4_CHANGE_TYPE_IS_TIME_METADATA are set, then
+        the client knows at the very least that the
+        change attribute is monotonically increasing, which
+        is sufficient to resolve the question of which
+        value is the most recent.
+      </t>
+
+      <t>
+        If the client sees the value
+        NFS4_CHANGE_TYPE_IS_TIME_METADATA, then by inspecting
+        the value of the 'time_delta' attribute it
+        additionally has the option of detecting rogue server
+        implementations that use time_metadata in violation
+        of the spec.
+      </t>
+
+      <t>
+        Finally, if the client sees NFS4_CHANGE_TYPE_IS_VERSION_COUNTER,
+        it has the ability to predict what the resulting change
+        attribute value should be after a COMPOUND containing
+        a SETATTR, WRITE, or CREATE. This again allows it to
+        detect changes made in parallel by another client.
+        The value NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS
+        permits the same, but only if the client is not
+        doing pNFS WRITEs.
+      </t>
+    </section>
+
+    <section toc='exclude' anchor='ss:fattr:sec' title='Attribute 80: sec_label'>
+      <figure>
+        <artwork>
+typedef uint32_t  policy4;
+        </artwork>
+      </figure>
+
+      <?rfc include='autogen/type_label_format.xml'?>
+
+      <t>
+        The FATTR4_SEC_LABEL contains an array of two components with the first
+        component being an LFS.  It serves to provide the receiving end
+        with the information necessary to translate the security attribute
+        into a form that is usable by the endpoint.  Label Formats assigned
+        an LFS may optionally choose to include a Policy Identifier
+        field to allow for complex policy deployments.  The LFS
+        and Label Format Registry are described in detail in
+        <xref target='ref:lfsreg' />.
+        The translation used to interpret the security
+        attribute is not specified as part of the protocol as it may depend
+        on various factors.  The second component is an opaque section which
+        contains the data of the attribute.  This component is dependent on
+        the MAC model to interpret and enforce.
+      </t>
+      <t>
+        In particular, it is the responsibility of the LFS specification
+        to define a maximum size for the opaque section, slai_data&lt;&gt;.
+        When creating or modifying a label for an object, the client
+        needs to be guaranteed that the server will accept a label
+        that is sized correctly. By both client and server being part
+        of a specific MAC model, the client will be aware of the size.
+      </t>
+    </section>
+
+    <section toc='exclude' anchor="ss:fattr:sr" title="Attribute 77: space_reserved">
       <t>
         The space_reserve attribute is a read/write attribute of type
         boolean.  It is a per file attribute.  When the space_reserved
@@ -100,7 +218,7 @@
       </t>
     </section>
 
-    <section toc='exclude' anchor="ss:space:ops:sf" title="Attribute 78: space_freed">
+    <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 78: space_freed">
       <t>
         space_freed gives the number of bytes freed if the file is deleted.
         This attribute is read only and is of type length4.  It is a per file

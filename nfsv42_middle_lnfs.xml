@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor="sec:lnfs" title="Labeled NFS">
   <section anchor="ss:lnfs:intro" title="Introduction">
@@ -153,48 +153,10 @@
       CREATE allows for the security attribute to be specified upon
       creation.  By providing an atomic create and set operation for the
       security attribute it is possible to enforce the second and fourth
-      requirements.  The recommended attribute FATTR4_SEC_LABEL will
+      requirements.  The recommended attribute FATTR4_SEC_LABEL
+      (see <xref target='ss:fattr:sec' />) will
       be used to satisfy this requirement.
     </t>
-
-    <section anchor='ss:macss:lnfs:interpret' title='Interpreting FATTR4_SEC_LABEL'>
-      <t>
-        The XDR <xref target='ref:RFC4506' /> necessary to implement Labeled
-        NFSv4 is presented below:
-      </t>
-
-      <figure anchor='fig:xdr'>
-        <artwork>
-typedef uint32_t  policy4;
-        </artwork>
-      </figure>
-
-      <?rfc include='autogen/type_label_format.xml'?>
-
-      <t>
-        The FATTR4_SEC_LABEL contains an array of two components with the first
-        component being an LFS.  It serves to provide the receiving end
-        with the information necessary to translate the security attribute
-        into a form that is usable by the endpoint.  Label Formats assigned
-        an LFS may optionally choose to include a Policy Identifier
-        field to allow for complex policy deployments.  The LFS
-        and Label Format Registry are described in detail in
-        <xref target='ref:lfsreg' />.
-        The translation used to interpret the security
-        attribute is not specified as part of the protocol as it may depend
-        on various factors.  The second component is an opaque section which
-        contains the data of the attribute.  This component is dependent on
-        the MAC model to interpret and enforce.
-      </t>
-      <t>
-        In particular, it is the responsibility of the LFS specification
-        to define a maximum size for the opaque section, slai_data&lt;&gt;.
-        When creating or modifying a label for an object, the client
-        needs to be guaranteed that the server will accept a label
-        that is sized correctly. By both client and server being part
-        of a specific MAC model, the client will be aware of the size.
-      </t>
-    </section>
 
     <section anchor='ss:macss:lnfs:delegs' title='Delegations'>
       <t>

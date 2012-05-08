@@ -34,84 +34,9 @@
       about how the change attribute is expected to evolve,
       so that the client may immediately determine which, out
       of the several change attribute values returned by the
-      server, is the most recent.
-    </t>
-  </section>
-
-  <section anchor="ss:chattr:defn" title="Definition of the 'change_attr_type' per-file system attribute">
-
-    <?rfc include='autogen/type_chattr_type.xml'?>
-
-    <t>
-      The solution enables the NFS server to
-      provide additional information about how it
-      expects the change attribute value to evolve after
-      the file data or metadata has changed.
-      'change_attr_type' is defined as a new recommended attribute,
-      and the following evolutions of the change attribute are supported:
-    </t>
-    <t>
-      <list style="hanging">
-        <t hangText="NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR:">
-          The change attribute value MUST monotonically
-          increase for every atomic change to the
-          file attributes, data or directory contents.
-        </t>
-        <t hangText="NFS4_CHANGE_TYPE_IS_VERSION_COUNTER:">
-          The change attribute value MUST be incremented
-          by one unit for every atomic change to the
-          file attributes, data or directory
-          contents. This property is preserved
-          when writing to pNFS data servers.
-        </t>
-        <t hangText="NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS:">
-          The change attribute value MUST be incremented
-          by one unit for every atomic change to the
-          file attributes, data or directory
-          contents. In the case where the client
-          is writing to pNFS data servers, the
-          number of increments is not guaranteed
-          to exactly match the number of writes.
-        </t>
-        <t hangText="NFS4_CHANGE_TYPE_IS_TIME_METADATA:">
-          The change attribute is implemented as
-          suggested in the NFSv4 spec
-          <xref target="ref:RFC3530bis" /> in terms of
-          the time_metadata attribute.
-        </t>
-        <t hangText="NFS4_CHANGE_TYPE_IS_UNDEFINED:">
-          The change attribute does not take
-          values that fit into any of these
-          categories.
-        </t>
-      </list>
-    </t>
-    <t>
-      If either NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR,
-      NFS4_CHANGE_TYPE_IS_VERSION_COUNTER, or
-      NFS4_CHANGE_TYPE_IS_TIME_METADATA are set, then
-      the client knows at the very least that the
-      change attribute is monotonically increasing, which
-      is sufficient to resolve the question of which
-      value is the most recent.
-    </t>
-    <t>
-      If the client sees the value
-      NFS4_CHANGE_TYPE_IS_TIME_METADATA, then by inspecting
-      the value of the 'time_delta' attribute it
-      additionally has the option of detecting rogue server
-      implementations that use time_metadata in violation
-      of the spec.
-    </t>
-    <t>
-      Finally, if the client sees NFS4_CHANGE_TYPE_IS_VERSION_COUNTER,
-      it has the ability to predict what the resulting change
-      attribute value should be after a COMPOUND containing
-      a SETATTR, WRITE, or CREATE. This again allows it to
-      detect changes made in parallel by another client.
-      The value NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS
-      permits the same, but only if the client is not
-      doing pNFS WRITEs.
+      server, is the most recent. change_attr_type is defined
+      as a new recommended attribute (see <xref target='ss:fattr:chattr' />),
+      and is per filesystem.
     </t>
   </section>
 </section>

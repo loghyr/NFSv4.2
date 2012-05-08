@@ -32,8 +32,9 @@
     </t>
 
     <t>
-      If the space_reserved attribute is set on a file, it is guaranteed
-      that writes that do not grow the file will not fail with NFSERR_NOSPC.
+      If the space_reserved attribute (see <xref target='ss:fattr:sr' />) is
+      set on a file, it is guaranteed that writes that do not grow the file
+      will not fail with NFSERR_NOSPC.
     </t>
 
     <t>
@@ -124,8 +125,9 @@
     </t>
 
     <t>
-      Adding another size attribute, space_freed, is helpful in solving
-      this problem. space_freed is the number of blocks that are allocated
+      Adding another size attribute, space_freed (see <xref target='ss:fattr:sf' />),
+      is helpful in solving this problem. space_freed is the number of
+      blocks that are allocated
       to the given file that would be freed on its deletion.  In the
       example, both A and B would report space_freed as 4 * BLOCK_SIZE and
       space_used as 10 * BLOCK_SIZE.  If A is deleted, B will report
