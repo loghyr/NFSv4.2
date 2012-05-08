@@ -1,33 +1,33 @@
-Section 13.9: LAYOUTRETURN - 05/03/12
-Chapter 8: Sharing change attribute implementation details with NFSv4 clients
-Section 11.2.1: Attribute 79: change_attr_type
-Section 11.1: New RECOMMENDED Attributes - List and Definition References
-Section 13.6: EXCHANGE_ID
-Chapter 7: Labeled NFS
-Section 10.1.3: Labeled NFS Errors
-Section 11.2.2: Attribute 80: sec_label
-Section 14.1: CB_ATTR_CHANGED
-Chapter 2: Server-side Copy
-Section 13.1: COPY
-Section 13.2: COPY_ABORT
-Section 13.3: COPY_NOTIFY
-Section 13.4: COPY_REVOKE
-Section 13.5: COPY_STATUS
-Section 14.2: CB_COPY
-Section 10.1.2: Server-side Copy Errors
-Chapter 3: Support for Application IO Hints
-Section 13.8: IO_ADVISE
-Chapter 4: Sparse Files
-Chapter 5: Space Reservation
-Section 11.2.3: Attribute 77: space_reserved
-Section 11.2.4: Attribute 78: space_freed
-Chapter 6: Application Data Block Support
-Section 13.7: INITIALIZE
-Section 13.10: READ_PLUS
-Section 13.11: SEEK
-Chapter 11.1: New File Attributes
-Chapter 12: Operations
-Chapter 9: Security Considerations
-Chapter 15: IANA Considerations
-Chapter 16: References
-Chapter 1: Introduction
+Target Date  Draft  Line  Text
+05/03/12      09    4177  Section 13.9: LAYOUTRETURN
+05/10/12      10    2417  Chapter 8: Sharing change attribute implementation details with NFSv4 clients
+05/10/12      10    2602  Section 11.2.1: Attribute 79: change_attr_type
+05/10/12      10    2551  Section 11.1: New RECOMMENDED Attributes - List and Definition References
+05/10/12      10    3677  Section 13.6: EXCHANGE_ID
+05/10/12      10    2007  Chapter 7: Labeled NFS
+                          Section 10.1.3: Labeled NFS Errors
+                          Section 11.2.2: Attribute 80: sec_label
+                          Section 14.1: CB_ATTR_CHANGED
+                          Chapter 2: Server-side Copy
+                          Section 13.1: COPY
+                          Section 13.2: COPY_ABORT
+                          Section 13.3: COPY_NOTIFY
+                          Section 13.4: COPY_REVOKE
+                          Section 13.5: COPY_STATUS
+                          Section 14.2: CB_COPY
+                          Section 10.1.2: Server-side Copy Errors
+                          Chapter 3: Support for Application IO Hints
+                          Section 13.8: IO_ADVISE
+                          Chapter 4: Sparse Files
+                          Chapter 5: Space Reservation
+                          Section 11.2.3: Attribute 77: space_reserved
+                          Section 11.2.4: Attribute 78: space_freed
+                          Chapter 6: Application Data Block Support
+                          Section 13.7: INITIALIZE
+                          Section 13.10: READ_PLUS
+                          Section 13.11: SEEK
+                          Chapter 12: Operations
+                          Chapter 9: Security Considerations
+                          Chapter 15: IANA Considerations
+                          Chapter 16: References
+                          Chapter 1: Introduction
