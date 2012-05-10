@@ -28,8 +28,8 @@
       SEQUENCE indicates the previous operation has completed.  However, if
       the session is lost, there is no way to know when any in progress
       operations have aborted or completed.  In hindsight, the NFSv4.1
-      specification should have mandated that DESTROY_SESSION abort/
-      complete all outstanding operations.
+      specification should have mandated that DESTROY_SESSION
+      either abort or complete all outstanding operations.
     </t>
   </section>
 
@@ -51,8 +51,8 @@
 
         <t>
           The server will not reply to subsequent EXCHANGE_ID invoked on the
-          same Client Owner with a new verifier until all operations in
-          progress on the Client ID's session are completed or aborted.
+          same client owner with a new verifier until all operations in
+          progress on the client ID's session are completed or aborted.
         </t>
 
         <t>
