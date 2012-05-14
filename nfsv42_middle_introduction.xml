@@ -51,7 +51,7 @@
 
   <section title="NFSv4.2 Goals">
     <t>
-      The goal of the design of NFSv4.2 is to take common local filesystem
+      The goal of the design of NFSv4.2 is to take common local file system
       features and offer them remotely.  These features might
       <list style='symbols'>
         <t>

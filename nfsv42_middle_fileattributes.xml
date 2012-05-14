@@ -4,8 +4,8 @@
 <section anchor="sec:file_attributes" title="New File Attributes">
   <section anchor="ss:file_attributes:REC" title="New RECOMMENDED Attributes - List and Definition References">
     <t>
-      The list of new RECOMMENDED attributes appears in <xref target="tbl:rec_attr" />.  The meaning of
-      the columns of the table are:
+      The list of new RECOMMENDED attributes appears in
+      <xref target="tbl:rec_attr" />.  The meaning of the columns of the table are:
     </t>
 
     <t>
@@ -66,15 +66,26 @@
       <?rfc include='autogen/type_chattr_type.xml'?>
 
       <t>
-        change_attr_type is a per filesystem attribute which
+        change_attr_type is a per file system attribute which
         enables the NFSv4.2 server to
         provide additional information about how it
         expects the change attribute value to evolve after
-        the file data or metadata has changed.
+        the file data or metadata has changed. While Section
+        5.4 of <xref target="ref:RFC5661" /> discusses
+        per file system attributes, it is expected that the
+        value of change_attr_type not depend on the value
+        of "homogeneous" and only changes in the event of
+        a migration.
       </t>
 
       <t>
         <list style="hanging">
+          <t hangText="NFS4_CHANGE_TYPE_IS_UNDEFINED:">
+            The change attribute does not take
+            values that fit into any of these
+            categories.
+          </t>
+
           <t hangText="NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR:">
             The change attribute value MUST monotonically
             increase for every atomic change to the
@@ -105,12 +116,6 @@
             <xref target="ref:RFC3530bis" /> in terms of
             the time_metadata attribute.
           </t>
-
-          <t hangText="NFS4_CHANGE_TYPE_IS_UNDEFINED:">
-            The change attribute does not take
-            values that fit into any of these
-            categories.
-          </t>
         </list>
       </t>
 
@@ -134,7 +139,7 @@
       </t>
 
       <t>
-        Finally, if the client sees NFS4_CHANGE_TYPE_IS_VERSION_COUNTER,
+        If the client sees NFS4_CHANGE_TYPE_IS_VERSION_COUNTER,
         it has the ability to predict what the resulting change
         attribute value should be after a COMPOUND containing
         a SETATTR, WRITE, or CREATE. This again allows it to
@@ -142,6 +147,13 @@
         The value NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS
         permits the same, but only if the client is not
         doing pNFS WRITEs.
+      </t>
+
+      <t>
+        Finally, if the server does not support change_attr_type
+        or if NFS4_CHANGE_TYPE_IS_UNDEFINED is set, then the
+        server SHOULD make an effort to implement the
+        change attribute in terms of the time_metadata attribute.
       </t>
     </section>
 

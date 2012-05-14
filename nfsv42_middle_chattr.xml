@@ -36,7 +36,7 @@
       of the several change attribute values returned by the
       server, is the most recent. change_attr_type is defined
       as a new recommended attribute (see <xref target='ss:fattr:chattr' />),
-      and is per filesystem.
+      and is per file system.
     </t>
   </section>
 </section>

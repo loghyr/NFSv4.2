@@ -11,12 +11,13 @@
       models base their access
       control decisions on the label on the subject (usually a process) and
       the object it wishes to access <xref target='ref:lnfs_req' />.  These
-      labels may contain user identity information but usually contain additional information.  In
+      labels may contain user identity information but usually contain
+      additional information.  In
       DAC systems users are free to specify the access rules for resources
       that they own.  MAC models base their security decisions on a system
       wide policy established by an administrator or organization which the
-      users do not have the ability to override.  In this section, we add
-      a MAC model to NFSv4.
+      users do not have the ability to override.
+      In this section, we add a MAC model to NFSv4.2.
     </t>
 
     <t>
@@ -89,8 +90,17 @@
         </t>
 
         <t hangText='Subject:'>
-          A subject is an active entity usually a process which is
+          is an active entity usually a process which is
           requesting access to an object.
+        </t>
+
+        <t hangText='MAC-Aware:'>
+          is a server which can transmit and store object labels.
+        </t>
+
+        <t hangText='MAC-Functional:'>
+          is a client or server which is LNFS enabled. Such a system
+          can interpret labels and apply policies based on the security system.
         </t>
 
         <t hangText='Multi-Level Security (MLS):'>
@@ -116,21 +126,21 @@
     <t>
       <list style='symbols'>
         <t>
-          Must provide flexibility with respect to MAC model.
+          MUST provide flexibility with respect to MAC model.
         </t>
 
         <t>
-          Must provide the ability to atomically set security information
+          MUST provide the ability to atomically set security information
           upon object creation.
         </t>
 
         <t>
-          Must provide the ability to enforce access control decisions both
+          MUST provide the ability to enforce access control decisions both
           on the client and the server.
         </t>
 
         <t>
-          Must not expose an object to either the client or server name
+          MUST not expose an object to either the client or server name
           space before its security information has been bound to it.
         </t>
       </list>
@@ -161,8 +171,10 @@
     <section anchor='ss:macss:lnfs:delegs' title='Delegations'>
       <t>
         In the event that a security attribute is changed on the server while
-        a client holds a delegation on the file, the client should follow the
-        existing protocol with respect to attribute changes.  It should flush
+        a client holds a delegation on the file, both the server and the
+        client MUST follow the NFSv4.1 protocol (see Chapter 10 of
+        <xref target="ref:RFC5661" />)
+        with respect to attribute changes.  It SHOULD flush
         all changes back to the server and relinquish the delegation.
       </t>
     </section>
@@ -188,11 +200,13 @@
         One of the parameters to these operations is an fattr4 structure
         containing the attributes the file is to be created with.  This
         allows NFSv4 to atomically set the security attribute of files upon
-        creation.  When a client is MAC aware it must always provide the
+        creation.  When a client is MAC-Functional it must always provide the
         initial security attribute upon file creation.  In the event that the
-        server is the only MAC aware entity in the system it should ignore
-        the security attribute specified by the client and instead make the
-        determination itself.  A more in depth explanation can be found in
+        server is MAC-Functional as well, it should determine by policy whether
+        it will accept the attribute from the client or instead make the
+        determination itself.  If the client is not MAC-Functional, then
+        the MAC-Functional server must decide on a default label.
+        A more in depth explanation can be found in
         <xref target='ss:lnfs:modes' />.
       </t>
     </section>
@@ -202,10 +216,7 @@
         Note that under the MAC model, all objects must have labels.
         Therefore, if an existing server is upgraded to include LNFS support,
         then it is the responsibility of the security system to
-        define the behavior for existing objects. For example, if
-        the security system is LFS 0, which means the server just
-        stores and returns labels, then existing files should
-        return labels which are set to an empty value.
+        define the behavior for existing objects.
       </t>
     </section>
 
@@ -332,7 +343,7 @@
 
     <section anchor='ss:modes:full' title='Full Mode'>
       <t>
-        Full mode environments consist of MAC aware NFSv4 servers and clients
+        Full mode environments consist of MAC-FunctionalNFSv4 servers and clients
         and may be composed of mixed MAC models and policies.  The system
         requires that both the client and server have an opportunity to
         perform an access control check based on all relevant information

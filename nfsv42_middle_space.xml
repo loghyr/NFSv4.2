@@ -26,7 +26,7 @@
       the entire file.  The initial zeroing allocates the backing blocks
       and all subsequent writes are overwrites of already allocated blocks.
       This approach is not only inefficient in terms of the amount of I/O
-      done, it is also not guaranteed to work on filesystems that are log
+      done, it is also not guaranteed to work on file systems that are log
       structured or deduplicated.  An efficient way of guaranteeing space
       reservation would be beneficial to such applications.
     </t>
@@ -57,8 +57,8 @@
 
     <t>
       While these attributes are sufficient for space accounting in
-      traditional filesystems, they prove to be inadequate in modern
-      filesystems that support block sharing.  In such filesystems,
+      traditional file systems, they prove to be inadequate in modern
+      file systems that support block sharing.  In such file systems,
       multiple inodes can point to a single block with a block reference
       count to guard against premature freeing.  Having a way to tell the
       number of blocks that would be freed if the file was deleted would be
@@ -68,8 +68,8 @@
 
     <t>
       Since virtual disks represent a hard drive in a virtual machine, a
-      virtual disk can be viewed as a filesystem within a file.  Since not
-      all blocks within a filesystem are in use, there is an opportunity to
+      virtual disk can be viewed as a file system within a file.  Since not
+      all blocks within a file system are in use, there is an opportunity to
       reclaim blocks that are no longer in use.  A call to deallocate
       blocks could result in better space efficiency.  Lesser space MAY be
       consumed for backups after block deallocation.

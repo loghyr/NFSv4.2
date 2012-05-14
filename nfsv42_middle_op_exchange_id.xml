@@ -45,8 +45,8 @@
     <t>
       <list style='symbols'>
         <t>
-          The server will not reply to DESTROY_SESSION until all operations
-          in progress are completed or aborted.
+          The server will not reply to any DESTROY_SESSION invoked with
+          the client ID until all operations in progress are completed or aborted.
         </t>
 
         <t>

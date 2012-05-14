@@ -38,7 +38,7 @@
         Situations may arise where di_offset and/or
         di_offset + di_length will not be aligned to a
         boundary that the server does allocations/deallocations in.  For
-        most filesystems, this is the block size of
+        most file systems, this is the block size of
         the file system.  In such a case, the server can deallocate as many
         bytes as it can in the region.  The blocks that cannot be deallocated
         MUST be zeroed.  Except for the block deallocation and maximum hole
