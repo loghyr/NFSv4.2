@@ -85,7 +85,7 @@
 
     <section title="Labeled NFS Errors" anchor="errors_lnfs">
       <t>
-        These errors are used in LNFS.
+        These errors are used in Labeled NFS.
       </t>
 
       <section title="NFS4ERR_BADLABEL (Error Code 10093)" anchor="err_BADLABEL">

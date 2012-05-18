@@ -1,6 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
+
 <section anchor="sec:lnfs" title="Labeled NFS">
   <section anchor="ss:lnfs:intro" title="Introduction">
     <t>
@@ -99,7 +100,7 @@
         </t>
 
         <t hangText='MAC-Functional:'>
-          is a client or server which is LNFS enabled. Such a system
+          is a client or server which is Labeled NFS enabled. Such a system
           can interpret labels and apply policies based on the security system.
         </t>
 
@@ -214,7 +215,7 @@
     <section anchor='ss:macss:lnfs:existing' title='Existing Objects'>
       <t>
         Note that under the MAC model, all objects must have labels.
-        Therefore, if an existing server is upgraded to include LNFS support,
+        Therefore, if an existing server is upgraded to include Labeled NFS support,
         then it is the responsibility of the security system to
         define the behavior for existing objects.
       </t>
@@ -275,7 +276,7 @@
 
   <section anchor='ss:lnfs:pnfs' title='pNFS Considerations'>
     <t>
-      This section examines the issues in deploying LNFS in
+      This section examines the issues in deploying Labeled NFS in
       a pNFS community of servers.
     </t>
 
@@ -298,17 +299,17 @@
     </section>
   </section>
 
-  <section anchor='ss:lnfs:discovery' title='Discovery of Server LNFS Support'>
+  <section anchor='ss:lnfs:discovery' title='Discovery of Server Labeled NFS Support'>
     <t>
-      The server can easily determine that a client supports LNFS
+      The server can easily determine that a client supports Labeled NFS
       when it queries for the FATTR4_SEC_LABEL label for an object.
       Note that it cannot assume that the presence of RPCSEC_GSSv3
-      indicates LNFS support. The client might need to discover
+      indicates Labeled NFS support. The client might need to discover
       which LFS the server supports.
     </t>
 
     <t>
-      A server which supports LNFS MUST allow a client with any subject
+      A server which supports Labeled NFS MUST allow a client with any subject
       label to retrieve the FATTR4_SEC_LABEL attribute for the root
       filehandle, ROOTFH. The following compound must always succeed
       as far as a MAC label check is concerned:
@@ -425,13 +426,13 @@
     <section anchor='ss:modes:guest' title='Guest Mode'>
       <t>
         Guest mode implies that either the client or the server does not
-        handle labels. If the client is not LNFS aware, then it will not
+        handle labels. If the client is not Labeled NFS aware, then it will not
         offer subject labels to the server. The server is the only entity
         enforcing policy, and may selectively provide standard NFS services
         to clients based on their authentication credentials and/or
         associated network attributes (e.g., IP address, network interface).
         The level of trust and access extended to a client in this mode is
-        configuration-specific.  If the server is not LNFS aware,
+        configuration-specific.  If the server is not Labeled NFS aware,
         then it will not return object labels to the client. Clients in
         this environment are may consist of groups implementing different
         MAC model policies.  The system requires that all clients in the
@@ -463,7 +464,7 @@
       An example of this is that a server that modifies READDIR
       or LOOKUP results based on the client's subject label might want
       to always construct the same subject label for a client which
-      does not present one. This will prevent a non-LNFS client from
+      does not present one. This will prevent a non-Labeled NFS client from
       mixing entries in the directory cache.
     </t>
   </section>
