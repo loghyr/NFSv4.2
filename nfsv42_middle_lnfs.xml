@@ -127,7 +127,7 @@
     <t>
       <list style='symbols'>
         <t>
-          MUST provide flexibility with respect to MAC model.
+          MUST provide flexibility with respect to the MAC model.
         </t>
 
         <t>
@@ -156,7 +156,7 @@
       first component is a LFS as defined in <xref target='ref:lfsreg' />
       to allow for interoperability between MAC
       mechanisms.  The second component is an opaque field which is the actual
-      security attribute data.  To allow for various MAC models NFSv4
+      security attribute data.  To allow for various MAC models, NFSv4
       should be used solely as a transport mechanism for the security
       attribute.  It is the responsibility of the endpoints to consume the
       security attribute and make access decisions based on their
@@ -344,7 +344,7 @@
 
     <section anchor='ss:modes:full' title='Full Mode'>
       <t>
-        Full mode environments consist of MAC-FunctionalNFSv4 servers and clients
+        Full mode environments consist of MAC-Functional NFSv4 servers and clients
         and may be composed of mixed MAC models and policies.  The system
         requires that both the client and server have an opportunity to
         perform an access control check based on all relevant information
@@ -443,7 +443,7 @@
 
   <section anchor="ss:lnfs:security" title="Security Considerations">
     <t>
-      This entire document deals with security issues.
+      This entire chapter deals with security issues.
     </t>
 
     <t>

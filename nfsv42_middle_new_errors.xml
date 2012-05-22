@@ -97,7 +97,7 @@
       <section title="NFS4ERR_WRONG_LFS (Error Code 10092)" anchor="err_WRONG_LFS">
         <t>
           The LFS specified in the subject label is not compatible with the LFS in
-          object label.
+          the object label.
         </t>
       </section>
     </section>

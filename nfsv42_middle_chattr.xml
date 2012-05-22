@@ -8,8 +8,8 @@
       and NFSv4.1 protocol <xref target="ref:RFC5661" />,
       define the change attribute as being mandatory
       to implement, there is little in the way of
-      guidance. The only feature that is mandated by
-      them is that the value must change
+      guidance. The only mandated feature
+      is that the value must change
       whenever the file data or metadata change.
     </t>
     <t>

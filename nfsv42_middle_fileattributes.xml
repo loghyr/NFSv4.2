@@ -70,7 +70,7 @@
         enables the NFSv4.2 server to
         provide additional information about how it
         expects the change attribute value to evolve after
-        the file data or metadata has changed. While Section
+        the file data, or metadata has changed. While Section
         5.4 of <xref target="ref:RFC5661" /> discusses
         per file system attributes, it is expected that the
         value of change_attr_type not depend on the value
@@ -89,13 +89,13 @@
           <t hangText="NFS4_CHANGE_TYPE_IS_MONOTONIC_INCR:">
             The change attribute value MUST monotonically
             increase for every atomic change to the
-            file attributes, data or directory contents.
+            file attributes, data, or directory contents.
           </t>
 
           <t hangText="NFS4_CHANGE_TYPE_IS_VERSION_COUNTER:">
             The change attribute value MUST be incremented
             by one unit for every atomic change to the
-            file attributes, data or directory
+            file attributes, data, or directory
             contents. This property is preserved
             when writing to pNFS data servers.
           </t>
@@ -103,7 +103,7 @@
           <t hangText="NFS4_CHANGE_TYPE_IS_VERSION_COUNTER_NOPNFS:">
             The change attribute value MUST be incremented
             by one unit for every atomic change to the
-            file attributes, data or directory
+            file attributes, data, or directory
             contents. In the case where the client
             is writing to pNFS data servers, the
             number of increments is not guaranteed
