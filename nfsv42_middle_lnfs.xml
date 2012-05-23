@@ -294,7 +294,7 @@
       <t>
         If a file's FATTR4_SEC_LABEL is changed, then the MDS
         should utilize CB_ATTR_CHANGED to inform the client
-        of that fact. If the MDS is maintaining
+        of that fact. If the MDS is maintaining <cref anchor="Drop1" source="TH">Houston, we seem to have a problem!</cref>
       </t>
     </section>
   </section>
@@ -376,7 +376,7 @@
           translating the opaque portion of the security attribute is needed.
           The actual translation function will vary based on MAC model and
           policy and is out of the scope of this document.  If a translation is
-          unavailable for a given LFS then the request SHOULD be
+          unavailable for a given LFS then the request MUST be
           denied.  Another recourse is to allow the host to provide a fallback
           mapping for unknown security attributes.
         </t>
@@ -411,9 +411,10 @@
         </t>
       </section>
 
-      <section anchor='ss:modes:lfs0' title='Label Aware Only Server'>
+      <section anchor='ss:modes:lfs0' title='Limited Server'>
         <t>
-          If the LFS is 0, then it indicates a server which is label aware,
+          A Limited Server mode (see Section 3.5.2 of <xref target="ref:lnfs_req" />)
+          consists of a server which  is label aware,
           but does not enforce policies. Such a server will store and retrieve
           all object labels presented by clients, notify the clients of
           any label changes via CB_ATTR_CHANGED, but will not restrict access
