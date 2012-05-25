@@ -1,7 +1,7 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section title="Operation 61: COPY_NOTIFY - Notify a source server of a future copy">
+<section anchor="op:copy_notify" title="Operation 61: COPY_NOTIFY - Notify a source server of a future copy">
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/copy_notify_args.xml'?>
   </section>

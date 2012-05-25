@@ -24,14 +24,6 @@
     </t>
 
     <t>
-      In general, this feature is useful whenever data is copied
-      from one location to another on the server. It is particularly useful
-      when copying the contents of a file from a backup. Backup-versions
-      of a file are copied for a number of reasons, including restoring
-      and cloning data.
-    </t>
-
-    <t>
       If the source object and destination object are on different file
       servers, the file servers will communicate with one another to
       perform the copy operation. The server-to-server protocol by which
@@ -351,8 +343,7 @@
 
     <section title="Server-to-Server Copy Protocol" anchor="server-to-server-proto">
       <t>
-        During an inter-server copy, the destination server reads
-        the file data from the source server. The source server and
+        The source server and
         destination server are not required to use a specific protocol to
         transfer the file data. The choice of what protocol to use
         is ultimately the destination server's decision.
@@ -392,7 +383,7 @@
 
         <t>
           In a heterogeneous environment, using a protocol other than NFSv4.x
-          (e.g,. HTTP <xref target="ref:RFC2616" /> or FTP <xref target="ref:RFC0959" />)
+          (e.g., HTTP <xref target="ref:RFC2616" /> or FTP <xref target="ref:RFC0959" />)
           presents some challenges. In particular, the destination
           server is presented with the challenge of accessing the source file
           given only an NFSv4.x filehandle.
@@ -431,14 +422,28 @@
 
   <section title="Operations" anchor="operations">
     <t>
-      In the sections that follow, several operations are defined that
-      together provide the server-side copy feature. These operations
-      are intended to be OPTIONAL operations as defined in section 17 of
-      <xref target="ref:RFC5661" />. The COPY_NOTIFY, COPY_REVOKE, COPY, COPY_ABORT,
-      and COPY_STATUS operations are designed to be sent within an NFSv4
-      COMPOUND procedure. The CB_COPY operation is designed to be sent
-      within an NFSv4 CB_COMPOUND procedure.
+      It is optional to implement the server-side copy functionality. A client or server
+      might choose to fully implement both or just one of intra-server and inter-server
+      copy modes. A client cannot determine whether a server is going to support
+      asynchronous or synchronous copies. The requirements for the copy operations are
+      presented in <xref target="tbl:copy_ops" />. An 'R' indicates the operation is
+      required, while an 'O' indicates that it is optional.
     </t>
+
+    <texttable anchor="tbl:copy_ops">
+    <ttcol align="left">Operation</ttcol>
+    <ttcol align="left">Server Intra</ttcol>
+    <ttcol align="left">Server Inter</ttcol>
+    <ttcol align="left">Client Intra</ttcol>
+    <ttcol align="left">Client Inter</ttcol>
+    <c>COPY (<xref target="op:copy" />)</c>                <c>R</c> <c>R</c> <c>R</c> <c>R</c>
+    <c>COPY_ABORT (<xref target="op:copy_abort" />)</c>    <c>R</c> <c>R</c> <c>R</c> <c>R</c>
+    <c>COPY_NOTIFY (<xref target="op:copy_notify" />)</c>  <c>O</c> <c>R</c> <c>O</c> <c>R</c>
+    <c>COPY_REVOKE (<xref target="op:copy_revoke" />)</c>  <c>O</c> <c>R</c> <c>O</c> <c>R</c>
+    <c>COPY_STATUS (<xref target="op:copy_status" />)</c>  <c>R</c> <c>R</c> <c>O</c> <c>O</c>
+    <c>CB_COPY (<xref target="op:cb_copy" />)</c>          <c>R</c> <c>R</c> <c>R</c> <c>R</c>
+    <postamble>Required operations depending on mode</postamble>
+    </texttable>
 
     <t>
       Each operation is performed in the context of the user identified
@@ -518,17 +523,17 @@
   <section title="Security Considerations">
     <t>
       The security considerations pertaining to NFSv4 <xref target="ref:RFC3530bis" />
-      apply to this document.
+      apply to this chapter.
     </t>
 
     <t>
       The standard security mechanisms provide by NFSv4 <xref target="ref:RFC3530bis" />
-      may be used to secure the protocol described in this document.
+      may be used to secure the protocol described in this chapter.
     </t>
 
     <t>
-      NFSv4 clients and servers supporting the the inter-server copy
-      operations described in this document are REQUIRED to implement
+      NFSv4 clients and servers supporting the inter-server copy
+      operations described in this chapter are REQUIRED to implement
       <xref target="ref:rpcsecgssv3" />, including the RPCSEC_GSSv3
       privileges copy_from_auth and copy_to_auth. If the server-to-server
       copy protocol is ONC RPC based, the servers are also REQUIRED to
@@ -939,7 +944,7 @@
         <t>
           ONC RPC security flavors other than RPCSEC_GSSv3 MAY be used with
           the server-side copy offload operations described in this
-          document. In particular, host-based ONC RPC security flavors
+          chapter. In particular, host-based ONC RPC security flavors
           such as AUTH_NONE and AUTH_SYS MAY be used. If a host-based
           security flavor is used, a minimal level of protection for
           the server-to-server copy protocol is possible.
