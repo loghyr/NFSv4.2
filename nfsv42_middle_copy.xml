@@ -69,86 +69,53 @@
     </t>
 
     <t>
-      For the inter-server copy protocol, the operations are defined
-      to be compatible with a server-to-server copy protocol in which
-      the destination server reads the file data from the source server.
-      This model in which the file data is pulled from the source by the
-      destination has a number of advantages over a model in which the
-      source pushes the file data to the destination. The advantages
-      of the pull model include:
+      For the inter-server copy, the operations are defined
+      to be compatible with the traditional copy authentication approach.
+      The client and user are authorized at the source for reading. Then
+      they are authorized at the destination for writing.
     </t>
 
-    <t>
-      <list style="symbols">
-        <t>
-          The pull model only requires a remote server (i.e., the destination
-          server) to be granted read access. A push model requires a
-          remote server (i.e., the source server) to be granted write
-          access, which is more privileged.
-        </t>
+    <section title="Overview of Copy Operations">
+      <t>
+        <list style="hanging">
+          <t hangText="COPY_NOTIFY:">
+            For inter-server copies, the client sends
+            this operation to the source server to notify it of a future
+            file copy from a given destination server for the given user.
+            (<xref target="op:copy_notify" />)
+          </t>
 
-        <t>
-          The pull model allows the destination server to stop reading
-          if it has run out of space. In a push model, the destination
-          server must flow control the source server in this situation.
-        </t>
+          <t hangText="COPY_REVOKE:">
+            Also for inter-server copies, the client
+            sends this operation to the source server to revoke permission
+            to copy a file for the given user.
+            (<xref target="op:copy_revoke" />)
+          </t>
 
-        <t>
-          The pull model allows the destination server to easily flow
-          control the data stream by adjusting the size of its read
-          operations. In a push model, the destination server does not
-          have this ability. The source server in a push model is capable
-          of writing chunks larger than the destination server has
-          requested in attributes and session parameters. In theory, the
-          destination server could perform a "short" write in this situation,
-          but this approach is known to behave poorly in practice.
-        </t>
-      </list>
-    </t>
+          <t hangText="COPY:">
+            Used by the client to request a file copy.
+            (<xref target="op:copy" />)
+          </t>
 
-    <t>
-      The following operations are provided to support server-side copy:
-    </t>
+          <t hangText="COPY_ABORT:">
+            Used by the client to abort an asynchronous file copy.
+            (<xref target="op:copy_abort" />)
+          </t>
 
-    <t>
-      <list style="hanging">
-        <t hangText="COPY_NOTIFY:">
-          For inter-server copies, the client sends
-          this operation to the source server to notify it of a future
-          file copy from a given destination server for the given user.
-        </t>
+          <t hangText="COPY_STATUS:">
+            Used by the client to poll the status of
+            an asynchronous file copy.
+            (<xref target="op:copy_status" />)
+          </t>
 
-        <t hangText="COPY_REVOKE:">
-          Also for inter-server copies, the client
-          sends this operation to the source server to revoke permission
-          to copy a file for the given user.
-        </t>
-
-        <t hangText="COPY:">
-          Used by the client to request a file copy.
-        </t>
-
-        <t hangText="COPY_ABORT:">
-          Used by the client to abort an asynchronous file copy.
-        </t>
-
-        <t hangText="COPY_STATUS:">
-          Used by the client to poll the status of
-          an asynchronous file copy.
-        </t>
-
-        <t hangText="CB_COPY:">
-          Used by the destination server to report the
-          results of an asynchronous file copy to the client.
-        </t>
-      </list>
-    </t>
-
-    <t>
-      These operations are described in detail in <xref target="operations" />.
-      This section provides an overview of how these operations are used
-      to perform server-side copies.
-    </t>
+          <t hangText="CB_COPY:">
+            Used by the destination server to report the
+            results of an asynchronous file copy to the client.
+            (<xref target="op:cb_copy" />)
+          </t>
+        </list>
+      </t>
+    </section>
 
     <section title="Intra-Server Copy">
       <t>
@@ -420,30 +387,46 @@
     </section>
   </section>
 
-  <section title="Operations" anchor="operations">
+  <section title="Requirements for Operations" anchor="operations">
     <t>
-      It is optional to implement the server-side copy functionality. A client or server
-      might choose to fully implement both or just one of intra-server and inter-server
-      copy modes. A client cannot determine whether a server is going to support
-      asynchronous or synchronous copies. The requirements for the copy operations are
-      presented in <xref target="tbl:copy_ops" />. An 'R' indicates the operation is
-      required, while an 'O' indicates that it is optional.
+      The implementation of server-side copy is OPTIONAL by the
+      client and the server. However, in order to successfully copy
+      a file, some operations MUST be supported by the client and/or
+      server.
     </t>
 
-    <texttable anchor="tbl:copy_ops">
-    <ttcol align="left">Operation</ttcol>
-    <ttcol align="left">Server Intra</ttcol>
-    <ttcol align="left">Server Inter</ttcol>
-    <ttcol align="left">Client Intra</ttcol>
-    <ttcol align="left">Client Inter</ttcol>
-    <c>COPY (<xref target="op:copy" />)</c>                <c>R</c> <c>R</c> <c>R</c> <c>R</c>
-    <c>COPY_ABORT (<xref target="op:copy_abort" />)</c>    <c>R</c> <c>R</c> <c>R</c> <c>R</c>
-    <c>COPY_NOTIFY (<xref target="op:copy_notify" />)</c>  <c>O</c> <c>R</c> <c>O</c> <c>R</c>
-    <c>COPY_REVOKE (<xref target="op:copy_revoke" />)</c>  <c>O</c> <c>R</c> <c>O</c> <c>R</c>
-    <c>COPY_STATUS (<xref target="op:copy_status" />)</c>  <c>R</c> <c>R</c> <c>O</c> <c>O</c>
-    <c>CB_COPY (<xref target="op:cb_copy" />)</c>          <c>R</c> <c>R</c> <c>R</c> <c>R</c>
-    <postamble>Required operations depending on mode</postamble>
-    </texttable>
+    <t>
+      If a client desires an intra-server file copy, then it MUST
+      support the COPY and CB_COPY operations. If COPY returns a
+      stateid, then the client MAY use the COPY_ABORT and COPY_STATUS
+      operations.
+    </t>
+
+    <t>
+      If a client desires an inter-server file copy, then it MUST
+      support the COPY, COPY_NOTICE, and CB_COPY operations, and
+      MAY use the COPY_REVOKE operation. If COPY returns a stateid,
+      then the client MAY use the COPY_ABORT and COPY_STATUS
+      operations.
+    </t>
+
+    <t>
+      If a server supports intra-server copy, then the server MUST
+      support the COPY operation. If a server’s COPY operation
+      returns a stateid, then the server MUST also support these operations:
+      CB_COPY, COPY_ABORT, and COPY_STATUS.
+    </t>
+
+    <t>
+      If a source server supports inter-server copy, then the source
+      server MUST support all these operations: COPY_NOTIFY and
+      COPY_REVOKE. If a destination server supports inter-server
+      copy, then the destination server MUST support the COPY
+      operation. If a destination server’s COPY operation returns
+      a stateid, then the destination server MUST also support these
+      operations: CB_COPY, COPY_ABORT, COPY_NOTIFY, COPY_REVOKE,
+      and COPY_STATUS.
+    </t>
 
     <t>
       Each operation is performed in the context of the user identified
