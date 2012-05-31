@@ -9,13 +9,13 @@ Target Date  Draft  Line  Text
 05/17/12      10    2669  Section 11.2.2: Attribute 80: sec_label
 05/17/12      10    4807  Section 14.1: CB_ATTR_CHANGED
 05/24/12      11     379  Chapter 2: Server-side Copy
-05/24/12      11    2959  Section 13.1: COPY
-05/24/12      11    3368  Section 13.2: COPY_ABORT
-05/24/12      11    3426  Section 13.3: COPY_NOTIFY
-05/24/12      11    3550  Section 13.4: COPY_REVOKE
-05/24/12      11    3608  Section 13.5: COPY_STATUS
-05/24/12      11    4853  Section 14.2: CB_COPY
-05/24/12      11    2502  Section 10.1.2: Server-side Copy Errors
+05/31/12      11    2959  Section 13.1: COPY
+05/31/12      11    3368  Section 13.2: COPY_ABORT
+05/31/12      11    3426  Section 13.3: COPY_NOTIFY
+05/31/12      11    3550  Section 13.4: COPY_REVOKE
+05/31/12      11    3608  Section 13.5: COPY_STATUS
+05/31/12      11    4853  Section 14.2: CB_COPY
+05/31/12      11    2502  Section 10.1.2: Server-side Copy Errors
                           Chapter 3: Support for Application IO Hints
                           Section 13.8: IO_ADVISE
                           Chapter 4: Sparse Files
