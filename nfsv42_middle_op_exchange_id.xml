@@ -38,8 +38,8 @@
        A client SHOULD request the EXCHGID4_FLAG_SUPP_FENCE_OPS capability
        when it sends an EXCHANGE_ID operation.  The server SHOULD set this
        capability in the EXCHANGE_ID reply whether the client requests it or
-       not.  If the client ID is created with this capability then the
-       following will occur:
+       not.  It is the server's return that determines whether this capability
+       is in effect.  When it is in effect, the following will occur:
     </t>
 
     <t>
@@ -53,15 +53,6 @@
           The server will not reply to subsequent EXCHANGE_ID invoked on the
           same client owner with a new verifier until all operations in
           progress on the client ID's session are completed or aborted.
-        </t>
-
-        <t>
-          When DESTROY_CLIENTID is invoked, if there are sessions (both idle
-          and non-idle), opens, locks, delegations, layouts, and/or wants
-          (Section 18.49 of  <xref target="ref:RFC5661" />) associated with the client ID are removed.
-          Pending operations will be completed or aborted before the
-          sessions, opens, locks, delegations, layouts, and/or wants are
-          deleted.
         </t>
 
         <t>
