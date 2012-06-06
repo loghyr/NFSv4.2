@@ -92,7 +92,7 @@
           deleted, taking block sharing into consideration.
         </t>
 
-        <t hangText="INITIALIZED">
+        <t hangText="INITIALIZE">
           This operation zeroes and/or deallocates the blocks
           backing a region of the file.
         </t>
