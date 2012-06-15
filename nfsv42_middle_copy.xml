@@ -494,11 +494,11 @@
       </t>
 
       <t>
-        A copy offload stateid's seqid MUST NOT be 0 (zero). In the
+        A copy offload stateid's seqid MUST NOT be 0. In the
         context of a copy offload operation, it is ambiguous to indicate
         the most recent copy offload operation using a stateid with
-        seqid of 0 (zero). Therefore a copy offload stateid with seqid
-        of 0 (zero) MUST be considered invalid.
+        seqid of 0. Therefore a copy offload stateid with seqid
+        of 0 MUST be considered invalid.
       </t>
     </section>
   </section>
