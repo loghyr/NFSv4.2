@@ -49,9 +49,7 @@
     </t>
 
     <t>
-      In order to avoid this problem, the minor version incorporating
-      the COPY operations will need to make a few small changes in
-      the handling of existing operations. If a server supports the
+      If a server supports the
       server-to-server COPY feature, a PUTFH followed by a SAVEFH
       MUST NOT return NFS4ERR_STALE for either operation. These
       restrictions do not pose substantial difficulties for
@@ -126,7 +124,7 @@
       If the ca_source_server list is specified, then this is an inter-server
       copy operation and the source file is on a remote server.  The client
       is expected to have previously issued a successful COPY_NOTIFY request
-      to the remote source server. The ca_source_server list SHOULD be the
+      to the remote source server. The ca_source_server list MUST be the
       same as the COPY_NOTIFY response's cnr_source_server list. If the client
       includes the entries from the COPY_NOTIFY response's cnr_source_server
       list in the ca_source_server list, the source server can indicate a
@@ -167,14 +165,15 @@
     <t>
       For NFSv4.2, <xref target="req_attr_tbl" /> and
       <xref target="rec_attr_tbl" /> list the REQUIRED and
-      RECOMMENDED attributes respectively. A "MUST" in the
-      "Copy to destination file?" column indicates that the
-      attribute is part of the MUST copy set. A "SHOULD" in
-      the "Copy to destination file?" column indicates that
-      the attribute is part of the SHOULD copy set.
+      RECOMMENDED attributes respectively. In the 
+      "Copy to destination file?" column, a "MUST" indicates that the
+      attribute is part of the MUST copy set. A "SHOULD" 
+      indicates that the attribute is part of the SHOULD copy set.
+      A "no" indicates that the attribute MUST NOT be copied.
     </t>
 
     <texttable anchor="req_attr_tbl">
+      <preamble>REQUIRED attributes</preamble>
       <ttcol align='left' >Name</ttcol>
       <ttcol align='left' >Id</ttcol>
       <ttcol align='left' >Copy to destination file?</ttcol>
@@ -196,6 +195,7 @@
     </texttable>
 
     <texttable anchor="rec_attr_tbl">
+      <preamble>RECOMMENDED attributes</preamble>
       <ttcol align='left' >Name</ttcol>
       <ttcol align='left' >Id</ttcol>
       <ttcol align='left' >Copy to destination file?</ttcol>
