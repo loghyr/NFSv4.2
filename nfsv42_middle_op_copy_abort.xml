@@ -32,7 +32,7 @@
       was successful or not. A value of NFS4_OK indicates that the
       copy operation was canceled and no callback will be issued
       by the server. A copy operation that is successfully canceled
-      may result in none, some, or all of the data copied.
+      may result in none, some, or all of the data and/or metadata copied.
     </t>
 
     <t>

@@ -67,10 +67,10 @@
 
       <section title="NFS4ERR_PARTNER_NO_AUTH (Error Code 10089)" anchor="err_PARTNER_NO_AUTH">
         <t>
-          The remote server does not authorize a
+          The source server does not authorize a
           server-to-server copy offload operation.  This may be due to the
-          client's failure to send the COPY_NOTIFY operation to the remote
-          server, the remote server receiving a server-to-server copy
+          client's failure to send the COPY_NOTIFY operation to the source
+          server, the source server receiving a server-to-server copy
           offload request after the copy lease time expired, or for some
           other permission problem.
         </t>

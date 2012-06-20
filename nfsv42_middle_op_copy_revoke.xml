@@ -29,7 +29,10 @@
     </t>
 
     <t>
-      The COPY_REVOKE operation is useful in situations in which the
+      The client uses COPY_ABORT to inform the destination to stop the
+      active transfer and COPY_REVOKE to inform the source to not allow
+      any more copy requests from the destination.
+      The COPY_REVOKE operation is also useful in situations in which the
       source server granted a very long or infinite lease on the
       destination server's ability to read the source file and
       all copy operations on the source file have been completed.

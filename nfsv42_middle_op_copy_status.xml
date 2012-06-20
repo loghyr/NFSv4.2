@@ -14,8 +14,7 @@
     <t>
       COPY_STATUS is used for both intra- and inter-server asynchronous
       copies. The COPY_STATUS operation allows the client to poll the
-      server to determine the status of an asynchronous copy operation.
-      This operation is sent by the client to the destination server.
+      destination server to determine the status of an asynchronous copy operation.
     </t>
 
     <t>

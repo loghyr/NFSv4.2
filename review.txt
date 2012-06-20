@@ -31,3 +31,6 @@ Target Date  Draft  Line  Text
                           Chapter 15: IANA Considerations
                           Chapter 16: References
                           Chapter 1: Introduction
+
+
+COPY_REVOKE stops sharing.
