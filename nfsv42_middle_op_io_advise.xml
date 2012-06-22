@@ -2,14 +2,6 @@
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='sec:io_advise' title='Operation 67: IO_ADVISE - Application I/O access pattern hints'>
-  <t>
-    This section introduces a new operation, named IO_ADVISE, which allows
-    NFS clients to communicate application I/O access pattern hints to
-    the NFS server.  This new operation will allow hints to be sent to
-    the server when applications use posix_fadvise, direct I/O, or at any
-    other point at which the client finds useful.
-  </t>
-
   <section toc='exclude' title="ARGUMENT">
    <?rfc include='autogen/io_advise_args.xml'?>
   </section>
@@ -29,7 +21,7 @@
     </t>
 
     <t>
-      The following are the possible hints:
+      The following are the allowed hints:
     </t>
 
     <t>
