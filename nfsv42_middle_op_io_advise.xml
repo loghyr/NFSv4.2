@@ -176,18 +176,16 @@
     </t>
 
     <t>
-      If NFL42_UFLG_IO_ADVISE_THRU_MDS is set, then if the client
-      implements IO_ADVISE, then if it wants the DS to honor IO_ADVISE, the
-      client MUST send the operation to the MDS, and the server will
-      communicate the advice back each DS. If the client sends IO_ADVISE to
-      the DS, then the server MAY return NFS4ERR_NOTSUPP.
+      If NFL42_UFLG_IO_ADVISE_THRU_MDS is set, the client MUST send the
+      IO_ADVISE operation to the MDS in order for it to be honored by the DS.  
+      Once the MDS receives the IO_ADVISE operation, it will communicate the
+      advice to each DS.
     </t>
 
     <t>
-      If NFL42_UFLG_IO_ADVISE_THRU_MDS is not set, then this indicates to
-      client that if wants to inform the server via IO_ADVISE of the
-      client's intended use of the file, then the client SHOULD send an
-      IO_ADVISE to each DS. While the client MAY always send IO_ADVISE to
+      If NFL42_UFLG_IO_ADVISE_THRU_MDS is not set, then the client SHOULD send
+      an IO_ADVISE operation to the appropriate DS for the specified byte range.
+      While the client MAY always send IO_ADVISE to
       the MDS, if the server has not set NFL42_UFLG_IO_ADVISE_THRU_MDS, the
       client should expect that such an IO_ADVISE is futile. Note that a
       client SHOULD use the same set of arguments on each IO_ADVISE sent to
