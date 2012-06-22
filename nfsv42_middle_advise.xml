@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='sec:ioadvise' title='Support for Application IO Hints'>
   <section anchor='ss:ioadvise:intro' title='Introduction'>
@@ -7,46 +7,25 @@
       Applications currently have several options for communicating I/O
       access patterns to the NFS client.  While this can help the NFS
       client optimize I/O and caching for a file, it does not allow the NFS
-      server and its exported file system to do likewise.  Therefore, here
-      we put forth a proposal for the NFSv4.2 protocol to allow
-      applications to communicate their expected behavior to the server.
+      server and its exported file system to do likewise. 
+      This chapter adds a new IO_ADVISE operation to communicate the
+      client file access patterns to the NFS server.  The NFS server upon
+      receiving a IO_ADVISE operation MAY choose to alter its I/O and
+      caching behavior, but is under no obligation to do so.
     </t>
 
     <t>
-      By communicating expected access pattern, e.g., sequential or random,
-      and data re-use behavior, e.g., data range will be read multiple
-      times and should be cached, the server will be able to better
-      understand what optimizations it should implement for access to a
-      file.  For example, if a application indicates it will never read the
-      data more than once, then the file system can avoid polluting the
-      data cache and not cache the data.
-    </t>
-
-    <t>
-      The first application that can issue client I/O hints is the
-      posix_fadvise operation.  For example, on Linux, when an application
-      uses posix_fadvise to specify a file will be read sequentially, Linux
+      Applications can issue client I/O hints via the
+      posix_fadvise() <xref target="ref:posix_fadvise" /> operation.
+      For example, on Linux, when an application
+      uses posix_fadvise() to specify a file will be read sequentially, Linux
       doubles the readahead buffer size.
-    </t>
-
-    <t>
-      Another instance where applications provide an indication of their
-      desired I/O behavior is the use of direct I/O.  By specifying direct
-      I/O, clients will no longer cache data, but this information is not
-      passed to the server, which will continue caching data.
     </t>
 
     <t>
       Application specific NFS clients such as those used by hypervisors
       and databases can also leverage application hints to communicate
       their specialized requirements.
-    </t>
-
-    <t>
-      This section adds a new IO_ADVISE operation to communicate the
-      client file access patterns to the NFS server.  The NFS server upon
-      receiving a IO_ADVISE operation MAY choose to alter its I/O and
-      caching behavior, but is under no obligation to do so.
     </t>
   </section>
 
@@ -157,7 +136,7 @@
     </t>
 
     <t>
-      Another use case is "Direct I/O", which allows a stated holder to
+      Another use case is "Direct I/O", which allows a stateid holder to
       inform the server that it does not wish to cache data.  Today, for
       applications that only intend to read data once, the use of direct
       I/O disables client caching, but does not affect server caching.  By
@@ -170,7 +149,7 @@
     </t>
 
     <t>
-      Another use case is "Backward Sequential Read", which allows a stated
+      Another use case is "Backward Sequential Read", which allows a stateid
       holder to inform the server that it intends to read the specified
       data backwards, i.e., back the end to the beginning.  This is
       different than POSIX_FADV_SEQUENTIAL, whose implied intention was
@@ -179,12 +158,6 @@
       prefetch data sequentially in a backwards manner to the start of the
       data range.  One example of an application that can make use of this
       hint is video editing.
-    </t>
-  </section>
-
-  <section anchor='ss:ioadvise:secs' title='Security Considerations'>
-    <t>
-     None.
     </t>
   </section>
 

@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='sec:io_advise' title='Operation 67: IO_ADVISE - Application I/O access pattern hints'>
   <t>
@@ -21,7 +21,7 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       The IO_ADVISE operation sends an I/O access pattern hint to the
-      server for the owner of stated for a given byte range specified by
+      server for the owner of the stateid for a given byte range specified by
       iar_offset and iar_count.  The byte range specified by iar_offset and iar_count need
       not currently exist in the file, but the iar_hints will apply to the byte
       range when it does exist.  If iar_count is 0, all data following
@@ -41,29 +41,29 @@
         </t>
 
         <t hangText='IO_ADVISE4_SEQUENTIAL'>
-          Specifies that the stated holder expects
+          Specifies that the stateid holder expects
           to access the specified data sequentially from lower offsets to
           higher offsets.
         </t>
 
         <t hangText='IO_ADVISE4_SEQUENTIAL BACKWARDS'>
-          Specifies that the stated holder
+          Specifies that the stateid holder
           expects to access the specified data sequentially from higher
           offsets to lower offsets.
         </t>
 
         <t hangText='IO_ADVISE4_RANDOM'>
-          Specifies that the stated holder expects to
+          Specifies that the stateid holder expects to
           access the specified data in a random order.
         </t>
 
         <t hangText='IO_ADVISE4_WILLNEED'>
-          Specifies that the stated holder expects to
+          Specifies that the stateid holder expects to
           access the specified data in the near future.
         </t>
 
         <t hangText='IO_ADVISE4_WILLNEED_OPPORTUNISTIC'>
-          Specifies that the stated
+          Specifies that the stateid
           holder expects to possibly access the data in the near future.
           This is a speculative hint, and therefore the server should
           prefetch data or indirect blocks only if it can be done at a
@@ -71,22 +71,22 @@
         </t>
 
         <t hangText='IO_ADVISE_DONTNEED'>
-          Specifies that the stated holder expects that
+          Specifies that the stateid holder expects that
           it will not access the specified data in the near future.
         </t>
 
         <t hangText='IO_ADVISE_NOREUSE'>
-          Specifies that the stated holder expects to
+          Specifies that the stateid holder expects to
           access the specified data once and then not reuse it thereafter.
         </t>
 
         <t hangText='IO_ADVISE4_READ'>
-          Specifies that the stated holder expects to read
+          Specifies that the stateid holder expects to read
           the specified data in the near future.
         </t>
 
         <t hangText='IO_ADVISE4_WRITE'>
-          Specifies that the stated holder expects to
+          Specifies that the stateid holder expects to
           write the specified data in the near future.
         </t>
 
@@ -98,22 +98,23 @@
           server to make better choices about which data to, for example purge
           from a cache, or move to secondary storage.  It also informs the
           server which delegations are more important, since if delegations are
-          working correctly, once delegated to a client, a server might never
-          receive another I/O request for the file.
+          working correctly, once delegated to a client and the client
+          has read the content for that byte range, a server might never
+          receive another read request for that byte range.
         </t>
       </list>
     </t>
 
     <t>
-      The server will return success if the operation is properly formed,
-      otherwise the server will return an error.  The server MUST NOT
-      return an error if it does not recognize or does not support the
-      requested advice.  This is also true even if the client sends
-      contradictory hints to the server, e.g., IO_ADVISE4_SEQUENTIAL and
-      IO_ADVISE4_RANDOM in a single IO_ADVISE operation.  In this case, the
+      Since IO_ADVISE is a hint, a server SHOULD not return an error
+      and invalidate a entire Compound request if one of sent hints is not
+      supported by the server.  Also, the server MUST NOT
+      return an error if the client sends contradictory hints to
+      the server, e.g., IO_ADVISE4_SEQUENTIAL and
+      IO_ADVISE4_RANDOM in a single IO_ADVISE operation.  In these cases, the
       server MUST return success and a ior_hints value that indicates the
-      hint it intends to optimize. For contradictory hints, this may mean
-      simply returning IO_ADVISE4_NORMAL for example.
+      hint it intends to optimize. This may mean
+      simply returning IO_ADVISE4_NORMAL.
     </t>
 
     <t>
@@ -140,7 +141,7 @@
     <t>
       Each issuance of the IO_ADVISE operation overrides all previous
       issuances of IO_ADVISE for a given byte range.  This effectively
-      follows a strategy of last hint wins for a given stated and byte
+      follows a strategy of last hint wins for a given stateid and byte
       range.
     </t>
 
@@ -161,17 +162,6 @@
       of posix_fadvise.  In this case, IO_ADVISE4_WRITE and IO_ADVISE4_READ
       may be set based upon the type of file access specified when the file
       was opened.
-    </t>
-
-    <t>
-      Another useful point would be when an application indicates it is
-      using direct I/O.  Direct I/O may be specified at file open, in which
-      case a IO_ADVISE may be included in the same compound as the OPEN
-      operation with the IO_ADVISE4_NOREUSE flag set.  Direct I/O may also
-      be specified separately, in which case a IO_ADVISE operation can be
-      sent to the server separately. As above, IO_ADVISE4_WRITE and
-      IO_ADVISE4_READ may be set based upon the type of file access
-      specified when the file was opened.
     </t>
   </section>
 

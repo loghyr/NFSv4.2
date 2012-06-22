@@ -16,13 +16,13 @@ Target Date  Draft  Line  Text
 06/14/12      11    3608  Section 13.5: COPY_STATUS
 06/14/12      11    4853  Section 14.2: CB_COPY
 06/14/12      11    2502  Section 10.1.2: Server-side Copy Errors
-                          Chapter 3: Support for Application IO Hints
-                          Section 13.8: IO_ADVISE
-                          Chapter 4: Sparse Files
-                          Chapter 5: Space Reservation
-                          Section 11.2.3: Attribute 77: space_reserved
-                          Section 11.2.4: Attribute 78: space_freed
-                          Chapter 6: Application Data Block Support
+06/20/12      12    1369  Chapter 3: Support for Application IO Hints
+06/20/12      12    3879  Section 13.8: IO_ADVISE
+06/20/12      12    1535  Chapter 4: Sparse Files
+06/20/12      12    1598  Chapter 5: Space Reservation
+06/20/12      12    2695  Section 11.2.3: Attribute 77: space_reserved
+06/20/12      12    2724  Section 11.2.4: Attribute 78: space_freed
+06/20/12      12    1712  Chapter 6: Application Data Block Support
                           Section 13.7: INITIALIZE
                           Section 13.10: READ_PLUS
                           Section 13.11: SEEK
@@ -31,6 +31,3 @@ Target Date  Draft  Line  Text
                           Chapter 15: IANA Considerations
                           Chapter 16: References
                           Chapter 1: Introduction
-
-
-COPY_REVOKE stops sharing.
