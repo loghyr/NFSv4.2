@@ -98,15 +98,16 @@
     </t>
 
     <t>
-      Since IO_ADVISE is a hint, a server SHOULD not return an error
-      and invalidate a entire Compound request if one of sent hints is not
-      supported by the server.  Also, the server MUST NOT
-      return an error if the client sends contradictory hints to
-      the server, e.g., IO_ADVISE4_SEQUENTIAL and
-      IO_ADVISE4_RANDOM in a single IO_ADVISE operation.  In these cases, the
-      server MUST return success and a ior_hints value that indicates the
-      hint it intends to optimize. This may mean
-      simply returning IO_ADVISE4_NORMAL.
+      Since IO_ADVISE is a hint, a server SHOULD NOT return an
+      error and invalidate a entire Compound request if one of
+      the sent hints in iar_hints is not supported by the server.  Also, the
+      server MUST NOT return an error if the client sends
+      contradictory hints to the server, e.g.,
+      IO_ADVISE4_SEQUENTIAL and IO_ADVISE4_RANDOM in a single
+      IO_ADVISE operation.  In these cases, the server MUST
+      return success and a ior_hints value that indicates
+      the hint it intends to implement. This may mean simply
+      returning IO_ADVISE4_NORMAL.
     </t>
 
     <t>
@@ -320,8 +321,8 @@
 
 
     <t>
-      The following hints will always apply to specified byte range, and
-      will treated as one time instructions:
+      The following hints will always apply to the specified byte range, and
+      will be treated as one time instructions:
     </t>
 
     <t>

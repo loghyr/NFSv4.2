@@ -1,20 +1,12 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor="sec:copy" title="NFS Server-side Copy">
   <section title="Introduction">
     <t>
-      This section describes a server-side copy feature for
-      the NFS protocol.
-    </t>
-
-    <t>
       The server-side copy feature provides a mechanism for
       the NFS client to perform a file copy on the server without
       the data being transmitted back and forth over the network.
-    </t>
-
-    <t>
       Without this feature, an NFS client copies data from one location
       to another by reading the data from the server over the network, and
       then writing the data back over the network to the server. Using this
