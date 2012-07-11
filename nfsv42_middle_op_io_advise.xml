@@ -21,78 +21,59 @@
     </t>
 
     <t>
-      The following are the allowed hints:
+      The following are the allowed hints for a stateid holder:
     </t>
 
     <t>
       <list style='hanging'>
         <t hangText='IO_ADVISE4_NORMAL'>
-          Specifies that the application has no advice
-          to give on its behavior with respect to the specified data. It is
-          the default characteristic if no advice is given.
+          There is no advice to give, this is the default behavior.
         </t>
 
         <t hangText='IO_ADVISE4_SEQUENTIAL'>
-          Specifies that the stateid holder expects
-          to access the specified data sequentially from lower offsets to
+          Expects to access the specified data sequentially from lower offsets to
           higher offsets.
         </t>
 
         <t hangText='IO_ADVISE4_SEQUENTIAL BACKWARDS'>
-          Specifies that the stateid holder
-          expects to access the specified data sequentially from higher
+          Expects to access the specified data sequentially from higher
           offsets to lower offsets.
         </t>
 
         <t hangText='IO_ADVISE4_RANDOM'>
-          Specifies that the stateid holder expects to
-          access the specified data in a random order.
+          Expects to access the specified data in a random order.
         </t>
 
         <t hangText='IO_ADVISE4_WILLNEED'>
-          Specifies that the stateid holder expects to
-          access the specified data in the near future.
+          Expects to access the specified data in the near future.
         </t>
 
         <t hangText='IO_ADVISE4_WILLNEED_OPPORTUNISTIC'>
-          Specifies that the stateid
-          holder expects to possibly access the data in the near future.
+          Expects to possibly access the data in the near future.
           This is a speculative hint, and therefore the server should
           prefetch data or indirect blocks only if it can be done at a
           marginal cost.
         </t>
 
         <t hangText='IO_ADVISE_DONTNEED'>
-          Specifies that the stateid holder expects that
-          it will not access the specified data in the near future.
+          Expects that it will not access the specified data in the near future.
         </t>
 
         <t hangText='IO_ADVISE_NOREUSE'>
-          Specifies that the stateid holder expects to
-          access the specified data once and then not reuse it thereafter.
+          Expects to access the specified data once and then not reuse it thereafter.
         </t>
 
         <t hangText='IO_ADVISE4_READ'>
-          Specifies that the stateid holder expects to read
-          the specified data in the near future.
+          Expects to read the specified data in the near future.
         </t>
 
         <t hangText='IO_ADVISE4_WRITE'>
-          Specifies that the stateid holder expects to
-          write the specified data in the near future.
+          Expects to write the specified data in the near future.
         </t>
 
         <t hangText = 'IO_ADVISE4_INIT_PROXIMITY'>
-          The client has recently accessed the byte range in
-          its own cache.  This informs the server that the data in the byte
-          range remains important to the client.  When the server reaches
-          resource exhaustion, knowing which data is more important allows the
-          server to make better choices about which data to, for example purge
-          from a cache, or move to secondary storage.  It also informs the
-          server which delegations are more important, since if delegations are
-          working correctly, once delegated to a client and the client
-          has read the content for that byte range, a server might never
-          receive another read request for that byte range.
+          Informs the server that the data in the byte range remains important
+          to the client.
         </t>
       </list>
     </t>
@@ -152,9 +133,32 @@
 
     <t>
       The most obvious is in direct response to an application's execution
-      of posix_fadvise.  In this case, IO_ADVISE4_WRITE and IO_ADVISE4_READ
+      of posix_fadvise().  In this case, IO_ADVISE4_WRITE and IO_ADVISE4_READ
       may be set based upon the type of file access specified when the file
       was opened.
+    </t>
+  </section>
+
+  <section toc='exclude' title="IO_ADVISE4_INIT_PROXIMITY">
+    <t>
+      The IO_ADVISE4_INIT_PROXIMITY hint is non-posix in origin and
+      conveys that the client has recently accessed the byte range in
+      its own cache. I.e., it has not accessed it on the server, but
+      it has locally.  When the server reaches
+      resource exhaustion, knowing which data is more important allows the
+      server to make better choices about which data to, for example purge
+      from a cache, or move to secondary storage.  It also informs the
+      server which delegations are more important, since if delegations are
+      working correctly, once delegated to a client and the client
+      has read the content for that byte range, a server might never
+      receive another read request for that byte range.
+    </t>
+
+    <t>
+      This hint is also useful in the case of NFS clients which are
+      network booting from a server. If the first client to be booted
+      sends this hint, then it keeps the cache warm for the remaining
+      clients.
     </t>
   </section>
 
@@ -291,60 +295,5 @@
         the response.
       </t>
     </section>
-  </section>
-
-  <section toc='exclude' title="Number of Supported File Segments">
-    <t>
-      In theory IO_ADVISE allows a client and server to support multiple
-      file segments, meaning that different, possibly overlapping, byte
-      ranges of the same open file reference will support different hints.
-      This is not practical, and in general the server will support just
-      one set of hints, and these will apply to the entire file. However,
-      there are some hints that very ephemeral, and are essentially amount
-      to one time instructions to the NFS server, which will be forgotten
-      momentarily after IO_ADVISE is executed.
-    </t>
-
-    <t>
-      The following hints will always apply to the entire file, regardless of
-      the specified byte range:
-    </t>
-
-    <t>
-      <list style='symbols'>
-        <t>IO_ADVISE4_NORMAL</t>
-        <t>IO_ADVISE4_SEQUENTIAL</t>
-        <t>IO_ADVISE4_SEQUENTIAL_BACKWARDS</t>
-        <t>IO_ADVISE4_RANDOM</t>
-      </list>
-    </t>
-
-
-    <t>
-      The following hints will always apply to the specified byte range, and
-      will be treated as one time instructions:
-    </t>
-
-    <t>
-      <list style='symbols'>
-        <t>IO_ADVISE4_WILLNEED</t>
-        <t>IO_ADVISE4_WILLNEED_OPPORTUNISTIC</t>
-        <t>IO_ADVISE4_DONTNEED</t>
-        <t>IO_ADVISE4_NOREUSE</t>
-      </list>
-    </t>
-
-    <t>
-      The following hints are modifiers to all other hints, and will apply
-      to the entire file and/or to a one time instruction on the specified
-      byte range:
-    </t>
-
-    <t>
-      <list style='symbols'>
-        <t>IO_ADVISE4_READ</t>
-        <t>IO_ADVISE4_WRITE</t>
-      </list>
-    </t>
   </section>
 </section>

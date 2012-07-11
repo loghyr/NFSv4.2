@@ -2,36 +2,22 @@
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='sec:ioadvise' title='Support for Application IO Hints'>
-  <section anchor='ss:ioadvise:intro' title='Introduction'>
-    <t>
-      Applications currently have several options for communicating I/O
-      access patterns to the NFS client.  While this can help the NFS
-      client optimize I/O and caching for a file, it does not allow the NFS
-      server and its exported file system to do likewise. 
-      This chapter adds a new IO_ADVISE operation to communicate the
-      client file access patterns to the NFS server.  The NFS server upon
-      receiving a IO_ADVISE operation MAY choose to alter its I/O and
-      caching behavior, but is under no obligation to do so.
-    </t>
+  <t>
+    Applications can issue client I/O hints via 
+    posix_fadvise() <xref target="ref:posix_fadvise" /> to the NFS client.
+    While this can help the NFS
+    client optimize I/O and caching for a file, it does not allow the NFS
+    server and its exported file system to do likewise. 
+    We add an IO_ADVISE procedure (<xref target='sec:io_advise' />) to communicate the
+    client file access patterns to the NFS server.
+    The NFS server upon
+    receiving a IO_ADVISE operation MAY choose to alter its I/O and
+    caching behavior, but is under no obligation to do so.
+  </t>
 
-    <t>
-      Applications can issue client I/O hints via the
-      posix_fadvise() <xref target="ref:posix_fadvise" /> operation.
-      For example, on Linux, when an application
-      uses posix_fadvise() to specify a file will be read sequentially, Linux
-      doubles the readahead buffer size.
-    </t>
-
-    <t>
-      Application specific NFS clients such as those used by hypervisors
-      and databases can also leverage application hints to communicate
-      their specialized requirements.
-    </t>
-  </section>
-
-  <section anchor='ss:ioadvise:iana' title='IANA Considerations'>
-    <t>
-     The IO_ADVISE_type4 will be extended through an IANA registry.
-    </t>
-  </section>
+  <t>
+    Application specific NFS clients such as those used by hypervisors
+    and databases can also leverage application hints to communicate
+    their specialized requirements.
+  </t>
 </section>
