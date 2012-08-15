@@ -2,8 +2,8 @@
 union seek_content switch (data_content4 content) {
 case NFS4_CONTENT_DATA:
 	data_info4	sc_data;
-case NFS4_CONTENT_APP_BLOCK:
-	app_data_block4	sc_block;
+case NFS4_CONTENT_APP_DATA_HOLE:
+	app_data_hole4	sc_adh;
 case NFS4_CONTENT_HOLE:
 	data_info4	sc_hole;
 default:

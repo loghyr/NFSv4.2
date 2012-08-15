@@ -5,8 +5,8 @@
  * are explicitly disallowing data.
  */
 union initialize_arg4 switch (data_content4 content) {
-case NFS4_CONTENT_APP_BLOCK:
-	app_data_block4	ia_adb;
+case NFS4_CONTENT_APP_DATA_HOLE:
+	app_data_hole4	ia_adh;
 case NFS4_CONTENT_HOLE:
 	data_info4	ia_hole;
 default:

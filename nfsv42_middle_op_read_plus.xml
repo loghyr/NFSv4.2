@@ -6,7 +6,7 @@
     READ_PLUS is a new variant of the NFSv4.1 READ
     operation <xref target="ref:RFC5661" />. Besides being able
     to support all of the data semantics of READ, it can also be
-    used by the server to return either holes or ADBs to the
+    used by the server to return either holes or ADHs to the
     client.  For holes, READ_PLUS extends the response
     to avoid returning data for portions of
     the file which are either initialized and contain no backing store
@@ -14,19 +14,19 @@
     a data block composed entirely of zeros, then it is easier to return
     a hole. Returning data blocks of unitialized data wastes computational
     and network resources, thus reducing performance.
-    For ADBs, READ_PLUS is used to return the metadata describing the
+    For ADHs, READ_PLUS is used to return the metadata describing the
     portions of the file which are either initialized and contain no backing
     store.
   </t>
 
   <t>
     If the client sends a READ operation, it is explicitly
-    stating that it is neither supporting sparse files nor ADBs. So
-    if a READ occurs on a sparse ADB or file, then the server must
+    stating that it is neither supporting sparse files nor ADHs. So
+    if a READ occurs on a sparse ADH or file, then the server must
     expand such data to be raw bytes. If a READ occurs in
-    the middle of a hole or ADB, the server can only send back
+    the middle of a hole or ADH, the server can only send back
     bytes starting from that offset. In contrast, if a READ_PLUS
-    occurs in the middle of a hole or ADB, the server can send
+    occurs in the middle of a hole or ADH, the server can send
     back a range which starts before the offset and extends past
     the range.
   </t>
@@ -35,7 +35,7 @@
     READ is inefficient for transfer of sparse sections of the file. As
     such, READ is marked as OBSOLETE in NFSv4.2. Instead, a client
     should issue READ_PLUS. Note that
-    as the client has no a priori knowledge of whether either an ADB
+    as the client has no a priori knowledge of whether either an ADH
     or a hole is present or not, it should always use READ_PLUS.
   </t>
 
@@ -65,10 +65,10 @@
 
     <t>
       The READ_PLUS result is comprised of an array of rpr_contents, each of
-      which describe a data_content4 type of data (<xref target="ss:adb:dc" />).
+      which describe a data_content4 type of data (<xref target="ss:adh:dc" />).
       For NFSv4.2, the allowed
-      values are data, ADB, and hole. A server is required to support the
-      data type, but neither ADB nor hole. Both an ADB and a hole must be
+      values are data, ADH, and hole. A server is required to support the
+      data type, but neither ADH nor hole. Both an ADH and a hole must be
       returned in its entirety - clients must be prepared to get more
       information than they requested.
     </t>
@@ -92,8 +92,8 @@
 
     <t>
       The server may elect to return adjacent elements of the same type. For
-      example, the guard pattern or block size of an ADB might change, which
-      would require adjacent elements of type ADB. Likewise if the server
+      example, the guard pattern or block size of an ADH might change, which
+      would require adjacent elements of type ADH. Likewise if the server
       has a range of data comprised entirely of zeros and then a hole, it
       might want to return two adjacent holes to the client.
     </t>
@@ -176,7 +176,7 @@
     <section toc='exclude' title="Additional pNFS Implementation Information">
       <t>
         With pNFS, the semantics of using READ_PLUS remains the same.  Any
-        data server MAY return a hole or ADB result for a READ_PLUS request that
+        data server MAY return a hole or ADH result for a READ_PLUS request that
         it receives.  When a data server chooses to return such a result, it has the
         option of returning information for the data stored on that
         data server (as defined by the data layout), but it MUST not return
@@ -185,7 +185,7 @@
 
       <t>
         A data server should do its best to return as much information about
-        a hole ADB as is feasible without having to contact the metadata server.
+        a ADH as is feasible without having to contact the metadata server.
         If communication with the metadata server is required, then every
         attempt should be taken to minimize the number of requests.
       </t>

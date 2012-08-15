@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor='sec:adb' title='Application Data Block Support'>
+<section anchor='sec:adh' title='Application Data Hole Support'>
   <t>
     At the OS level, files are contained on disk
     blocks.  Applications are also free to impose structure on the
@@ -23,10 +23,8 @@
   <t>
     <list style='numbers'>
       <t>
-        An ADB
-        Number (ADBN), which allows the application to determine which
-        data block is being referenced.
-        The ADBN is a logical block number and is useful when the
+        A logical block number which allows the application to determine which
+        data block is being referenced.  This is useful when the
         client is not storing the blocks in contiguous memory.
       </t>
 
@@ -49,39 +47,34 @@
     What they are not able to do is efficiently transfer and
     store ADBs. To initialize a file with ADBs, the client
     must send the full ADB to the server and that must be stored
-    on the server. When the application is initializing a file
-    to have the ADB structure, it could compress the ADBs to
-    just the information to necessary to later reconstruct the
-    header portion of the ADB when the contents are read back.
-    Using sparse file techniques, the disk blocks described by
-    would not be allocated. Unlike sparse file techniques, there
-    would be a small cost to store the compressed header
-    data.
+    on the server.
   </t>
 
   <t>
-    In this section, we are going to define a generic framework
-    for an ADB, present one approach to detecting corruption in
-    a given ADB implementation, and describe the model for
+    In this section, we are going to define an Application Data
+    Hole (ADH), which is a generic framework
+    for transfering the  ADB, present one approach to detecting corruption in
+    a given ADH implementation, and describe the model for
     how the client and server can support efficient initialization
-    of ADBs, reading of ADB holes, punching holes in ADBs, and space
-    reservation.
+    of ADHs, reading of ADH holes, punching ADH holes in a file, and space
+    reservation. We define the ADHN to be the Application Data Hole
+    Number, which is the logical block number discussed earlier.
   </t>
 
-  <section anchor='ss:adb:framework' title='Generic Framework'>
+  <section anchor='ss:adh:framework' title='Generic Framework'>
     <t>
-      We want the representation of the ADB to be flexible
+      We want the representation of the ADH to be flexible
       enough to support many different applications. The most
       basic approach is no imposition of a block at all, which
       means we are working with the raw bytes. Such an approach
       would be useful for storing holes, punching holes, etc.
       In more complex deployments, a server might be supporting
       multiple applications, each with their own definition of
-      the ADB. One might store the ADBN at the start of the block
+      the ADH. One might store the ADHN at the start of the block
       and then have a guard pattern to detect corruption
       <xref target='ref:solaris:corruption' />. The next
-      might store the ADBN at an offset of 100 bytes within the
-      block and have no guard pattern at all.  I.e., 
+      might store the ADHN at an offset of 100 bytes within the
+      block and have no guard pattern at all, i.e.,
       existing applications might already have well defined
       formats for their data blocks.
     </t>
@@ -90,7 +83,7 @@
       The guard pattern can be used to represent the state of
       the block, to protect against corruption, or both. Again,
       it needs to be able to be placed anywhere within the
-      ADB.
+      ADH.
     </t>
 
     <t>
@@ -100,41 +93,41 @@
       sized blocks in a file.
     </t>
 
-    <section anchor='ss:adb:db' title='Data Block Representation'>
-      <?rfc include='autogen/app_data_block4.xml'?>
+    <section anchor='ss:adh:dh' title='Data Hole Representation'>
+      <?rfc include='autogen/app_data_hole4.xml'?>
 
       <t>
-        The app_data_block4 structure captures the abstraction presented
-        for the ADB. The additional fields present are to allow
-        the transmission of adb_block_count ADBs at one time.  We
-        also use adb_block_num to convey the ADBN of the first block
-        in the sequence.  Each ADB will contain the same adb_pattern
+        The app_data_hole4 structure captures the abstraction presented
+        for the ADH. The additional fields present are to allow
+        the transmission of adh_block_count ADHs at one time.  We
+        also use adh_block_num to convey the ADHN of the first block
+        in the sequence.  Each ADH will contain the same adh_pattern
         string.
       </t>
 
       <t>
-        As both adb_block_num and adb_pattern are optional, if
-        either adb_reloff_pattern or adb_reloff_blocknum is set
+        As both adh_block_num and adh_pattern are optional, if
+        either adh_reloff_pattern or adh_reloff_blocknum is set
         to NFS4_UINT64_MAX, then the corresponding field is not
-        set in any of the ADB.
+        set in any of the ADH.
       </t>
     </section>
 
-    <section anchor='ss:adb:dc' title='Data Content'>
+    <section anchor='ss:adh:dc' title='Data Content'>
       <?rfc include='autogen/data_content4.xml'?>
 
       <t>
         New operations might need to differentiate between
-        wanting to access data versus an ADB. Also, future
+        wanting to access data versus an ADH. Also, future
         minor versions might want to introduce new data
         formats. This enumeration allows that to occur.
       </t>
     </section>
   </section>
 
-  <section anchor='ss:adb:pnfs' title='pNFS Considerations'>
+  <section anchor='ss:adh:pnfs' title='pNFS Considerations'>
     <t>
-      While this document does not mandate how sparse ADBs
+      While this document does not mandate how sparse ADHs
       are recorded on the server, it does make the assumption
       that such information is not in the file. I.e., the
       information is metadata. As such, the INITIALIZE operation
@@ -148,18 +141,18 @@
 
     <t>
       Furthermore, each DS MUST not report to a client a sparse
-      ADB which belongs to another DS. One implication
-      of this requirement is that the app_data_block4's adb_block_size
+      ADH which belongs to another DS. One implication
+      of this requirement is that the app_data_hole4's adh_block_size
       MUST be either be the stripe width or the stripe width
       must be an even multiple of it.  The second implication here
       is that the DS must be able to use the Control Protocol
-      to determine from the MDS where the sparse ADBs occur.
+      to determine from the MDS where the sparse ADHs occur.
     </t>
   </section>
 
-  <section anchor='ss:adb:corrupt' title='An Example of Detecting Corruption'>
+  <section anchor='ss:adh:corrupt' title='An Example of Detecting Corruption'>
     <t>
-      In this section, we define an ADB format in which
+      In this section, we define an ADH format in which
       corruption can be detected. Note that this is just
       one possible format and means to detect corruption.
     </t>
@@ -187,7 +180,7 @@
       <list style='hanging'>
         <t hangText='0xfeedface - '>
           This is the FREE state and indicates that the
-          ADB format has been applied.
+          ADH format has been applied.
         </t>
 
         <t hangText='0xcafedead - '>
@@ -215,7 +208,7 @@
       contents of the block. If the state is FREE, then
       that checksum is trivially zero. As such, the application
       has no need to transfer the checksum implicitly inside the
-      ADB - it need not make the transfer layer aware of the
+      ADH - it need not make the transfer layer aware of the
       fact that there is a checksum (see
       <xref target='ref:Oracle:corruption' /> for an example
       of checksums used to detect corruption in application
@@ -223,7 +216,7 @@
     </t>
 
     <t>
-      Corruption in each ADB can be detected thusly:
+      Corruption in each ADH can be detected thusly:
     </t>
 
     <t>
@@ -235,7 +228,7 @@
 
         <t>
           If the guard pattern is FREE and any other
-          byte in the remainder of the ADB is anything other
+          byte in the remainder of the ADH is anything other
           than zero.
         </t>
 
@@ -248,7 +241,7 @@
         <t>
           If the guard pattern is INDIRECT and one of the
           stored indirect block numbers has a value greater
-          than the number of ADBs in the file.
+          than the number of ADHs in the file.
         </t>
 
         <t>
@@ -263,7 +256,7 @@
       As can be seen, the application can detect errors based
       on the combination of the guard pattern state and the
       checksum. But also, the application can detect corruption
-      based on the state and the contents of the ADB.
+      based on the state and the contents of the ADH.
       This last point is important in validating the minimum
       amount of data we incorporated into our generic
       framework. I.e., the guard pattern is sufficient
@@ -281,13 +274,13 @@
     </t>
   </section>
 
-  <section anchor='ss:adb:ex_rp' title='Example of READ_PLUS'>
+  <section anchor='ss:adh:ex_rp' title='Example of READ_PLUS'>
     <t>
       The hypothetical application presented in
-      <xref target='ss:adb:corrupt' /> can be used to
+      <xref target='ss:adh:corrupt' /> can be used to
       illustrate how READ_PLUS would return an array
       of results. A file is created and initialized
-      with 100 4k ADBs in the FREE state:
+      with 100 4k ADHs in the FREE state:
     </t>
 
     <figure>
@@ -298,7 +291,7 @@
 
     <t>
       Further, assume the application writes a single
-      ADB at 16k, changing the guard pattern to 0xcafedead,
+      ADH at 16k, changing the guard pattern to 0xcafedead,
       we would then have in memory:
     </t>
 
@@ -312,27 +305,27 @@
 
     <t>
      And when the client did a READ_PLUS of 64k at the start of the file,
-     it would get back a result of an ADB, some data, and a final ADB:
+     it would get back a result of an ADH, some data, and a final ADH:
     </t>
 
     <figure>
       <artwork>
-   ADB {0, 4, 0, 0, 8, 0xfeedface}
+   ADH {0, 4, 0, 0, 8, 0xfeedface}
    data 4k
-   ADB {20k, 4k, 59, 0, 6, 0xfeedface}
+   ADH {20k, 4k, 59, 0, 6, 0xfeedface}
       </artwork>
     </figure>
 
   </section>
 
-  <section anchor='ss:adb:zero_holes' title='Zero Filled Holes'>
+  <section anchor='ss:adh:zero_holes' title='Zero Filled Holes'>
     <t>
       As applications are free to define the structure of an
-      ADB, it is trivial to define an ADB which supports
+      ADH, it is trivial to define an ADH which supports
       zero filled holes. Such a case would encompass the
       traditional definitions of a sparse file and hole
       punching. For example, to punch a 64k hole, starting
-      at 100M, into an existing file which has no ADB structure:
+      at 100M, into an existing file which has no ADH structure:
     </t>
 
     <figure>

@@ -4,7 +4,7 @@
 <section anchor='op:initialize' title='Operation 64: INITIALIZE'>
   <t>
     This operation can be used to initialize the structure imposed
-    by an application onto a file, i.e., ADBs, and to punch a hole into a file.
+    by an application onto a file, i.e., ADHs, and to punch a hole into a file.
   </t>
 
   <section toc='exclude' title="ARGUMENT">
@@ -17,8 +17,8 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      Using the data_content4 (<xref target="ss:adb:dc" />), INITIALIZE can be used
-      either to punch holes or to impose ADB structure on a file.
+      Using the data_content4 (<xref target="ss:adh:dc" />), INITIALIZE can be used
+      either to punch holes or to impose ADH structure on a file.
     </t>
 
     <section title="Hole punching">
@@ -98,20 +98,20 @@
         </list>
       </t>
     </section>
-    <section title="ADBs">
+    <section title="ADHs">
       <t>
-        If the server supports ADBs, then it MUST support the
-        NFS4_CONTENT_APP_BLOCK arm of the INITIALIZE operation.
+        If the server supports ADHs, then it MUST support the
+        NFS4_CONTENT_APP_DATA_HOLE arm of the INITIALIZE operation.
         The server has no concept of the structure imposed
         by the application. It is only when the application
         writes to a section of the file does order get imposed.
         In order to detect corruption even before the application
         utilizes the file, the application will want to initialize
-        a range of ADBs using INITIALIZE.
+        a range of ADHs using INITIALIZE.
       </t>
 
       <t>
-        For ADBs, when the client invokes the INITIALIZE operation, it has
+        For ADHs, when the client invokes the INITIALIZE operation, it has
         two desired results:
       </t>
 
@@ -132,7 +132,7 @@
         If the server supports the INITIALIZE operation, it still
         might not support sparse files. So if it receives the
         INITIALIZE operation, then it MUST populate the contents
-        of the file with the initialized ADBs.
+        of the file with the initialized ADHs.
       </t>
 
       <t>
@@ -147,7 +147,7 @@
           </t>
 
           <t>
-            Initializing in the middle of an existing ADB.
+            Initializing in the middle of an existing ADH.
           </t>
         </list>
       </t>
@@ -158,29 +158,29 @@
         INITIALIZE supports sparse files, then the data
         blocks are to be deallocated. If not, then the
         data blocks are to be rewritten in the indicated
-        ADB format.
+        ADH format.
       </t>
 
       <t>
-        Since the server has no knowledge of ADBs, it
-        should not report misaligned creation of ADBs.
+        Since the server has no knowledge of ADHs, it
+        should not report misaligned creation of ADHs.
         Even while it can detect them, it cannot disallow
         them, as the application might be in the process of
-        changing the size of the ADBs. Thus the server
+        changing the size of the ADHs. Thus the server
         must be prepared to handle an INITIALIZE into
-        an existing ADB.
+        an existing ADH.
       </t>
 
       <t>
         This document does not mandate the manner in
-        which the server stores ADBs sparsely for a
-        file. It does assume that if ADBs are stored
+        which the server stores ADHs sparsely for a
+        file. It does assume that if ADHs are stored
         sparsely, then the server can detect when
         an INITIALIZE arrives that will force a new
-        ADB to start inside an existing ADB. For
-        example, assume that ADBi has a adb_block_size
+        ADH to start inside an existing ADH. For
+        example, assume that ADHi has a adh_block_size
         of 4k and that an INITIALIZE starts 1k inside
-        ADBi. The server should
+        ADHi. The server should
 
         <cref anchor='AI3' source='TH'>
           Need to flesh this out.

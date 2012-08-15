@@ -231,7 +231,7 @@ SPITGEN =	basic_types.x \
 		copy_confirm_auth.x \
 		copy_from_auth.x \
 		copy_to_auth.x \
-		app_data_block4.x \
+		app_data_hole4.x \
 		data_info4.x \
 		data_content4.x \
 		type_chattr_type.x \

@@ -16,18 +16,18 @@ Target Date  Draft  Line  Text
 06/14/12      11    3608  Section 13.5: COPY_STATUS
 06/14/12      11    4853  Section 14.2: CB_COPY
 06/14/12      11    2502  Section 10.1.2: Server-side Copy Errors
-07/12/12      12    1313  Chapter 3: Support for Application IO Hints
-07/12/12      12    3673  Section 13.8: IO_ADVISE
-07/12/12      12    1329  Chapter 4: Sparse Files
-07/12/12      12    1392  Chapter 5: Space Reservation
-07/12/12      12    2497  Section 11.2.3: Attribute 77: space_reserved
-07/12/12      12    2543  Section 11.2.4: Attribute 78: space_freed
-07/12/12      12    1516  Chapter 6: Application Data Block Support
-                          Section 13.7: INITIALIZE
-                          Section 13.10: READ_PLUS
-                          Section 13.11: SEEK
-                          Chapter 12: Operations
-                          Chapter 9: Security Considerations
-                          Chapter 15: IANA Considerations
-                          Chapter 16: References
-                          Chapter 1: Introduction
+07/12/12      13    1313  Chapter 3: Support for Application IO Hints
+07/12/12      13    3673  Section 13.8: IO_ADVISE
+07/12/12      13    1329  Chapter 4: Sparse Files
+07/12/12      13    1392  Chapter 5: Space Reservation
+07/12/12      13    2497  Section 11.2.3: Attribute 77: space_reserved
+07/12/12      13    2543  Section 11.2.4: Attribute 78: space_freed
+07/19/12      13    1516  Chapter 6: Application Data Block Support
+07/19/12      13    3483  Section 13.7: INITIALIZE
+                    4187  Section 13.10: READ_PLUS
+                    4430  Section 13.11: SEEK
+                    2541  Chapter 12: Operations
+                    2227  Chapter 9: Security Considerations
+                    4603  Chapter 15: IANA Considerations
+                    4608  Chapter 16: References
+                     228  Chapter 1: Introduction

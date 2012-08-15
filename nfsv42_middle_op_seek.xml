@@ -20,7 +20,7 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       From the given sa_offset, find the next data_content4 of type
-      sa_what in the file. For either a hole or ADB, this must return
+      sa_what in the file. For either a hole or ADH, this must return
       the data_content4 in its entirety. For data, it must not return
       the actual data.
     </t>

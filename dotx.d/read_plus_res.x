@@ -2,8 +2,8 @@
 union read_plus_content switch (data_content4 content) {
 case NFS4_CONTENT_DATA:
 	opaque		rpc_data<>;
-case NFS4_CONTENT_APP_BLOCK:
-	app_data_block4	rpc_block;
+case NFS4_CONTENT_APP_DATA_HOLE:
+	app_data_hole4	rpc_adh;
 case NFS4_CONTENT_HOLE:
 	data_info4	rpc_hole;
 default:

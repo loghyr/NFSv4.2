@@ -105,8 +105,8 @@
         Server Side Copy
       </t>
 
-      <t hangText='ADB'>
-        Application Data Blocks
+      <t hangText='ADH'>
+        Application Data Holes
       </t>
     </list>
   </t>
@@ -138,7 +138,7 @@
       <c>GETDEVICEINFO        </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>GETDEVICELIST        </c> <c> OPT </c> <c> pNFS (OPT)   </c>
       <c>GETFH                </c> <c> REQ </c> <c>              </c>
-      <c>INITIALIZE           </c> <c> OPT </c> <c> ADB (REQ)    </c>
+      <c>INITIALIZE           </c> <c> OPT </c> <c> ADH (REQ)    </c>
       <c>GET_DIR_DELEGATION   </c> <c> OPT </c> <c> DDELG (REQ)  </c>
       <c>LAYOUTCOMMIT         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>LAYOUTGET            </c> <c> OPT </c> <c> pNFS (REQ)   </c>
@@ -160,7 +160,7 @@
       <c>READ                 </c> <c> OBS </c> <c>              </c>
       <c>READDIR              </c> <c> REQ </c> <c>              </c>
       <c>READLINK             </c> <c> OPT </c> <c>              </c>
-      <c>READ_PLUS            </c> <c> OPT </c> <c> ADB (REQ)    </c>
+      <c>READ_PLUS            </c> <c> OPT </c> <c> ADH (REQ)    </c>
       <c>RECLAIM_COMPLETE     </c> <c> REQ </c> <c>              </c>
       <c>RELEASE_LOCKOWNER    </c> <c> MNI </c> <c>              </c>
       <c>REMOVE               </c> <c> REQ </c> <c>              </c>
