@@ -125,31 +125,6 @@
     </section>
   </section>
 
-  <section anchor='ss:adh:pnfs' title='pNFS Considerations'>
-    <t>
-      While this document does not mandate how sparse ADHs
-      are recorded on the server, it does make the assumption
-      that such information is not in the file. I.e., the
-      information is metadata. As such, the INITIALIZE operation
-      is defined to be not supported by the DS - it must be
-      issued to the MDS. But since the client must not assume
-      a priori whether a read is sparse or not, the READ_PLUS
-      operation MUST be supported by both the DS and the MDS.
-      I.e., the client might impose on the MDS to asynchronously
-      read the data from the DS.
-    </t>
-
-    <t>
-      Furthermore, each DS MUST not report to a client a sparse
-      ADH which belongs to another DS. One implication
-      of this requirement is that the app_data_hole4's adh_block_size
-      MUST be either be the stripe width or the stripe width
-      must be an even multiple of it.  The second implication here
-      is that the DS must be able to use the Control Protocol
-      to determine from the MDS where the sparse ADHs occur.
-    </t>
-  </section>
-
   <section anchor='ss:adh:corrupt' title='An Example of Detecting Corruption'>
     <t>
       In this section, we define an ADH format in which
@@ -313,25 +288,6 @@
    ADH {0, 4, 0, 0, 8, 0xfeedface}
    data 4k
    ADH {20k, 4k, 59, 0, 6, 0xfeedface}
-      </artwork>
-    </figure>
-
-  </section>
-
-  <section anchor='ss:adh:zero_holes' title='Zero Filled Holes'>
-    <t>
-      As applications are free to define the structure of an
-      ADH, it is trivial to define an ADH which supports
-      zero filled holes. Such a case would encompass the
-      traditional definitions of a sparse file and hole
-      punching. For example, to punch a 64k hole, starting
-      at 100M, into an existing file which has no ADH structure:
-    </t>
-
-    <figure>
-      <artwork>
-   INITIALIZE {100M, 64k, 1, NFS4_UINT64_MAX,
-               0, NFS4_UINT64_MAX, 0x0}
       </artwork>
     </figure>
   </section>
