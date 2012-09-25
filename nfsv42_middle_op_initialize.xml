@@ -8,6 +8,7 @@
   </t>
 
   <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/initialize_args.xml'?>
   </section>
 
@@ -174,17 +175,15 @@
       <t>
         This document does not mandate the manner in
         which the server stores ADHs sparsely for a
-        file. It does assume that if ADHs are stored
-        sparsely, then the server can detect when
-        an INITIALIZE arrives that will force a new
-        ADH to start inside an existing ADH. For
-        example, assume that ADHi has a adh_block_size
-        of 4k and that an INITIALIZE starts 1k inside
-        ADHi. The server should
-
-        <cref anchor='AI3' source='TH'>
-          Need to flesh this out.
-        </cref>
+        file. However, if an INITIALIZE arrives that
+        will force a new ADH to start inside an
+        existing ADH then the server will have three
+        ADHs instead of two. It will have one up to
+        the new one for the INITIALIZE, one for the
+        INITIALIZE, and one for after the INITIALIZE.
+        Note that depending on server specific policies
+        for block allocation, there may also be some
+        physical blocks allocated to align the boundaries.
       </t>
     </section>
   </section>

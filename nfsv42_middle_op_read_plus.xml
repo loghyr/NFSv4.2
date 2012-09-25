@@ -12,7 +12,7 @@
     the file which are either initialized and contain no backing store
     or if the result would appear to be so. I.e., if the result was
     a data block composed entirely of zeros, then it is easier to return
-    a hole. Returning data blocks of unitialized data wastes computational
+    a hole. Returning data blocks of uninitialized data wastes computational
     and network resources, thus reducing performance.
     For ADHs, READ_PLUS is used to return the metadata describing the
     portions of the file which are either initialized and contain no backing
@@ -70,7 +70,8 @@
       values are data, ADH, and hole. A server is required to support the
       data type, but neither ADH nor hole. Both an ADH and a hole must be
       returned in its entirety - clients must be prepared to get more
-      information than they requested.
+      information than they requested. Both the start and the end of the
+      hole may execeed what was requested.
     </t>
 
     <t>
