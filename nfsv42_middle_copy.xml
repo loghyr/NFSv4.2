@@ -161,7 +161,7 @@
      |<------------------------------------/| a file copy
      |                                      |
      |                                      |
-     |--- OFFLOAD_STATUS --------------------->| Client may poll
+     |--- OFFLOAD_STATUS ------------------>| Client may poll
      |<------------------------------------/| for status
      |                                      |
      |                  .                   | Multiple OFFLOAD_STATUS
@@ -266,36 +266,61 @@
       <figure title="An asynchronous inter-server copy." anchor="async-inter-server-fig">
         <artwork><![CDATA[
   Client                Source         Destination
-     +                    +                 +
-     |                    |                 |
-     |--- COPY_NOTIFY --->|                 |
-     |<------------------/|                 |
-     |                    |                 |
-     |                    |                 |
-     |--- COPY ---------------------------->|
-     |<------------------------------------/|
-     |                    |                 |
-     |                    |                 |
-     |                    |<----- read -----|
-     |                    |\--------------->|
-     |                    |                 |
-     |                    |        .        | Multiple reads may
-     |                    |        .        | be necessary
-     |                    |        .        |
-     |                    |                 |
-     |                    |                 |
-     |--- OFFLOAD_STATUS --------------------->| Client may poll
-     |<------------------------------------/| for status
-     |                    |                 |
-     |                    |        .        | Multiple OFFLOAD_STATUS
-     |                    |        .        | operations may be sent
-     |                    |        .        |
-     |                    |                 |
-     |                    |                 |
-     |                    |                 |
-     |<-- CB_COPY --------------------------| Destination reports
-     |\------------------------------------>| results
-     |                    |                 |
+    +                    +                 +
+    |                    |                 |
+    |--- OPEN        --->|                 | Returns os1
+    |<------------------/|                 |
+    |                    |                 |
+    |--- LOCK        --->|                 | Optional, could be done
+    |<------------------/|                 | with a share lock
+    |                    |                 |
+    |--- COPY_NOTIFY --->|                 | Need to pass in
+    |<------------------/|                 | os1 or lock state
+    |                    |                 |
+    |                    |                 |
+    |                    |                 |
+    |--- OPEN ---------------------------->| Returns os2
+    |<------------------------------------/|
+    |                    |                 |
+    |--- LOCK ---------------------------->| Optional ...
+    |<------------------------------------/|
+    |                    |                 |
+    |--- COPY ---------------------------->| Need to pass in
+    |<------------------------------------/| os2 or lock state
+    |                    |                 |
+    |                    |                 |
+    |                    |<----- read -----|
+    |                    |\--------------->|
+    |                    |                 |
+    |                    |        .        | Multiple reads may
+    |                    |        .        | be necessary
+    |                    |        .        |
+    |                    |                 |
+    |                    |                 |
+    |--- OFFLOAD_STATUS ------------------>| Client may poll
+    |<------------------------------------/| for status
+    |                    |                 |
+    |                    |        .        | Multiple OFFLOAD_STATUS
+    |                    |        .        | operations may be sent
+    |                    |        .        |
+    |                    |                 |
+    |                    |                 |
+    |                    |                 |
+    |<-- CB_COPY --------------------------| Destination reports
+    |\------------------------------------>| results
+    |                    |                 |
+    |--- LOCKU --------------------------->| Only if LOCK was done
+    |<------------------------------------/|
+    |                    |                 |
+    |--- CLOSE --------------------------->| Release open state
+    |<------------------------------------/|
+    |                    |                 |
+    |--- LOCKU       --->|                 | Only if LOCK was done
+    |<------------------/|                 |
+    |                    |                 |
+    |--- CLOSE       --->|                 | Release open state
+    |<------------------/|                 |
+    |                    |                 |
         ]]></artwork>
       </figure>
     </section>
