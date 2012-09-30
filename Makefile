@@ -304,14 +304,14 @@ AUTOGEN =	\
 		autogen/commit_res.xml \
 		autogen/copy_notify_args.xml \
 		autogen/copy_notify_res.xml \
-		autogen/copy_revoke_args.xml \
-		autogen/copy_revoke_res.xml \
+		autogen/offload_revoke_args.xml \
+		autogen/offload_revoke_res.xml \
 		autogen/copy_args.xml \
 		autogen/copy_res.xml \
-		autogen/copy_abort_args.xml \
-		autogen/copy_abort_res.xml \
-		autogen/copy_status_args.xml \
-		autogen/copy_status_res.xml \
+		autogen/offload_abort_args.xml \
+		autogen/offload_abort_res.xml \
+		autogen/offload_status_args.xml \
+		autogen/offload_status_res.xml \
 		autogen/create_args.xml \
 		autogen/exchange_id_args.xml \
 		autogen/exchange_id_res.xml \
@@ -430,10 +430,10 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_mandlist.xml \
 	nfsv42_middle_op_aaa.xml \
 	nfsv42_middle_op_copy.xml \
-	nfsv42_middle_op_copy_abort.xml \
+	nfsv42_middle_op_offload_abort.xml \
 	nfsv42_middle_op_copy_notify.xml \
-	nfsv42_middle_op_copy_revoke.xml \
-	nfsv42_middle_op_copy_status.xml \
+	nfsv42_middle_op_offload_revoke.xml \
+	nfsv42_middle_op_offload_status.xml \
 	nfsv42_middle_op_exchange_id.xml \
 	nfsv42_middle_op_initialize.xml \
 	nfsv42_middle_op_io_advise.xml \

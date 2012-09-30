@@ -1,13 +1,13 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="op:copy_revoke" title="Operation 62: COPY_REVOKE - Revoke a destination server's copy privileges">
+<section anchor="op:offload_revoke" title="Operation 62: OFFLOAD_REVOKE - Revoke a destination server's copy privileges">
   <section toc='exclude' title="ARGUMENT">
-    <?rfc include='autogen/copy_revoke_args.xml'?>
+    <?rfc include='autogen/offload_revoke_args.xml'?>
   </section>
 
   <section toc='exclude' title="RESULT">
-    <?rfc include='autogen/copy_revoke_res.xml'?>
+    <?rfc include='autogen/offload_revoke_res.xml'?>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
@@ -29,10 +29,10 @@
     </t>
 
     <t>
-      The client uses COPY_ABORT to inform the destination to stop the
-      active transfer and COPY_REVOKE to inform the source to not allow
+      The client uses OFFLOAD_ABORT to inform the destination to stop the
+      active transfer and OFFLOAD_REVOKE to inform the source to not allow
       any more copy requests from the destination.
-      The COPY_REVOKE operation is also useful in situations in which the
+      The OFFLOAD_REVOKE operation is also useful in situations in which the
       source server granted a very long or infinite lease on the
       destination server's ability to read the source file and
       all copy operations on the source file have been completed.
@@ -45,11 +45,11 @@
 
     <t>
       If the server supports COPY_NOTIFY, the server is
-      REQUIRED to support the COPY_REVOKE operation.
+      REQUIRED to support the OFFLOAD_REVOKE operation.
     </t>
 
     <t>
-      The COPY_REVOKE operation may fail for the following reasons
+      The OFFLOAD_REVOKE operation may fail for the following reasons
       (this is a partial list):
     </t>
 

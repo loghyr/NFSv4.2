@@ -122,10 +122,10 @@
       <c>CLOSE                </c> <c> REQ </c> <c>              </c>
       <c>COMMIT               </c> <c> REQ </c> <c>              </c>
       <c>COPY                 </c> <c> OPT </c> <c> COPY (REQ)   </c>
-      <c>COPY_ABORT           </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>OFFLOAD_ABORT        </c> <c> OPT </c> <c> COPY (REQ)   </c>
       <c>COPY_NOTIFY          </c> <c> OPT </c> <c> COPY (REQ)   </c>
-      <c>COPY_REVOKE          </c> <c> OPT </c> <c> COPY (REQ)   </c>
-      <c>COPY_STATUS          </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>OFFLOAD_REVOKE       </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>OFFLOAD_STATUS       </c> <c> OPT </c> <c> COPY (REQ)   </c>
       <c>CREATE               </c> <c> REQ </c> <c>              </c>
       <c>CREATE_SESSION       </c> <c> REQ </c> <c>              </c>
       <c>DELEGPURGE           </c> <c> OPT </c> <c> FDELG (REQ)  </c>

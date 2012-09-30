@@ -77,11 +77,11 @@
             (<xref target="op:copy_notify" />)
           </t>
 
-          <t hangText="COPY_REVOKE:">
+          <t hangText="OFFLOAD_REVOKE:">
             Also for inter-server copies, the client
             sends this operation to the source server to revoke permission
             to copy a file for the given user.
-            (<xref target="op:copy_revoke" />)
+            (<xref target="op:offload_revoke" />)
           </t>
 
           <t hangText="COPY:">
@@ -89,15 +89,15 @@
             (<xref target="op:copy" />)
           </t>
 
-          <t hangText="COPY_ABORT:">
+          <t hangText="OFFLOAD_ABORT:">
             Used by the client to abort an asynchronous file copy.
-            (<xref target="op:copy_abort" />)
+            (<xref target="op:offload_abort" />)
           </t>
 
-          <t hangText="COPY_STATUS:">
+          <t hangText="OFFLOAD_STATUS:">
             Used by the client to poll the status of
             an asynchronous file copy.
-            (<xref target="op:copy_status" />)
+            (<xref target="op:offload_status" />)
           </t>
 
           <t hangText="CB_COPY:">
@@ -116,7 +116,7 @@
         the copy or it may perform the copy asynchronously and deliver the
         results using a CB_COPY operation callback. If the copy is performed
         asynchronously, the client may poll the status of the copy using
-        COPY_STATUS or cancel the copy using COPY_ABORT.
+        OFFLOAD_STATUS or cancel the copy using OFFLOAD_ABORT.
       </t>
 
       <t>
@@ -148,7 +148,7 @@
         and the final result will be delivered at a later time. The server's
         reply also contains a copy stateid. The client may use this copy
         stateid to poll for status information (as shown) or to cancel the copy
-        using a COPY_ABORT. When the server completes the copy, the server
+        using a OFFLOAD_ABORT. When the server completes the copy, the server
         performs a callback to the client and reports the results.
       </t>
 
@@ -161,10 +161,10 @@
      |<------------------------------------/| a file copy
      |                                      |
      |                                      |
-     |--- COPY_STATUS --------------------->| Client may poll
+     |--- OFFLOAD_STATUS --------------------->| Client may poll
      |<------------------------------------/| for status
      |                                      |
-     |                  .                   | Multiple COPY_STATUS
+     |                  .                   | Multiple OFFLOAD_STATUS
      |                  .                   | operations may be sent.
      |                  .                   |
      |                                      |
@@ -284,10 +284,10 @@
      |                    |        .        |
      |                    |                 |
      |                    |                 |
-     |--- COPY_STATUS --------------------->| Client may poll
+     |--- OFFLOAD_STATUS --------------------->| Client may poll
      |<------------------------------------/| for status
      |                    |                 |
-     |                    |        .        | Multiple COPY_STATUS
+     |                    |        .        | Multiple OFFLOAD_STATUS
      |                    |        .        | operations may be sent
      |                    |        .        |
      |                    |                 |
@@ -390,15 +390,15 @@
     <t>
       If a client desires an intra-server file copy, then it MUST
       support the COPY and CB_COPY operations. If COPY returns a
-      stateid, then the client MAY use the COPY_ABORT and COPY_STATUS
+      stateid, then the client MAY use the OFFLOAD_ABORT and OFFLOAD_STATUS
       operations.
     </t>
 
     <t>
       If a client desires an inter-server file copy, then it MUST
       support the COPY, COPY_NOTICE, and CB_COPY operations, and
-      MAY use the COPY_REVOKE operation. If COPY returns a stateid,
-      then the client MAY use the COPY_ABORT and COPY_STATUS
+      MAY use the OFFLOAD_REVOKE operation. If COPY returns a stateid,
+      then the client MAY use the OFFLOAD_ABORT and OFFLOAD_STATUS
       operations.
     </t>
 
@@ -406,26 +406,26 @@
       If a server supports intra-server copy, then the server MUST
       support the COPY operation. If a server’s COPY operation
       returns a stateid, then the server MUST also support these operations:
-      CB_COPY, COPY_ABORT, and COPY_STATUS.
+      CB_COPY, OFFLOAD_ABORT, and OFFLOAD_STATUS.
     </t>
 
     <t>
       If a source server supports inter-server copy, then the source
       server MUST support all these operations: COPY_NOTIFY and
-      COPY_REVOKE. If a destination server supports inter-server
+      OFFLOAD_REVOKE. If a destination server supports inter-server
       copy, then the destination server MUST support the COPY
       operation. If a destination server’s COPY operation returns
       a stateid, then the destination server MUST also support these
-      operations: CB_COPY, COPY_ABORT, COPY_NOTIFY, COPY_REVOKE,
-      and COPY_STATUS.
+      operations: CB_COPY, OFFLOAD_ABORT, COPY_NOTIFY, OFFLOAD_REVOKE,
+      and OFFLOAD_STATUS.
     </t>
 
     <t>
       Each operation is performed in the context of the user identified
       by the ONC RPC credential of its containing COMPOUND or CB_COMPOUND
-      request. For example, a COPY_ABORT operation issued by a given user
+      request. For example, a OFFLOAD_ABORT operation issued by a given user
       indicates that a specified COPY operation initiated by the same user
-      be canceled. Therefore a COPY_ABORT MUST NOT interfere with a copy
+      be canceled. Therefore a OFFLOAD_ABORT MUST NOT interfere with a copy
       of the same file initiated by another user.
     </t>
 
@@ -468,8 +468,8 @@
       <t>
         A server may perform a copy offload operation asynchronously. An
         asynchronous copy is tracked using a copy offload stateid. Copy
-        offload stateids are included in the COPY, COPY_ABORT,
-        COPY_STATUS, and CB_COPY operations.
+        offload stateids are included in the COPY, OFFLOAD_ABORT,
+        OFFLOAD_STATUS, and CB_COPY operations.
       </t>
 
       <t>
@@ -481,7 +481,7 @@
       <t>
         A copy offload stateid will be valid until either (A) the client
         or server restarts or (B) the client returns the resource by
-        issuing a COPY_ABORT operation or the client replies to a
+        issuing a OFFLOAD_ABORT operation or the client replies to a
         CB_COPY operation.
       </t>
 
@@ -825,10 +825,10 @@
           </t>
 
           <t>
-            If the client sends a COPY_REVOKE to the source server to rescind the
+            If the client sends a OFFLOAD_REVOKE to the source server to rescind the
             destination server's copy privilege, it uses the privileged
             "copy_from_auth" RPCSEC_GSSv3 handle and the cra_destination_server
-            in COPY_REVOKE MUST be the same as the name of the destination server
+            in OFFLOAD_REVOKE MUST be the same as the name of the destination server
             specified in copy_from_auth_priv. The source server will then
             delete the &lt;"copy_from_auth", user id, destination&gt; privilege
             and fail any subsequent copy requests sent under the auspices of this

@@ -998,10 +998,10 @@ enum nfs_opnum4 {
 %/* new operations for NFSv4.2 */
 %
  OP_COPY		= 59,
- OP_COPY_ABORT		= 60,
+ OP_OFFLOAD_ABORT	= 60,
  OP_COPY_NOTIFY		= 61,
- OP_COPY_REVOKE		= 62,
- OP_COPY_STATUS		= 63,
+ OP_OFFLOAD_REVOKE	= 62,
+ OP_OFFLOAD_STATUS	= 63,
  OP_INITIALIZE		= 64,
  OP_READ_PLUS		= 65,
  OP_SEEK		= 66,
@@ -1117,11 +1117,11 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
 				opreclaim_complete;
 
  /* Operations new to NFSv4.2 */
- case OP_COPY_NOTIFY:	COPY_NOTIFY4args opcopy_notify;
- case OP_COPY_REVOKE:	COPY_REVOKE4args opcopy_revoke;
+ case OP_COPY_NOTIFY:	COPY_NOTIFY4args opoffload_notify;
+ case OP_OFFLOAD_REVOKE: OFFLOAD_REVOKE4args opcopy_revoke;
  case OP_COPY:		COPY4args opcopy;
- case OP_COPY_ABORT:	COPY_ABORT4args opcopy_abort;
- case OP_COPY_STATUS:	COPY_STATUS4args opcopy_status;
+ case OP_OFFLOAD_ABORT:	OFFLOAD_ABORT4args opoffload_abort;
+ case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4args opoffload_status;
  case OP_INITIALIZE:	INITIALIZE4args opinitialize;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
  case OP_SEEK:		SEEK4args opseek;
@@ -1248,10 +1248,10 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
 
  /* Operations new to NFSv4.2 */
  case OP_COPY_NOTIFY:	COPY_NOTIFY4res opcopy_notify;
- case OP_COPY_REVOKE:	COPY_REVOKE4res opcopy_revoke;
+ case OP_OFFLOAD_REVOKE: OFFLOAD_REVOKE4res opoffload_revoke;
  case OP_COPY:		COPY4res opcopy;
- case OP_COPY_ABORT:	COPY_ABORT4res opcopy_abort;
- case OP_COPY_STATUS:	COPY_STATUS4res opcopy_status;
+ case OP_OFFLOAD_ABORT:	OFFLOAD_ABORT4res opoffload_abort;
+ case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4res opoffload_status;
  case OP_INITIALIZE:	INITIALIZE4res opinitialize;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
  case OP_SEEK:		SEEK4res opseek;

@@ -1,19 +1,19 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="op:copy_abort" title="Operation 60: COPY_ABORT - Cancel a server-side copy">
+<section anchor="op:offload_abort" title="Operation 60: OFFLOAD_ABORT - Cancel a server-side copy">
   <section toc='exclude' title="ARGUMENT">
-    <?rfc include='autogen/copy_abort_args.xml'?>
+    <?rfc include='autogen/offload_abort_args.xml'?>
   </section>
 
   <section toc='exclude' title="RESULT">
-    <?rfc include='autogen/copy_abort_res.xml'?>
+    <?rfc include='autogen/offload_abort_res.xml'?>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      COPY_ABORT is used for both intra- and inter-server
-      asynchronous copies. The COPY_ABORT operation allows the client
+      OFFLOAD_ABORT is used for both intra- and inter-server
+      asynchronous copies. The OFFLOAD_ABORT operation allows the client
       to cancel a server-side copy operation that it initiated. This operation
       is sent in a COMPOUND request from the client to the destination
       server. This operation may be used to cancel a copy when
@@ -37,11 +37,11 @@
 
     <t>
       If the server supports asynchronous copies, the server is
-      REQUIRED to support the COPY_ABORT operation.
+      REQUIRED to support the OFFLOAD_ABORT operation.
     </t>
 
     <t>
-      The COPY_ABORT operation may fail for the following reasons
+      The OFFLOAD_ABORT operation may fail for the following reasons
       (this is a partial list):
     </t>
 
