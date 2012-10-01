@@ -19,13 +19,13 @@
 
     <t>
       If this operation is successful, the number of bytes copied are
-      returned to the client in the csr_bytes_copied field. The
-      csr_bytes_copied value indicates the number of bytes copied but
+      returned to the client in the osr_bytes_copied field. The
+      osr_bytes_copied value indicates the number of bytes copied but
       not which specific bytes have been copied.
     </t>
 
     <t>
-      If the optional csr_complete field is present, the copy has
+      If the optional osr_complete field is present, the copy has
       completed. In this case the status value indicates the result
       of the asynchronous copy operation. In all cases, the server will
       also deliver the final results of the asynchronous copy in a

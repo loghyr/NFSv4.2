@@ -20,6 +20,12 @@
     </t>
 
     <t>
+      The cna_src_stateid MUST refer to either open or locking
+      states provided earlier by the server. If it is invalid,
+      then the operation MUST fail.
+    </t>
+
+    <t>
       The cna_destination_server MUST be specified using the
       netloc4 network location format. The server is not required
       to resolve the cna_destination_server address before completing

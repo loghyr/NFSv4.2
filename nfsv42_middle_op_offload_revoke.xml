@@ -15,16 +15,16 @@
       This operation is used for an inter-server copy. A client sends this
       operation in a COMPOUND request to the source server to revoke the
       authorization of a destination server identified by
-      cra_destination_server from
+      ora_destination_server from
       reading the file specified by CURRENT_FH on behalf of given user. If the
-      cra_destination_server has already begun copying the file, a successful
+      ora_destination_server has already begun copying the file, a successful
       return from this operation indicates that further access will be prevented.
     </t>
 
     <t>
-      The cra_destination_server MUST be specified using the
+      The ora_destination_server MUST be specified using the
       netloc4 network location format. The server is not required
-      to resolve the cra_destination_server address before completing
+      to resolve the ora_destination_server address before completing
       this operation.
     </t>
 

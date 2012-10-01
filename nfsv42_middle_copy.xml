@@ -109,6 +109,15 @@
       </t>
     </section>
 
+    <section title="Locking the Files">
+      <t>
+        Both the source and destination file may need to be locked
+        to protect the content during the copy operations. A client
+        can achieve this by a combination of OPEN and LOCK operations.
+        I.e., either share or byte range locks might be desired.
+      </t>
+    </section>
+
     <section title="Intra-Server Copy">
       <t>
         To copy a file on a single server, the client uses a COPY operation.
@@ -133,8 +142,20 @@
   Client                                  Server
      +                                      +
      |                                      |
+     |--- OPEN ---------------------------->| Client opens
+     |<------------------------------------/| the source file
+     |                                      |
+     |--- OPEN ---------------------------->| Client opens
+     |<------------------------------------/| the destination file
+     |                                      |
      |--- COPY ---------------------------->| Client requests
      |<------------------------------------/| a file copy
+     |                                      |
+     |--- CLOSE --------------------------->| Client closes
+     |<------------------------------------/| the destination file
+     |                                      |
+     |--- CLOSE --------------------------->| Client closes
+     |<------------------------------------/| the source file
      |                                      |
      |                                      |
         ]]></artwork>
@@ -157,6 +178,12 @@
   Client                                  Server
      +                                      +
      |                                      |
+     |--- OPEN ---------------------------->| Client opens
+     |<------------------------------------/| the source file
+     |                                      |
+     |--- OPEN ---------------------------->| Client opens
+     |<------------------------------------/| the destination file
+     |                                      |
      |--- COPY ---------------------------->| Client requests
      |<------------------------------------/| a file copy
      |                                      |
@@ -170,6 +197,13 @@
      |                                      |
      |<-- CB_COPY --------------------------| Server reports results
      |\------------------------------------>|
+     |                                      |
+     |--- CLOSE --------------------------->| Client closes
+     |<------------------------------------/| the destination file
+     |                                      |
+     |--- CLOSE --------------------------->| Client closes
+     |<------------------------------------/| the source file
+     |                                      |
      |                                      |
         ]]></artwork>
       </figure>
@@ -243,9 +277,14 @@
   Client                Source         Destination
      +                    +                 +
      |                    |                 |
+     |--- OPEN        --->|                 | Returns os1
+     |<------------------/|                 |
+     |                    |                 |
      |--- COPY_NOTIFY --->|                 |
      |<------------------/|                 |
      |                    |                 |
+     |--- OPEN ---------------------------->| Returns os2
+     |<------------------------------------/|
      |                    |                 |
      |--- COPY ---------------------------->|
      |                    |                 |
@@ -260,6 +299,12 @@
      |                    |                 |
      |<------------------------------------/| Destination replies
      |                    |                 | to COPY
+     |                    |                 |
+     |--- CLOSE --------------------------->| Release open state
+     |<------------------------------------/|
+     |                    |                 |
+     |--- CLOSE       --->|                 | Release open state
+     |<------------------/|                 |
         ]]></artwork>
       </figure>
 

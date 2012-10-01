@@ -59,6 +59,16 @@
     </t>
 
     <t>
+      For an intra-server copy, both the ca_src_stateid and
+      ca_dst_stateid MUST refer to either open or locking
+      states provided earlier by the server. If either
+      stateid is invalid, then the operation MUST fail.
+      If the request is for a inter-server copy, then the
+      ca_src_stateid can be ignored. If ca_dst_stateid
+      is invalid, then the operation MUST fail.
+    </t>
+
+    <t>
       The CURRENT_FH and ca_destination together specify the
       destination of the copy operation. If ca_destination
       is of 0 (zero) length, then CURRENT_FH specifies the target file.

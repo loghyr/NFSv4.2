@@ -28,7 +28,7 @@
     </t>
 
     <t>
-      The result's car_status field indicates whether the cancel
+      The result's oar_status field indicates whether the cancel
       was successful or not. A value of NFS4_OK indicates that the
       copy operation was canceled and no callback will be issued
       by the server. A copy operation that is successfully canceled
