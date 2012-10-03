@@ -157,9 +157,7 @@ BACK_OPS =	cb_getattr_args.x \
 		cb_notify_deviceid_args.x \
 		cb_notify_deviceid_res.x \
 		cb_copy_args.x \
-		cb_copy_res.x \
-		cb_attr_changed_args.x \
-		cb_attr_changed_res.x
+		cb_copy_res.x
 
 SPITGEN =	basic_types.x \
 		type_nfstime4.x \
@@ -235,7 +233,8 @@ SPITGEN =	basic_types.x \
 		data_info4.x \
 		data_content4.x \
 		type_chattr_type.x \
-		type_label_format.x
+		type_label_format.x \
+		type_change_label.x
 
 AUTOGEN =	hand_edit_warning.x \
 		fore_ops.x \

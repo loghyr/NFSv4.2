@@ -44,7 +44,7 @@ typedef :component4:pathname4<>:Represents path name for fs_locations.
 typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operations (COMMIT, CREATE, EXCHANGE_ID, OPEN, READDIR, WRITE) NFS4_VERIFIER_SIZE is defined as 8.
 :enum:netloc_type4:Specifies network locations.
 typedef :string:secret4<>:Secret value to share between servers.
-typedef :uint32_t:policy4:Label formt specifier or policy identifier.
+typedef :uint32_t:policy4:Label format specifier or policy identifier.
 EOF
 
 	fi
@@ -805,7 +805,6 @@ enum nfs_cb_opnum4 {
 	OP_CB_NOTIFY_DEVICEID		= 14,
 %/* Callback operations new to NFSv4.2 */
 	OP_CB_COPY			= 15,
-	OP_CB_ATTR_CHANGED		= 16,
 
 	OP_CB_ILLEGAL			= 10044
 };
@@ -846,8 +845,6 @@ union nfs_cb_argop4 switch (unsigned argop) {
  /* new NFSv4.2 operations */
  case OP_CB_COPY:
       CB_COPY4args   		opcbcopy;
- case OP_CB_ATTR_CHANGED:
-      CB_ATTR_CHANGED4args   	opcbattrchanged;
 
  case OP_CB_ILLEGAL:            void;
 };
@@ -910,9 +907,6 @@ union nfs_cb_resop4 switch (unsigned resop) {
 
  /* new NFSv4.2 operations */
  case OP_CB_COPY:	CB_COPY4res	opcbcopy;
- case OP_CB_ATTR_CHANGED:
-			CB_ATTR_CHANGED4res
-					opattrchanged;
 
  /* Not new operation */
  case OP_CB_ILLEGAL:	CB_ILLEGAL4res	opcbillegal;
@@ -1423,6 +1417,15 @@ struct sec_label4 {
 	labelformat_spec4	slai_lfs;
 	opaque			slai_data<>;
 };
+EOF
+
+	;;
+
+	type_change_label.x )
+
+cat << EOF > $i
+
+typedef uint32_t	change_sec_label4;
 EOF
 
 	;;

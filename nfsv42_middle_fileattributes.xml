@@ -55,6 +55,7 @@
       <ttcol align="left">Defined in</ttcol>
       <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
       <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
+      <c>change_sec_label</c> <c>81</c> <c>change_sec_label4</c>  <c>R  </c> <c><xref target="ss:fattr:chsec" /></c>
       <c>space_reserved</c>   <c>77</c> <c>boolean</c>            <c>R W</c> <c><xref target="ss:fattr:sr" /></c>
       <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
     </texttable>
@@ -188,6 +189,20 @@ typedef uint32_t  policy4;
         needs to be guaranteed that the server will accept a label
         that is sized correctly. By both client and server being part
         of a specific MAC model, the client will be aware of the size.
+      </t>
+    </section>
+
+    <section toc='exclude' anchor='ss:fattr:chsec' title='Attribute 81: change_sec_label'>
+      <?rfc include='autogen/type_change_label.xml'?>
+
+      <t>
+        The change_sec_label attribute is a read-only attribute per file.
+        When the file is created, the value of change_sec_label is set
+        to 0. Each time the sec_label is changed, the server MUST
+        increment the value of change_sec_label by one. As the
+        sec_label is not bounded by size, this attribute allows for
+        VERIFY and NVERIFY to quickly determine if the sec_label
+        has been modified.
       </t>
     </section>
 

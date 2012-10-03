@@ -9,15 +9,14 @@
       Lists are commonly referred to as Discretionary Access Control (DAC)
       models.  These systems base their access decisions on user identity
       and resource ownership.  In contrast Mandatory Access Control (MAC)
-      models base their access
-      control decisions on the label on the subject (usually a process) and
-      the object it wishes to access <xref target='ref:lnfs_req' />.  These
-      labels may contain user identity information but usually contain
-      additional information.  In
-      DAC systems users are free to specify the access rules for resources
-      that they own.  MAC models base their security decisions on a system
-      wide policy established by an administrator or organization which the
-      users do not have the ability to override.
+      models base their access control decisions on the label on the
+      subject (usually a process) and the object it wishes to access
+      <xref target='ref:lnfs_req' />.  These labels may contain user
+      identity information but usually contain additional information.
+      In DAC systems users are free to specify the access rules for
+      resources that they own.  MAC models base their security decisions
+      on a system wide policy established by an administrator or
+      organization which the users do not have the ability to override.
       In this section, we add a MAC model to NFSv4.2.
     </t>
 
@@ -36,14 +35,15 @@
     </t>
 
     <t>
-      The second change is to provide a method for the server to
-      notify the client that the attribute changed on an open
-      file on the server. If the file is closed, then during the
-      open attempt, the client will gather the new attribute value.
-      The server MUST not communicate the new value of the attribute,
-      the client MUST query it. This requirement stems from the
-      need for the client to provide sufficient access rights to
-      the attribute.
+      The second change is to provide methods for the client to
+      determine if the security label has changed. A client which
+      needs to know if a label is going to change SHOULD register
+      a delegation on that file. In order to change the security
+      label, the server will have to recall all delegations. This
+      will inform the client of the change. If a client wants to
+      detect if the label has changed, it MAY use VERIFY and NVERIFY
+      on FATTR4_CHANGE_SEC_LABEL to detect that the FATTR4_SEC_LABEL has been
+      modified.
     </t>
 
     <t>
@@ -148,9 +148,8 @@
     </t>
 
     <t>
-      NFSv4 implements the security attribute as a
-      recommended attribute.  These attributes have a fixed format
-      and semantics, which
+      NFSv4 implements the security attribute as a recommended attribute.
+      These attributes have a fixed format and semantics, which
       conflicts with the flexible nature of the security attribute.  To
       resolve this the security attribute consists of two components.  The
       first component is a LFS as defined in <xref target='ref:lfsreg' />
@@ -223,22 +222,12 @@
 
     <section anchor='ss:macss:lnfs:changes' title='Label Changes'>
       <t>
-        As per the requirements, when a file's security label is
-        modified, the server must notify all clients which have
-        the file opened of the change in label. It does so with
-        CB_ATTR_CHANGED. There are preconditions to making an
-        attribute change imposed by NFSv4 and the security system might
-        want to impose others. In the process of meeting these
-        preconditions, the server may chose to either serve
-        the request in whole or return NFS4ERR_DELAY to the
-        SETATTR operation.
-      </t>
-
-      <t>
         If there are open delegations on the file
         belonging to client other than the one making the label
         change, then the process described in
         <xref target='ss:macss:lnfs:delegs' /> must be followed.
+        In short, the delegation will be recalled, which effectively
+        notifies the client of the change.
       </t>
 
       <t>
@@ -247,12 +236,7 @@
         communicate the fact that the label has changed to
         the client. In the cases where the change outright denies
         the client access, the client will be able to quickly
-        determine that there is a new label in effect. It is
-        in cases where the client may share the same object
-        between multiple subjects or a security system which
-        is not strictly hierarchical that the CB_ATTR_CHANGED callback is
-        very useful. It allows the server to inform the clients
-        that the cached security attribute is now stale.
+        determine that there is a new label in effect.
       </t>
 
       <t>
@@ -265,11 +249,15 @@
 
       <t>
         The way in which MAC labels are enforced is by the
-        client. So if client A changes a security label on a file,
-        then the server MUST inform all clients that have the file
-        opened that the label has changed via CB_ATTR_CHANGED. Then
-        the clients MUST retrieve the new label and MUST enforce
-        access via the new attribute values.
+        client. The security policies on the client can be
+        such that the client does not have access to the file
+        unless it has a delegation. The recall of the delegation
+        will force the client to flush any cached content of the
+        file. The clients could also be configured to periodically
+        VERIFY/NVERIFY the FATTR4_CHANGE_SEC_LABEL attribute to
+        determine when the label has changed. When a change is
+        detected, then the client could take the costlier action
+        of retrieving the FATTR4_SEC_LABEL.
       </t>
     </section>
   </section>
@@ -289,12 +277,6 @@
         the DS to the MDS. In order for the DS to validate
         the subject label presented by the client, it SHOULD
         utilize this mechanism.
-      </t>
-
-      <t>
-        If a file's FATTR4_SEC_LABEL is changed, then the MDS
-        should utilize CB_ATTR_CHANGED to inform the client
-        of that fact. If the MDS is maintaining <cref anchor="Drop1" source="TH">Houston, we seem to have a problem!</cref>
       </t>
     </section>
   </section>
@@ -416,8 +398,9 @@
           A Limited Server mode (see Section 3.5.2 of <xref target="ref:lnfs_req" />)
           consists of a server which  is label aware,
           but does not enforce policies. Such a server will store and retrieve
-          all object labels presented by clients, notify the clients of
-          any label changes via CB_ATTR_CHANGED, but will not restrict access
+          all object labels presented by clients, utililze the methods
+          described in <xref target='ss:macss:lnfs:changes' /> to allow
+          the clients to detect changing labels,, but will not restrict access
           via the subject label. Instead, it will expect the clients to enforce
           all such access locally.
         </t>

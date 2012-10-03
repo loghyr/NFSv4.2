@@ -167,6 +167,7 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/type_netloc_type4.x \
 		dotx.d/type_chattr_type.x \
 		dotx.d/type_label_format.x \
+		dotx.d/type_change_label.x \
 		dotx.d/copy_confirm_auth.x \
 		dotx.d/copy_from_auth.x \
 		dotx.d/copy_to_auth.x \
@@ -242,6 +243,7 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_netloc_type4.xml \
 		autogen/type_chattr_type.xml \
 		autogen/type_label_format.xml \
+		autogen/type_change_label.xml \
 		autogen/copy_confirm_auth.xml \
 		autogen/copy_from_auth.xml \
 		autogen/copy_to_auth.xml \
@@ -274,8 +276,6 @@ AUTOGEN =	\
 		autogen/cb_getattr_args.xml \
 		autogen/cb_getattr_res.xml \
 		autogen/cb_illegal_res.xml \
-		autogen/cb_attr_changed_args.xml \
-		autogen/cb_attr_changed_res.xml \
 		autogen/cb_layoutrecall_args.xml \
 		autogen/cb_layoutrecall_res.xml \
 		autogen/cb_notify_args.xml \
@@ -442,7 +442,6 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_seek.xml \
 	nfsv42_middle_op_zzz.xml \
 	nfsv42_middle_op_cb_aaa.xml \
-	nfsv42_middle_op_cb_attr_changed.xml \
 	nfsv42_middle_op_cb_copy.xml \
 	nfsv42_middle_op_cb_zzz.xml \
 	nfsv42_middle_iana.xml \
