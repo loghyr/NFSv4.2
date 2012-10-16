@@ -1,19 +1,19 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="op:cb_copy" title="Operation 15: CB_COPY - Report results of a server-side copy">
+<section anchor="op:cb_offload" title="Operation 15: CB_OFFLOAD - Report results of a server-side copy">
   <section toc='exclude' title="ARGUMENT">
-    <?rfc include='autogen/cb_copy_args.xml'?>
+    <?rfc include='autogen/cb_offload_args.xml'?>
   </section>
 
   <section toc='exclude' title="RESULT">
-    <?rfc include='autogen/cb_copy_res.xml'?>
+    <?rfc include='autogen/cb_offload_res.xml'?>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      CB_COPY is used for both intra- and inter-server asynchronous
-      copies. The CB_COPY callback informs the client of the result of
+      CB_OFFLOAD is used for both intra- and inter-server asynchronous
+      copies. The CB_OFFLOAD callback informs the client of the result of
       an asynchronous server-side copy. This operation is sent by the
       destination server to the client in a CB_COMPOUND request. The
       copy is identified by the filehandle and stateid arguments. The result
@@ -25,18 +25,18 @@
 
     <t>
       If the client supports the COPY operation, the client is
-      REQUIRED to support the CB_COPY operation.
+      REQUIRED to support the CB_OFFLOAD operation.
     </t>
 
     <t>
       There is a potential race between the reply to the original COPY on
-      the forechannel and the CB_COPY callback on the backchannel.
+      the forechannel and the CB_OFFLOAD callback on the backchannel.
       Sections 2.10.6.3 and 20.9.3 in <xref target="ref:RFC5661" />
       describes how to handle this type of issue.
     </t>
 
     <t>
-      The CB_COPY operation may fail for the following reasons
+      The CB_OFFLOAD operation may fail for the following reasons
       (this is a partial list):
     </t>
 

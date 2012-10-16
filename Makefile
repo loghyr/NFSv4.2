@@ -271,8 +271,8 @@ AUTOGEN =	\
 		autogen/backchannel_ctl_res.xml \
 		autogen/bind_conn_to_session_args.xml \
 		autogen/bind_conn_to_session_res.xml \
-		autogen/cb_copy_args.xml \
-		autogen/cb_copy_res.xml \
+		autogen/cb_offload_args.xml \
+		autogen/cb_offload_res.xml \
 		autogen/cb_getattr_args.xml \
 		autogen/cb_getattr_res.xml \
 		autogen/cb_illegal_res.xml \
@@ -442,7 +442,7 @@ IDXMLSRC_BASE = \
 	nfsv42_middle_op_seek.xml \
 	nfsv42_middle_op_zzz.xml \
 	nfsv42_middle_op_cb_aaa.xml \
-	nfsv42_middle_op_cb_copy.xml \
+	nfsv42_middle_op_cb_offload.xml \
 	nfsv42_middle_op_cb_zzz.xml \
 	nfsv42_middle_iana.xml \
 	nfsv42_middle_end.xml \

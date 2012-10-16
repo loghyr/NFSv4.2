@@ -100,10 +100,10 @@
             (<xref target="op:offload_status" />)
           </t>
 
-          <t hangText="CB_COPY:">
+          <t hangText="CB_OFFLOAD:">
             Used by the destination server to report the
             results of an asynchronous file copy to the client.
-            (<xref target="op:cb_copy" />)
+            (<xref target="op:cb_offload" />)
           </t>
         </list>
       </t>
@@ -123,7 +123,7 @@
         To copy a file on a single server, the client uses a COPY operation.
         The server may respond to the copy operation with the final results of
         the copy or it may perform the copy asynchronously and deliver the
-        results using a CB_COPY operation callback. If the copy is performed
+        results using a CB_OFFLOAD operation callback. If the copy is performed
         asynchronously, the client may poll the status of the copy using
         OFFLOAD_STATUS or cancel the copy using OFFLOAD_ABORT.
       </t>
@@ -195,7 +195,7 @@
      |                  .                   | operations may be sent.
      |                  .                   |
      |                                      |
-     |<-- CB_COPY --------------------------| Server reports results
+     |<-- CB_OFFLOAD --------------------------| Server reports results
      |\------------------------------------>|
      |                                      |
      |--- CLOSE --------------------------->| Client closes
@@ -351,7 +351,7 @@
     |                    |                 |
     |                    |                 |
     |                    |                 |
-    |<-- CB_COPY --------------------------| Destination reports
+    |<-- CB_OFFLOAD --------------------------| Destination reports
     |\------------------------------------>| results
     |                    |                 |
     |--- LOCKU --------------------------->| Only if LOCK was done
@@ -459,14 +459,14 @@
 
     <t>
       If a client desires an intra-server file copy, then it MUST
-      support the COPY and CB_COPY operations. If COPY returns a
+      support the COPY and CB_OFFLOAD operations. If COPY returns a
       stateid, then the client MAY use the OFFLOAD_ABORT and OFFLOAD_STATUS
       operations.
     </t>
 
     <t>
       If a client desires an inter-server file copy, then it MUST
-      support the COPY, COPY_NOTICE, and CB_COPY operations, and
+      support the COPY, COPY_NOTICE, and CB_OFFLOAD operations, and
       MAY use the OFFLOAD_REVOKE operation. If COPY returns a stateid,
       then the client MAY use the OFFLOAD_ABORT and OFFLOAD_STATUS
       operations.
@@ -476,7 +476,7 @@
       If a server supports intra-server copy, then the server MUST
       support the COPY operation. If a server’s COPY operation
       returns a stateid, then the server MUST also support these operations:
-      CB_COPY, OFFLOAD_ABORT, and OFFLOAD_STATUS.
+      CB_OFFLOAD, OFFLOAD_ABORT, and OFFLOAD_STATUS.
     </t>
 
     <t>
@@ -486,7 +486,7 @@
       copy, then the destination server MUST support the COPY
       operation. If a destination server’s COPY operation returns
       a stateid, then the destination server MUST also support these
-      operations: CB_COPY, OFFLOAD_ABORT, COPY_NOTIFY, OFFLOAD_REVOKE,
+      operations: CB_OFFLOAD, OFFLOAD_ABORT, COPY_NOTIFY, OFFLOAD_REVOKE,
       and OFFLOAD_STATUS.
     </t>
 
@@ -539,7 +539,7 @@
         A server may perform a copy offload operation asynchronously. An
         asynchronous copy is tracked using a copy offload stateid. Copy
         offload stateids are included in the COPY, OFFLOAD_ABORT,
-        OFFLOAD_STATUS, and CB_COPY operations.
+        OFFLOAD_STATUS, and CB_OFFLOAD operations.
       </t>
 
       <t>
@@ -552,7 +552,7 @@
         A copy offload stateid will be valid until either (A) the client
         or server restarts or (B) the client returns the resource by
         issuing a OFFLOAD_ABORT operation or the client replies to a
-        CB_COPY operation.
+        CB_OFFLOAD operation.
       </t>
 
       <t>

@@ -804,7 +804,7 @@ enum nfs_cb_opnum4 {
 	OP_CB_NOTIFY_LOCK		= 13,
 	OP_CB_NOTIFY_DEVICEID		= 14,
 %/* Callback operations new to NFSv4.2 */
-	OP_CB_COPY			= 15,
+	OP_CB_OFFLOAD			= 15,
 
 	OP_CB_ILLEGAL			= 10044
 };
@@ -843,8 +843,8 @@ union nfs_cb_argop4 switch (unsigned argop) {
       CB_NOTIFY_DEVICEID4args   opcbnotify_deviceid;
 
  /* new NFSv4.2 operations */
- case OP_CB_COPY:
-      CB_COPY4args   		opcbcopy;
+ case OP_CB_OFFLOAD:
+      CB_OFFLOAD4args  		opcboffload;
 
  case OP_CB_ILLEGAL:            void;
 };
@@ -906,7 +906,7 @@ union nfs_cb_resop4 switch (unsigned resop) {
 					opcbnotify_deviceid;
 
  /* new NFSv4.2 operations */
- case OP_CB_COPY:	CB_COPY4res	opcbcopy;
+ case OP_CB_OFFLOAD:	CB_OFFLOAD4res	opcboffload;
 
  /* Not new operation */
  case OP_CB_ILLEGAL:	CB_ILLEGAL4res	opcbillegal;
