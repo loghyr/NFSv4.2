@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor='op:initialize' title='Operation 64: INITIALIZE'>
+<section anchor='op:write_plus' title='Operation 64: WRITE_PLUS'>
   <t>
     This operation can be used to initialize the structure imposed
     by an application onto a file, i.e., ADHs, and to punch a hole into a file.
@@ -9,23 +9,23 @@
 
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/data_info4.xml'?>
-    <?rfc include='autogen/initialize_args.xml'?>
+    <?rfc include='autogen/write_plus_args.xml'?>
   </section>
 
   <section toc='exclude' title="RESULT">
-    <?rfc include='autogen/initialize_res.xml'?>
+    <?rfc include='autogen/write_plus_res.xml'?>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      Using the data_content4 (<xref target="ss:adh:dc" />), INITIALIZE can be used
+      Using the data_content4 (<xref target="ss:adh:dc" />), WRITE_PLUS can be used
       either to punch holes or to impose ADH structure on a file.
     </t>
 
     <section title="Hole punching">
       <t>
         Whenever a client wishes to zero the blocks backing a
-        particular region in the file, it calls the INITIALIZE operation with
+        particular region in the file, it calls the WRITE_PLUS operation with
         the current filehandle set to the filehandle of the file in question,
         and the equivalent of start offset and length in bytes of the region
         set in ia_hole.di_offset and ia_hole.di_length respectively.  If the
@@ -43,14 +43,14 @@
         the file system.  In such a case, the server can deallocate as many
         bytes as it can in the region.  The blocks that cannot be deallocated
         MUST be zeroed.  Except for the block deallocation and maximum hole
-        punching capability, a INITIALIZE operation is to be treated similar
+        punching capability, a WRITE_PLUS operation is to be treated similar
         to a write of zeroes.
       </t>
 
       <t>
         The server is not required to complete deallocating the blocks
         specified in the operation before returning.  It is acceptable to
-        have the deallocation be deferred.  In fact, INITIALIZE is merely a
+        have the deallocation be deferred.  In fact, WRITE_PLUS is merely a
         hint; it is valid for a server to return success without ever doing
         anything towards deallocating the blocks backing the region
         specified.  However, any future reads to the region MUST return
@@ -58,7 +58,7 @@
       </t>
 
       <t>
-        If used to hole punch, INITIALIZE will result in the space_used
+        If used to hole punch, WRITE_PLUS will result in the space_used
         attribute being decreased by the number of bytes that were
         deallocated.  The space_freed attribute
         may or may not decrease, depending on the support and whether the
@@ -67,14 +67,14 @@
       </t>
 
       <t>
-        The INITIALIZE operation MUST NOT change the space reservation
+        The WRITE_PLUS operation MUST NOT change the space reservation
         guarantee of the file.  While the server can deallocate the blocks
         specified by di_offset and di_length, future writes to this region
         MUST NOT fail with NFSERR_NOSPC.
       </t>
 
       <t>
-        The INITIALIZE operation may fail for the following reasons (this is
+        The WRITE_PLUS operation may fail for the following reasons (this is
         a partial list):
       </t>
 
@@ -102,17 +102,17 @@
     <section title="ADHs">
       <t>
         If the server supports ADHs, then it MUST support the
-        NFS4_CONTENT_APP_DATA_HOLE arm of the INITIALIZE operation.
+        NFS4_CONTENT_APP_DATA_HOLE arm of the WRITE_PLUS operation.
         The server has no concept of the structure imposed
         by the application. It is only when the application
         writes to a section of the file does order get imposed.
         In order to detect corruption even before the application
         utilizes the file, the application will want to initialize
-        a range of ADHs using INITIALIZE.
+        a range of ADHs using WRITE_PLUS.
       </t>
 
       <t>
-        For ADHs, when the client invokes the INITIALIZE operation, it has
+        For ADHs, when the client invokes the WRITE_PLUS operation, it has
         two desired results:
       </t>
 
@@ -130,9 +130,9 @@
       </t>
 
       <t>
-        If the server supports the INITIALIZE operation, it still
+        If the server supports the WRITE_PLUS operation, it still
         might not support sparse files. So if it receives the
-        INITIALIZE operation, then it MUST populate the contents
+        WRITE_PLUS operation, then it MUST populate the contents
         of the file with the initialized ADHs.
       </t>
 
@@ -155,8 +155,8 @@
 
       <t>
         If the data blocks were already allocated, then
-        the INITIALIZE is a hole punch operation. If
-        INITIALIZE supports sparse files, then the data
+        the WRITE_PLUS is a hole punch operation. If
+        WRITE_PLUS supports sparse files, then the data
         blocks are to be deallocated. If not, then the
         data blocks are to be rewritten in the indicated
         ADH format.
@@ -168,19 +168,19 @@
         Even while it can detect them, it cannot disallow
         them, as the application might be in the process of
         changing the size of the ADHs. Thus the server
-        must be prepared to handle an INITIALIZE into
+        must be prepared to handle an WRITE_PLUS into
         an existing ADH.
       </t>
 
       <t>
         This document does not mandate the manner in
         which the server stores ADHs sparsely for a
-        file. However, if an INITIALIZE arrives that
+        file. However, if an WRITE_PLUS arrives that
         will force a new ADH to start inside an
         existing ADH then the server will have three
         ADHs instead of two. It will have one up to
-        the new one for the INITIALIZE, one for the
-        INITIALIZE, and one for after the INITIALIZE.
+        the new one for the WRITE_PLUS, one for the
+        WRITE_PLUS, and one for after the WRITE_PLUS.
         Note that depending on server specific policies
         for block allocation, there may also be some
         physical blocks allocated to align the boundaries.

@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor="sec:operations:mandlist" title="Operations: REQUIRED, RECOMMENDED, or OPTIONAL">
   <t>
@@ -54,7 +54,7 @@
       </t>
 
       <t hangText='REC'>
-        RECOMMEND to implement
+        RECOMMENDED to implement
       </t>
 
       <t hangText='OPT'>
@@ -62,7 +62,7 @@
       </t>
 
       <t hangText='OBS'>
-        MUST NOT implement
+        OBSOLETE, might be required to implement
       </t>
 
       <t hangText='MNI'>
@@ -138,7 +138,7 @@
       <c>GETDEVICEINFO        </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>GETDEVICELIST        </c> <c> OPT </c> <c> pNFS (OPT)   </c>
       <c>GETFH                </c> <c> REQ </c> <c>              </c>
-      <c>INITIALIZE           </c> <c> OPT </c> <c> ADH (REQ)    </c>
+      <c>WRITE_PLUS           </c> <c> OPT </c> <c> ADH (REQ)    </c>
       <c>GET_DIR_DELEGATION   </c> <c> OPT </c> <c> DDELG (REQ)  </c>
       <c>LAYOUTCOMMIT         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>LAYOUTGET            </c> <c> OPT </c> <c> pNFS (REQ)   </c>
@@ -178,7 +178,7 @@
       <c>TEST_STATEID         </c> <c> REQ </c> <c>              </c>
       <c>VERIFY               </c> <c> REQ </c> <c>              </c>
       <c>WANT_DELEGATION      </c> <c> OPT </c> <c> FDELG (OPT)  </c>
-      <c>WRITE                </c> <c> REQ </c> <c>              </c>
+      <c>WRITE                </c> <c> OBS </c> <c>              </c>
   </texttable>
 
   <texttable>

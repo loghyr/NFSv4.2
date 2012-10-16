@@ -4,19 +4,19 @@
  * extend new types later. Note that we
  * are explicitly disallowing data.
  */
-union initialize_arg4 switch (data_content4 content) {
+union write_plus_arg4 switch (data_content4 content) {
 case NFS4_CONTENT_APP_DATA_HOLE:
-	app_data_hole4	ia_adh;
+	app_data_hole4	wpa_adh;
 case NFS4_CONTENT_HOLE:
-	data_info4	ia_hole;
+	data_info4	wpa_hole;
 default:
 	void;
 };
 
-struct INITIALIZE4args {
+struct WRITE_PLUS4args {
 	/* CURRENT_FH: file */
-	stateid4	ia_stateid;
-	stable_how4	ia_stable;
-	initialize_arg4	ia_data<>;
+	stateid4	wp_stateid;
+	stable_how4	wp_stable;
+	write_plus_arg4	wp_data<>;
 };
 

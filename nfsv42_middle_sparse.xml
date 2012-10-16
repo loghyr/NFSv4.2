@@ -35,9 +35,9 @@
     </t>
 
     <t>
-      Two new operations INITIALIZE (<xref target="op:initialize" />)
+      Two new operations WRITE_PLUS (<xref target="op:write_plus" />)
       and READ_PLUS (<xref target="op:read_plus" />) are introduced.
-      INITIALIZE allows for the creation of a sparse file and for hole
+      WRITE_PLUS allows for the creation of a sparse file and for hole
       punching.  An application might want to zero out a range of the file.
       READ_PLUS supports all the features of READ but includes an extension to support sparse
       pattern files (<xref target="ss:adh:dc" />).  READ_PLUS is guaranteed to perform

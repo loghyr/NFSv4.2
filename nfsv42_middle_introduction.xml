@@ -79,9 +79,8 @@
 
     <section title="Sparse Files">
       <t>
-        Two new operations are defined to support the reading of sparse
-        files (READ_PLUS) and the punching of holes to remove backing
-        storage (INITIALIZE).
+        Two new operations are defined to support the reading
+        (READ_PLUS) and writing (WRITE_PLUS)of sparse files.
       </t>
     </section>
 

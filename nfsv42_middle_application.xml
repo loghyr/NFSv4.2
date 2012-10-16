@@ -260,7 +260,7 @@
 
     <figure>
       <artwork>
-   INITIALIZE {0, 4k, 100, 0, 0, 8, 0xfeedface}
+   WRITE_PLUS {0, 4k, 100, 0, 0, 8, 0xfeedface}
       </artwork>
     </figure>
 
