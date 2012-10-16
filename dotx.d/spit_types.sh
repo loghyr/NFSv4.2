@@ -996,7 +996,7 @@ enum nfs_opnum4 {
  OP_COPY_NOTIFY		= 61,
  OP_OFFLOAD_REVOKE	= 62,
  OP_OFFLOAD_STATUS	= 63,
- OP_INITIALIZE		= 64,
+ OP_WRITE_PLUS		= 64,
  OP_READ_PLUS		= 65,
  OP_SEEK		= 66,
  OP_IO_ADVISE		= 67,
@@ -1116,7 +1116,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY:		COPY4args opcopy;
  case OP_OFFLOAD_ABORT:	OFFLOAD_ABORT4args opoffload_abort;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4args opoffload_status;
- case OP_INITIALIZE:	INITIALIZE4args opinitialize;
+ case OP_WRITE_PLUS:	WRITE_PLUS4args opwrite_plus;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
  case OP_SEEK:		SEEK4args opseek;
  case OP_IO_ADVISE:	IO_ADVISE4args opio_advise;
@@ -1246,7 +1246,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_COPY:		COPY4res opcopy;
  case OP_OFFLOAD_ABORT:	OFFLOAD_ABORT4res opoffload_abort;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4res opoffload_status;
- case OP_INITIALIZE:	INITIALIZE4res opinitialize;
+ case OP_WRITE_PLUS:	WRITE_PLUS4res opwrite_plus;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
  case OP_SEEK:		SEEK4res opseek;
  case OP_IO_ADVISE:	IO_ADVISE4res opio_advise;
@@ -1425,7 +1425,6 @@ EOF
 
 cat << EOF > $i
 
-typedef uint64_t	change_sec_label4;
 struct change_sec_label4 {
 	uint64_t	csl_major;
 	uint64_t	csl_minor;
