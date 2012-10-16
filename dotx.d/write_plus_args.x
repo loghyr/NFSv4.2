@@ -1,10 +1,7 @@
 
-/*
- * We use data_content4 in case we wish to
- * extend new types later. Note that we
- * are explicitly disallowing data.
- */
 union write_plus_arg4 switch (data_content4 content) {
+case NFS4_CONTENT_DATA"
+	opaque		wpa_data<>;
 case NFS4_CONTENT_APP_DATA_HOLE:
 	app_data_hole4	wpa_adh;
 case NFS4_CONTENT_HOLE:
