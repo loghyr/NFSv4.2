@@ -1425,7 +1425,11 @@ EOF
 
 cat << EOF > $i
 
-typedef uint32_t	change_sec_label4;
+typedef uint64_t	change_sec_label4;
+struct change_sec_label4 {
+	uint64_t	csl_major;
+	uint64_t	csl_minor;
+};
 EOF
 
 	;;

@@ -503,7 +503,7 @@ testx:
 		rpcgen -a nfsv42.x ; \
 		if [ ! -f /usr/include/rpc/auth_sys.h ]; then \
 			ln Make* make ; \
-			CFLAGS="-I /usr/include/rpcsecgss -I /usr/include/gssrpc" ; export CFLAGS ; \
+			CFLAGS="-I /usr/include/rpcsecgss -I /usr/include/gssglue" ; export CFLAGS ; \
 			LDLIBS="-lrpcsecgss" ; export LDLIBS ; \
 		fi ; \
 		$(MAKE) -f make* )
