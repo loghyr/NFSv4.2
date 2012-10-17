@@ -2,24 +2,20 @@
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='op:write_plus' title='Operation 64: WRITE_PLUS'>
-  <t>
-    This operation can be used to initialize the structure imposed
-    by an application onto a file, i.e., ADHs, and to punch a hole into a file.
-  </t>
-
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/write_plus_args.xml'?>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/write_response4.xml'?>
     <?rfc include='autogen/write_plus_res.xml'?>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
       Using the data_content4 (<xref target="ss:adh:dc" />), WRITE_PLUS can be used
-      either to punch holes or to impose ADH structure on a file.
+      to either punch holes or impose ADH structure on a file.
     </t>
 
     <section title="Hole punching">

@@ -409,6 +409,10 @@ include(data_info4.x)
 
 include(data_content4.x)
 
+include(stable_how4.x)
+
+include(write_response4.x)
+
 /*
  * NFSv4.1 attributes
  */

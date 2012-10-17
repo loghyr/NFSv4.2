@@ -73,4 +73,63 @@
       </list>
     </t>
   </section>
+
+  <section anchor="ss:sparse:new_ops" title="New Operations">
+    <t>
+      READ_PLUS and WRITE_PLUS are new variants of the NFSv4.1
+      READ and WRITE operations <xref target="ref:RFC5661" />.
+      Besides being able to support all of the data semantics of
+      those operations, they can also be used by the client
+      and server to efficiently transfer both holes and ADHs
+      (see <xref target='ss:adh:dh' />). As both READ and WRITE
+      are inefficient for transfer of sparse sections of the file,
+      they are marked as OBSOLETE in NFSv4.2. Instead, a client
+      should utilize READ_PLUS and WRITE_PLUS. Note that as
+      the client has no a priori knowledge of whether either
+      an ADH or a hole is present or not, if it supports
+      READ_PLUS and so does the server, then it should
+      always use READ_PLUS.
+    </t>
+
+    <section anchor="ss:sparse:read_plus" title="READ_PLUS">
+      <t>
+        For holes, READ_PLUS extends the response
+        to avoid returning data for portions of
+        the file which are either initialized and contain no backing store
+        or if the result would appear to be so. I.e., if the result was
+        a data block composed entirely of zeros, then it is easier to return
+        a hole. Returning data blocks of uninitialized data wastes computational
+        and network resources, thus reducing performance.
+        For ADHs, READ_PLUS is used to return the metadata describing the
+        portions of the file which are either initialized and contain no backing
+        store.
+      </t>
+
+      <t>
+        If the client sends a READ operation, it is explicitly
+        stating that it is neither supporting sparse files nor ADHs. So
+        if a READ occurs on a sparse ADH or file, then the server must
+        expand such data to be raw bytes. If a READ occurs in
+        the middle of a hole or ADH, the server can only send back
+        bytes starting from that offset. In contrast, if a READ_PLUS
+        occurs in the middle of a hole or ADH, the server can send
+        back a range which starts before the offset and extends past
+        the range.
+      </t>
+    </section>
+
+    <section anchor="ss:sparse:write_plus" title="WRITE_PLUS">
+      <t>
+        WRITE_PLUS can be used to either hole punch or initialize
+        ADHs. For either purpose, the client can avoid the
+        transfer of a repititive pattern across the network.
+        If the filesystem on the server does not supports
+        sparse files, the WRITE_PLUS operation may return
+        the result asynchronously via the CB_OFFLOAD operation.
+        As a hole punch may entail deallocating data blocks,
+        even if the filesystem supports sparse files, it
+        may still have to return the result via CB_OFFLOAD.
+      </t>
+    </section>
+  </section>
 </section>

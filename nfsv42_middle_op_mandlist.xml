@@ -186,7 +186,7 @@
     <ttcol align='left'>Operation</ttcol>
     <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
     <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
-      <c>CB_COPY                 </c> <c> OPT </c> <c> COPY (REQ) </c>
+      <c>CB_OFFLOAD              </c> <c> OPT </c> <c> COPY (REQ) </c>
       <c>CB_GETATTR              </c> <c> OPT </c> <c> FDELG (REQ) </c>
       <c>CB_LAYOUTRECALL         </c> <c> OPT </c> <c> pNFS (REQ)  </c>
       <c>CB_NOTIFY               </c> <c> OPT </c> <c> DDELG (REQ) </c>

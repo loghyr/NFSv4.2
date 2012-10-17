@@ -29,7 +29,7 @@
       completed. In this case the status value indicates the result
       of the asynchronous copy operation. In all cases, the server will
       also deliver the final results of the asynchronous copy in a
-      CB_COPY operation.
+      CB_OFFLOAD operation.
     </t>
 
     <t>

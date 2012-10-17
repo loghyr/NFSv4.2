@@ -2,43 +2,6 @@
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor='op:read_plus' title='Operation 65: READ_PLUS'>
-  <t>
-    READ_PLUS is a new variant of the NFSv4.1 READ
-    operation <xref target="ref:RFC5661" />. Besides being able
-    to support all of the data semantics of READ, it can also be
-    used by the server to return either holes or ADHs to the
-    client.  For holes, READ_PLUS extends the response
-    to avoid returning data for portions of
-    the file which are either initialized and contain no backing store
-    or if the result would appear to be so. I.e., if the result was
-    a data block composed entirely of zeros, then it is easier to return
-    a hole. Returning data blocks of uninitialized data wastes computational
-    and network resources, thus reducing performance.
-    For ADHs, READ_PLUS is used to return the metadata describing the
-    portions of the file which are either initialized and contain no backing
-    store.
-  </t>
-
-  <t>
-    If the client sends a READ operation, it is explicitly
-    stating that it is neither supporting sparse files nor ADHs. So
-    if a READ occurs on a sparse ADH or file, then the server must
-    expand such data to be raw bytes. If a READ occurs in
-    the middle of a hole or ADH, the server can only send back
-    bytes starting from that offset. In contrast, if a READ_PLUS
-    occurs in the middle of a hole or ADH, the server can send
-    back a range which starts before the offset and extends past
-    the range.
-  </t>
-
-  <t>
-    READ is inefficient for transfer of sparse sections of the file. As
-    such, READ is marked as OBSOLETE in NFSv4.2. Instead, a client
-    should issue READ_PLUS. Note that
-    as the client has no a priori knowledge of whether either an ADH
-    or a hole is present or not, it should always use READ_PLUS.
-  </t>
-
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/read_plus_args.xml'?>
   </section>

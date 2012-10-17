@@ -1,8 +1,9 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="op:cb_offload" title="Operation 15: CB_OFFLOAD - Report results of a server-side copy">
+<section anchor="op:cb_offload" title="Operation 15: CB_OFFLOAD - Report results of an asynchronus operation">
   <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/write_response4.xml'?>
     <?rfc include='autogen/cb_offload_args.xml'?>
   </section>
 
@@ -17,15 +18,15 @@
       an asynchronous server-side copy. This operation is sent by the
       destination server to the client in a CB_COMPOUND request. The
       copy is identified by the filehandle and stateid arguments. The result
-      is indicated by the status field. If the copy failed, cca_bytes_copied
+      is indicated by the status field. If the copy failed, oca_bytes_copied
       contains the number of bytes copied before the failure occurred.
-      The cca_bytes_copied value indicates the number of bytes copied
+      The oca_bytes_copied value indicates the number of bytes copied
       but not which specific bytes have been copied.
     </t>
 
     <t>
-      If the client supports the COPY operation, the client is
-      REQUIRED to support the CB_OFFLOAD operation.
+      If the client supports either the COPY or WRITE_PLUS operation,
+      the client is REQUIRED to support the CB_OFFLOAD operation.
     </t>
 
     <t>
@@ -43,7 +44,7 @@
     <t>
       <list style="hanging">
         <t hangText="NFS4ERR_NOTSUPP:">
-          The copy offload operation is not supported by
+          This callback operation is not supported by
           the NFS client receiving this request.
         </t>
       </list>

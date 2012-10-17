@@ -4,9 +4,9 @@ struct COPY_NOTIFY4resok {
 };
 
 union COPY_NOTIFY4res switch (nfsstat4 cnr_status) {
-	case NFS4_OK:
-		COPY_NOTIFY4resok	resok4;
-	default:
-		void;
+case NFS4_OK:
+	COPY_NOTIFY4resok	resok4;
+default:
+	void;
 };
 

@@ -173,7 +173,9 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/copy_to_auth.x \
 		dotx.d/app_data_hole4.x \
 		dotx.d/data_info4.x \
-		dotx.d/data_content4.x
+		dotx.d/data_content4.x \
+		dotx.d/stable_how4.x \
+		dotx.d/write_response4.x
 
 SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_time_how4.xml \
@@ -249,7 +251,9 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/copy_to_auth.xml \
 		autogen/app_data_hole4.xml \
 		autogen/data_info4.xml \
-		autogen/data_content4.xml
+		autogen/data_content4.xml \
+		autogen/stable_how4.xml \
+		autogen/write_response4.xml
 
 $(SPITGEN): dotx.d/spit_types.sh
 	cd dotx.d ; sh spit_types.sh `basename $@`
@@ -406,6 +410,7 @@ AUTOGEN =	\
 		autogen/want_delegation_args.xml \
 		autogen/want_delegation_res.xml \
 		autogen/write_args.xml \
+		autogen/stable_how4.xml \
 		autogen/write_res.xml
 
 START_PREGEN = nfsv42_rfc_start.xml

@@ -346,7 +346,7 @@
 
     <t>
       If the cr_callback_id is returned, this indicates that the operation
-      was initiated and a CB_COPY callback will deliver the final results
+      was initiated and a CB_OFFLOAD callback will deliver the final results
       of the operation. The cr_callback_id stateid is termed a copy stateid
       in this context. The server is given the option of returning the
       results in a callback because the data may require a relatively long

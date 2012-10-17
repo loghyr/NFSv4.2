@@ -1433,6 +1433,34 @@ EOF
 
 	;;
 
+	stable_how4.x )
+
+cat << EOF > $i
+
+enum stable_how4 {
+	UNSTABLE4	= 0,
+	DATA_SYNC4	= 1,
+	FILE_SYNC4	= 2
+};
+EOF
+
+	;;
+
+	write_response4.x )
+
+cat << EOF > $i
+
+struct write_response4 {
+	stateid4	wr_callback_id<1>;
+	count4		wr_count;
+	stable_how4	wr_committed;
+	verifier4	wr_writeverf;
+	data_content4	wr_sparse;
+};
+EOF
+
+	;;
+
 	* )
 		echo $0: Error: $i not recognized target.
 
