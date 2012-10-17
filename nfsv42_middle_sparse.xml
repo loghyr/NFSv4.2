@@ -87,8 +87,8 @@
       should utilize READ_PLUS and WRITE_PLUS. Note that as
       the client has no a priori knowledge of whether either
       an ADH or a hole is present or not, if it supports
-      READ_PLUS and so does the server, then it should
-      always use READ_PLUS.
+      these operations and so does the server, then it should
+      always use these operations.
     </t>
 
     <section anchor="ss:sparse:read_plus" title="READ_PLUS">

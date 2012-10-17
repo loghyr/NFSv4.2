@@ -241,7 +241,8 @@ typedef uint32_t  policy4;
 
       <t>
         The value of space_reserved can be obtained at any time through
-        GETATTR.
+        GETATTR. If the size is retrieved at the same time, the client
+        can determine the size of the reservation.
       </t>
 
       <t>
@@ -251,6 +252,11 @@ typedef uint32_t  policy4;
         guaranteed for the new size.  If the file size is decreased, space
         reservation is only guaranteed for the new size and the extra blocks
         backing the file can be released.
+      </t>
+
+      <t>
+        The attribute applies during the lifetime of a file or until
+        the attribute is turned off.
       </t>
     </section>
 

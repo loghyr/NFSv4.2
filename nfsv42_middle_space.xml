@@ -83,8 +83,8 @@
     <t>
       <list style="hanging">
         <t hangText="space_reserved">
-          This attribute specifies whether the blocks backing
-          the file have been preallocated.
+          This attribute specifies that writes to the reserved
+          area of the file will not fail with NFS4ERR_NOSPACE.
         </t>
 
         <t hangText="space_freed">
@@ -136,7 +136,7 @@
     </t>
 
     <t>
-      The addition of this problem doesn't solve the problem of space being
+      The addition of this problem does not solve the problem of space being
       over-reported.  However, over-reporting is better than under-reporting.
     </t>
   </section>
