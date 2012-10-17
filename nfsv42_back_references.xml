@@ -53,22 +53,6 @@
 	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x/" />
     </reference>
 
-    <reference anchor='ref:RFC2119'>
-      <front>
-	<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
-	<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
-	  <organization>Harvard University</organization>
-	  <address>
-	    <postal>
-	      <street>1350 Mass. Ave.</street>
-	      <street>Cambridge</street>
-	    <street>MA 02138</street></postal>
-	    <phone>- +1 617 495 3864</phone>
-	<email>sob@harvard.edu</email></address></author>
-	<date year='1997' month='March' />
-      </front>
-    </reference>
-
     <reference anchor='ref:RFC2203'>
 
       <front>
@@ -221,21 +205,25 @@ specifications of each URI scheme.
       </front>
     </reference>
 
-    <reference anchor="ref:lnfs_req">
-      <front>
-        <title>
-          Requirements for Labeled NFS
-        </title>
-        <author initials='T.' surname='Haynes' fullname='T. Haynes'>
-          <organization />
-        </author>
-      </front>
-      <seriesInfo name="draft-ietf-nfsv4-labreqs-00" value="(work in progress)" />
-    </reference>
-
   </references>
 
   <references title="Informative References">
+
+    <reference anchor='ref:RFC2119'>
+      <front>
+	<title abbrev='RFC Key Words'>Key words for use in RFCs to Indicate Requirement Levels</title>
+	<author initials='S.' surname='Bradner' fullname='Scott Bradner'>
+	  <organization>Harvard University</organization>
+	  <address>
+	    <postal>
+	      <street>1350 Mass. Ave.</street>
+	      <street>Cambridge</street>
+	    <street>MA 02138</street></postal>
+	    <phone>- +1 617 495 3864</phone>
+	<email>sob@harvard.edu</email></address></author>
+	<date year='1997' month='March' />
+      </front>
+    </reference>
 
    <reference anchor='ref:RFC5226'>
 
@@ -286,9 +274,9 @@ specifications of each URI scheme.
         <author initials="D." surname="Noveck" fullname="D. Noveck">
           <organization>EMC Corporation</organization>
         </author>
-        <date year="2011" month="March" />
+        <date year="2012" month="October" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-09" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-20" value="(Work In Progress)"/>
     </reference>
 
 <reference anchor='ref:RFC0959'>
@@ -565,15 +553,16 @@ specifications of each URI scheme.
 ml/Deployment_Guide/sec-mls-ov.html' />
   </reference>
 
-  <reference anchor='ref:seek_over'>
-    <front>
-      <title>Reducing Seek Overhead with Application-Directed Prefetching </title>
-      <author initials="S." surname ="VanDeBogart" />
-      <author initials="C." surname ="Frost" />
-      <author initials="E." surname ="Kohler" />
-      <date month="June" year="2009" />
-    </front>
-    <seriesInfo name="Proceedings of USENIX Annual Technical Conference" value="" />
-  </reference>
+    <reference anchor="ref:lnfs_req">
+      <front>
+        <title>
+          Requirements for Labeled NFS
+        </title>
+        <author initials='T.' surname='Haynes' fullname='T. Haynes'>
+          <organization />
+        </author>
+      </front>
+      <seriesInfo name="draft-ietf-nfsv4-labreqs-03" value="(work in progress)" />
+    </reference>
 
 </references>

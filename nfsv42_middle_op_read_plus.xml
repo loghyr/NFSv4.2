@@ -143,7 +143,7 @@
         data server MAY return a hole or ADH result for a READ_PLUS request that
         it receives.  When a data server chooses to return such a result, it has the
         option of returning information for the data stored on that
-        data server (as defined by the data layout), but it MUST not return
+        data server (as defined by the data layout), but it MUST NOT return
         results for a byte range that includes data managed by another data server.
       </t>
 

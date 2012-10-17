@@ -216,32 +216,32 @@
         topologies. As shown in <xref target="inter-server-fig" />,
         the client and servers may be connected by multiple networks.
         In particular, the servers may be connected by a specialized,
-        high speed network (network 192.168.33.0/24 in the diagram)
+        high speed network (network 192.0.2.0/24 in the diagram)
         that does not include the client. The protocol allows the
         client to setup the copy between the servers (over network
-        10.11.78.0/24 in the diagram) and for the servers to
+        203.0.113.0/24 in the diagram) and for the servers to
         communicate on the high speed network if they choose to
         do so.
       </t>
 
       <figure title="An example inter-server network topology." anchor="inter-server-fig">
         <artwork><![CDATA[
-                          192.168.33.0/24
+                          192.0.2.0/24
               +-------------------------------------+
               |                                     |
               |                                     |
-              | 192.168.33.18                       | 192.168.33.56
+              | 192.0.2.18                       | 192.0.2.56
       +-------+------+                       +------+------+
       |     Source   |                       | Destination |
       +-------+------+                       +------+------+
-              | 10.11.78.18                         | 10.11.78.56
+              | 203.0.113.18                         | 203.0.113.56
               |                                     |
               |                                     |
-              |             10.11.78.0/24           |
+              |             203.0.113.0/24           |
               +------------------+------------------+
                                  |
                                  |
-                                 | 10.11.78.243
+                                 | 203.0.113.243
                            +-----+-----+
                            |   Client  |
                            +-----------+
@@ -1023,13 +1023,13 @@
           For example, suppose the network topology is as shown in
           <xref target="inter-server-fig" />.  If the source filehandle
           is 0x12345, the source server may respond to a COPY_NOTIFY
-          for destination 10.11.78.56 with the URLs:
+          for destination 203.0.113.56 with the URLs:
         </t>
 
         <t>
           <list style="empty">
-            <t>nfs://10.11.78.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/10.11.78.56/_FH/0x12345</t>
-            <t>nfs://192.168.33.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/10.11.78.56/_FH/0x12345</t>
+            <t>nfs://203.0.113.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/203.0.113.56/_FH/0x12345</t>
+            <t>nfs://192.0.2.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/203.0.113.56/_FH/0x12345</t>
           </list>
         </t>
 
@@ -1040,10 +1040,10 @@
 
         <t>
           The client will then send these URLs to the destination server
-          in the COPY operation. Suppose that the 192.168.33.0/24 network
+          in the COPY operation. Suppose that the 192.0.2.0/24 network
           is a high speed network and the destination server decides to
           transfer the file over this network. If the destination
-          contacts the source server from 192.168.33.56 over this network
+          contacts the source server from 192.0.2.56 over this network
           using NFSv4.1, it does the following:
         </t>
 
@@ -1051,7 +1051,7 @@
           <list style="hanging">
             <t hangText="COMPOUND"> { PUTROOTFH, LOOKUP "_COPY" ;
               LOOKUP "FvhH1OKbu8VrxvV1erdjvR7N" ;
-              LOOKUP "10.11.78.56";
+              LOOKUP "203.0.113.56";
               LOOKUP "_FH" ; OPEN "0x12345" ; GETFH }
             </t>
           </list>

@@ -141,7 +141,7 @@
         </t>
 
         <t>
-          MUST not expose an object to either the client or server name
+          MUST NOT expose an object to either the client or server name
           space before its security information has been bound to it.
         </t>
       </list>
