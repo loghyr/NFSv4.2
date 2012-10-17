@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="sec:copy" title="NFS Server-side Copy">
+<section anchor="sec:copy" title="Server-side Copy">
   <section title="Introduction">
     <t>
       The server-side copy feature provides a mechanism for

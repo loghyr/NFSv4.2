@@ -8,7 +8,7 @@
     While this can help the NFS
     client optimize I/O and caching for a file, it does not allow the NFS
     server and its exported file system to do likewise. 
-    We add an IO_ADVISE procedure (<xref target='sec:io_advise' />) to communicate the
+    We add an IO_ADVISE procedure (<xref target='op:io_advise' />) to communicate the
     client file access patterns to the NFS server.
     The NFS server upon
     receiving a IO_ADVISE operation MAY choose to alter its I/O and
