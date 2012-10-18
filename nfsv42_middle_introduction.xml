@@ -103,7 +103,9 @@
         as 0s during I/O. READ_PLUS (see <xref target='op:read_plus' />)
         allows a server to send back to the client metadata describing
         the hole and WRITE_PLUS (see <xref target='op:write_plus' />)
-        allows the client to punch holes into a file.
+        allows the client to punch holes into a file. In addition,
+        SEEK (see <xref target='op:seek' />) is provided to scan
+        for the next hole or data from a given location.
       </t>
     </section>
 

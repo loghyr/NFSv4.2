@@ -218,7 +218,8 @@ typedef uint32_t  policy4;
     <section toc='exclude' anchor="ss:fattr:sr" title="Attribute 77: space_reserved">
       <t>
         The space_reserve attribute is a read/write attribute of type
-        boolean.  It is a per file attribute.  When the space_reserved
+        boolean.  It is a per file attribute and applies during the
+        lifetime of the file or until it is turned off.  When the space_reserved
         attribute is set via SETATTR, the server must ensure that there is
         disk space to accommodate every byte in the file before it can return
         success.  If the server cannot guarantee this, it must return
@@ -250,13 +251,12 @@ typedef uint32_t  policy4;
         along with the size bit in SETATTR.  Increasing the size of a file
         with space_reserve set will fail if space reservation cannot be
         guaranteed for the new size.  If the file size is decreased, space
-        reservation is only guaranteed for the new size and the extra blocks
-        backing the file can be released.
+        reservation is only guaranteed for the new size.
+        If a hole is punched into the file, then the reservation is not
+        changed.
       </t>
 
       <t>
-        The attribute applies during the lifetime of a file or until
-        the attribute is turned off.
       </t>
     </section>
 
