@@ -37,7 +37,7 @@
       the size attribute (see Section 5.8.1.5 of <xref target="ref:RFC5661" />).
       If space_reserved attribute is
       set on a file, it is guaranteed that writes that do not grow the file
-      past the size will not fail with NFSERR_NOSPC. Once the size is
+      past the size will not fail with NFS4ERR_NOSPC. Once the size is
       changed, then the reservation is changed to that new size.
     </t>
 

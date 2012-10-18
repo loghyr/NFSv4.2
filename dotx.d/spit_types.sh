@@ -1467,7 +1467,6 @@ struct write_response4 {
 	count4		wr_count;
 	stable_how4	wr_committed;
 	verifier4	wr_writeverf;
-	data_content4	wr_sparse;
 };
 EOF
 

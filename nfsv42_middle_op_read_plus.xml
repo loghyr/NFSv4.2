@@ -36,7 +36,7 @@
       data type, but neither ADH nor hole. Both an ADH and a hole must be
       returned in its entirety - clients must be prepared to get more
       information than they requested. Both the start and the end of the
-      hole may execeed what was requested. The array contents MUST be
+      hole may exceed what was requested. The array contents MUST be
       contiguous in the file.
     </t>
 

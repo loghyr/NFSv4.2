@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="op:cb_offload" title="Operation 15: CB_OFFLOAD - Report results of an asynchronus operation">
+<section anchor="op:cb_offload" title="Operation 15: CB_OFFLOAD - Report results of an asynchronous operation">
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/write_response4.xml'?>
     <?rfc include='autogen/cb_offload_args.xml'?>
@@ -14,7 +14,7 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       CB_OFFLOAD is used to report to the client the results of
-      an aysnchronous operation, e.g., Server-side Copy or a hole punch. 
+      an asynchronous operation, e.g., Server-side Copy or a hole punch. 
       The coa_fh and coa_stateid identify the transaction and the coa_status
       indicates success or failure. The coa_resok4.wr_callback_id MUST NOT
       be set. If the transaction failed, then the coa_bytes_copied

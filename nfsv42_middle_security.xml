@@ -3,7 +3,7 @@
 
 <section anchor="sec:security" title="Security Considerations">
   <t>
-    NFSv4.2 has all of the security concenrns present in NFSv4.1
+    NFSv4.2 has all of the security concerns present in NFSv4.1
     (see Section 21 of <xref target='ref:RFC5661' />) and those present in
     the Server-side Copy (see <xref target='ss:copy:security' />)
     and in Labeled NFS (see <xref target='ss:lnfs:security' />).

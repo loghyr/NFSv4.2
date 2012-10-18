@@ -220,7 +220,7 @@
         it wrote until it is informed by the server
         that the operation is complete. It can
         use OFFLOAD_STATUS (<xref target="op:offload_status" />)
-        to monitor the operatiom and
+        to monitor the operation and
         OFFLOAD_ABORT (<xref target="op:offload_abort" />)
         to cancel the operation. An example of
         a asynchronous WRITE_PLUS is shown in

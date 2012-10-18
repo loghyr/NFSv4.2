@@ -26,7 +26,7 @@
       correspond to the most recent state of the file? In
       some cases, the only recourse may be to send another
       COMPOUND containing a third GETATTR that is fully
-      serialised with the first two.
+      serialized with the first two.
     </t>
     <t>
       NFSv4.2 avoids this kind of inefficiency by

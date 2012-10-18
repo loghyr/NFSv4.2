@@ -53,7 +53,7 @@
   <t>
     In this section, we are going to define an Application Data
     Hole (ADH), which is a generic framework
-    for transfering the  ADB, present one approach to detecting corruption in
+    for transferring the  ADB, present one approach to detecting corruption in
     a given ADH implementation, and describe the model for
     how the client and server can support efficient initialization
     of ADHs, reading of ADH holes, punching ADH holes in a file, and space
@@ -191,7 +191,7 @@
     </t>
 
     <t>
-      Corruption in each ADH can be detected thusly:
+      Corruption in each ADH can thus be detected:
     </t>
 
     <t>

@@ -29,7 +29,7 @@
       belief that this is a hard error. If the MDS is informed by
       the client that there is an error, it can safely ignore that.
       For it, the mission is accomplished in that the client has
-      returned a layout that the MDS had most likley recalled.
+      returned a layout that the MDS had most likely recalled.
     </t>
 
     <t>
@@ -50,7 +50,7 @@
       it cannot determine if the client and DS path is working. As with
       the case of the DS passing errors to the client, it must be
       prepared for the MDS to consider such outages as being
-      transistory.
+      transitory.
     </t>
 
     <t>
@@ -97,8 +97,8 @@
     </t>
 
     <t>
-      Each individual layoutreturn_device_error4 descibes a single
-      error associated with a DS, which is identfied via lrde_deviceid.
+      Each individual layoutreturn_device_error4 describes a single
+      error associated with a DS, which is identified via lrde_deviceid.
       The operation which returned the error is identified
       via lrde_opnum. Finally the NFS error value (nfsstat4) encountered
       is provided via lrde_status and may consist of the following

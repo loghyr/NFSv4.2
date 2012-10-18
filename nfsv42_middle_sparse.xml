@@ -122,7 +122,7 @@
       <t>
         WRITE_PLUS can be used to either hole punch or initialize
         ADHs. For either purpose, the client can avoid the
-        transfer of a repititive pattern across the network.
+        transfer of a repetitive pattern across the network.
         If the filesystem on the server does not supports
         sparse files, the WRITE_PLUS operation may return
         the result asynchronously via the CB_OFFLOAD operation.

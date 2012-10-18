@@ -976,7 +976,7 @@
           <t>
             For protocols that authenticate user names with passwords
             (e.g., HTTP <xref target="ref:RFC2616" /> and FTP <xref target="ref:RFC0959" />),
-            the nfsv4 user id could be used as the user name, and an ASCII
+            the NFSv4 user id could be used as the user name, and an ASCII
             hexadecimal representation of the RPCSEC_GSSv3 shared secret could be
             used as the user password or as input into non-password authentication
             methods like CHAP <xref target="ref:RFC1994" />.
