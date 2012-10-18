@@ -1,5 +1,5 @@
 
-union write_plus_arg4 switch (data_content4 content) {
+union write_plus_arg4 switch (data_content4 wpa_content) {
 case NFS4_CONTENT_DATA:
 	opaque		wpa_data<>;
 case NFS4_CONTENT_APP_DATA_HOLE:

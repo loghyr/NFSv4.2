@@ -13,14 +13,13 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      CB_OFFLOAD is used for both intra- and inter-server asynchronous
-      copies. The CB_OFFLOAD callback informs the client of the result of
-      an asynchronous server-side copy. This operation is sent by the
-      destination server to the client in a CB_COMPOUND request. The
-      copy is identified by the filehandle and stateid arguments. The result
-      is indicated by the status field. If the copy failed, oca_bytes_copied
+      CB_OFFLOAD is used to report to the client the results of
+      an aysnchronous operation, e.g., Server-side Copy or a hole punch. 
+      The coa_fh and coa_stateid identify the transaction and the coa_status
+      indicates success or failure. The coa_resok4.wr_callback_id MUST NOT
+      be set. If the transaction failed, then the coa_bytes_copied
       contains the number of bytes copied before the failure occurred.
-      The oca_bytes_copied value indicates the number of bytes copied
+      The coa_bytes_copied value indicates the number of bytes copied
       but not which specific bytes have been copied.
     </t>
 
@@ -30,10 +29,29 @@
     </t>
 
     <t>
-      There is a potential race between the reply to the original COPY on
+      There is a potential race between the reply to the original transaction on
       the forechannel and the CB_OFFLOAD callback on the backchannel.
       Sections 2.10.6.3 and 20.9.3 in <xref target="ref:RFC5661" />
       describes how to handle this type of issue.
     </t>
+
+    <section toc='exclude' title='Server-side Copy'>
+      <t>
+        CB_OFFLOAD is used for both intra- and inter-server asynchronous
+        copies. This operation is sent by the
+        destination server to the client in a CB_COMPOUND request.
+        Upon success, the coa_resok4.wr_count presents the total
+        number of bytes copied.
+      </t>
+    </section>
+
+    <section toc='exclude' title='WRITE_PLUS'>
+      <t>
+        CB_OFFLOAD is used to report the completion of either
+        a hole punch or an ADH initialization. Upon success,
+        the coa_resok4 will contain the same information that
+        a synchronous WRITE_PLUS would have returned.
+      </t>
+    </section>
   </section>
 </section>
