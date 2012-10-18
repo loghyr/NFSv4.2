@@ -1,12 +1,12 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
 <section anchor="sec:space" title="Space Reservation">
   <section anchor="ss:space:intro" title="Introduction">
     <t>
-      This section describes a set of operations that allow applications
-      such as hypervisors to reserve space for a file, report the amount of
-      actual disk space a file occupies and freeup the backing space of a
+      Applications such as hypervisors want to be able to
+      reserve space for a file, report the amount of
+      actual disk space a file occupies, and freeup the backing space of a
       file when it is not required.  In virtualized environments, virtual
       disk files are often stored on NFS mounted volumes.  Since virtual
       disk files represent the hard disks of virtual machines, hypervisors
@@ -32,13 +32,17 @@
     </t>
 
     <t>
-      If the space_reserved attribute (see <xref target='ss:fattr:sr' />) is
+      We define a "reservation" as being the combination of the 
+      space_reserved attribute (see <xref target='ss:fattr:sr' />) and
+      the size attribute (see Section 5.8.1.5 of <xref target="ref:RFC5661" />).
+      If space_reserved attribute is
       set on a file, it is guaranteed that writes that do not grow the file
-      will not fail with NFSERR_NOSPC.
+      past the size will not fail with NFSERR_NOSPC. Once the size is
+      changed, then the reservation is changed to that new size.
     </t>
 
     <t>
-      Another useful feature would be the ability to report the number of
+      Another useful feature is the ability to report the number of
       blocks that would be freed when a file is deleted.  Currently, NFS
       reports two size attributes:
     </t>

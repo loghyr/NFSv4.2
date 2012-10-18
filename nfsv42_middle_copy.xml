@@ -130,14 +130,14 @@
 
       <t>
         A synchronous intra-server copy is shown in
-        <xref target="sync-intra-server-fig" />. In this example, the NFS
+        <xref target="fig:sync-intra-server" />. In this example, the NFS
         server chooses to perform the copy synchronously. The copy operation
         is completed, either successfully or unsuccessfully, before the
         server replies to the client's request. The server's reply contains
         the final result of the operation.
       </t>
 
-      <figure title="A synchronous intra-server copy." anchor="sync-intra-server-fig">
+      <figure title="A synchronous intra-server copy." anchor="fig:sync-intra-server">
         <artwork><![CDATA[
   Client                                  Server
      +                                      +
@@ -163,7 +163,7 @@
 
       <t>
         An asynchronous intra-server copy is shown in
-        <xref target="async-intra-server-fig" />. In this example, the NFS
+        <xref target="afig:sync-intra-server" />. In this example, the NFS
         server performs the copy asynchronously. The server's reply to
         the copy request indicates that the copy operation was initiated
         and the final result will be delivered at a later time. The server's
@@ -173,7 +173,7 @@
         performs a callback to the client and reports the results.
       </t>
 
-      <figure title="An asynchronous intra-server copy." anchor="async-intra-server-fig">
+      <figure title="An asynchronous intra-server copy." anchor="afig:sync-intra-server">
         <artwork><![CDATA[
   Client                                  Server
      +                                      +
@@ -213,7 +213,7 @@
       <t>
         A copy may also be performed between two servers. The copy
         protocol is designed to accommodate a variety of network
-        topologies. As shown in <xref target="inter-server-fig" />,
+        topologies. As shown in <xref target="fig:inter-server" />,
         the client and servers may be connected by multiple networks.
         In particular, the servers may be connected by a specialized,
         high speed network (network 192.0.2.0/24 in the diagram)
@@ -224,7 +224,7 @@
         do so.
       </t>
 
-      <figure title="An example inter-server network topology." anchor="inter-server-fig">
+      <figure title="An example inter-server network topology." anchor="fig:inter-server">
         <artwork><![CDATA[
                           192.0.2.0/24
               +-------------------------------------+
@@ -259,20 +259,20 @@
 
       <t>
         A synchronous inter-server copy is shown in
-        <xref target="sync-inter-server-fig" />. In this case, the
+        <xref target="fig:sync-inter-server" />. In this case, the
         destination server chooses to perform the copy before
         responding to the client's COPY request.
       </t>
 
       <t>
         An asynchronous copy is shown in
-        <xref target="async-inter-server-fig" />. In this case, the
+        <xref target="fig:async-inter-server" />. In this case, the
         destination server chooses to respond to the client's COPY
         request immediately and then perform the copy
         asynchronously.
       </t>
 
-      <figure title="A synchronous inter-server copy." anchor="sync-inter-server-fig">
+      <figure title="A synchronous inter-server copy." anchor="fig:sync-inter-server">
         <artwork><![CDATA[
   Client                Source         Destination
      +                    +                 +
@@ -308,7 +308,7 @@
         ]]></artwork>
       </figure>
 
-      <figure title="An asynchronous inter-server copy." anchor="async-inter-server-fig">
+      <figure title="An asynchronous inter-server copy." anchor="fig:async-inter-server">
         <artwork><![CDATA[
   Client                Source         Destination
     +                    +                 +
@@ -526,7 +526,7 @@
 
       <t>
         When netloc4 values are used for an inter-server copy as
-        shown in <xref target="inter-server-fig" />, their values
+        shown in <xref target="fig:inter-server" />, their values
         may be evaluated on the source server, destination server,
         and client. The network environment in which these systems
         operate should be configured so that the netloc4 values
@@ -1021,7 +1021,7 @@
 
         <t>
           For example, suppose the network topology is as shown in
-          <xref target="inter-server-fig" />.  If the source filehandle
+          <xref target="fig:inter-server" />.  If the source filehandle
           is 0x12345, the source server may respond to a COPY_NOTIFY
           for destination 203.0.113.56 with the URLs:
         </t>

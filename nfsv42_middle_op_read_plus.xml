@@ -7,13 +7,15 @@
   </section>
 
   <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/data_info4.xml'?>
+    <?rfc include='autogen/data4.xml'?>
     <?rfc include='autogen/read_plus_res.xml'?>
   </section>
 
   <section toc='exclude' anchor='op:read_plus:desc'  title="DESCRIPTION">
     <t>
       The READ_PLUS operation is based upon the NFSv4.1 READ operation
-      <xref target="ref:RFC5661" /> and similarly reads data from the
+      (see Section 18.22 of <xref target="ref:RFC5661" />) and similarly reads data from the
       regular file identified by the current filehandle.
     </t>
 
@@ -34,7 +36,8 @@
       data type, but neither ADH nor hole. Both an ADH and a hole must be
       returned in its entirety - clients must be prepared to get more
       information than they requested. Both the start and the end of the
-      hole may execeed what was requested.
+      hole may execeed what was requested. The array contents MUST be
+      contiguous in the file.
     </t>
 
     <t>
@@ -51,7 +54,9 @@
       differentiates this to the client by setting di_allocated to TRUE
       in this case. Note that in such a scenario, the server is not
       required to determine the full extent of the "hole" - it does not
-      need to determine where the zeros start and end.
+      need to determine where the zeros start and end. If the server
+      elects to return the hole as data, then it can set the d_allocted
+      to FALSE in the rpc_data to indicate it is a hole.
     </t>
 
     <t>

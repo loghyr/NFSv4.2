@@ -1,7 +1,7 @@
 
 union write_plus_arg4 switch (data_content4 wpa_content) {
 case NFS4_CONTENT_DATA:
-	opaque		wpa_data<>;
+	data4		wpa_data;
 case NFS4_CONTENT_APP_DATA_HOLE:
 	app_data_hole4	wpa_adh;
 case NFS4_CONTENT_HOLE:

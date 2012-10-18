@@ -4,6 +4,7 @@
 <section anchor='op:write_plus' title='Operation 64: WRITE_PLUS'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/data_info4.xml'?>
+    <?rfc include='autogen/data4.xml'?>
     <?rfc include='autogen/write_plus_args.xml'?>
   </section>
 
@@ -12,11 +13,53 @@
     <?rfc include='autogen/write_plus_res.xml'?>
   </section>
 
-  <section toc='exclude' title="DESCRIPTION">
+  <section toc='exclude' anchor='op:write_plus:desc'  title="DESCRIPTION">
     <t>
-      Using the data_content4 (<xref target="ss:adh:dc" />), WRITE_PLUS can be used
-      to either punch holes or impose ADH structure on a file.
+      The WRITE_PLUS operation is an extension of the NFSv4.1 WRITE
+      operation (see Section 18.2 of <xref target="ref:RFC5661" /> and
+      writes data to the regular file identified by the
+      current filehandle.  The server MAY write fewer bytes than
+      requested by the client.
     </t>
+
+    <t>
+      The WRITE_PLUS argument is comprised of an array of rpr_contents, each of
+      which describe a data_content4 type of data (<xref target="ss:adh:dc" />).
+      For NFSv4.2, the allowed values are data, ADH, and hole.
+      The array contents MUST be contiguous in the file. A successful
+      WRITE_PLUS will construct a reply for wr_count, wr_committed,
+      and wr_writeverf as per the NFSv4.1 WRITE operation results.
+      If wr_callback_id is set, it indicates an asynchronous reply
+      (see <xref target='op:write_plus:async' />).
+    </t>
+
+    <t>
+      WRITE_PLUS has to support all of the errors which are returned by WRITE
+      plus NFS4ERR_UNION_NOTSUPP. If the client asks for a hole and the server
+      does not support that arm of the discriminated union, but does support
+      one or more additional arms, it can signal to the client that it supports
+      the operation, but not the arm with NFS4ERR_UNION_NOTSUPP.
+    </t>
+
+    <t>
+      If the client supports WRITE_PLUS, it MUST support CB_OFFLOAD.
+    </t>
+
+    <section title="Data">
+      <t>
+        The d_offset specifies the offset where
+        the data should be written.  An d_offset of zero specifies
+        that the write should start at the beginning of the file.  The
+        d_count, as encoded as part of the opaque data parameter,
+        represents the number of bytes of data that are to be written.
+        If the d_count is zero, the WRITE_PLUS will succeed and
+        return a d_count of zero subject to permissions checking.
+      </t>
+
+      <t>
+        Note that d_allocated has no meaning for WRITE_PLUS.
+      </t>
+    </section>
 
     <section title="Hole punching">
       <t>
@@ -24,8 +67,8 @@
         particular region in the file, it calls the WRITE_PLUS operation with
         the current filehandle set to the filehandle of the file in question,
         and the equivalent of start offset and length in bytes of the region
-        set in ia_hole.di_offset and ia_hole.di_length respectively.  If the
-        ia_hole.di_allocated is set to TRUE, then the blocks will be zeroed and
+        set in wpa_hole.di_offset and wpa_hole.di_length respectively.  If the
+        wpa_hole.di_allocated is set to TRUE, then the blocks will be zeroed and
         if it is set to FALSE, then they will be deallocated. All
         further reads to this region MUST return zeros until overwritten.
         The filehandle specified must be that of a regular file.
@@ -45,12 +88,10 @@
 
       <t>
         The server is not required to complete deallocating the blocks
-        specified in the operation before returning.  It is acceptable to
-        have the deallocation be deferred.  In fact, WRITE_PLUS is merely a
-        hint; it is valid for a server to return success without ever doing
-        anything towards deallocating the blocks backing the region
-        specified.  However, any future reads to the region MUST return
-        zeroes.
+        specified in the operation before returning.  The server SHOULD
+        return an asynchronous result if it can determine the
+        operation will be long running
+        (see <xref target='op:write_plus:async' />).
       </t>
 
       <t>
@@ -104,7 +145,10 @@
         If the server supports the WRITE_PLUS operation, it still
         might not support sparse files. So if it receives the
         WRITE_PLUS operation, then it MUST populate the contents
-        of the file with the initialized ADHs.
+        of the file with the initialized ADHs. The server SHOULD
+        return an asynchronous result if it can determine the
+        operation will be long running
+        (see <xref target='op:write_plus:async' />).
       </t>
 
       <t>
@@ -158,8 +202,32 @@
       </t>
     </section>
 
-    <section title='Asynchronous Transactions'>
-      <figure title="An asynchronous WRITE_PLUS." anchor="async-write_plus-fig">
+    <section anchor='op:write_plus:async' title='Asynchronous Transactions'>
+      <t>
+        Both hole punching and ADH initialization may 
+        lead to server determining to service the
+        operation asynchronously. If it decides to
+        do so, it sets the stateid in wr_callback_id
+        to be that of the wp_stateid. If it does
+        not set the wr_callback_id, then the result
+        is synchronous.
+      </t>
+
+      <t>
+        When the client determines that the reply
+        will be given asynchronously, it should not
+        assume anything about the contents of what
+        it wrote until it is informed by the server
+        that the operation is complete. It can
+        use OFFLOAD_STATUS (<xref target="op:offload_status" />)
+        to monitor the operatiom and
+        OFFLOAD_ABORT (<xref target="op:offload_abort" />)
+        to cancel the operation. An example of
+        a asynchronous WRITE_PLUS is shown in
+        <xref target='fig:async-write_plus' />.
+      </t>
+
+      <figure title="An asynchronous WRITE_PLUS." anchor="fig:async-write_plus">
         <artwork><![CDATA[
   Client                                  Server
      +                                      +
@@ -187,6 +255,15 @@
      |                                      |
         ]]></artwork>
       </figure>
+
+      <t>
+        When CB_OFFLOAD informs the client of
+        the successful WRITE_PLUS, the write_response4
+        embedded in the operation will provide
+        the necessary information that a synchronous
+        WRITE_PLUS would have provided.
+      </t>
+
     </section>
   </section>
 </section>

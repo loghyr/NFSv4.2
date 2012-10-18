@@ -1390,6 +1390,18 @@ EOF
 
 	;;
 
+	data4.x )
+
+cat << EOF > $i
+struct data4 {
+	offset4		d_offset;
+	bool		d_allocated;
+	opaque		d_data<>;
+};
+EOF
+
+	;;
+
 	data_content4.x )
 
 cat << EOF > $i
