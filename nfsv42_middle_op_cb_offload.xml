@@ -35,19 +35,5 @@
       Sections 2.10.6.3 and 20.9.3 in <xref target="ref:RFC5661" />
       describes how to handle this type of issue.
     </t>
-
-    <t>
-      The CB_OFFLOAD operation may fail for the following reasons
-      (this is a partial list):
-    </t>
-
-    <t>
-      <list style="hanging">
-        <t hangText="NFS4ERR_NOTSUPP:">
-          This callback operation is not supported by
-          the NFS client receiving this request.
-        </t>
-      </list>
-    </t>
   </section>
 </section>

@@ -85,18 +85,5 @@
       For a copy only involving one server (the source and destination
       are on the same server), this operation is unnecessary.
     </t>
-
-    <t>
-      The COPY_NOTIFY operation may fail for the following reasons
-      (this is a partial list):
-    </t>
-
-    <t>
-      <list style="symbols">
-        <t>NFS4ERR_MOVED</t>
-        <t>NFS4ERR_NOTSUPP</t>
-        <t>NFS4ERR_WRONGSEC</t>
-      </list>
-    </t>
   </section>
 </section>

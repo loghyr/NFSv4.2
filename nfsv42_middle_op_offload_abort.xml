@@ -39,19 +39,5 @@
       If the server supports asynchronous copies, the server is
       REQUIRED to support the OFFLOAD_ABORT operation.
     </t>
-
-    <t>
-      The OFFLOAD_ABORT operation may fail for the following reasons
-      (this is a partial list):
-    </t>
-
-    <t>
-      <list style="symbols">
-        <t>NFS4ERR_NOTSUPP</t>
-        <t>NFS4ERR_RETRY</t>
-        <t>NFS4ERR_COMPLETE_ALREADY</t>
-        <t>NFS4ERR_SERVERFAULT</t>
-      </list>
-    </t>
   </section>
 </section>

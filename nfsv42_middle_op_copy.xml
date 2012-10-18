@@ -368,29 +368,5 @@
       deduplicate, or otherwise represent the on disk data in the source and
       destination file differently.
     </t>
-
-    <t>
-      In the event of a failure the state of the destination file is
-      implementation dependent. The COPY operation may fail for the following
-      reasons (this is a partial list).
-    </t>
-
-    <t>
-      <list style="symbols">
-        <t>NFS4ERR_MOVED</t>
-        <t>NFS4ERR_NOTSUPP</t>
-        <t>NFS4ERR_PARTNER_NOTSUPP</t>
-        <t>NFS4ERR_OFFLOAD_DENIED</t>
-        <t>NFS4ERR_PARTNER_NO_AUTH</t>
-        <t>NFS4ERR_FBIG</t>
-        <t>NFS4ERR_NOTDIR</t>
-        <t>NFS4ERR_WRONG_TYPE</t>
-        <t>NFS4ERR_ISDIR</t>
-        <t>NFS4ERR_INVAL</t>
-        <t>NFS4ERR_DELAY</t>
-        <t>NFS4ERR_METADATA_NOTSUPP</t>
-        <t>NFS4ERR_WRONGSEC</t>
-      </list>
-    </t>
   </section>
 </section>

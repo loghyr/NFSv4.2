@@ -102,4 +102,318 @@
       </section>
     </section>
   </section>
+
+  <section anchor="ss:error_values:ops" title="New Operations and Their Valid Errors">
+    <t>
+      This section contains a table that gives the valid error returns for
+      each new NFSv4.2 protocol operation.  The error code NFS4_OK (indicating no
+      error) is not listed but should be understood to be returnable by all
+      new operations. The error values for all other operations are defined
+      in Section 15.2 of <xref target="ref:RFC5661" />.
+    </t>
+
+    <texttable anchor='tbl:op_error_returns'>
+      <preamble>Valid Error Returns for Each New Protocol Operation</preamble>
+      <ttcol align="left">Operation</ttcol>
+      <ttcol align="left">Errors</ttcol>
+
+<!-- DO NOT MOVE THIS OR THE NEXT LINE - IT MUST BE AT THE START OF TABLE -->
+<!-- STARTOFTHEERRORTABLE -->
+
+      <c>COPY</c>
+      <c>
+        NFS4ERR_ACCESS,
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_DELAY,
+        NFS4ERR_DELEG_REVOKED,
+        NFS4ERR_DQUOT,
+        NFS4ERR_EXPIRED,
+        NFS4ERR_FBIG,
+        NFS4ERR_FHEXPIRED,
+        NFS4ERR_GRACE,
+        NFS4ERR_INVAL,
+        NFS4ERR_IO,
+        NFS4ERR_ISDIR,
+        NFS4ERR_LOCKED,
+        NFS4ERR_MOVED,
+        NFS4ERR_NOFILEHANDLE,
+        NFS4ERR_NOSPC,
+        NFS4ERR_OFFLOAD_DENIED,
+        NFS4ERR_OLD_STATEID,
+        NFS4ERR_OPENMODE,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_PARTNER_NO_AUTH,
+        NFS4ERR_PARTNER_NOTSUPP,
+        NFS4ERR_PNFS_IO_HOLE,
+        NFS4ERR_PNFS_NO_LAYOUT,
+        NFS4ERR_REP_TOO_BIG,
+        NFS4ERR_REP_TOO_BIG_TO_CACHE,
+        NFS4ERR_REQ_TOO_BIG,
+        NFS4ERR_RETRY_UNCACHED_REP,
+        NFS4ERR_ROFS,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_STALE,
+        NFS4ERR_SYMLINK,
+        NFS4ERR_TOO_MANY_OPS,
+        NFS4ERR_WRONG_TYPE
+      </c>
+
+      <c>COPY_NOTIFY</c>
+      <c>
+        NFS4ERR_ACCESS,
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_DELAY,
+        NFS4ERR_DELEG_REVOKED,
+        NFS4ERR_EXPIRED,
+        NFS4ERR_FHEXPIRED,
+        NFS4ERR_GRACE,
+        NFS4ERR_INVAL,
+        NFS4ERR_ISDIR,
+        NFS4ERR_IO,
+        NFS4ERR_LOCKED,
+        NFS4ERR_MOVED,
+        NFS4ERR_NOFILEHANDLE,
+        NFS4ERR_OLD_STATEID,
+        NFS4ERR_OPENMODE,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_PNFS_IO_HOLE,
+        NFS4ERR_PNFS_NO_LAYOUT,
+        NFS4ERR_REP_TOO_BIG,
+        NFS4ERR_REP_TOO_BIG_TO_CACHE,
+        NFS4ERR_REQ_TOO_BIG,
+        NFS4ERR_RETRY_UNCACHED_REP,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_STALE,
+        NFS4ERR_SYMLINK,
+        NFS4ERR_TOO_MANY_OPS,
+        NFS4ERR_WRONG_TYPE
+      </c>
+
+      <c>OFFLOAD_ABORT</c>
+      <c>
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_COMPLETE_ALREADY,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_EXPIRED,
+        NFS4ERR_DELAY,
+        NFS4ERR_GRACE,
+        NFS4ERR_NOTSUPP,
+        NFS4ERR_OLD_STATEID,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_TOO_MANY_OPS
+      </c>
+
+      <c>OFFLOAD_REVOKE</c>
+      <c>
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_COMPLETE_ALREADY,
+        NFS4ERR_DELAY,
+        NFS4ERR_GRACE,
+        NFS4ERR_INVALID,
+        NFS4ERR_MOVED,
+        NFS4ERR_NOTSUPP,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_TOO_MANY_OPS
+      </c>
+
+      <c>OFFLOAD_STATUS</c>
+      <c>
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_COMPLETE_ALREADY,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_EXPIRED,
+        NFS4ERR_DELAY,
+        NFS4ERR_GRACE,
+        NFS4ERR_NOTSUPP,
+        NFS4ERR_OLD_STATEID,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_TOO_MANY_OPS
+      </c>
+
+      <c>READ_PLUS</c>
+      <c>
+        NFS4ERR_ACCESS,
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_DELAY,
+        NFS4ERR_DELEG_REVOKED,
+        NFS4ERR_EXPIRED,
+        NFS4ERR_FHEXPIRED,
+        NFS4ERR_GRACE,
+        NFS4ERR_INVAL,
+        NFS4ERR_ISDIR,
+        NFS4ERR_IO,
+        NFS4ERR_LOCKED,
+        NFS4ERR_MOVED,
+        NFS4ERR_NOFILEHANDLE,
+        NFS4ERR_OLD_STATEID,
+        NFS4ERR_OPENMODE,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_PNFS_IO_HOLE,
+        NFS4ERR_PNFS_NO_LAYOUT,
+        NFS4ERR_REP_TOO_BIG,
+        NFS4ERR_REP_TOO_BIG_TO_CACHE,
+        NFS4ERR_REQ_TOO_BIG,
+        NFS4ERR_RETRY_UNCACHED_REP,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_STALE,
+        NFS4ERR_SYMLINK,
+        NFS4ERR_TOO_MANY_OPS,
+        NFS4ERR_UNION_NOTSUPP,
+        NFS4ERR_WRONG_TYPE
+      </c>
+
+      <c>SEEK</c>
+      <c>
+        NFS4ERR_ACCESS,
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_DELAY,
+        NFS4ERR_DELEG_REVOKED,
+        NFS4ERR_EXPIRED,
+        NFS4ERR_FHEXPIRED,
+        NFS4ERR_GRACE,
+        NFS4ERR_INVAL,
+        NFS4ERR_ISDIR,
+        NFS4ERR_IO,
+        NFS4ERR_LOCKED,
+        NFS4ERR_MOVED,
+        NFS4ERR_NOFILEHANDLE,
+        NFS4ERR_OLD_STATEID,
+        NFS4ERR_OPENMODE,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_PNFS_IO_HOLE,
+        NFS4ERR_PNFS_NO_LAYOUT,
+        NFS4ERR_REP_TOO_BIG,
+        NFS4ERR_REP_TOO_BIG_TO_CACHE,
+        NFS4ERR_REQ_TOO_BIG,
+        NFS4ERR_RETRY_UNCACHED_REP,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_STALE,
+        NFS4ERR_SYMLINK,
+        NFS4ERR_TOO_MANY_OPS,
+        NFS4ERR_UNION_NOTSUPP,
+        NFS4ERR_WRONG_TYPE
+      </c>
+
+      <c>SEQUENCE</c>
+      <c>
+        NFS4ERR_BADSESSION,
+        NFS4ERR_BADSLOT,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_HIGH_SLOT,
+        NFS4ERR_CONN_NOT_BOUND_TO_SESSION,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_DELAY,
+        NFS4ERR_REP_TOO_BIG,
+        NFS4ERR_REP_TOO_BIG_TO_CACHE,
+        NFS4ERR_REQ_TOO_BIG,
+        NFS4ERR_RETRY_UNCACHED_REP,
+        NFS4ERR_SEQUENCE_POS,
+        NFS4ERR_SEQ_FALSE_RETRY,
+        NFS4ERR_SEQ_MISORDERED,
+        NFS4ERR_TOO_MANY_OPS
+      </c>
+
+      <c>WRITE_PLUS</c>
+      <c>
+        NFS4ERR_ACCESS,
+        NFS4ERR_ADMIN_REVOKED,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_DEADSESSION,
+        NFS4ERR_DELAY,
+        NFS4ERR_DELEG_REVOKED,
+        NFS4ERR_DQUOT,
+        NFS4ERR_EXPIRED,
+        NFS4ERR_FBIG,
+        NFS4ERR_FHEXPIRED,
+        NFS4ERR_GRACE,
+        NFS4ERR_INVAL,
+        NFS4ERR_IO,
+        NFS4ERR_ISDIR,
+        NFS4ERR_LOCKED,
+        NFS4ERR_MOVED,
+        NFS4ERR_NOFILEHANDLE,
+        NFS4ERR_NOSPC,
+        NFS4ERR_OLD_STATEID,
+        NFS4ERR_OPENMODE,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_PNFS_IO_HOLE,
+        NFS4ERR_PNFS_NO_LAYOUT,
+        NFS4ERR_REP_TOO_BIG,
+        NFS4ERR_REP_TOO_BIG_TO_CACHE,
+        NFS4ERR_REQ_TOO_BIG,
+        NFS4ERR_RETRY_UNCACHED_REP,
+        NFS4ERR_ROFS,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_STALE,
+        NFS4ERR_SYMLINK,
+        NFS4ERR_TOO_MANY_OPS,
+        NFS4ERR_UNION_NOTSUPP,
+        NFS4ERR_WRONG_TYPE
+      </c>
+
+<!-- ENDOFTHEERRORTABLE -->
+<!-- DO NOT MOVE THIS OR THE ONE ABOVE LINE - IT MUST BE AT THE START OF TABLE -->
+
+    </texttable>
+  </section>
+
+  <section anchor="ss:error_values:cb_ops" title="New Callback Operations and Their Valid Errors">
+    <t>
+      This section contains a table that gives the valid error returns for
+      each new NFSv4.2 callback operation.  The error code NFS4_OK (indicating no
+      error) is not listed but should be understood to be returnable by all
+      new callback operations.
+      The error values for all other callback operations are defined
+      in Section 15.3 of <xref target="ref:RFC5661" />.
+    </t>
+
+    <texttable anchor='tbl:cb_op_error_returns'>
+      <preamble>Valid Error Returns for Each New Protocol Callback Operation</preamble>
+      <ttcol align="left">Callback Operation</ttcol>
+      <ttcol align="left">Errors</ttcol>
+
+<!-- DO NOT MOVE THIS OR THE NEXT LINE - IT MUST BE AT THE START OF TABLE -->
+<!-- STARTOFTHEERRORTABLE -->
+
+      <c>CB_OFFLOAD</c>
+      <c>
+        NFS4ERR_BADHANDLE,
+        NFS4ERR_BADXDR,
+        NFS4ERR_BAD_STATEID,
+        NFS4ERR_DELAY,
+        NFS4ERR_OP_NOT_IN_SESSION,
+        NFS4ERR_REP_TOO_BIG,
+        NFS4ERR_REP_TOO_BIG_TO_CACHE,
+        NFS4ERR_REQ_TOO_BIG,
+        NFS4ERR_RETRY_UNCACHED_REP,
+        NFS4ERR_SERVERFAULT,
+        NFS4ERR_TOO_MANY_OPS
+      </c>
+
+<!-- ENDOFTHEERRORTABLE -->
+<!-- DO NOT MOVE THIS OR THE ONE ABOVE LINE - IT MUST BE AT THE START OF TABLE -->
+
+    </texttable>
+  </section>
 </section>

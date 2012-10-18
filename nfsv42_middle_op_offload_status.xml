@@ -41,18 +41,5 @@
       If the server supports asynchronous copies, the server is
       REQUIRED to support the OFFLOAD_STATUS operation.
     </t>
-
-    <t>
-      The OFFLOAD_STATUS operation may fail for the following reasons
-      (this is a partial list):
-    </t>
-
-    <t>
-      <list style="symbols">
-        <t>NFS4ERR_NOTSUPP</t>
-        <t>NFS4ERR_BAD_STATEID</t>
-        <t>NFS4ERR_EXPIRED</t>
-      </list>
-    </t>
   </section>
 </section>

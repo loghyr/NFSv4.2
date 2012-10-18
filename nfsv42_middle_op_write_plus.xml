@@ -68,33 +68,8 @@
         specified by di_offset and di_length, future writes to this region
         MUST NOT fail with NFSERR_NOSPC.
       </t>
-
-      <t>
-        The WRITE_PLUS operation may fail for the following reasons (this is
-        a partial list):
-      </t>
-
-      <t>
-        <list style="hanging">
-          <t hangText="NFS4ERR_NOTSUPP">
-            The Hole punch operations are not supported by the
-            NFS server receiving this request.
-          </t>
-
-          <t hangText="NFS4ERR_DIR">
-            The current filehandle is of type NF4DIR.
-          </t>
-
-          <t hangText="NFS4ERR_SYMLINK">
-            The current filehandle is of type NF4LNK.
-          </t>
-
-          <t hangText="NFS4ERR_WRONG_TYPE">
-            The current filehandle does not designate an ordinary file.
-          </t>
-        </list>
-      </t>
     </section>
+
     <section title="ADHs">
       <t>
         If the server supports ADHs, then it MUST support the

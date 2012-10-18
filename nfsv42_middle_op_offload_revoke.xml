@@ -47,17 +47,5 @@
       If the server supports COPY_NOTIFY, the server is
       REQUIRED to support the OFFLOAD_REVOKE operation.
     </t>
-
-    <t>
-      The OFFLOAD_REVOKE operation may fail for the following reasons
-      (this is a partial list):
-    </t>
-
-    <t>
-      <list style="symbols">
-        <t>NFS4ERR_MOVED</t>
-        <t>NFS4ERR_NOTSUPP</t>
-      </list>
-    </t>
   </section>
 </section>

@@ -565,7 +565,7 @@
     </section>
   </section>
 
-  <section title="Security Considerations">
+  <section anchor="ss:copy:security" title="Security Considerations">
     <t>
       The security considerations pertaining to NFSv4 <xref target="ref:RFC3530bis" />
       apply to this chapter.
