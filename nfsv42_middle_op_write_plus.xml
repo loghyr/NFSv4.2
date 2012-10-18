@@ -157,5 +157,36 @@
         physical blocks allocated to align the boundaries.
       </t>
     </section>
+
+    <section title='Asynchronous Transactions'>
+      <figure title="An asynchronous WRITE_PLUS." anchor="async-write_plus-fig">
+        <artwork><![CDATA[
+  Client                                  Server
+     +                                      +
+     |                                      |
+     |--- OPEN ---------------------------->| Client opens
+     |<------------------------------------/| the file
+     |                                      |
+     |--- WRITE_PLUS ---------------------->| Client punches
+     |<------------------------------------/| a hole
+     |                                      |
+     |                                      |
+     |--- OFFLOAD_STATUS ------------------>| Client may poll
+     |<------------------------------------/| for status
+     |                                      |
+     |                  .                   | Multiple OFFLOAD_STATUS
+     |                  .                   | operations may be sent.
+     |                  .                   |
+     |                                      |
+     |<-- CB_OFFLOAD -----------------------| Server reports results
+     |\------------------------------------>|
+     |                                      |
+     |--- CLOSE --------------------------->| Client closes
+     |<------------------------------------/| the file
+     |                                      |
+     |                                      |
+        ]]></artwork>
+      </figure>
+    </section>
   </section>
 </section>
