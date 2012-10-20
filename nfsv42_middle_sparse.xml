@@ -83,7 +83,7 @@
       and server to efficiently transfer both holes and ADHs
       (see <xref target='ss:adh:dh' />). As both READ and WRITE
       are inefficient for transfer of sparse sections of the file,
-      they are marked as OBSOLETE in NFSv4.2. Instead, a client
+      they are marked as END-OF-LIFE in NFSv4.2. Instead, a client
       should utilize READ_PLUS and WRITE_PLUS. Note that as
       the client has no a priori knowledge of whether either
       an ADH or a hole is present or not, if it supports

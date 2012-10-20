@@ -5,11 +5,11 @@
   <t>
     The following tables summarize the operations of the NFSv4.2 protocol
     and the corresponding designation of REQUIRED, RECOMMENDED, and
-    OPTIONAL to implement or either OBSOLETE if implemented or MUST NOT implement.
-    The designation of OBSOLETE if implemented is reserved for those
-    operations which are defined in either NFSv4.0 or NFSV4.1, can
-    be implemented in NFSv4.2, and are intended to be MUST NOT be
-    implemented in NFSv4.3.  The designation of MUST
+    OPTIONAL to implement or either END-OF-LIFE or MUST NOT implement.
+    The designation of END-OF_LIFE is reserved for those
+    operations which are defined in either NFSv4.0 or NFSv4.1
+    and are intended to be classified as
+    MUST NOT be implemented in NFSv4.3.  The designation of MUST
     NOT implement is reserved for those operations that were defined in
     either NFSv4.0 or NFSV4.1 and MUST NOT be implemented in NFSv4.2.
   </t>
@@ -61,8 +61,8 @@
         OPTIONAL to implement
       </t>
 
-      <t hangText='OBS'>
-        OBSOLETE, might be required to implement
+      <t hangText='EOL'>
+        END-OF-LIFE and will be modified with either REC or OPT
       </t>
 
       <t hangText='MNI'>
@@ -114,7 +114,7 @@
   <texttable>
     <preamble>Operations</preamble>
     <ttcol align='left'>Operation</ttcol>
-    <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
+    <ttcol align='left'>EOL, REQ, REC, OPT, or MNI</ttcol>
     <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
       <c>ACCESS               </c> <c> REQ </c> <c>              </c>
       <c>BACKCHANNEL_CTL      </c> <c> REQ </c> <c>              </c>
@@ -157,7 +157,7 @@
       <c>PUTFH                </c> <c> REQ </c> <c>              </c>
       <c>PUTPUBFH             </c> <c> REQ </c> <c>              </c>
       <c>PUTROOTFH            </c> <c> REQ </c> <c>              </c>
-      <c>READ                 </c> <c> OBS </c> <c>              </c>
+      <c>READ                 </c> <c> EOL (REC) </c> <c>              </c>
       <c>READDIR              </c> <c> REQ </c> <c>              </c>
       <c>READLINK             </c> <c> OPT </c> <c>              </c>
       <c>READ_PLUS            </c> <c> OPT </c> <c> ADH (REQ)    </c>
@@ -178,7 +178,7 @@
       <c>TEST_STATEID         </c> <c> REQ </c> <c>              </c>
       <c>VERIFY               </c> <c> REQ </c> <c>              </c>
       <c>WANT_DELEGATION      </c> <c> OPT </c> <c> FDELG (OPT)  </c>
-      <c>WRITE                </c> <c> OBS </c> <c>              </c>
+      <c>WRITE                </c> <c> OBS (REC) </c> <c>              </c>
   </texttable>
 
   <texttable>
