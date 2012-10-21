@@ -8,8 +8,9 @@
 
     <author fullname="Thomas Haynes"
             initials="T."
-            surname="Haynes">
-        <organization abbrev="Editor">NetApp</organization>
+            surname="Haynes"
+            role="editor">
+        <organization abbrev="NetApp">NetApp</organization>
         <address>
             <postal>
                 <street>9110 E 66th St</street>

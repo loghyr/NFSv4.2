@@ -16,6 +16,8 @@ txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt
 dotx:
 	cd ../dotx.d ; VERS=$(SPECVERS) make all
 
+XML2RFC=xml2rfc.tcl
+
 xml: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 
 clobber:
@@ -47,7 +49,7 @@ tmp.x:	tmp.txt
 
 tmp.txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 	rm -f tmp.txt tmp2.txt
-	XML2RFCDOT="." sh ../xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml tmp2.txt
+	XML2RFCDOT="." $(XML2RFC) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml tmp2.txt
 	mv -f tmp2.txt tmp.txt
 
 draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
@@ -64,7 +66,7 @@ draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
 	cp tmp.txt $@
 
 draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).nr: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
-	XML2RFCDOT="." sh ../xml2rfc_wrapper.sh draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml $@
+	XML2RFCDOT="." $(XML2RFC) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml $@
 
 dotx_front_autogen.xml: dotx_front.xml Makefile
 	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < dotx_front.xml > dotx_front_autogen.xml
