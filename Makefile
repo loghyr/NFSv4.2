@@ -12,6 +12,9 @@ VPATH=dotx.d
 
 XML2RFC=xml2rfc.tcl
 
+DRAFT_BASE=draft-ietf-nfsv4-minorversion2
+DOC_PREFIX=nfsv42
+
 autogen/%.xml : %.x
 	@mkdir -p autogen
 	@rm -f $@.tmp $@
@@ -30,11 +33,11 @@ all: html txt dotx dotx-txt
 # Build the stuff needed to ensure integrity of document.
 common: testx dotx html dotx-txt
 
-txt: draft-ietf-nfsv4-minorversion2-$(VERS).txt
+txt: ${DRAFT_BASE}-$(VERS).txt
 
-html: draft-ietf-nfsv4-minorversion2-$(VERS).html
+html: ${DRAFT_BASE}-$(VERS).html
 
-nr: draft-ietf-nfsv4-minorversion2-$(VERS).nr
+nr: ${DRAFT_BASE}-$(VERS).nr
 
 dotx:
 	cd dotx.d ; VERS=$(VERS) $(MAKE) all
@@ -45,12 +48,12 @@ dotx:
 dotx-txt:
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) all
 
-xml: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+xml: ${DRAFT_BASE}-$(VERS).xml
 
 clobber:
-	$(RM) draft-ietf-nfsv4-minorversion2-$(VERS).txt \
-		draft-ietf-nfsv4-minorversion2-$(VERS).html \
-		draft-ietf-nfsv4-minorversion2-$(VERS).nr
+	$(RM) ${DRAFT_BASE}-$(VERS).txt \
+		${DRAFT_BASE}-$(VERS).html \
+		${DRAFT_BASE}-$(VERS).nr
 	export SPECVERS=$(VERS)
 	export VERS=$(VERS)
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) clobber
@@ -59,7 +62,7 @@ clobber:
 clean:
 	rm -f $(AUTOGEN)
 	rm -rf autogen
-	rm -f draft-ietf-nfsv4-minorversion2-$(VERS).xml
+	rm -f ${DRAFT_BASE}-$(VERS).xml
 	rm -rf draft-$(VERS)
 	rm -f draft-$(VERS).tar.gz
 	rm -rf testx.d
@@ -74,29 +77,29 @@ pall:
 	( $(MAKE) html ; echo .html done ) & \
 	wait
 
-draft-ietf-nfsv4-minorversion2-$(VERS).txt: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+${DRAFT_BASE}-$(VERS).txt: ${DRAFT_BASE}-$(VERS).xml
 	rm -f $@ draft-tmp.txt
-	$(XML2RFC) draft-ietf-nfsv4-minorversion2-$(VERS).xml draft-tmp.txt
+	$(XML2RFC) ${DRAFT_BASE}-$(VERS).xml draft-tmp.txt
 	mv draft-tmp.txt $@
 
-draft-ietf-nfsv4-minorversion2-$(VERS).html: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+${DRAFT_BASE}-$(VERS).html: ${DRAFT_BASE}-$(VERS).xml
 	rm -f $@ draft-tmp.html
-	$(XML2RFC) draft-ietf-nfsv4-minorversion2-$(VERS).xml draft-tmp.html
+	$(XML2RFC) ${DRAFT_BASE}-$(VERS).xml draft-tmp.html
 	mv draft-tmp.html $@
 
-draft-ietf-nfsv4-minorversion2-$(VERS).nr: draft-ietf-nfsv4-minorversion2-$(VERS).xml
+${DRAFT_BASE}-$(VERS).nr: ${DRAFT_BASE}-$(VERS).xml
 	rm -f $@ draft-tmp.nr
-	$(XML2RFC) draft-ietf-nfsv4-minorversion2-$(VERS).xml $@.tmp
+	$(XML2RFC) ${DRAFT_BASE}-$(VERS).xml $@.tmp
 	mv draft-tmp.nr $@
 
-nfsv42_middle_errortoop_autogen.xml: nfsv42_middle_errors.xml
-	./errortbl < nfsv42_middle_errors.xml > nfsv42_middle_errortoop_autogen.xml
+${DOC_PREFIX}_middle_errortoop_autogen.xml: ${DOC_PREFIX}_middle_errors.xml
+	./errortbl < ${DOC_PREFIX}_middle_errors.xml > ${DOC_PREFIX}_middle_errortoop_autogen.xml
 
-nfsv42_front_autogen.xml: nfsv42_front.xml Makefile
-	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < nfsv42_front.xml > nfsv42_front_autogen.xml
+${DOC_PREFIX}_front_autogen.xml: ${DOC_PREFIX}_front.xml Makefile
+	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < ${DOC_PREFIX}_front.xml > ${DOC_PREFIX}_front_autogen.xml
 
-nfsv42_rfc_start_autogen.xml: nfsv42_rfc_start.xml Makefile
-	sed -e s/VERSIONVAR/${VERS}/g < nfsv42_rfc_start.xml > nfsv42_rfc_start_autogen.xml
+${DOC_PREFIX}_rfc_start_autogen.xml: ${DOC_PREFIX}_rfc_start.xml Makefile
+	sed -e s/DRAFTVERSION/${DRAFT_BASE}_${VERS}/g < ${DOC_PREFIX}_rfc_start.xml > ${DOC_PREFIX}_rfc_start_autogen.xml
 
 autogen/basic_types.xml: dotx.d/spit_types.sh
 	sh dotx.d/spit_types.sh $@
@@ -267,9 +270,9 @@ dotx.d/open_args_gen.x: dotx.d/open_args.x dotx.d/const_access_deny.x
 	cd dotx.d ; VERS=$(VERS) $(MAKE) `basename $@`
 
 AUTOGEN =	\
-		nfsv42_front_autogen.xml \
-		nfsv42_rfc_start_autogen.xml \
-		nfsv42_middle_errortoop_autogen.xml \
+		${DOC_PREFIX}_front_autogen.xml \
+		${DOC_PREFIX}_rfc_start_autogen.xml \
+		${DOC_PREFIX}_middle_errortoop_autogen.xml \
 		autogen/basic_types.xml \
 		$(SPITGEN) \
 		$(SPITGENXML) \
@@ -417,52 +420,53 @@ AUTOGEN =	\
 		autogen/stable_how4.xml \
 		autogen/write_res.xml
 
-START_PREGEN = nfsv42_rfc_start.xml
-START=	nfsv42_rfc_start_autogen.xml
-END=	nfsv42_rfc_end.xml
+START_PREGEN = ${DOC_PREFIX}_rfc_start.xml
+START=	${DOC_PREFIX}_rfc_start_autogen.xml
+END=	${DOC_PREFIX}_rfc_end.xml
 
-FRONT_PREGEN = nfsv42_front.xml
+FRONT_PREGEN = ${DOC_PREFIX}_front.xml
 
 IDXMLSRC_BASE = \
-	nfsv42_middle_start.xml \
-	nfsv42_middle_introduction.xml \
-	nfsv42_middle_copy.xml \
-	nfsv42_middle_advise.xml \
-	nfsv42_middle_sparse.xml \
-	nfsv42_middle_space.xml \
-	nfsv42_middle_application.xml \
-	nfsv42_middle_lnfs.xml \
-	nfsv42_middle_chattr.xml \
-        nfsv42_middle_security.xml \
-	nfsv42_middle_new_errors.xml \
-        nfsv42_middle_fileattributes.xml \
-	nfsv42_middle_op_mandlist.xml \
-	nfsv42_middle_op_aaa.xml \
-	nfsv42_middle_op_copy.xml \
-	nfsv42_middle_op_offload_abort.xml \
-	nfsv42_middle_op_copy_notify.xml \
-	nfsv42_middle_op_offload_revoke.xml \
-	nfsv42_middle_op_offload_status.xml \
-	nfsv42_middle_op_exchange_id.xml \
-	nfsv42_middle_op_write_plus.xml \
-	nfsv42_middle_op_io_advise.xml \
-	nfsv42_middle_op_layoutreturn.xml \
-	nfsv42_middle_op_read_plus.xml \
-	nfsv42_middle_op_seek.xml \
-	nfsv42_middle_op_zzz.xml \
-	nfsv42_middle_op_cb_aaa.xml \
-	nfsv42_middle_op_cb_offload.xml \
-	nfsv42_middle_op_cb_zzz.xml \
-	nfsv42_middle_iana.xml \
-	nfsv42_middle_end.xml \
-	nfsv42_back_front.xml \
-	nfsv42_back_references.xml \
-	nfsv42_back_acks.xml \
-	nfsv42_back_back.xml
+	${DOC_PREFIX}_middle_start.xml \
+	${DOC_PREFIX}_middle_introduction.xml \
+	${DOC_PREFIX}_middle_minorv.xml \
+	${DOC_PREFIX}_middle_copy.xml \
+	${DOC_PREFIX}_middle_advise.xml \
+	${DOC_PREFIX}_middle_sparse.xml \
+	${DOC_PREFIX}_middle_space.xml \
+	${DOC_PREFIX}_middle_application.xml \
+	${DOC_PREFIX}_middle_lnfs.xml \
+	${DOC_PREFIX}_middle_chattr.xml \
+        ${DOC_PREFIX}_middle_security.xml \
+	${DOC_PREFIX}_middle_new_errors.xml \
+        ${DOC_PREFIX}_middle_fileattributes.xml \
+	${DOC_PREFIX}_middle_op_mandlist.xml \
+	${DOC_PREFIX}_middle_op_aaa.xml \
+	${DOC_PREFIX}_middle_op_copy.xml \
+	${DOC_PREFIX}_middle_op_offload_abort.xml \
+	${DOC_PREFIX}_middle_op_copy_notify.xml \
+	${DOC_PREFIX}_middle_op_offload_revoke.xml \
+	${DOC_PREFIX}_middle_op_offload_status.xml \
+	${DOC_PREFIX}_middle_op_exchange_id.xml \
+	${DOC_PREFIX}_middle_op_write_plus.xml \
+	${DOC_PREFIX}_middle_op_io_advise.xml \
+	${DOC_PREFIX}_middle_op_layoutreturn.xml \
+	${DOC_PREFIX}_middle_op_read_plus.xml \
+	${DOC_PREFIX}_middle_op_seek.xml \
+	${DOC_PREFIX}_middle_op_zzz.xml \
+	${DOC_PREFIX}_middle_op_cb_aaa.xml \
+	${DOC_PREFIX}_middle_op_cb_offload.xml \
+	${DOC_PREFIX}_middle_op_cb_zzz.xml \
+	${DOC_PREFIX}_middle_iana.xml \
+	${DOC_PREFIX}_middle_end.xml \
+	${DOC_PREFIX}_back_front.xml \
+	${DOC_PREFIX}_back_references.xml \
+	${DOC_PREFIX}_back_acks.xml \
+	${DOC_PREFIX}_back_back.xml
 
-IDCONTENTS = nfsv42_front_autogen.xml $(IDXMLSRC_BASE)
+IDCONTENTS = ${DOC_PREFIX}_front_autogen.xml $(IDXMLSRC_BASE)
 
-IDXMLSRC = nfsv42_front.xml $(IDXMLSRC_BASE)
+IDXMLSRC = ${DOC_PREFIX}_front.xml $(IDXMLSRC_BASE)
 
 draft-tmp.xml: $(START) Makefile $(END)
 		rm -f $@ $@.tmp
@@ -472,16 +476,16 @@ draft-tmp.xml: $(START) Makefile $(END)
 		cat $(END) >> $@.tmp
 		mv $@.tmp $@
 
-draft-ietf-nfsv4-minorversion2-$(VERS).xml: draft-tmp.xml $(IDCONTENTS) $(AUTOGEN)
+${DRAFT_BASE}-$(VERS).xml: draft-tmp.xml $(IDCONTENTS) $(AUTOGEN)
 		rm -f $@
 		cp draft-tmp.xml $@
 
 genhtml: Makefile gendraft html txt dotx dotx-txt draft-$(VERS).tar
 	./gendraft draft-$(PREVVERS) \
-		draft-ietf-nfsv4-minorversion2-$(PREVVERS).txt \
+		${DRAFT_BASE}-$(PREVVERS).txt \
 		draft-$(VERS) \
-		draft-ietf-nfsv4-minorversion2-$(VERS).txt \
-		draft-ietf-nfsv4-minorversion2-$(VERS).html \
+		${DRAFT_BASE}-$(VERS).txt \
+		${DRAFT_BASE}-$(VERS).html \
 		dotx.d/nfsv4.x \
 		draft-$(VERS).tar.gz
 
@@ -531,9 +535,9 @@ AUXFILES = \
 	xml2rfc
 
 DRAFTFILES = \
-	draft-ietf-nfsv4-minorversion2-$(VERS).txt \
-	draft-ietf-nfsv4-minorversion2-$(VERS).html \
-	draft-ietf-nfsv4-minorversion2-$(VERS).xml
+	${DRAFT_BASE}-$(VERS).txt \
+	${DRAFT_BASE}-$(VERS).html \
+	${DRAFT_BASE}-$(VERS).xml
 
 draft-$(VERS).tar: $(IDCONTENTS) $(START_PREGEN) $(FRONT_PREGEN) $(AUXFILES) $(DRAFTFILES) dotx.d/nfsv4.x
 	rm -f draft-$(VERS).tar.gz

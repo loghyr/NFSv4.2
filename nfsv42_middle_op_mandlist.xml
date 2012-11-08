@@ -61,10 +61,6 @@
         OPTIONAL to implement
       </t>
 
-      <t hangText='EOL'>
-        END-OF-LIFE and will be modified with either REC or OPT
-      </t>
-
       <t hangText='MNI'>
         MUST NOT implement
       </t>
@@ -157,7 +153,7 @@
       <c>PUTFH                </c> <c> REQ </c> <c>              </c>
       <c>PUTPUBFH             </c> <c> REQ </c> <c>              </c>
       <c>PUTROOTFH            </c> <c> REQ </c> <c>              </c>
-      <c>READ                 </c> <c> EOL (REC) </c> <c>              </c>
+      <c>READ                 </c> <c> REQ </c> <c>              </c>
       <c>READDIR              </c> <c> REQ </c> <c>              </c>
       <c>READLINK             </c> <c> OPT </c> <c>              </c>
       <c>READ_PLUS            </c> <c> OPT </c> <c> ADH (REQ)    </c>
@@ -178,7 +174,7 @@
       <c>TEST_STATEID         </c> <c> REQ </c> <c>              </c>
       <c>VERIFY               </c> <c> REQ </c> <c>              </c>
       <c>WANT_DELEGATION      </c> <c> OPT </c> <c> FDELG (OPT)  </c>
-      <c>WRITE                </c> <c> OBS (REC) </c> <c>              </c>
+      <c>WRITE                </c> <c> REQ </c> <c>              </c>
   </texttable>
 
   <texttable>
