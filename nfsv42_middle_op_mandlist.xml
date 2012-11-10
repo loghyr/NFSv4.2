@@ -65,8 +65,8 @@
         MUST NOT implement
       </t>
 
-      <t hangText='DEP'>
-        Also DEPRECATED for future versions.
+      <t hangText='OBS'>
+        Also OBSOLESCENT for future versions.
       </t>
     </list>
   </t>
@@ -157,7 +157,7 @@
       <c>PUTFH                </c> <c> REQ </c> <c>              </c>
       <c>PUTPUBFH             </c> <c> REQ </c> <c>              </c>
       <c>PUTROOTFH            </c> <c> REQ </c> <c>              </c>
-      <c>READ                 </c> <c> REQ (DEP)</c> <c>              </c>
+      <c>READ                 </c> <c> REQ (OBS)</c> <c>              </c>
       <c>READDIR              </c> <c> REQ </c> <c>              </c>
       <c>READLINK             </c> <c> OPT </c> <c>              </c>
       <c>READ_PLUS            </c> <c> OPT </c> <c> ADH (REQ)    </c>
@@ -178,7 +178,7 @@
       <c>TEST_STATEID         </c> <c> REQ </c> <c>              </c>
       <c>VERIFY               </c> <c> REQ </c> <c>              </c>
       <c>WANT_DELEGATION      </c> <c> OPT </c> <c> FDELG (OPT)  </c>
-      <c>WRITE                </c> <c> REQ (DEP)</c> <c>              </c>
+      <c>WRITE                </c> <c> REQ (OBS)</c> <c>              </c>
   </texttable>
 
   <texttable>
