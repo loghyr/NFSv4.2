@@ -6,8 +6,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=16
-VERS=17
+PREVVERS=17
+VERS=18
 VPATH=dotx.d
 
 XML2RFC=xml2rfc.tcl
@@ -99,7 +99,7 @@ ${DOC_PREFIX}_front_autogen.xml: ${DOC_PREFIX}_front.xml Makefile
 	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < ${DOC_PREFIX}_front.xml > ${DOC_PREFIX}_front_autogen.xml
 
 ${DOC_PREFIX}_rfc_start_autogen.xml: ${DOC_PREFIX}_rfc_start.xml Makefile
-	sed -e s/DRAFTVERSION/${DRAFT_BASE}_${VERS}/g < ${DOC_PREFIX}_rfc_start.xml > ${DOC_PREFIX}_rfc_start_autogen.xml
+	sed -e s/DRAFTVERSION/${DRAFT_BASE}-${VERS}/g < ${DOC_PREFIX}_rfc_start.xml > ${DOC_PREFIX}_rfc_start_autogen.xml
 
 autogen/basic_types.xml: dotx.d/spit_types.sh
 	sh dotx.d/spit_types.sh $@
