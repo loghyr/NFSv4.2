@@ -152,43 +152,30 @@
       </t>
 
       <t>
-        Minor versions may declare an operation to be OBSOLESCENT,
-        which indicates an intention to remove the operation
-        (i.e., make it MANDATORY TO NOT implement) in a subsequent
-        minor version.  Such labeling is separate from the question of
-        whether the operation is REQUIRED or RECOMMENDED or OPTIONAL
-        in the current minor version. An operation may be both REQUIRED
-        for the given minor version and marked OBSOLESCENT, with the
-        expectation that it will be MANDATORY TO NOT implement
-        in the next (or other subsequent) minor version.
+        Minor versions may declare an operation to be DEPRECATED, which
+        indicates the plan to remove the operation in the next release.
+        Such a labeling does not effect whether the operation is
+        REQUIRED or RECOMMENDED or OPTIONAL. I.e., an operation may
+        be both REQUIRED for the given minor version and earmarked
+        for MUST NOT be implemented for the next release. Note that
+        this two minor version release approach is put in place to
+        mitigate design and implementation mistakes. As such, even
+        if an operation is marked DEPRECATED in a given minor release,
+        it may end up not being marked as MUST NOT implement in
+        the next minor version. 
       </t>
 
       <t>
-        Note that the early notification of operation obsolescence
-        is put in place to mitigate the effects of design and implementation
-        mistakes, and to allow protocol development to adapt to unexpected
-        changes in the pace of implementation. Even if an operation is marked
-        OBSOLESCENT in a given minor version, it may end up not being marked
-        MANDATORY TO NOT implement in the next minor version.  In unusual
-        circumstances, it might not be marked OBSOLESCENT in a
-        subsequent minor version, and never become MANDATORY TO NOT implement.
-      </t>
-
-      <t>
-        Minor versions may downgrade features from REQUIRED to
-        RECOMMENDED, from RECOMMENDED to OPTIONAL, or from OPIONAL
-        to MANDATORY TO NOT implement. Also, if a feature
-        was marked as OBSOLESCENT in the prior minor version, it may
-        be downgraded from REQUIRED to OPTIONAL from RECOMMENDED
-        to MANDATORY TO NOT implement, or from REQUIRED to
-        MANDATORY TO NOT implement.
+        Minor versions may downgrade features (i.e., operations
+        and attributes) from REQUIRED to
+        RECOMMENDED, or RECOMMENDED to OPTIONAL. Also, if a feature
+        was marked as DEPRECATED in a prior minor version, it may
+        be downgraded from REQUIRED to OPTIONAL.
       </t>
 
       <t>
         Minor versions may upgrade features from OPTIONAL to
-        RECOMMENDED, or RECOMMENDED to REQUIRED. Also, if a feature
-        was marked as OBSOLESCENT in the prior minor version, it may
-        be upgraded to not be OBSOLESCENT.
+        RECOMMENDED, or RECOMMENDED to REQUIRED.
       </t>
 
       <t>
