@@ -42,7 +42,8 @@
     </t>
 
     <t>
-      If the client supports WRITE_PLUS, it MUST support CB_OFFLOAD.
+      If the client supports WRITE_PLUS and any arm of the discriminated
+      union other than NFS4_CONTENT_DATA, it MUST support CB_OFFLOAD. 
     </t>
 
     <section title="Data">
@@ -58,6 +59,11 @@
 
       <t>
         Note that d_allocated has no meaning for WRITE_PLUS.
+      </t>
+
+      <t>
+        The data MUST be written synchronously and MUST follow the
+        same semantics of COMMIT as does the WRITE operation.
       </t>
     </section>
 
@@ -267,6 +273,16 @@
         WRITE_PLUS would have provided.
       </t>
 
+      <t>
+        Regardelss of whether the operation is asynchronous or
+        synchronous, it MUST still support the COMMIT operation semantics
+        as outlined in Section 18.3 of <xref target="ref:RFC5661" />.
+        I.e., COMMIT works on one or more WRITE operations and the
+        WRITE_PLUS operation can appear as several WRITE operations
+        to the server.  The client can use locking operations to control the behavior
+        on the server with respect to a long running asynchornous
+        write operations.
+      </t>
     </section>
   </section>
 </section>
