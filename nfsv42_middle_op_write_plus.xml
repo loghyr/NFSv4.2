@@ -224,7 +224,10 @@
         OFFLOAD_ABORT (<xref target="op:offload_abort" />)
         to cancel the operation. An example of
         a asynchronous WRITE_PLUS is shown in
-        <xref target='fig:async-write_plus' />.
+        <xref target='fig:async-write_plus' />. Note that
+        as with the COPY operation, WRITE_PLUS must
+        provide a stateid for tracking the asynchronous
+        operation.
       </t>
 
       <figure title="An asynchronous WRITE_PLUS." anchor="fig:async-write_plus">

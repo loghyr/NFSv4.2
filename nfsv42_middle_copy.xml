@@ -534,10 +534,10 @@
       </t>
     </section>
 
-    <section title="Copy Offload Stateids" anchor="ss:copy:stateid">
+    <section title="Offload Stateids" anchor="ss:copy:stateid">
       <t>
         A server may perform a copy offload operation asynchronously. An
-        asynchronous copy is tracked using a copy offload stateid. Copy
+        asynchronous copy is tracked using a offload stateid. Copy
         offload stateids are included in the COPY, OFFLOAD_ABORT,
         OFFLOAD_STATUS, and CB_OFFLOAD operations.
       </t>
@@ -549,14 +549,14 @@
       </t>
 
       <t>
-        A copy offload stateid will be valid until either (A) the client
+        A offload stateid will be valid until either (A) the client
         or server restarts or (B) the client returns the resource by
         issuing a OFFLOAD_ABORT operation or the client replies to a
         CB_OFFLOAD operation.
       </t>
 
       <t>
-        A copy offload stateid's seqid MUST NOT be 0. In the
+        A offload stateid's seqid MUST NOT be 0. In the
         context of a copy offload operation, it is ambiguous to indicate
         the most recent copy offload operation using a stateid with
         seqid of 0. Therefore a copy offload stateid with seqid
