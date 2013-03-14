@@ -8,7 +8,7 @@
     data contained in a file and we can define an Application Data
     Block (ADB) to be such a structure. From the application's
     viewpoint, it only wants to handle ADBs and not raw bytes (see
-    <xref target='Oracle:blocks' />). An ADB is typically
+    <xref target='Strohm11' />). An ADB is typically
     comprised of two sections: a header and data. The header
     describes the characteristics of the block and can provide
     a means to detect corruption in the data payload.
@@ -42,8 +42,8 @@
 
   <t>
     Applications already impose structures on files
-    <xref target='Oracle:blocks' /> and detect corruption
-    in data blocks <xref target='Oracle:corruption' />.
+    <xref target='Strohm11' /> and detect corruption
+    in data blocks <xref target='Ashdown08' />.
     What they are not able to do is efficiently transfer and
     store ADBs. To initialize a file with ADBs, the client
     must send the full ADB to the server and that must be stored
@@ -72,7 +72,7 @@
       multiple applications, each with their own definition of
       the ADH. One might store the ADHN at the start of the block
       and then have a guard pattern to detect corruption
-      <xref target='solaris:corruption' />. The next
+      <xref target='McDougall07' />. The next
       might store the ADHN at an offset of 100 bytes within the
       block and have no guard pattern at all, i.e.,
       existing applications might already have well defined
@@ -178,14 +178,14 @@
 
     <t>
       Finally, it also defines an 8 byte
-      checksum <xref target='storage_stack' /> starting at
+      checksum <xref target='Baira08' /> starting at
       byte 16 which applies to the remaining
       contents of the block. If the state is FREE, then
       that checksum is trivially zero. As such, the application
       has no need to transfer the checksum implicitly inside the
       ADH - it need not make the transfer layer aware of the
       fact that there is a checksum (see
-      <xref target='Oracle:corruption' /> for an example
+      <xref target='Ashdown08' /> for an example
       of checksums used to detect corruption in application
       data blocks).
     </t>

@@ -114,7 +114,7 @@
           <t hangText="NFS4_CHANGE_TYPE_IS_TIME_METADATA:">
             The change attribute is implemented as
             suggested in the NFSv4 spec
-            <xref target="RFC3530bis" /> in terms of
+            <xref target="I-D.ietf-nfsv4-rfc3530bis" /> in terms of
             the time_metadata attribute.
           </t>
         </list>
@@ -175,7 +175,7 @@ typedef uint32_t  policy4;
         an LFS may optionally choose to include a Policy Identifier
         field to allow for complex policy deployments.  The LFS
         and Label Format Registry are described in detail in
-        <xref target='lfsreg' />.
+        <xref target='Quigley11' />.
         The translation used to interpret the security
         attribute is not specified as part of the protocol as it may depend
         on various factors.  The second component is an opaque section which

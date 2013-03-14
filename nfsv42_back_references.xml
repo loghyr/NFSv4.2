@@ -50,7 +50,7 @@
 	<date year="2013" month="March"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-18" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-19" />
     </reference>
 
     <reference anchor='RFC2203'>
@@ -265,7 +265,7 @@ specifications of each URI scheme.
       target="ftp://ftp.isi.edu/in-notes/rfc4506.txt"/>
   </reference>
 
-    <reference anchor='RFC3530bis'>
+    <reference anchor='I-D.ietf-nfsv4-rfc3530bis'>
       <front>
         <title>Network File System (NFS) version 4 Protocol</title>
         <author initials="T." surname="Haynes" fullname="T. Haynes">
@@ -466,7 +466,7 @@ specifications of each URI scheme.
         <seriesInfo name="draft-ietf-nfsv4-federated-fs-admin" value="(Work In Progress)"/>
 </reference>
 
-<reference anchor='Oracle:blocks'>
+<reference anchor='Strohm11'>
   <front>
     <title>
       Chapter 2, Data Blocks, Extents, and Segments, of Oracle Database Concepts 11g Release 1 (11.1)
@@ -479,7 +479,7 @@ specifications of each URI scheme.
     <format type='HTML' target='http://download.oracle.com/docs/cd/B28359_01/server.111/b28318/logical.htm' />
 </reference>
 
-<reference anchor='solaris:corruption'>
+<reference anchor='McDougall07'>
   <front>
     <title>
       Section 11.4.3, Detecting Memory Corruption of Solaris Internals
@@ -490,7 +490,7 @@ specifications of each URI scheme.
   </front>
 </reference>
 
-<reference anchor='Oracle:corruption'>
+<reference anchor='Ashdown08'>
   <front>
     <title>
       Chapter 15, Validating Database Files and Backups, of Oracle Database Backup and Recovery User's Guide 11g Release 1 (11.1)
@@ -503,7 +503,7 @@ specifications of each URI scheme.
     <format type='HTML' target='http://download.oracle.com/docs/cd/B28359_01/backup.111/b28270/rcmvalid.htm' />
 </reference>
 
-<reference anchor='storage_stack'>
+<reference anchor='Baira08'>
   <front>
     <title>
       An Analysis of Data Corruption in the Storage Stack
@@ -529,7 +529,7 @@ specifications of each URI scheme.
   <format type='HTML' target='http://www.usenix.org/events/fast08/tech/full_papers/bairavasundaram/bairavasundaram.pdf' />
 </reference>
 
-    <reference anchor="lfsreg">
+    <reference anchor="Quigley11">
       <front>
         <title>Registry Specification for MAC Security Label Formats</title>
         <author initials="D." surname="Quigley" />
@@ -539,7 +539,7 @@ specifications of each URI scheme.
       <seriesInfo name="draft-quigley-label-format-registry" value="(work in progress)"/>
     </reference>
 
-  <reference anchor='rh_mls'>
+  <reference anchor='MLS'>
     <front>
       <title>
         Section 46.6. Multi-Level Security (MLS) of Deployment Guide:
@@ -553,7 +553,7 @@ specifications of each URI scheme.
 ml/Deployment_Guide/sec-mls-ov.html' />
   </reference>
 
-    <reference anchor="lnfs_req">
+    <reference anchor="Haynes12">
       <front>
         <title>
           Requirements for Labeled NFS

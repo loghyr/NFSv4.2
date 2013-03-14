@@ -11,7 +11,7 @@
       and resource ownership.  In contrast Mandatory Access Control (MAC)
       models base their access control decisions on the label on the
       subject (usually a process) and the object it wishes to access
-      <xref target='lnfs_req' />.  These labels may contain user
+      <xref target='Haynes12' />.  These labels may contain user
       identity information but usually contain additional information.
       In DAC systems users are free to specify the access rules for
       resources that they own.  MAC models base their security decisions
@@ -107,7 +107,7 @@
         <t hangText='Multi-Level Security (MLS):'>
           is a traditional model where objects are given a sensitivity
           level (Unclassified, Secret, Top Secret,  etc) and a category set
-          <xref target='rh_mls' />.
+          <xref target='MLS' />.
         </t>
       </list>
     </t>
@@ -152,7 +152,7 @@
       These attributes have a fixed format and semantics, which
       conflicts with the flexible nature of the security attribute.  To
       resolve this the security attribute consists of two components.  The
-      first component is a LFS as defined in <xref target='lfsreg' />
+      first component is a LFS as defined in <xref target='Quigley11' />
       to allow for interoperability between MAC
       mechanisms.  The second component is an opaque field which is the actual
       security attribute data.  To allow for various MAC models, NFSv4
@@ -395,7 +395,7 @@
 
       <section anchor='ss:modes:lfs0' title='Limited Server'>
         <t>
-          A Limited Server mode (see Section 3.5.2 of <xref target="lnfs_req" />)
+          A Limited Server mode (see Section 3.5.2 of <xref target="Haynes12" />)
           consists of a server which  is label aware,
           but does not enforce policies. Such a server will store and retrieve
           all object labels presented by clients, utilize the methods

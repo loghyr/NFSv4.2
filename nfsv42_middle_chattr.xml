@@ -4,7 +4,7 @@
 <section anchor="sec:chattr" title="Sharing change attribute implementation details with NFSv4 clients">
   <section title="Introduction">
     <t>
-      Although both the NFSv4 <xref target="RFC3530bis" />
+      Although both the NFSv4 <xref target="I-D.ietf-nfsv4-rfc3530bis" />
       and NFSv4.1 protocol <xref target="RFC5661" />,
       define the change attribute as being mandatory
       to implement, there is little in the way of
