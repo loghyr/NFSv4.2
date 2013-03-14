@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor="sec:sparse" title="Sparse Files">
   <section anchor="ss:sparse:intro" title="Introduction">
@@ -83,7 +83,7 @@
       and server to efficiently transfer both holes and ADHs
       (see <xref target='ss:adh:dh' />). As both READ and WRITE
       are inefficient for transfer of sparse sections of the file,
-      they are marked as END-OF-LIFE in NFSv4.2. Instead, a client
+      they are marked as OBSOLESCENT in NFSv4.2. Instead, a client
       should utilize READ_PLUS and WRITE_PLUS. Note that as
       the client has no a priori knowledge of whether either
       an ADH or a hole is present or not, if it supports
@@ -95,13 +95,13 @@
       <t>
         For holes, READ_PLUS extends the response
         to avoid returning data for portions of
-        the file which are either initialized and contain no backing store
-        or if the result would appear to be so. I.e., if the result was
+        the file which are initialized and contain no backing store.
+        Additionally it will do so if the result would appear to be a hole. I.e., if the result was
         a data block composed entirely of zeros, then it is easier to return
         a hole. Returning data blocks of uninitialized data wastes computational
         and network resources, thus reducing performance.
         For ADHs, READ_PLUS is used to return the metadata describing the
-        portions of the file which are either initialized and contain no backing
+        portions of the file which are initialized and contain no backing
         store.
       </t>
 

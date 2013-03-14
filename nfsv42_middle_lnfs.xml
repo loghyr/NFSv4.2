@@ -37,7 +37,7 @@
     <t>
       The second change is to provide methods for the client to
       determine if the security label has changed. A client which
-      needs to know if a label is going to change SHOULD register
+      needs to know if a label is going to change SHOULD request
       a delegation on that file. In order to change the security
       label, the server will have to recall all delegations. This
       will inform the client of the change. If a client wants to
