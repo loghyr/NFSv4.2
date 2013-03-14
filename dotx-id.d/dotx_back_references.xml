@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2007) -->
-<!-- Copyright (C) The Internet Society (2006) -->
+<!-- Copyright (C) The IETF Trust (2007-2013) -->
+<!-- Copyright (C) The Internet Society (2006-2013) -->
   <references title="Normative References">
 
     <reference anchor='RFC2119'>
@@ -44,9 +44,9 @@
           <organization abbrev='NetApp' />
         </author>
 
-        <date month='March' year='2011' />
+        <date month='March' year='2013' />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-minorversion2-00" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-minorversion2-18" value="(Work In Progress)"/>
     </reference>
 
 </references>

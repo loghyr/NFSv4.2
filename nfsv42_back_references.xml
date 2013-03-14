@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
   <references title="Normative References">
 
@@ -47,10 +47,10 @@
 	<author initials="T." surname="Haynes" fullname="T. Haynes">
 	  <organization>NetApp</organization>
 	</author>
-	<date year="2011" month="March"/>
+	<date year="2013" month="March"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x/" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-18" />
     </reference>
 
     <reference anchor='ref:RFC2203'>
@@ -274,9 +274,9 @@ specifications of each URI scheme.
         <author initials="D." surname="Noveck" fullname="D. Noveck">
           <organization>EMC Corporation</organization>
         </author>
-        <date year="2012" month="October" />
+        <date year="2013" month="February" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-20" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-25" value="(Work In Progress)"/>
     </reference>
 
 <reference anchor='ref:RFC0959'>

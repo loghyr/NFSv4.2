@@ -35,7 +35,7 @@
           higher offsets.
         </t>
 
-        <t hangText='IO_ADVISE4_SEQUENTIAL BACKWARDS'>
+        <t hangText='IO_ADVISE4_SEQUENTIAL_BACKWARDS'>
           Expects to access the specified data sequentially from higher
           offsets to lower offsets.
         </t>
