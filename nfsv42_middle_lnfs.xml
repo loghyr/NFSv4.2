@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 
 <section anchor="sec:lnfs" title="Labeled NFS">
@@ -11,7 +11,7 @@
       and resource ownership.  In contrast Mandatory Access Control (MAC)
       models base their access control decisions on the label on the
       subject (usually a process) and the object it wishes to access
-      <xref target='ref:lnfs_req' />.  These labels may contain user
+      <xref target='lnfs_req' />.  These labels may contain user
       identity information but usually contain additional information.
       In DAC systems users are free to specify the access rules for
       resources that they own.  MAC models base their security decisions
@@ -49,12 +49,12 @@
     <t>
       The final change necessary is a modification to the RPC layer used
       in NFSv4 in the form of a new version of the
-      RPCSEC_GSS <xref target='ref:RFC2203' /> framework.
+      RPCSEC_GSS <xref target='RFC2203' /> framework.
       In order for an NFSv4 server to apply MAC checks it must obtain
       additional information from the client.  Several methods were explored for
       performing this and it was decided that the best approach was to
       incorporate the ability to make security attribute assertions through
-      the RPC mechanism.  RPCSECGSSv3 <xref target='ref:rpcsecgssv3' />
+      the RPC mechanism.  RPCSECGSSv3 <xref target='rpcsecgssv3' />
       outlines a method to assert additional security information
       such as security labels on gss context creation and have that data
       bound to all RPC requests that make use of that context.
@@ -107,7 +107,7 @@
         <t hangText='Multi-Level Security (MLS):'>
           is a traditional model where objects are given a sensitivity
           level (Unclassified, Secret, Top Secret,  etc) and a category set
-          <xref target='ref:rh_mls' />.
+          <xref target='rh_mls' />.
         </t>
       </list>
     </t>
@@ -152,7 +152,7 @@
       These attributes have a fixed format and semantics, which
       conflicts with the flexible nature of the security attribute.  To
       resolve this the security attribute consists of two components.  The
-      first component is a LFS as defined in <xref target='ref:lfsreg' />
+      first component is a LFS as defined in <xref target='lfsreg' />
       to allow for interoperability between MAC
       mechanisms.  The second component is an opaque field which is the actual
       security attribute data.  To allow for various MAC models, NFSv4
@@ -173,7 +173,7 @@
         In the event that a security attribute is changed on the server while
         a client holds a delegation on the file, both the server and the
         client MUST follow the NFSv4.1 protocol (see Chapter 10 of
-        <xref target="ref:RFC5661" />)
+        <xref target="RFC5661" />)
         with respect to attribute changes.  It SHOULD flush
         all changes back to the server and relinquish the delegation.
       </t>
@@ -272,7 +272,7 @@
       <t>
         The new FATTR4_SEC_LABEL attribute is metadata information
         and as such the DS is not aware of the value contained
-        on the MDS. Fortunately, the NFSv4.1 protocol <xref target='ref:RFC5661' />
+        on the MDS. Fortunately, the NFSv4.1 protocol <xref target='RFC5661' />
         already has provisions for doing access level checks from
         the DS to the MDS. In order for the DS to validate
         the subject label presented by the client, it SHOULD
@@ -334,7 +334,7 @@
         using the mechanism described in <xref target='ss:lnfs:macsec' />.  The
         security attribute of the subject making the request is transported
         at the RPC layer using the mechanism described in RPCSECGSSv3
-        <xref target='ref:rpcsecgssv3' />.
+        <xref target='rpcsecgssv3' />.
       </t>
 
       <section anchor='ss:modes:fm_ilt' title='Initial Labeling and Translation'>
@@ -395,7 +395,7 @@
 
       <section anchor='ss:modes:lfs0' title='Limited Server'>
         <t>
-          A Limited Server mode (see Section 3.5.2 of <xref target="ref:lnfs_req" />)
+          A Limited Server mode (see Section 3.5.2 of <xref target="lnfs_req" />)
           consists of a server which  is label aware,
           but does not enforce policies. Such a server will store and retrieve
           all object labels presented by clients, utilize the methods

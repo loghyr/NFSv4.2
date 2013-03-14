@@ -1,11 +1,11 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor="sec:chattr" title="Sharing change attribute implementation details with NFSv4 clients">
   <section title="Introduction">
     <t>
-      Although both the NFSv4 <xref target="ref:RFC3530bis" />
-      and NFSv4.1 protocol <xref target="ref:RFC5661" />,
+      Although both the NFSv4 <xref target="RFC3530bis" />
+      and NFSv4.1 protocol <xref target="RFC5661" />,
       define the change attribute as being mandatory
       to implement, there is little in the way of
       guidance. The only mandated feature

@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2012) -->
-<!-- Copyright (C) The Internet Society (2012) -->
+<!-- Copyright (C) The IETF Trust (2012-2013) -->
+<!-- Copyright (C) The Internet Society (2012-2013) -->
 <section anchor="ss:minorv" title="Minor Versioning">
   <t>
     To address the requirement of an NFS protocol that can evolve as the
@@ -11,8 +11,8 @@
     The base assumption with respect to minor versioning is that any
     future accepted minor version will be documented in one or more
     Standards Track RFCs.  Minor version 0 of the NFSv4 protocol is
-    represented by <xref target="ref:RFC3530bis" />, minor version 1
-    by <xref target='ref:RFC5661' />, and minor version
+    represented by <xref target="RFC3530bis" />, minor version 1
+    by <xref target='RFC5661' />, and minor version
     2 by this document.
     The COMPOUND and CB_COMPOUND procedures support the encoding of the
     minor version being requested by the client.

@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor="sec:copy" title="Server-side Copy">
   <section title="Introduction">
@@ -51,9 +51,9 @@
       a directory, the client can synthesize a directory copy by first
       creating the destination directory and then copying the source
       directory's files to the new destination directory. If the user
-      wishes to copy a namespace junction <xref target="ref:FEDFS-NSDB" />
-      <xref target="ref:FEDFS-ADMIN" />, the client can use the ONC RPC
-      Federated Filesystem protocol <xref target="ref:FEDFS-ADMIN" /> to
+      wishes to copy a namespace junction <xref target="FEDFS-NSDB" />
+      <xref target="FEDFS-ADMIN" />, the client can use the ONC RPC
+      Federated Filesystem protocol <xref target="FEDFS-ADMIN" /> to
       perform the copy. Specifically the client can determine the
       source junction's attributes using the FEDFS_LOOKUP_FSN procedure
       and create a duplicate junction using the FEDFS_CREATE_JUNCTION
@@ -412,7 +412,7 @@
 
         <t>
           In a heterogeneous environment, using a protocol other than NFSv4.x
-          (e.g., HTTP <xref target="ref:RFC2616" /> or FTP <xref target="ref:RFC0959" />)
+          (e.g., HTTP <xref target="RFC2616" /> or FTP <xref target="RFC0959" />)
           presents some challenges. In particular, the destination
           server is presented with the challenge of accessing the source file
           given only an NFSv4.x filehandle.
@@ -517,11 +517,11 @@
         specified as a UTF-8 string. The nl_name is expected to be
         resolved to a network address via DNS, LDAP, NIS, /etc/hosts,
         or some other means. If the netloc4 is of type NL4_URL, a
-        server URL <xref target="ref:RFC3986" /> appropriate for the
+        server URL <xref target="RFC3986" /> appropriate for the
         server-to-server copy operation is specified as a UTF-8 string.
         If the netloc4 is of type NL4_NETADDR, the nl_addr field MUST
         contain a valid netaddr4 as defined in Section 3.3.9 of
-        <xref target="ref:RFC5661" />.
+        <xref target="RFC5661" />.
       </t>
 
       <t>
@@ -543,7 +543,7 @@
       </t>
 
       <t>
-        Section 8.2.4 of <xref target="ref:RFC5661" /> specifies that stateids
+        Section 8.2.4 of <xref target="RFC5661" /> specifies that stateids
         are valid until either (A) the client or server restart or (B)
         the client returns the resource.
       </t>
@@ -567,24 +567,24 @@
 
   <section anchor="ss:copy:security" title="Security Considerations">
     <t>
-      The security considerations pertaining to NFSv4 <xref target="ref:RFC3530bis" />
+      The security considerations pertaining to NFSv4 <xref target="RFC3530bis" />
       apply to this chapter.
     </t>
 
     <t>
-      The standard security mechanisms provide by NFSv4 <xref target="ref:RFC3530bis" />
+      The standard security mechanisms provide by NFSv4 <xref target="RFC3530bis" />
       may be used to secure the protocol described in this chapter.
     </t>
 
     <t>
       NFSv4 clients and servers supporting the inter-server copy
       operations described in this chapter are REQUIRED to implement
-      <xref target="ref:rpcsecgssv3" />, including the RPCSEC_GSSv3
+      <xref target="rpcsecgssv3" />, including the RPCSEC_GSSv3
       privileges copy_from_auth and copy_to_auth. If the server-to-server
       copy protocol is ONC RPC based, the servers are also REQUIRED to
       implement the RPCSEC_GSSv3 privilege copy_confirm_auth. These
       requirements to implement are not requirements to use. NFSv4 clients
-      and servers are RECOMMENDED to use <xref target="ref:rpcsecgssv3" />
+      and servers are RECOMMENDED to use <xref target="rpcsecgssv3" />
       to secure server-side copy operations.
     </t>
 
@@ -666,7 +666,7 @@
           copy other files. The user principal would have to trust the
           destination server to not do so. This is counter to the requirements,
           and therefore is not considered. Instead an approach using
-          RPCSEC_GSSv3 <xref target="ref:rpcsecgssv3" /> privileges is proposed.
+          RPCSEC_GSSv3 <xref target="rpcsecgssv3" /> privileges is proposed.
         </t>
 
         <t>
@@ -975,11 +975,11 @@
 
           <t>
             For protocols that authenticate user names with passwords
-            (e.g., HTTP <xref target="ref:RFC2616" /> and FTP <xref target="ref:RFC0959" />),
+            (e.g., HTTP <xref target="RFC2616" /> and FTP <xref target="RFC0959" />),
             the NFSv4 user id could be used as the user name, and an ASCII
             hexadecimal representation of the RPCSEC_GSSv3 shared secret could be
             used as the user password or as input into non-password authentication
-            methods like CHAP <xref target="ref:RFC1994" />.
+            methods like CHAP <xref target="RFC1994" />.
           </t>
         </section>
       </section>
@@ -1074,7 +1074,7 @@
         <t>
           The same techniques as <xref target="server-to-server-with-rpc-no-gss" />,
           using unique URLs for each destination server, can be used for other
-          protocols (e.g., HTTP <xref target="ref:RFC2616" /> and FTP <xref target="ref:RFC0959" />)
+          protocols (e.g., HTTP <xref target="RFC2616" /> and FTP <xref target="RFC0959" />)
           as well.
         </t>
       </section>

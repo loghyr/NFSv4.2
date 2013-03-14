@@ -1,15 +1,15 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor="sec:intro" title="Introduction">
   <section title="The NFS Version 4 Minor Version 2 Protocol">
     <t>
       The NFS version 4 minor version 2 (NFSv4.2) protocol is the third
       minor version of the NFS version 4 (NFSv4) protocol.  The first minor
-      version, NFSv4.0, is described in <xref target="ref:RFC3530bis" /> and the second minor version,
-      NFSv4.1, is described in <xref target="ref:RFC5661" />.  It follows the
+      version, NFSv4.0, is described in <xref target="RFC3530bis" /> and the second minor version,
+      NFSv4.1, is described in <xref target="RFC5661" />.  It follows the
       guidelines for minor versioning that are listed in Section 11 of
-      <xref target="ref:RFC3530bis" />.
+      <xref target="RFC3530bis" />.
     </t>
 
     <t>
@@ -45,7 +45,7 @@
     </t>
 
     <t>
-      The full XDR for NFSv4.2 is presented in <xref target='ref:4.2xdr' />.
+      The full XDR for NFSv4.2 is presented in <xref target='4.2xdr' />.
     </t>
   </section>
 

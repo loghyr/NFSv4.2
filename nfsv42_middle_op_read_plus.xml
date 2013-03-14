@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor='op:read_plus' title='Operation 65: READ_PLUS'>
   <section toc='exclude' title="ARGUMENT">
@@ -15,7 +15,7 @@
   <section toc='exclude' anchor='op:read_plus:desc'  title="DESCRIPTION">
     <t>
       The READ_PLUS operation is based upon the NFSv4.1 READ operation
-      (see Section 18.22 of <xref target="ref:RFC5661" />) and similarly reads data from the
+      (see Section 18.22 of <xref target="RFC5661" />) and similarly reads data from the
       regular file identified by the current filehandle.
     </t>
 
@@ -137,7 +137,7 @@
   <section toc='exclude' title="IMPLEMENTATION">
     <t>
       In general, the IMPLEMENTATION notes for READ in Section 18.22.4 of
-      <xref target="ref:RFC5661" /> also apply to READ_PLUS. One delta is
+      <xref target="RFC5661" /> also apply to READ_PLUS. One delta is
       that when the owner has a locked byte range, the server
       MUST return an array of rpr_contents with values inside that range.
     </t>

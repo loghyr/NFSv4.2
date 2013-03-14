@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor="sec:file_attributes" title="New File Attributes">
   <section anchor="ss:file_attributes:REC" title="New RECOMMENDED Attributes - List and Definition References">
@@ -16,9 +16,9 @@
 
         <t hangText='Id:'>
           The number assigned to the attribute.  In the event of
-          conflicts between the assigned number and <xref target="ref:4.2xdr" />, the latter is
+          conflicts between the assigned number and <xref target="4.2xdr" />, the latter is
           likely authoritative, but should be resolved with Errata to this
-          document and/or <xref target="ref:4.2xdr" />.  See <xref target="IESG08" /> for the Errata process.
+          document and/or <xref target="4.2xdr" />.  See <xref target="IESG08" /> for the Errata process.
         </t>
 
         <t hangText='Data Type:'>
@@ -72,7 +72,7 @@
         provide additional information about how it
         expects the change attribute value to evolve after
         the file data, or metadata has changed. While Section
-        5.4 of <xref target="ref:RFC5661" /> discusses
+        5.4 of <xref target="RFC5661" /> discusses
         per file system attributes, it is expected that the
         value of change_attr_type not depend on the value
         of "homogeneous" and only changes in the event of
@@ -114,7 +114,7 @@
           <t hangText="NFS4_CHANGE_TYPE_IS_TIME_METADATA:">
             The change attribute is implemented as
             suggested in the NFSv4 spec
-            <xref target="ref:RFC3530bis" /> in terms of
+            <xref target="RFC3530bis" /> in terms of
             the time_metadata attribute.
           </t>
         </list>
@@ -175,7 +175,7 @@ typedef uint32_t  policy4;
         an LFS may optionally choose to include a Policy Identifier
         field to allow for complex policy deployments.  The LFS
         and Label Format Registry are described in detail in
-        <xref target='ref:lfsreg' />.
+        <xref target='lfsreg' />.
         The translation used to interpret the security
         attribute is not specified as part of the protocol as it may depend
         on various factors.  The second component is an opaque section which

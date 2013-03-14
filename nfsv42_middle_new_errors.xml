@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2012) -->
-<!-- Copyright (C) The Internet Society (2012) -->
+<!-- Copyright (C) The IETF Trust (2012-2013) -->
+<!-- Copyright (C) The Internet Society (2012-2013) -->
 
 <section title="Error Values">
   <t>
@@ -109,7 +109,7 @@
       each new NFSv4.2 protocol operation.  The error code NFS4_OK (indicating no
       error) is not listed but should be understood to be returnable by all
       new operations. The error values for all other operations are defined
-      in Section 15.2 of <xref target="ref:RFC5661" />.
+      in Section 15.2 of <xref target="RFC5661" />.
     </t>
 
     <texttable anchor='tbl:op_error_returns'>
@@ -385,7 +385,7 @@
       error) is not listed but should be understood to be returnable by all
       new callback operations.
       The error values for all other callback operations are defined
-      in Section 15.3 of <xref target="ref:RFC5661" />.
+      in Section 15.3 of <xref target="RFC5661" />.
     </t>
 
     <texttable anchor='tbl:cb_op_error_returns'>

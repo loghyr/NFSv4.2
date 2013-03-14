@@ -41,7 +41,7 @@
     <t>
       There is a potential race between the reply to the original transaction on
       the forechannel and the CB_OFFLOAD callback on the backchannel.
-      Sections 2.10.6.3 and 20.9.3 in <xref target="ref:RFC5661" />
+      Sections 2.10.6.3 and 20.9.3 in <xref target="RFC5661" />
       describes how to handle this type of issue.
     </t>
 

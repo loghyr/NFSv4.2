@@ -77,7 +77,7 @@
   <section anchor="ss:sparse:new_ops" title="New Operations">
     <t>
       READ_PLUS and WRITE_PLUS are new variants of the NFSv4.1
-      READ and WRITE operations <xref target="ref:RFC5661" />.
+      READ and WRITE operations <xref target="RFC5661" />.
       Besides being able to support all of the data semantics of
       those operations, they can also be used by the client
       and server to efficiently transfer both holes and ADHs
