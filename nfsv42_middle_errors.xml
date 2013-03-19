@@ -471,7 +471,7 @@
         </t>
       </section>
 
-      <section toc='exclude' anchor="ss:error_values:NC123" title="NFS4ERR_DQUOT (Error Code 19)">
+      <section toc='exclude' anchor="ss:error_values:NC123" title="NFS4ERR_DQUOT (Error Code 69)">
         <t>
           Resource (quota) hard limit exceeded.  The user's resource limit on
           the server has been exceeded.
