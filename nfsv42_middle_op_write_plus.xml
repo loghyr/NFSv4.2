@@ -274,13 +274,13 @@
       </t>
 
       <t>
-        Regardelss of whether the operation is asynchronous or
+        Regardless of whether the operation is asynchronous or
         synchronous, it MUST still support the COMMIT operation semantics
         as outlined in Section 18.3 of <xref target="RFC5661" />.
         I.e., COMMIT works on one or more WRITE operations and the
         WRITE_PLUS operation can appear as several WRITE operations
         to the server.  The client can use locking operations to control the behavior
-        on the server with respect to a long running asynchornous
+        on the server with respect to long running asynchronous
         write operations.
       </t>
     </section>

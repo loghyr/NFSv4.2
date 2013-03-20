@@ -6,7 +6,7 @@
     The following tables summarize the operations of the NFSv4.2 protocol
     and the corresponding designation of REQUIRED, RECOMMENDED, and
     OPTIONAL to implement or either OBSOLESCENT or MUST NOT implement.
-    The designation of OBSOLESCENT for those
+    The designation of OBSOLESCENT is reserved for those
     operations which are defined in either NFSv4.0 or NFSv4.1
     and are intended to be classified as
     MUST NOT be implemented in NFSv4.3.  The designation of MUST
