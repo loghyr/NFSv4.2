@@ -103,7 +103,7 @@
         version must not make new cases be REQUIRED. While the encapsulating
         operation may be REQUIRED, the new cases (the specific arm
         of the discriminated union) is not. The error code
-        NFS4ERR_UNION_NOTSUPP is used to notifify the client when the
+        NFS4ERR_UNION_NOTSUPP is used to notify the client when the
         server does not support such a case.
       </t>
 
@@ -177,7 +177,7 @@
 
       <t>
         Minor versions may downgrade features from REQUIRED to
-        RECOMMENDED, from RECOMMENDED to OPTIONAL, or from OPIONAL to
+        RECOMMENDED, from RECOMMENDED to OPTIONAL, or from OPTIONAL to
         MANDATORY TO NOT implement.  Also, if a feature was marked as
         OBSOLESCENT in the prior minor version, it may be downgraded
         from REQUIRED to OPTIONAL from RECOMMENDED to MANDATORY TO NOT

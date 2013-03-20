@@ -6,7 +6,7 @@
     <t>
       Applications such as hypervisors want to be able to
       reserve space for a file, report the amount of
-      actual disk space a file occupies, and freeup the backing space of a
+      actual disk space a file occupies, and free-up the backing space of a
       file when it is not required.  In virtualized environments, virtual
       disk files are often stored on NFS mounted volumes.  Since virtual
       disk files represent the hard disks of virtual machines, hypervisors
