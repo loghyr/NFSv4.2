@@ -13,15 +13,13 @@
         <organization abbrev="NetApp">NetApp</organization>
         <address>
             <postal>
-                <street>9110 E 66th St</street>
-                <city>Tulsa</city>
-                <region>OK</region>
-                <code>74133</code>
+                <street>495 E Java Dr</street>
+                <city>Sunnyvale</city>
+                <region>CA</region>
+                <code>95054</code>
                 <country>USA</country>
             </postal>
-            <phone>+1 918 307 1415</phone>
             <email>thomas@netapp.com</email>
-            <uri>http://www.tulsalabs.com</uri>
         </address>
     </author>
 
