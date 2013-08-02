@@ -606,7 +606,7 @@ const FATTR4_SPACE_RESERVED	= 77;
 const FATTR4_SPACE_FREED	= 78;
 const FATTR4_CHANGE_ATTR_TYPE	= 79;
 const FATTR4_SEC_LABEL		= 80;
-const FATTR4_CHNAGE_SEC_LABEL	= 81;
+const FATTR4_CHANGE_SEC_LABEL	= 81;
 
 /*
  * File attribute container
