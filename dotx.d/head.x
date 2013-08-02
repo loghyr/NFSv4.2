@@ -397,7 +397,6 @@ include(type_fs_charset_cap4.x)
 include(type_netloc_type4.x)
 include(type_chattr_type.x)
 include(type_label_format.x)
-include(type_change_label.x)
 
 include(copy_from_auth.x)
 include(copy_to_auth.x)

@@ -199,7 +199,6 @@ typedef uint32_t  policy4;
     </section>
 
     <section toc='exclude' anchor='ss:fattr:chsec' title='Attribute 81: change_sec_label'>
-      <?rfc include='autogen/type_change_label.xml'?>
 
       <t>
         The change_sec_label attribute is a read-only attribute per file.

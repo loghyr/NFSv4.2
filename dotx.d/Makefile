@@ -235,7 +235,6 @@ SPITGEN =	basic_types.x \
 		data_content4.x \
 		type_chattr_type.x \
 		type_label_format.x \
-		type_change_label.x \
 		stable_how4.x \
 		write_response4.x
 
