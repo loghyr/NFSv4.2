@@ -384,7 +384,7 @@
           but does not enforce policies. Such a server will store and retrieve
           all object labels presented by clients, utilize the methods
           described in <xref target='ss:macss:lnfs:changes' /> to allow
-          the clients to detect changing labels,, but will not restrict access
+          the clients to detect changing labels, but will not restrict access
           via the subject label. Instead, it will expect the clients to enforce
           all such access locally.
         </t>
