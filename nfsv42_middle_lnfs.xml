@@ -231,15 +231,6 @@
       </t>
 
       <t>
-        As the server is always presented with the subject
-        label from the client, it does not necessarily need to
-        communicate the fact that the label has changed to
-        the client. In the cases where the change outright denies
-        the client access, the client will be able to quickly
-        determine that there is a new label in effect.
-      </t>
-
-      <t>
         Consider a system in which the clients enforce MAC checks and
         and the server has a very simple security
         system which just stores the labels. In this system, the
