@@ -254,12 +254,6 @@
   </section>
 
   <section anchor='ss:lnfs:pnfs' title='pNFS Considerations'>
-    <t>
-      This section examines the issues in deploying Labeled NFS in
-      a pNFS community of servers.
-    </t>
-
-    <section toc='exclude' anchor="ss:pnfs:checks" title="MAC Label Checks">
       <t>
         The new FATTR4_SEC_LABEL attribute is metadata information
         and as such the DS is not aware of the value contained
@@ -269,7 +263,6 @@
         the subject label presented by the client, it SHOULD
         utilize this mechanism.
       </t>
-    </section>
   </section>
 
   <section anchor='ss:lnfs:discovery' title='Discovery of Server Labeled NFS Support'>
