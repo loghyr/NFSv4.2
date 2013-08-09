@@ -75,7 +75,7 @@
       regardless of the actual copy engine used.
       If the file cannot be created in the destination file system (due to
       file name restrictions, such as case or length), the COPY
-      operation MUST not be called.
+      operation MUST NOT be called.
     </t>
 
     <t>
@@ -106,15 +106,6 @@
       the size of the destination file. This allows for the client
       to issue parallel copies to implement operations such as
       "cat file1 file2 file3 file4 > dest".
-    </t>
-
-    <t>
-      If the destination file is created as a result of this command, the
-      destination file's size will be equal to the number of bytes
-      successfully copied. If the destination file already existed, the
-      destination file's size may increase as a result of this operation
-      (e.g. if ca_dst_offset plus ca_count is greater than the destination's
-      initial size).
     </t>
 
     <t>
