@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <front>
     <title abbrev="NFSv4.2">
@@ -19,6 +19,7 @@
                 <code>95054</code>
                 <country>USA</country>
             </postal>
+            <phone>+1 408 419 3018</phone>
             <email>thomas@netapp.com</email>
         </address>
     </author>

@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2013) -->
+<!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor="op:copy" title="Operation 59: COPY - Initiate a server-side copy">
   <section toc='exclude' title="ARGUMENT">
@@ -16,8 +16,7 @@
       copies. In both cases, the COPY is always sent from the client
       to the destination server of the file copy. The COPY operation
       requests that a file be copied from the location specified by the
-      SAVED_FH value to the location specified by the combination of
-      CURRENT_FH and ca_destination.
+      SAVED_FH value to the location specified by the CURRENT_FH.
     </t>
 
     <t>
@@ -69,26 +68,14 @@
     </t>
 
     <t>
-      The CURRENT_FH and ca_destination together specify the
-      destination of the copy operation. If ca_destination
-      is of 0 (zero) length, then CURRENT_FH specifies the target file.
-      In this case, CURRENT_FH MUST be a regular file and not a directory.
-      If ca_destination is not of 0 (zero) length, the ca_destination
-      argument specifies the file name to which the data will be copied
-      within the directory identified by CURRENT_FH. In this case,
-      CURRENT_FH MUST be a directory and not a regular file.
-    </t>
-
-    <t>
-      If the file named by ca_destination does not exist and the operation
-      completes successfully, the file will be visible in the file system
-      namespace. If the file does not exist and the operation fails, the
-      file MAY be visible in the file system namespace depending on when
-      the failure occurs and on the implementation of the NFS server
-      receiving the COPY operation. If the ca_destination name
-      cannot be created in the destination file system (due to
-      file name restrictions, such as case or length), the operation
-      MUST fail.
+      The CURRENT_FH specifies the destination of the copy operation.
+      The CURRENT_FH MUST be a regular file and not a directory. Note,
+      the file MUST exist before the COPY operation begins. It is the
+      responsibility of the client to create the file if necessary,
+      regardless of the actual copy engine used.
+      If the file cannot be created in the destination file system (due to
+      file name restrictions, such as case or length), the COPY
+      operation MUST not be called.
     </t>
 
     <t>
