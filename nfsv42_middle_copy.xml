@@ -577,14 +577,12 @@
 
     <t>
       NFSv4 clients and servers supporting the inter-server copy
-      operations described in this chapter are REQUIRED to implement
-      <xref target="rpcsecgssv3" />, including the RPCSEC_GSSv3
-      privileges copy_from_auth and copy_to_auth. If the server-to-server
-      copy protocol is ONC RPC based, the servers are also REQUIRED to
-      implement the RPCSEC_GSSv3 privilege copy_confirm_auth. These
-      requirements to implement are not requirements to use. NFSv4 clients
-      and servers are RECOMMENDED to use <xref target="rpcsecgssv3" />
-      to secure server-side copy operations.
+      operations described in this chapter are REQUIRED to implement the
+      mechanism described in <xref target="server-to-server-with-rpc">,
+      and to support rejecting COPY_NOTIFY requests that do not use
+      RPCSEC_GSS with privacy.  This requirement to implement is not
+      a requirement to use; for example, a server may depending on
+      configuration also allow COPY_NOTIFY requests that use only AUTH_SYS.
     </t>
 
     <section title="Inter-Server Copy Security" anchor="server-to-server-sec">
@@ -596,7 +594,7 @@
         <t>
           <list style="symbols">
             <t>
-              The specification MUST NOT mandate an inter-server copy
+              The specification must not mandate an inter-server copy
               protocol. There are many ways to copy data. Some will be
               more optimal than others depending on the identities of
               the source server and destination server. For example
@@ -614,14 +612,14 @@
             </t>
 
             <t>
-              The specification MUST provide guidance for using NFSv4.x as
+              The specification must provide guidance for using NFSv4.x as
               a copy protocol. For those source and destination servers
               willing to use NFSv4.x there are specific security considerations
               that this specification can and does address.
             </t>
 
             <t>
-              The specification MUST NOT mandate pre-configuration between the
+              The specification must not mandate pre-configuration between the
               source and destination server. Requiring that the source and
               destination first have a "copying relationship" increases the
               administrative burden. However the specification MUST NOT
@@ -629,7 +627,7 @@
             </t>
 
             <t>
-              The specification MUST NOT mandate a trust relationship between
+              The specification must not mandate a trust relationship between
               the source and destination server. The NFSv4 security model
               requires mutual authentication between a principal on an NFS
               client and a principal on an NFS server. This model MUST continue
@@ -639,364 +637,11 @@
         </t>
       </section>
 
-      <section title="Inter-Server Copy with RPCSEC_GSSv3">
+      <section title="Inter-Server Copy via ONC RPC"
+       anchor="server-to-server-with-rpc">
         <t>
-          When the client sends a COPY_NOTIFY to the source server to expect
-          the destination to attempt to copy data from the source server, it
-          is expected that this copy is being done on behalf of the principal
-          (called the "user principal") that sent the RPC request that encloses
-          the COMPOUND procedure that contains the COPY_NOTIFY operation. The
-          user principal is identified by the RPC credentials. A mechanism that
-          allows the user principal to authorize the destination server to perform
-          the copy in a manner that lets the source server properly authenticate
-          the destination's copy, and without allowing the destination to
-          exceed its authorization is necessary.
-        </t>
-
-        <t>
-          An approach that sends delegated credentials of the client's user
-          principal to the destination server is not used for the following
-          reasons. If the client's user delegated its credentials, the
-          destination would authenticate as the user principal. If the
-          destination were using the NFSv4 protocol to perform the copy,
-          then the source server would authenticate the destination server
-          as the user principal, and the file copy would securely proceed.
-          However, this approach would allow the destination server to
-          copy other files. The user principal would have to trust the
-          destination server to not do so. This is counter to the requirements,
-          and therefore is not considered. Instead an approach using
-          RPCSEC_GSSv3 <xref target="rpcsecgssv3" /> privileges is proposed.
-        </t>
-
-        <t>
-          One of the stated applications of the proposed RPCSEC_GSSv3
-          protocol is compound client host and user authentication
-          [+ privilege assertion]. For inter-server file copy, we require
-          compound NFS server host and user authentication
-          [+ privilege assertion]. The distinction between the two is one
-          without meaning.
-        </t>
-
-        <t>
-          RPCSEC_GSSv3 introduces the notion of privileges. We define three privileges:
-        </t>
-
-        <t>
-          <list style="hanging">
-
-            <t hangText="copy_from_auth:">
-              A user principal is authorizing a source principal
-              ("nfs@&lt;source&gt;") to allow a destination principal
-              ("nfs@&lt;destination&gt;") to copy a file from the source
-              to the destination. This privilege is established on the
-              source server before the user principal sends a COPY_NOTIFY
-              operation to the source server.
-
-              <vspace blankLines="1" />
-              <?rfc include='autogen/copy_from_auth.xml'?>
-              <vspace blankLines="1" />
-
-              cfp_shared_secret is a secret value the user
-              principal generates.
-            </t>
-
-            <t hangText="copy_to_auth:">
-              A user principal is authorizing a destination principal
-              ("nfs@&lt;destination&gt;") to allow it to copy a file
-              from the source to the destination. This privilege is
-              established on the destination server before the user
-              principal sends a COPY operation to the destination server.
-
-              <vspace blankLines="1" />
-              <?rfc include='autogen/copy_to_auth.xml'?>
-              <vspace blankLines="1" />
-
-              ctap_shared_secret is a secret value the user principal
-              generated and was used to establish the copy_from_auth
-              privilege with the source principal.
-            </t>
-
-            <t hangText="copy_confirm_auth:">
-              A destination principal is confirming with the
-              source principal that it is authorized to copy data
-              from the source on behalf of the user principal. When
-              the inter-server copy protocol is NFSv4, or for that
-              matter, any protocol capable of being secured via
-              RPCSEC_GSSv3 (i.e., any ONC RPC protocol), this privilege
-              is established before the file is copied from the
-              source to the destination.
-
-              <vspace blankLines="1" />
-              <?rfc include='autogen/copy_confirm_auth.xml'?>
-            </t>
-          </list>
-        </t>
-
-        <section title="Establishing a Security Context">
-          <t>
-            When the user principal wants to COPY a file between two servers, if it has
-            not established copy_from_auth and copy_to_auth privileges on the servers,
-            it establishes them:
-          </t>
-
-          <t>
-            <list style="symbols">
-
-              <t>
-                The user principal generates a secret it will share with the two
-                servers. This shared secret will be placed in the cfap_shared_secret
-                and ctap_shared_secret fields of the appropriate privilege data types,
-                copy_from_auth_priv and copy_to_auth_priv.
-              </t>
-
-              <t>
-                An instance of copy_from_auth_priv is filled in with the shared
-                secret, the destination server, and the NFSv4 user id of the
-                user principal. It will be sent with an RPCSEC_GSS3_CREATE
-                procedure, and so cfap_seq_num is set to the seq_num of the
-                credential of the RPCSEC_GSS3_CREATE procedure. Because
-                cfap_shared_secret is a secret, after XDR encoding
-                copy_from_auth_priv, GSS_Wrap() (with privacy) is invoked
-                on copy_from_auth_priv. The RPCSEC_GSS3_CREATE procedure's
-                arguments are:
-
-                <vspace blankLines="1" />
-
-                <figure>
-                  <artwork>
-   struct {
-      rpc_gss3_gss_binding    *compound_binding;
-      rpc_gss3_chan_binding   *chan_binding_mic;
-      rpc_gss3_assertion      assertions&lt;&gt;;
-      rpc_gss3_extension      extensions&lt;&gt;;
-   } rpc_gss3_create_args;
-                 </artwork>
-                </figure>
-
-                <vspace blankLines="1" />
-
-                The string "copy_from_auth" is placed in assertions[0].privs. The
-                output of GSS_Wrap() is placed in extensions[0].data. The field
-                extensions[0].critical is set to TRUE. The source server calls
-                GSS_Unwrap() on the privilege, and verifies that the seq_num matches
-                the credential. It then verifies that the NFSv4 user id being asserted
-                matches the source server's mapping of the user principal. If it
-                does, the privilege is established on the source server as:
-                &lt;"copy_from_auth", user id, destination&gt;. The successful
-                reply to RPCSEC_GSS3_CREATE has:
-
-                <vspace blankLines="1" />
-
-                <figure>
-                  <artwork>
-   struct {
-      opaque                  handle&lt;&gt;;
-      rpc_gss3_chan_binding   *chan_binding_mic;
-      rpc_gss3_assertion      granted_assertions&lt;&gt;;
-      rpc_gss3_assertion      server_assertions&lt;&gt;;
-      rpc_gss3_extension      extensions&lt;&gt;;
-   } rpc_gss3_create_res;
-                  </artwork>
-                </figure>
-
-                <vspace blankLines="1" />
-
-                The field "handle" is the RPCSEC_GSSv3 handle that the client
-                will use on COPY_NOTIFY requests involving the source and
-                destination server. granted_assertions[0].privs will be equal to
-                "copy_from_auth". The server will return a GSS_Wrap() of
-                copy_to_auth_priv.
-              </t>
-
-              <t>
-                An instance of copy_to_auth_priv is filled in with the
-                shared secret, the source server, and the NFSv4 user id.
-                It will be sent with an RPCSEC_GSS3_CREATE procedure, and
-                so ctap_seq_num is set to the seq_num of the credential of
-                the RPCSEC_GSS3_CREATE procedure. Because ctap_shared_secret
-                is a secret, after XDR encoding copy_to_auth_priv,
-                GSS_Wrap() is invoked on copy_to_auth_priv. The RPCSEC_GSS3_CREATE
-                procedure's arguments are:
-
-                <vspace blankLines="1" />
-
-                <figure>
-                  <artwork>
-   struct {
-      rpc_gss3_gss_binding    *compound_binding;
-      rpc_gss3_chan_binding   *chan_binding_mic;
-      rpc_gss3_assertion      assertions&lt;&gt;;
-      rpc_gss3_extension      extensions&lt;&gt;;
-   } rpc_gss3_create_args;
-                  </artwork>
-                </figure>
-
-                <vspace blankLines="1" />
-
-                The string "copy_to_auth" is placed in assertions[0].privs.
-                The output of GSS_Wrap() is placed in extensions[0].data. The
-                field extensions[0].critical is set to TRUE. After unwrapping,
-                verifying the seq_num, and the user principal to NFSv4 user
-                ID mapping, the destination establishes a privilege of
-                &lt;"copy_to_auth", user id, source&gt;. The successful reply
-                to RPCSEC_GSS3_CREATE has:
-
-                <vspace blankLines="1" />
-
-                <figure>
-                  <artwork>
-   struct {
-      opaque                  handle&lt;&gt;;
-      rpc_gss3_chan_binding   *chan_binding_mic;
-      rpc_gss3_assertion      granted_assertions&lt;&gt;;
-      rpc_gss3_assertion      server_assertions&lt;&gt;;
-      rpc_gss3_extension      extensions&lt;&gt;;
-   } rpc_gss3_create_res;
-                  </artwork>
-                </figure>
-
-                <vspace blankLines="1" />
-
-                The field "handle" is the RPCSEC_GSSv3 handle that the client will
-                use on COPY requests involving the source and destination server.
-                The field granted_assertions[0].privs will be equal to "copy_to_auth".
-                The server will return a GSS_Wrap() of copy_to_auth_priv.
-              </t>
-            </list>
-          </t>
-        </section>
-
-        <section title="Starting a Secure Inter-Server Copy">
-          <t>
-            When the client sends a COPY_NOTIFY request to the source server, it uses
-            the privileged "copy_from_auth" RPCSEC_GSSv3 handle. cna_destination_server
-            in COPY_NOTIFY MUST be the same as the name of the destination server
-            specified in copy_from_auth_priv. Otherwise, COPY_NOTIFY will fail with
-            NFS4ERR_ACCESS. The source server verifies that the privilege
-            &lt;"copy_from_auth", user id, destination&gt; exists, and annotates it
-            with the source filehandle, if the user principal has read
-            access to the source file, and if administrative policies give the user
-            principal and the NFS client read access to the source file (i.e., if the
-            ACCESS operation would grant read access). Otherwise, COPY_NOTIFY will fail
-            with NFS4ERR_ACCESS.
-          </t>
-
-          <t>
-            When the client sends a COPY request to the destination server, it uses
-            the privileged "copy_to_auth" RPCSEC_GSSv3 handle. ca_source_server in
-            COPY MUST be the same as the name of the source server specified in
-            copy_to_auth_priv. Otherwise, COPY will fail with NFS4ERR_ACCESS. The
-            destination server verifies that the privilege
-            &lt;"copy_to_auth", user id, source&gt; exists, and annotates it with the
-            source and destination filehandles. If the client has failed to establish
-            the "copy_to_auth" policy it will reject the request with
-            NFS4ERR_PARTNER_NO_AUTH.
-          </t>
-
-          <t>
-            If the client sends a OFFLOAD_REVOKE to the source server to rescind the
-            destination server's copy privilege, it uses the privileged
-            "copy_from_auth" RPCSEC_GSSv3 handle and the cra_destination_server
-            in OFFLOAD_REVOKE MUST be the same as the name of the destination server
-            specified in copy_from_auth_priv. The source server will then
-            delete the &lt;"copy_from_auth", user id, destination&gt; privilege
-            and fail any subsequent copy requests sent under the auspices of this
-            privilege from the destination server.
-          </t>
-        </section>
-
-        <section title="Securing ONC RPC Server-to-Server Copy Protocols">
-          <t>
-            After a destination server has a "copy_to_auth" privilege established on
-            it, and it receives a COPY request, if it knows it will use an ONC RPC
-            protocol to copy data, it will establish a "copy_confirm_auth" privilege
-            on the source server, using nfs@&lt;destination&gt; as the initiator
-            principal, and nfs@&lt;source&gt; as the target principal.
-          </t>
-
-          <t>
-            The value of the field ccap_shared_secret_mic is a GSS_VerifyMIC() of
-            the shared secret passed in the copy_to_auth privilege.  The field
-            ccap_username is the mapping of the user principal to an NFSv4 user
-            name ("user"@"domain" form), and MUST be the same as ctap_username
-            and cfap_username. The field ccap_seq_num is the seq_num of the
-            RPCSEC_GSSv3 credential used for the RPCSEC_GSS3_CREATE procedure
-            the destination will send to the source server to establish the
-            privilege.
-          </t>
-
-          <t>
-            The source server verifies the privilege, and establishes a
-            &lt;"copy_confirm_auth", user id, destination&gt; privilege. If the
-            source server fails to verify the privilege, the COPY operation will
-            be rejected with NFS4ERR_PARTNER_NO_AUTH. All subsequent ONC RPC
-            requests sent from the destination to copy data from the source to
-            the destination will use the RPCSEC_GSSv3 handle returned by the
-            source's RPCSEC_GSS3_CREATE response.
-          </t>
-
-          <t>
-            Note that the use of the "copy_confirm_auth" privilege
-            accomplishes the following:
-          </t>
-
-          <t>
-            <list style="symbols">
-              <t>
-                if a protocol like NFS is being used, with export policies,
-                export policies can be overridden in case the destination server
-                as-an-NFS-client is not authorized
-              </t>
-
-              <t>
-                manual configuration to allow a copy relationship between the source
-                and destination is not needed.
-              </t>
-            </list>
-          </t>
-
-          <t>
-            If the attempt to establish a "copy_confirm_auth" privilege fails,
-            then when the user principal sends a COPY request to destination,
-            the destination server will reject it with NFS4ERR_PARTNER_NO_AUTH.
-          </t>
-        </section>
-
-        <section title="Securing Non ONC RPC Server-to-Server Copy Protocols"
-         anchor="server-to-server-no-rpc-with-gss">
-          <t>
-            If the destination won't be using ONC RPC to copy the data, then
-            the source and destination are using an unspecified copy protocol.
-            The destination could use the shared secret and the NFSv4 user id to
-            prove to the source server that the user principal has authorized
-            the copy.
-          </t>
-
-          <t>
-            For protocols that authenticate user names with passwords
-            (e.g., HTTP <xref target="RFC2616" /> and FTP <xref target="RFC0959" />),
-            the NFSv4 user id could be used as the user name, and an ASCII
-            hexadecimal representation of the RPCSEC_GSSv3 shared secret could be
-            used as the user password or as input into non-password authentication
-            methods like CHAP <xref target="RFC1994" />.
-          </t>
-        </section>
-      </section>
-
-      <section title="Inter-Server Copy via ONC RPC but without RPCSEC_GSSv3"
-       anchor="server-to-server-with-rpc-no-gss">
-        <t>
-          ONC RPC security flavors other than RPCSEC_GSSv3 MAY be used with
-          the server-side copy offload operations described in this
-          chapter. In particular, host-based ONC RPC security flavors
-          such as AUTH_NONE and AUTH_SYS MAY be used. If a host-based
-          security flavor is used, a minimal level of protection for
-          the server-to-server copy protocol is possible.
-        </t>
-
-        <t>
-          In the absence of strong security mechanisms such as
-          RPCSEC_GSSv3, the challenge is how the source server
+          In the absence of a strong security mechanism designed for the
+	  purpose, the challenge is how the source server
           and destination server identify themselves to each other,
           especially in the presence of multi-homed source and
           destination servers. In a multi-homed environment, the
@@ -1066,6 +711,14 @@
           observes the random number on the wire. Other secure communication
           techniques (e.g., IPsec) are necessary to block these attacks.
         </t>
+
+	<t>
+	  Servers SHOULD reject COPY_NOTIFY requests that do not use
+	  RPCSEC_GSS with privacy, thus ensuring the URL in the
+	  COPY_NOTIFY reply is encrypted.  For the same reason, clients
+	  SHOULD send COPY requests to the destination using RPCSEC_GSS
+	  with privacy.
+	</t>
       </section>
 
       <section title="Inter-Server Copy without ONC RPC and RPCSEC_GSSv3"
