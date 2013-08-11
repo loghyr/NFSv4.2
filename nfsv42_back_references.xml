@@ -553,16 +553,17 @@ specifications of each URI scheme.
 ml/Deployment_Guide/sec-mls-ov.html' />
   </reference>
 
-    <reference anchor="Haynes12">
+    <reference anchor="Haynes13">
       <front>
         <title>
           Requirements for Labeled NFS
         </title>
         <author initials='T.' surname='Haynes' fullname='T. Haynes'>
-          <organization />
+          <organization>NetApp</organization>
         </author>
+        <date year="2013" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-labreqs-03" value="(work in progress)" />
+      <seriesInfo name="draft-ietf-nfsv4-labreqs-04" value="(work in progress)" />
     </reference>
 
 </references>

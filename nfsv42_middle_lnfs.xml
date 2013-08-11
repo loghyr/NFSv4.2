@@ -11,7 +11,7 @@
       and resource ownership.  In contrast Mandatory Access Control (MAC)
       models base their access control decisions on the label on the
       subject (usually a process) and the object it wishes to access
-      <xref target='Haynes12' />.  These labels may contain user
+      <xref target='Haynes13' />.  These labels may contain user
       identity information but usually contain additional information.
       In DAC systems users are free to specify the access rules for
       resources that they own.  MAC models base their security decisions
@@ -47,17 +47,9 @@
     </t>
 
     <t>
-      The final change necessary is a modification to the RPC layer used
-      in NFSv4 in the form of a new version of the
-      RPCSEC_GSS <xref target='RFC2203' /> framework.
-      In order for an NFSv4 server to apply MAC checks it must obtain
-      additional information from the client.  Several methods were explored for
-      performing this and it was decided that the best approach was to
-      incorporate the ability to make security attribute assertions through
-      the RPC mechanism.  RPCSECGSSv3 <xref target='rpcsecgssv3' />
-      outlines a method to assert additional security information
-      such as security labels on gss context creation and have that data
-      bound to all RPC requests that make use of that context.
+      An additional useful change would be modification to the RPC layer
+      used in NFSv4 to allow RPC calls to carry security labels.  Such
+      modifications are outside the scope of this document.
     </t>
   </section>
 
@@ -269,16 +261,11 @@
     <t>
       The server can easily determine that a client supports Labeled NFS
       when it queries for the FATTR4_SEC_LABEL label for an object.
-      Note that it cannot assume that the presence of RPCSEC_GSSv3
-      indicates Labeled NFS support. The client might need to discover
-      which LFS the server supports.
+      The client might need to discover which LFS the server supports.
     </t>
 
     <t>
-      A server which supports Labeled NFS MUST allow a client with any subject
-      label to retrieve the FATTR4_SEC_LABEL attribute for the root
-      filehandle, ROOTFH. The following compound must always succeed
-      as far as a MAC label check is concerned:
+      The following compound MUST NOT be denied by any MAC label check:
     </t>
 
     <figure>
@@ -315,10 +302,15 @@
         requires that both the client and server have an opportunity to
         perform an access control check based on all relevant information
         within the network.  The file object security attribute is provided
-        using the mechanism described in <xref target='ss:lnfs:macsec' />.  The
-        security attribute of the subject making the request is transported
-        at the RPC layer using the mechanism described in RPCSECGSSv3
-        <xref target='rpcsecgssv3' />.
+        using the mechanism described in <xref target='ss:lnfs:macsec' />.
+      </t>
+
+      <t>
+        Fully MAC-Functional NFSv4 servers are not possible in the
+        absence of RPC layer modifications to support subject label
+        transport.  However, servers may make decisions based on the
+        RPC credential information available and future specifications
+        may provide subject label transport.
       </t>
 
       <section anchor='ss:modes:fm_ilt' title='Initial Labeling and Translation'>
@@ -360,12 +352,17 @@
         </t>
 
         <t>
-          When the server receives the request from the client it extracts the
-          security attribute conveyed in the RPC request.  The server then uses
-          this security attribute and the attribute of the object the client is
+          When the server receives the request from the client it uses any
+          credential information conveyed in the RPC request
+          the attribute of the object the client is
           trying to access to make an access control decision.  If the server's
           policy allows this access it will fulfill the client's request,
           otherwise it will return NFS4ERR_ACCESS.
+        </t>
+
+        <t>
+          Future protocol extensions may also allow the server to factor into
+          the decision a security label extracted from the RPC request.
         </t>
 
         <t>
@@ -379,14 +376,14 @@
 
       <section anchor='ss:modes:lfs0' title='Limited Server'>
         <t>
-          A Limited Server mode (see Section 3.5.2 of <xref target="Haynes12" />)
-          consists of a server which  is label aware,
+          A Limited Server mode (see Section 3.5.2 of <xref target="Haynes13" />)
+          consists of a server which is label aware,
           but does not enforce policies. Such a server will store and retrieve
           all object labels presented by clients, utilize the methods
           described in <xref target='ss:macss:lnfs:changes' /> to allow
-          the clients to detect changing labels, but will not restrict access
-          via the subject label. Instead, it will expect the clients to enforce
-          all such access locally.
+          the clients to detect changing labels, but may not factor
+          the label into access decisions.  Instead, it will expect the clients
+          to enforce all such access locally.
         </t>
       </section>
     </section>
