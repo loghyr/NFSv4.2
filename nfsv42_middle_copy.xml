@@ -370,7 +370,7 @@
       </figure>
     </section>
 
-    <section title="Server-to-Server Copy Protocol" anchor="server-to-server-proto">
+    <section title="Server-to-Server Copy Protocol" anchor="sec:SSC-proto">
       <t>
         The source server and
         destination server are not required to use a specific protocol to
@@ -442,8 +442,7 @@
         <t>
           Authenticating and identifying the destination server to the source
           server is also a challenge. Recommendations for how to accomplish
-          this are given in <xref target="server-to-server-no-rpc-with-gss" />
-          and <xref target="server-to-server-no-rpc-no-gss" />.
+          this are given in <xref target="sec:SSC-no-rpc" />.
         </t>
       </section>
     </section>
@@ -578,14 +577,14 @@
     <t>
       NFSv4 clients and servers supporting the inter-server copy
       operations described in this chapter are REQUIRED to implement the
-      mechanism described in <xref target="server-to-server-with-rpc">,
+      mechanism described in <xref target="sec:SSC-with-rpc" />,
       and to support rejecting COPY_NOTIFY requests that do not use
       RPCSEC_GSS with privacy.  This requirement to implement is not
       a requirement to use; for example, a server may depending on
       configuration also allow COPY_NOTIFY requests that use only AUTH_SYS.
     </t>
 
-    <section title="Inter-Server Copy Security" anchor="server-to-server-sec">
+    <section title="Inter-Server Copy Security" anchor="sec:SSC-sec">
       <section title="Requirements for Secure Inter-Server Copy">
         <t>
           Inter-server copy is driven by several requirements:
@@ -637,11 +636,10 @@
         </t>
       </section>
 
-      <section title="Inter-Server Copy via ONC RPC"
-       anchor="server-to-server-with-rpc">
+      <section title="Inter-Server Copy via ONC RPC" anchor="sec:SSC-with-rpc">
         <t>
           In the absence of a strong security mechanism designed for the
-	  purpose, the challenge is how the source server
+          purpose, the challenge is how the source server
           and destination server identify themselves to each other,
           especially in the presence of multi-homed source and
           destination servers. In a multi-homed environment, the
@@ -712,19 +710,18 @@
           techniques (e.g., IPsec) are necessary to block these attacks.
         </t>
 
-	<t>
-	  Servers SHOULD reject COPY_NOTIFY requests that do not use
-	  RPCSEC_GSS with privacy, thus ensuring the URL in the
-	  COPY_NOTIFY reply is encrypted.  For the same reason, clients
-	  SHOULD send COPY requests to the destination using RPCSEC_GSS
-	  with privacy.
-	</t>
+        <t>
+          Servers SHOULD reject COPY_NOTIFY requests that do not use
+          RPCSEC_GSS with privacy, thus ensuring the URL in the
+          COPY_NOTIFY reply is encrypted.  For the same reason, clients
+          SHOULD send COPY requests to the destination using RPCSEC_GSS
+          with privacy.
+        </t>
       </section>
 
-      <section title="Inter-Server Copy without ONC RPC and RPCSEC_GSSv3"
-         anchor="server-to-server-no-rpc-no-gss">
+      <section title="Inter-Server Copy without ONC RPC" anchor="sec:SSC-no-rpc">
         <t>
-          The same techniques as <xref target="server-to-server-with-rpc-no-gss" />,
+          The same techniques as <xref target="sec:SSC-with-rpc" />,
           using unique URLs for each destination server, can be used for other
           protocols (e.g., HTTP <xref target="RFC2616" /> and FTP <xref target="RFC0959" />)
           as well.

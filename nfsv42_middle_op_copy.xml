@@ -119,8 +119,8 @@
       specific copy protocol for the destination server to use by returning
       a URL, which specifies both a protocol service and server name.
       Server-to-server copy protocol considerations are described in
-      <xref target="server-to-server-proto" /> and
-      <xref target="server-to-server-sec" />.
+      <xref target="sec:SSC-proto" /> and
+      <xref target="sec:SSC-sec" />.
     </t>
 
     <t>
