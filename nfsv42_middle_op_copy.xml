@@ -72,7 +72,7 @@
       The CURRENT_FH MUST be a regular file and not a directory. Note,
       the file MUST exist before the COPY operation begins. It is the
       responsibility of the client to create the file if necessary,
-      regardless of the actual copy engine used.
+      regardless of the actual copy protocol used.
       If the file cannot be created in the destination file system (due to
       file name restrictions, such as case or length), the COPY
       operation MUST NOT be called.
@@ -124,162 +124,21 @@
     </t>
 
     <t>
-      The ca_flags argument allows the copy operation to be
-      customized in the following ways using the guarded flag
-      (COPY4_GUARDED) and the metadata flag (COPY4_METADATA).
-    </t>
-
-    <t>
-      If the guarded flag is set and the destination exists on the
-      server, this operation will fail with NFS4ERR_EXIST.
-    </t>
-
-    <t>
-      If the guarded flag is not set and the destination exists
-      on the server, the behavior is implementation dependent.
-    </t>
-
-    <t>
-      If the metadata flag is set and the client is requesting a
-      whole file copy (i.e., ca_count is 0 (zero)), a subset of
-      the destination file's attributes MUST be the same as the
-      source file's corresponding attributes and a subset of
-      the destination file's attributes SHOULD be the same as
-      the source file's corresponding attributes. The attributes
-      in the MUST and SHOULD copy subsets will be defined for each
-      NFS version.
-    </t>
-
-    <t>
-      For NFSv4.2, <xref target="req_attr_tbl" /> and
-      <xref target="rec_attr_tbl" /> list the REQUIRED and
-      RECOMMENDED attributes respectively. In the 
-      "Copy to destination file?" column, a "MUST" indicates that the
-      attribute is part of the MUST copy set. A "SHOULD" 
-      indicates that the attribute is part of the SHOULD copy set.
-      A "no" indicates that the attribute MUST NOT be copied.
-    </t>
-
-    <texttable anchor="req_attr_tbl">
-      <preamble>REQUIRED attributes</preamble>
-      <ttcol align='left' >Name</ttcol>
-      <ttcol align='left' >Id</ttcol>
-      <ttcol align='left' >Copy to destination file?</ttcol>
-
-      <c>supported_attrs</c>   <c>0</c> <c>no</c>
-      <c>type</c>              <c>1</c> <c>MUST</c>
-      <c>fh_expire_type</c>    <c>2</c> <c>no</c>
-      <c>change</c>            <c>3</c> <c>SHOULD</c>
-      <c>size</c>              <c>4</c> <c>MUST</c>
-      <c>link_support</c>      <c>5</c> <c>no</c>
-      <c>symlink_support</c>   <c>6</c> <c>no</c>
-      <c>named_attr</c>        <c>7</c> <c>no</c>
-      <c>fsid</c>              <c>8</c> <c>no</c>
-      <c>unique_handles</c>    <c>9</c> <c>no</c>
-      <c>lease_time</c>        <c>10</c><c>no</c>
-      <c>rdattr_error</c>      <c>11</c><c>no</c>
-      <c>filehandle</c>        <c>19</c><c>no</c>
-      <c>suppattr_exclcreat</c><c>75</c><c>no</c>
-    </texttable>
-
-    <texttable anchor="rec_attr_tbl">
-      <preamble>RECOMMENDED attributes</preamble>
-      <ttcol align='left' >Name</ttcol>
-      <ttcol align='left' >Id</ttcol>
-      <ttcol align='left' >Copy to destination file?</ttcol>
-
-      <c>acl</c>               <c>12</c><c>MUST</c>
-      <c>aclsupport</c>        <c>13</c><c>no</c>
-      <c>archive</c>           <c>14</c><c>no</c>
-      <c>cansettime</c>        <c>15</c><c>no</c>
-      <c>case_insensitive</c>  <c>16</c><c>no</c>
-      <c>case_preserving</c>   <c>17</c><c>no</c>
-      <c>change_attr_type</c>  <c>79</c><c>no</c>
-      <c>change_policy</c>     <c>60</c><c>no</c>
-      <c>chown_restricted</c>  <c>18</c><c>MUST</c>
-      <c>dacl</c>              <c>58</c><c>MUST</c>
-      <c>dir_notif_delay</c>   <c>56</c><c>no</c>
-      <c>dirent_notif_delay</c><c>57</c><c>no</c>
-      <c>fileid</c>            <c>20</c><c>no</c>
-      <c>files_avail</c>       <c>21</c><c>no</c>
-      <c>files_free</c>        <c>22</c><c>no</c>
-      <c>files_total</c>       <c>23</c><c>no</c>
-      <c>fs_charset_cap</c>    <c>76</c><c>no</c>
-      <c>fs_layout_type</c>    <c>62</c><c>no</c>
-      <c>fs_locations</c>      <c>24</c><c>no</c>
-      <c>fs_locations_info</c> <c>67</c><c>no</c>
-      <c>fs_status</c>         <c>61</c><c>no</c>
-      <c>hidden</c>            <c>25</c><c>MUST</c>
-      <c>homogeneous</c>       <c>26</c><c>no</c>
-      <c>layout_alignment</c>  <c>66</c><c>no</c>
-      <c>layout_blksize</c>    <c>65</c><c>no</c>
-      <c>layout_hint</c>       <c>63</c><c>no</c>
-      <c>layout_type</c>       <c>64</c><c>no</c>
-      <c>maxfilesize</c>       <c>27</c><c>no</c>
-      <c>maxlink</c>           <c>28</c><c>no</c>
-      <c>maxname</c>           <c>29</c><c>no</c>
-      <c>maxread</c>           <c>30</c><c>no</c>
-      <c>maxwrite</c>          <c>31</c><c>no</c>
-      <c>mdsthreshold</c>      <c>68</c><c>no</c>
-      <c>mimetype</c>          <c>32</c><c>MUST</c>
-      <c>mode</c>              <c>33</c><c>MUST</c>
-      <c>mode_set_masked</c>   <c>74</c><c>no</c>
-      <c>mounted_on_fileid</c> <c>55</c><c>no</c>
-      <c>no_trunc</c>          <c>34</c><c>no</c>
-      <c>numlinks</c>          <c>35</c><c>no</c>
-      <c>owner</c>             <c>36</c><c>MUST</c>
-      <c>owner_group</c>       <c>37</c><c>MUST</c>
-      <c>quota_avail_hard</c>  <c>38</c><c>no</c>
-      <c>quota_avail_soft</c>  <c>39</c><c>no</c>
-      <c>quota_used</c>        <c>40</c><c>no</c>
-      <c>rawdev</c>            <c>41</c><c>no</c>
-      <c>retentevt_get</c>     <c>71</c><c>MUST</c>
-      <c>retentevt_set</c>     <c>72</c><c>no</c>
-      <c>retention_get</c>     <c>69</c><c>MUST</c>
-      <c>retention_hold</c>    <c>73</c><c>MUST</c>
-      <c>retention_set</c>     <c>70</c><c>no</c>
-      <c>sacl</c>              <c>59</c><c>MUST</c>
-      <c>sec_label</c>         <c>80</c><c>MUST</c>
-      <c>space_avail</c>       <c>42</c><c>no</c>
-      <c>space_free</c>        <c>43</c><c>no</c>
-      <c>space_freed</c>       <c>78</c><c>no</c>
-      <c>space_reserved</c>    <c>77</c><c>MUST</c>
-      <c>space_total</c>       <c>44</c><c>no</c>
-      <c>space_used</c>        <c>45</c><c>no</c>
-      <c>system</c>            <c>46</c><c>MUST</c>
-      <c>time_access</c>       <c>47</c><c>MUST</c>
-      <c>time_access_set</c>   <c>48</c><c>no</c>
-      <c>time_backup</c>       <c>49</c><c>no</c>
-      <c>time_create</c>       <c>50</c><c>MUST</c>
-      <c>time_delta</c>        <c>51</c><c>no</c>
-      <c>time_metadata</c>     <c>52</c><c>SHOULD</c>
-      <c>time_modify</c>       <c>53</c><c>MUST</c>
-      <c>time_modify_set</c>   <c>54</c><c>no</c>
-    </texttable>
-
-    <t>
-      [NOTE: The source file's attribute values will take precedence
-      over any attribute values inherited by the destination file.]
-    </t>
-
-    <t>
-      In the case of an inter-server copy or an intra-server copy
-      between file systems, the attributes supported for the source
-      file and destination file could be different. By definition,the
-      REQUIRED attributes will be supported in all cases. If the
-      metadata flag is set and the source file has a RECOMMENDED
-      attribute that is not supported for the destination file, the
-      copy MUST fail with NFS4ERR_ATTRNOTSUPP.
-    </t>
-
-    <t>
+      The copying of any and all attributes on the source file is
+      the responsibility of both the client and the copy protocol.
+      Any attribute which is both exposed via the NFS protocol on
+      the source file and set SHOULD be copied to the destination file.
       Any attribute supported by the destination server that is not
-      set on the source file SHOULD be left unset.
+      set on the source file SHOULD be left unset. If the client
+      cannot copy an attribute from the source to destination, it
+      MAY fail the copy transaction.
     </t>
 
     <t>
       Metadata attributes not exposed via the NFS protocol SHOULD
-      be copied to the destination file where appropriate.
+      be copied to the destination file where appropriate via the
+      copy protocol. Note that if the copy protocol is NFSv4.x, then
+      these attributes will be lost.
     </t>
 
     <t>
@@ -289,18 +148,6 @@
       NFSv4 operations. However, the destination file's named
       attribute capabilities MAY be different from the source
       file's named attribute capabilities.
-    </t>
-
-    <t>
-      If the metadata flag is not set and the client is requesting a
-      whole file copy (i.e., ca_count is 0 (zero)), the destination
-      file's metadata is implementation dependent.
-    </t>
-
-    <t>
-      If the client is requesting a partial file copy (i.e., ca_count
-      is not 0 (zero)), the client SHOULD NOT set the metadata flag
-      and the server MUST ignore the metadata flag.
     </t>
 
     <t>

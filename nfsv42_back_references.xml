@@ -53,62 +53,6 @@
 	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-19" />
     </reference>
 
-    <reference anchor='RFC2203'>
-
-      <front>
-      <title>RPCSEC_GSS Protocol Specification</title>
-
-        <author initials='M.' surname='Eisler' fullname='Michael Eisler'>
-        <organization>Sun Microsystems, Inc.</organization>
-        <address>
-        <postal>
-        <street>M/S UCOS03</street>
-        <street>2550 Garcia Avenue</street>
-        <street>Mountain View</street>
-        <street>CA 94043</street></postal>
-        <phone>+1 (719) 599-9026</phone>
-        <email>mre@eng.sun.com</email></address></author>
-
-        <author initials='A.' surname='Chiu' fullname='Alex Chiu'>
-        <organization>Sun Microsystems, Inc.</organization>
-        <address>
-        <postal>
-        <street>M/S UMPK17-203</street>
-        <street>2550 Garcia Avenue</street>
-        <street>Mountain View</street>
-        <street>CA 94043</street></postal>
-        <phone>+1 (415) 786-6465</phone>
-        <email>hacker@eng.sun.com</email></address></author>
-
-        <author initials='L.' surname='Ling' fullname='Lin Ling'>
-        <organization>Sun Microsystems, Inc.</organization>
-        <address>
-        <postal>
-        <street>M/S UMPK17-201</street>
-        <street>2550 Garcia Avenue</street>
-        <street>Mountain View</street>
-        <street>CA 94043</street></postal>
-        <phone>+1 (415) 786-5084</phone>
-        <email>lling@eng.sun.com</email></address></author>
-
-      <date year='1997' month='September' />
-      <area>Security</area>
-      <keyword>generic security service</keyword>
-      <keyword>remote procedure call</keyword>
-      <keyword>security</keyword>
-      <abstract>
-      <t>
-         This memo describes an ONC/RPC security flavor that allows RPC
-         protocols to access the Generic Security Services Application
-         Programming Interface (referred to henceforth as GSS-API).
-      </t></abstract></front>
-
-      <seriesInfo name='RFC' value='2203' />
-      <format type='TXT' octets='50937' target='ftp://ftp.isi.edu/in-notes/rfc2203.txt' />
-      <format type='HTML' octets='64234' target='http://xml.resource.org/public/rfc/html/rfc2203.html' />
-      <format type='XML' octets='50069' target='http://xml.resource.org/public/rfc/xml/rfc2203.xml' />
-    </reference>
-
 <reference anchor='RFC3986'>
 
 <front>
@@ -182,18 +126,7 @@ specifications of each URI scheme.
 <format type='XML' octets='163534' target='http://xml.resource.org/public/rfc/xml/rfc3986.xml' />
 </reference>
 
-
-    <reference anchor="rpcsecgssv3">
-      <front>
-        <title>Remote Procedure Call (RPC) Security Version 3</title>
-        <author initials="T." surname="Haynes" />
-        <author initials="N." surname="Williams" />
-        <date year="2011" />
-      </front>
-      <seriesInfo name="draft-williams-rpcsecgssv3" value="(work in progress)"/>
-    </reference>
-
-    <reference anchor="posix_fadvise">
+  <reference anchor="posix_fadvise">
       <front>
      <title>Section 'posix_fadvise()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
      </title>
@@ -397,29 +330,6 @@ specifications of each URI scheme.
 <format type='XML' octets='493420' target='http://xml.resource.org/public/rfc/xml/rfc2616.xml' />
 </reference>
 
-<reference anchor='RFC1994'>
-
-<front>
-<title>PPP Challenge Handshake Authentication Protocol (CHAP)</title>
-<author initials='W.' surname='Simpson' fullname='William Allen Simpson'>
-<organization>DayDreamer Computer Systems Consulting Services</organization>
-<address>
-<postal>
-<street>1384 Fontaine</street>
-<city>Madison Heights</city>
-<region>MI</region>
-<code>48071</code>
-<country>US</country></postal>
-<email>wsimpson@GreenDragon.com</email></address></author>
-<date year='1996' month='August' />
-<abstract>
-<t>The Point-to-Point Protocol (PPP)provides a standard method for transporting multi-protocol datagrams over point-to-point links. PPP also defines an extensible Link Control Protocol, which allows negotiation of an Authentication Protocol for authenticating its peer before allowing Network Layer protocols to transmit over the link.</t>
-<t>This document defines a method for Authentication using PPP, which uses a random Challenge, with a cryptographically hashed Response which depends upon the Challenge and a secret key.</t></abstract></front>
-
-<seriesInfo name='RFC' value='1994' />
-<format type='TXT' octets='24094' target='ftp://ftp.isi.edu/in-notes/rfc1994.txt' />
-</reference>
-
 <reference anchor="FEDFS-NSDB">
         <front>
                 <title>NSDB Protocol for Federated Filesystems</title>
@@ -442,6 +352,7 @@ specifications of each URI scheme.
         </front>
         <seriesInfo name="draft-ietf-nfsv4-federated-fs-protocol" value="(Work In Progress)"/>
 </reference>
+
 
 <reference anchor="FEDFS-ADMIN">
         <front>

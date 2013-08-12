@@ -381,9 +381,9 @@
       <section title="Using NFSv4.x as a Server-to-Server Copy Protocol">
         <t>
           The destination server MAY use standard NFSv4.x (where x >= 1)
-          to read the data from the source server. If NFSv4.x is used
+          operations to read the data from the source server. If NFSv4.x is used
           for the server-to-server copy protocol, the destination server
-          can use the filehandle contained in the COPY request with
+          can use the source filehandle provided in the COPY request with
           standard NFSv4.x operations to read data
           from the source server. Specifically, the destination
           server may use the NFSv4.x OPEN operation's CLAIM_FH
