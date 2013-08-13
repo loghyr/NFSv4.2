@@ -354,7 +354,7 @@
         <t>
           When the server receives the request from the client it uses any
           credential information conveyed in the RPC request
-          and the attribute of the object the client is
+          and the attributes of the object the client is
           trying to access to make an access control decision.  If the server's
           policy allows this access it will fulfill the client's request,
           otherwise it will return NFS4ERR_ACCESS.
