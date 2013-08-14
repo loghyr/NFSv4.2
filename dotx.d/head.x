@@ -176,11 +176,10 @@ enum nfsstat4 {
 
  NFS4ERR_PARTNER_NOTSUPP= 10088,/* s2s not supported       */
  NFS4ERR_PARTNER_NO_AUTH= 10089,/* s2s not authorized      */
- NFS4ERR_METADATA_NOTSUPP=10090,/* dest metadata diff sourc*/
+ NFS4ERR_UNION_NOTSUPP  = 10090,/* Arm of union not supp   */
  NFS4ERR_OFFLOAD_DENIED = 10091,/* dest not allowing copy  */
  NFS4ERR_WRONG_LFS      = 10092,/* LFS not supported       */
- NFS4ERR_BADLABEL       = 10093,/* incorrect label         */
- NFS4ERR_UNION_NOTSUPP  = 10094 /* Arm of union not supp   */
+ NFS4ERR_BADLABEL       = 10093 /* incorrect label         */
 };
 
 /*
