@@ -587,7 +587,7 @@
         </t>
       </section>
 
-      <section toc='exclude' anchor="ss:error_values:NC128" title="NFS4ERR_BAD_STATEID (Error Code 10026)">
+      <section toc='exclude' anchor="ss:error_values:NC128" title="NFS4ERR_BAD_STATEID (Error Code 10025)">
         <t>
           A stateid does not properly designate any valid state.  See Sections <xref target="ss:state_management:SLaV" format='counter' />
           and <xref target="ss:state_management:SS1" format='counter' /> for a discussion of how stateids are validated.
