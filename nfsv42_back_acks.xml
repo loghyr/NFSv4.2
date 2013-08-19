@@ -19,7 +19,8 @@
     of that document.  It was also was reviewed by a number of individuals:
     Pranoop Erasani, Tom Haynes, Arthur Lent, Trond Myklebust,
     Dave Noveck, Theresa Lingutla-Raj, Manjunath Shankararao, Satyam
-    Vaghani, and Nico Williams.
+    Vaghani, and Nico Williams. Bryan Schumaker's early
+    prototyping experience helped us avoid some traps. 
   </t>
   <t>
     For the NFS space reservation operations, the original draft was

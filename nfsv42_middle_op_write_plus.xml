@@ -16,7 +16,7 @@
   <section toc='exclude' anchor='op:write_plus:desc'  title="DESCRIPTION">
     <t>
       The WRITE_PLUS operation is an extension of the NFSv4.1 WRITE
-      operation (see Section 18.2 of <xref target="RFC5661" /> and
+      operation (see Section 18.2 of <xref target="RFC5661" />) and
       writes data to the regular file identified by the
       current filehandle.  The server MAY write fewer bytes than
       requested by the client.
