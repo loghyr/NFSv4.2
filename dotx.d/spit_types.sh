@@ -1327,8 +1327,6 @@ struct copy_from_auth_priv {
 	netloc4             cfap_destination;
 	/* the NFSv4 user name that the user principal maps to */
 	utf8str_mixed       cfap_username;
-	/* equal to seq_num of rpc_gss_cred_vers_3_t */
-	unsigned int        cfap_seq_num;
 };
 EOF
 	;;
@@ -1342,8 +1340,15 @@ struct copy_to_auth_priv {
 	netloc4              ctap_source;
 	/* the NFSv4 user name that the user principal maps to */
 	utf8str_mixed        ctap_username;
-	/* equal to seq_num of rpc_gss_cred_vers_3_t */
-	unsigned int         ctap_seq_num;
+	/*
+	 * user principal RPCSEC_GSSv1 (or v2) handle shared
+	 * with the source server
+	 */
+	opaque               ctap_handle;
+	int                  ctap_handle_vers;
+	/* A nounce and a mic of the nounce using ctap_handle */
+	opaque               ctap_nounce;
+	opaque               ctap_nounce_mic;
 };
 EOF
 	;;
@@ -1356,8 +1361,6 @@ struct copy_confirm_auth_priv {
 	opaque              ccap_shared_secret_mic<>;
 	/* the NFSv4 user name that the user principal maps to */
 	utf8str_mixed       ccap_username;
-	/* equal to seq_num of rpc_gss_cred_vers_3_t */
-	unsigned int        ccap_seq_num;
 };
 EOF
 

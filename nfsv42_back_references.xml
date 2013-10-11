@@ -41,6 +41,21 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5664.txt"/>
     </reference>
 
+    <reference anchor='rpcsec_gssv3'>
+      <front>
+        <title>Remote Procedure Call (RPC) Security Version 3</title>
+        <author initials="W." surname="Adamson" fullname="W. Adamson">
+          <organization>NetApp</organization>
+        </author>
+        <author initials="N." surname="Williams" fullname="N. Williams">
+          <organization>Cryptonector</organization>
+        </author>
+        <date year="2013" month="October"/>
+      </front>
+      <format type="TXT"
+              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-06.txt"/>
+    </reference>
+
     <reference anchor='NFSv42xdr'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
