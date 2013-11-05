@@ -41,7 +41,7 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5664.txt"/>
     </reference>
 
-    <reference anchor='4.2xdr'>
+    <reference anchor='NFSv42xdr'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
 	<author initials="T." surname="Haynes" fullname="T. Haynes">

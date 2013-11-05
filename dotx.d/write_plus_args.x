@@ -14,6 +14,6 @@ struct WRITE_PLUS4args {
 	/* CURRENT_FH: file */
 	stateid4	wp_stateid;
 	stable_how4	wp_stable;
-	write_plus_arg4	wp_data<>;
+	write_plus_arg4	wp_data;
 };
 

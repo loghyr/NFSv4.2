@@ -32,7 +32,7 @@ is in a file called "spec.txt", then the reader can do:
 </t>
 <figure>
 <artwork>
- sh extract.sh < spec.txt > nfs4_prot.x
+ sh extract.sh &lt; spec.txt &gt; nfs4_prot.x
 </artwork>
 </figure>
 
