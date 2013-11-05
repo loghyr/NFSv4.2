@@ -1,3 +1,10 @@
+To build the current RFC run make in the current directory, which will
+generated the draft-ietf-nfsv4-minorversion2-<currentdraft>.txt file.
+
+Note that the makefiles expect the xml2rfc tool to have .tcl extension which it
+does not seem to have on any Unix-like system, so two makefiles will need
+to be modified before a successful build.
+
 The editor for the NFSv4 minor version 2 internet draft uses this site as a method of distributing content and issue tracking. The latest version of the NFSv4.2 I-D is always found on the IETF site. The NFSv4 WG page will have pointers to all of this and includes a pointer to the email archive as well.
 
 http://www.ietf.org/html.charters/nfsv4-charter.html
