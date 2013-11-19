@@ -41,14 +41,6 @@
     </t>
 
     <t>
-      READ_PLUS has to support all of the errors which are returned by READ
-      plus NFS4ERR_UNION_NOTSUPP. If the client asks for a hole and the server
-      does not support that arm of the discriminated union, but does support
-      one or more additional arms, it can signal to the client that it supports
-      the operation, but not the arm with NFS4ERR_UNION_NOTSUPP.
-    </t>
-
-    <t>
       If the data to be returned is comprised entirely of zeros, then
       the server may elect to return that data as a hole. The server
       differentiates this to the client by setting di_allocated to TRUE

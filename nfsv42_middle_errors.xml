@@ -242,7 +242,7 @@
           One of the arguments to the operation is a discriminated union and
           while the server supports the given operation, it does not support
           the selected arm of the discriminated union. For an example, see
-          READ_PLUS (<xref target="op:read_plus" />).
+          WRITE_PLUS (<xref target="op:write_plus" />).
         </t>
       </section>
     </section>
@@ -2399,7 +2399,6 @@
         NFS4ERR_STALE,
         NFS4ERR_SYMLINK,
         NFS4ERR_TOO_MANY_OPS,
-        NFS4ERR_UNION_NOTSUPP,
         NFS4ERR_WRONG_TYPE
       </c>
 
