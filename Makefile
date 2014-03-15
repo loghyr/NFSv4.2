@@ -10,7 +10,7 @@ PREVVERS=21
 VERS=22
 VPATH=dotx.d
 
-XML2RFC=xml2rfc.tcl
+XML2RFC=xml2rfc
 
 DRAFT_BASE=draft-ietf-nfsv4-minorversion2
 DOC_PREFIX=nfsv42
@@ -78,19 +78,13 @@ pall:
 	wait
 
 ${DRAFT_BASE}-$(VERS).txt: ${DRAFT_BASE}-$(VERS).xml
-	rm -f $@ draft-tmp.txt
-	$(XML2RFC) ${DRAFT_BASE}-$(VERS).xml draft-tmp.txt
-	mv draft-tmp.txt $@
+	$(XML2RFC) --text ${DRAFT_BASE}-$(VERS).xml -o $@
 
 ${DRAFT_BASE}-$(VERS).html: ${DRAFT_BASE}-$(VERS).xml
-	rm -f $@ draft-tmp.html
-	$(XML2RFC) ${DRAFT_BASE}-$(VERS).xml draft-tmp.html
-	mv draft-tmp.html $@
+	$(XML2RFC) --html ${DRAFT_BASE}-$(VERS).xml -o $@
 
 ${DRAFT_BASE}-$(VERS).nr: ${DRAFT_BASE}-$(VERS).xml
-	rm -f $@ draft-tmp.nr
-	$(XML2RFC) ${DRAFT_BASE}-$(VERS).xml $@.tmp
-	mv draft-tmp.nr $@
+	$(XML2RFC) --nroff ${DRAFT_BASE}-$(VERS).xml -o $@
 
 ${DOC_PREFIX}_middle_errortoop_autogen.xml: ${DOC_PREFIX}_middle_errors.xml
 	./errortbl < ${DOC_PREFIX}_middle_errors.xml > ${DOC_PREFIX}_middle_errortoop_autogen.xml
@@ -466,11 +460,11 @@ IDCONTENTS = ${DOC_PREFIX}_front_autogen.xml $(IDXMLSRC_BASE)
 
 IDXMLSRC = ${DOC_PREFIX}_front.xml $(IDXMLSRC_BASE)
 
-draft-tmp.xml: $(START) Makefile $(END)
+draft-tmp.xml: $(START) Makefile $(END) $(IDCONTENTS) $(AUTOGEN)
 		rm -f $@ $@.tmp
 		cp $(START) $@.tmp
 		chmod +w $@.tmp
-		for i in $(IDCONTENTS) ; do echo '<?rfc include="'$$i'"?>' >> $@.tmp ; done
+		for i in $(IDCONTENTS) ; do cat $$i >> $@.tmp ; done
 		cat $(END) >> $@.tmp
 		mv $@.tmp $@
 

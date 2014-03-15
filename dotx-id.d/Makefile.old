@@ -5,8 +5,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=19
-VERS=20
+PREVVERS=20
+VERS=21
 VPATH = ../../dotx.d
 
 all: txt filelist
@@ -16,7 +16,7 @@ txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt
 dotx:
 	cd ../dotx.d ; VERS=$(SPECVERS) make all
 
-XML2RFC=xml2rfc
+XML2RFC=xml2rfc.tcl
 
 xml: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 
@@ -49,7 +49,7 @@ tmp.x:	tmp.txt
 
 tmp.txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 	rm -f tmp.txt tmp2.txt
-	$(XML2RFC) --text draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml -o tmp2.txt
+	XML2RFCDOT="." $(XML2RFC) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml tmp2.txt
 	mv -f tmp2.txt tmp.txt
 
 draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
@@ -66,7 +66,7 @@ draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
 	cp tmp.txt $@
 
 draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).nr: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
-	$(XML2RFC) --nroff draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml -o $@
+	XML2RFCDOT="." $(XML2RFC) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml $@
 
 dotx_front_autogen.xml: dotx_front.xml Makefile
 	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < dotx_front.xml > dotx_front_autogen.xml
@@ -118,7 +118,7 @@ draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml: Makefile $(START) $(IDCONTENTS
 		rm -f $@ $@.tmp
 		cp $(START) $@.tmp
 		chmod +w $@.tmp
-		for i in $(IDCONTENTS) ; do cat $$i >> $@.tmp ; done
+		for i in $(IDCONTENTS) ; do echo '<?rfc include="'$$i'"?>' >> $@.tmp ; done
 		cat $(END) >> $@.tmp
 		mv $@.tmp $@
 

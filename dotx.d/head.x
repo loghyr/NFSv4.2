@@ -151,7 +151,7 @@ enum nfsstat4 {
  NFS4ERR_REQ_TOO_BIG	= 10065,/* request too big         */
  NFS4ERR_REP_TOO_BIG	= 10066,/* reply too big           */
  NFS4ERR_REP_TOO_BIG_TO_CACHE =10067,/* rep. not all cached*/
- NFS4ERR_RETRY_UNCACHED_REP =10068,/* retry & rep. uncached*/
+ NFS4ERR_RETRY_UNCACHED_REP =10068,/* retry + rep. uncached*/
  NFS4ERR_UNSAFE_COMPOUND =10069,/* retry/recovery too hard */
  NFS4ERR_TOO_MANY_OPS	= 10070,/*too many ops in [CB_]COMP*/
  NFS4ERR_OP_NOT_IN_SESSION =10071,/* op needs [CB_]SEQ. op */

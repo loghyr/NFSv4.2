@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2007) -->
-<!-- Copyright (C) The Internet Society (2006) -->
+<!-- Copyright (C) The IETF Trust (2007-2014) -->
+<!-- Copyright (C) The Internet Society (2006-2014) -->
 <section anchor="xdr_desc" title="XDR Description of NFSv4.2 " >
 <t>
 
@@ -45,7 +45,3 @@ is in a file called "spec.txt", then the reader can do:
 </t>
 
 
-
-   <?rfc include='dotx_autogen.xml'?>
-
-</section>

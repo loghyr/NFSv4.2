@@ -1,4 +1,4 @@
-# Copyright (C) The IETF Trust (2011-2013)
+# Copyright (C) The IETF Trust (2011-2014)
 # Manage the .xml for the NFSv4 minor version document.
 #
 
@@ -16,7 +16,7 @@ txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt
 dotx:
 	cd ../dotx.d ; VERS=$(SPECVERS) make all
 
-XML2RFC=xml2rfc.tcl
+XML2RFC=xml2rfc
 
 xml: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 
@@ -49,7 +49,7 @@ tmp.x:	tmp.txt
 
 tmp.txt: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
 	rm -f tmp.txt tmp2.txt
-	XML2RFCDOT="." $(XML2RFC) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml tmp2.txt
+	$(XML2RFC) --text draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml -o tmp2.txt
 	mv -f tmp2.txt tmp.txt
 
 draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
@@ -66,7 +66,7 @@ draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).txt: tmp.txt tmp.x
 	cp tmp.txt $@
 
 draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).nr: draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml
-	XML2RFCDOT="." $(XML2RFC) draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml $@
+	$(XML2RFC) --nroff draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml -o $@
 
 dotx_front_autogen.xml: dotx_front.xml Makefile
 	sed -e s/DAYVAR/${DAY}/g -e s/MONTHVAR/${MONTH}/g -e s/YEARVAR/${YEAR}/g < dotx_front.xml > dotx_front_autogen.xml
@@ -103,6 +103,8 @@ FRONT_PREGEN = dotx_front.xml
 IDXMLSRC_BASE = \
 	dotx_middle_start.xml \
 	dotx_middle_body.xml \
+        dotx_autogen.xml \
+	dotx_middle_body_end.xml \
 	dotx_middle_security_considerations.xml \
 	dotx_middle_iana_considerations.xml \
 	dotx_middle_end.xml \
@@ -118,7 +120,7 @@ draft-ietf-nfsv4-minorversion2-dot-x-$(VERS).xml: Makefile $(START) $(IDCONTENTS
 		rm -f $@ $@.tmp
 		cp $(START) $@.tmp
 		chmod +w $@.tmp
-		for i in $(IDCONTENTS) ; do echo '<?rfc include="'$$i'"?>' >> $@.tmp ; done
+		for i in $(IDCONTENTS) ; do cat $$i >> $@.tmp ; done
 		cat $(END) >> $@.tmp
 		mv $@.tmp $@
 
