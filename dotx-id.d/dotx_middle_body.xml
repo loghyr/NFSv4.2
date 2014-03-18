@@ -44,4 +44,6 @@ is in a file called "spec.txt", then the reader can do:
  The XDR description, with the sentinel sequence follows:
 </t>
 
+   <?rfc include='dotx_autogen.xml'?>
 
+</section>

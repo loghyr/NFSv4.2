@@ -460,7 +460,7 @@ IDCONTENTS = ${DOC_PREFIX}_front_autogen.xml $(IDXMLSRC_BASE)
 
 IDXMLSRC = ${DOC_PREFIX}_front.xml $(IDXMLSRC_BASE)
 
-draft-tmp.xml: $(START) Makefile $(END) $(IDCONTENTS) $(AUTOGEN)
+draft-tmp.xml: $(START) ${DOC_PREFIX}_front_autogen.xml Makefile $(END) $(IDCONTENTS) $(AUTOGEN)
 		rm -f $@ $@.tmp
 		cp $(START) $@.tmp
 		chmod +w $@.tmp
@@ -470,7 +470,7 @@ draft-tmp.xml: $(START) Makefile $(END) $(IDCONTENTS) $(AUTOGEN)
 
 ${DRAFT_BASE}-$(VERS).xml: draft-tmp.xml $(IDCONTENTS) $(AUTOGEN)
 		rm -f $@
-		cp draft-tmp.xml $@
+		./rfcincfill.pl draft-tmp.xml $@
 
 genhtml: Makefile gendraft html txt dotx dotx-txt draft-$(VERS).tar
 	./gendraft draft-$(PREVVERS) \
