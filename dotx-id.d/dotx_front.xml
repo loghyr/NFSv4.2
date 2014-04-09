@@ -10,18 +10,18 @@
     <author fullname="Thomas Haynes" 
             initials="T." 
             surname="Haynes">
-        <organization abbrev="Editors">NetApp</organization>
-        <address>
-            <postal>
-                <street>9110 E 66th St</street>
-                <city>Tulsa</city>
-                <region>OK</region>
-                <code>74133</code>
-                <country>USA</country>
-            </postal>
-            <phone>+1-918-307-1415</phone>
-            <email>thomas@netapp.com</email>
-        </address>
+      <organization abbrev="Primary Data">Primary Data, Inc.</organization>
+      <address>
+        <postal>
+          <street>4300 El Camino Real Ste 100</street>
+          <city> Los Altos</city>
+          <region>CA</region>
+          <code>94022</code>
+          <country>USA</country>
+        </postal>
+        <phone>+1-408-215-1519</phone>
+        <email>thomas.haynes@primarydata.com</email>
+      </address>
     </author>
 
     <date year="YEARVAR" month="MONTHVAR" day="DAYVAR"/>

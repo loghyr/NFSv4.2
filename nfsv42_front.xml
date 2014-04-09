@@ -10,18 +10,18 @@
             initials="T."
             surname="Haynes"
             role="editor">
-        <organization abbrev="NetApp">NetApp</organization>
-        <address>
-            <postal>
-                <street>495 E Java Dr</street>
-                <city>Sunnyvale</city>
-                <region>CA</region>
-                <code>95054</code>
-                <country>USA</country>
-            </postal>
-            <phone>+1 408 419 3018</phone>
-            <email>thomas@netapp.com</email>
-        </address>
+      <organization abbrev="Primary Data">PrimaryData, Inc.</organization>
+      <address>
+        <postal>
+          <street>4300 El Camino Real Ste 100</street>
+          <city> Los Altos</city>
+          <region>CA</region>
+          <code>94022</code>
+          <country>USA</country>
+        </postal>
+        <phone>+1 408 215 1519</phone>
+        <email>thomas.haynes@primarydata.com</email>
+      </address>
     </author>
 
     <date year="YEARVAR" month="MONTHVAR" day="DAYVAR"/>

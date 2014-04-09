@@ -5,8 +5,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=20
-VERS=21
+PREVVERS=21
+VERS=22
 VPATH = ../../dotx.d
 
 DRAFT_BASE=draft-ietf-nfsv4-minorversion2-dot-x
@@ -111,6 +111,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_end.xml \
 	${DOC_PREFIX}_back_front.xml \
 	${DOC_PREFIX}_back_references.xml \
+	${DOC_PREFIX}_back_acks.xml \
 	${DOC_PREFIX}_back_back.xml
 
 IDCONTENTS = ${DOC_PREFIX}_front_autogen.xml $(IDXMLSRC_BASE)

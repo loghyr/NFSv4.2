@@ -1456,7 +1456,7 @@ cat << EOF > $i
 
 struct write_response4 {
 	stateid4	wr_callback_id<1>;
-	count4		wr_count;
+	length4		wr_count;
 	stable_how4	wr_committed;
 	verifier4	wr_writeverf;
 };

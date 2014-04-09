@@ -1,7 +1,11 @@
-<!-- Copyright (C) The IETF Trust (2011-2012) -->
-<!-- Copyright (C) The Internet Society (2011-2012) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section title="Acknowledgments">
+  <t>
+    Tom Haynes would like to thank NetApp, Inc. for its
+    funding of his time on this project.
+  </t>
   <t>
     For the pNFS Access Permissions Check, the original draft was
     by Sorin Faibish, David Black, Mike Eisler, and Jason Glasgow.
