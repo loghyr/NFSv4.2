@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011) -->
-<!-- Copyright (C) The Internet Society (2011) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:error_values" title="Error Values">
   <t>
@@ -241,8 +241,7 @@
         <t>
           One of the arguments to the operation is a discriminated union and
           while the server supports the given operation, it does not support
-          the selected arm of the discriminated union. For an example, see
-          WRITE_PLUS (<xref target="op:write_plus" />).
+          the selected arm of the discriminated union.
         </t>
       </section>
     </section>

@@ -1,49 +1,37 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='op:write_plus' title='Operation 64: WRITE_PLUS'>
+<section anchor='op:write_hole' title='Operation 64: WRITE_HOLE'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/data_info4.xml'?>
-    <?rfc include='autogen/data4.xml'?>
-    <?rfc include='autogen/write_plus_args.xml'?>
+    <?rfc include='autogen/write_hole_args.xml'?>
   </section>
 
   <section toc='exclude' title="RESULT">
     <?rfc include='autogen/write_response4.xml'?>
-    <?rfc include='autogen/write_plus_res.xml'?>
+    <?rfc include='autogen/write_hole_res.xml'?>
   </section>
 
-  <section toc='exclude' anchor='op:write_plus:desc'  title="DESCRIPTION">
+  <section toc='exclude' anchor='op:write_hole:desc'  title="DESCRIPTION">
     <t>
-      The WRITE_PLUS operation is an extension of the NFSv4.1 WRITE
+      The WRITE_HOLE operation is an extension of the NFSv4.1 WRITE
       operation (see Section 18.2 of <xref target="RFC5661" />) and
-      writes data to the regular file identified by the
+      writes holes to the regular file identified by the
       current filehandle.  The server MAY write fewer bytes than
       requested by the client.
     </t>
 
     <t>
-      The WRITE_PLUS argument is comprised of an array of rpr_contents, each of
-      which describe a data_content4 type of data (<xref target="ss:adh:dc" />).
-      For NFSv4.2, the allowed values are data, ADH, and hole.
-      The array contents MUST be contiguous in the file. A successful
-      WRITE_PLUS will construct a reply for wr_count, wr_committed,
+      A successful WRITE_HOLE will construct a reply for wr_count, wr_committed,
       and wr_writeverf as per the NFSv4.1 WRITE operation results.
       If wr_callback_id is set, it indicates an asynchronous reply
-      (see <xref target='op:write_plus:async' />).
+      (see <xref target='op:write_hole:async' />).
     </t>
 
     <t>
-      WRITE_PLUS has to support all of the errors which are returned by WRITE
-      plus NFS4ERR_UNION_NOTSUPP. If the client asks for a hole and the server
-      does not support that arm of the discriminated union, but does support
-      one or more additional arms, it can signal to the client that it supports
-      the operation, but not the arm with NFS4ERR_UNION_NOTSUPP.
-    </t>
-
-    <t>
-      If the client supports WRITE_PLUS and any arm of the discriminated
-      union other than NFS4_CONTENT_DATA, it MUST support CB_OFFLOAD. 
+      WRITE_HOLE has to support all of the errors which are returned by WRITE
+      plus NFS4ERR_NOTSUPP, i.e., it is an OPTIONAL operation.
+      If the client supports WRITE_HOLE, it MUST support CB_OFFLOAD. 
     </t>
 
     <section title="Data">
@@ -53,12 +41,12 @@
         that the write should start at the beginning of the file.  The
         d_count, as encoded as part of the opaque data parameter,
         represents the number of bytes of data that are to be written.
-        If the d_count is zero, the WRITE_PLUS will succeed and
+        If the d_count is zero, the WRITE_HOLE will succeed and
         return a d_count of zero subject to permissions checking.
       </t>
 
       <t>
-        Note that d_allocated has no meaning for WRITE_PLUS.
+        Note that d_allocated has no meaning for WRITE_HOLE.
       </t>
 
       <t>
@@ -70,7 +58,7 @@
     <section title="Hole punching">
       <t>
         Whenever a client wishes to zero the blocks backing a
-        particular region in the file, it calls the WRITE_PLUS operation with
+        particular region in the file, it calls the WRITE_HOLE operation with
         the current filehandle set to the filehandle of the file in question,
         and the equivalent of start offset and length in bytes of the region
         set in wpa_hole.di_offset and wpa_hole.di_length respectively.  If the
@@ -88,7 +76,7 @@
         the file system.  In such a case, the server can deallocate as many
         bytes as it can in the region.  The blocks that cannot be deallocated
         MUST be zeroed.  Except for the block deallocation and maximum hole
-        punching capability, a WRITE_PLUS operation is to be treated similar
+        punching capability, a WRITE_HOLE operation is to be treated similar
         to a write of zeroes.
       </t>
 
@@ -97,11 +85,11 @@
         specified in the operation before returning.  The server SHOULD
         return an asynchronous result if it can determine the
         operation will be long running
-        (see <xref target='op:write_plus:async' />).
+        (see <xref target='op:write_hole:async' />).
       </t>
 
       <t>
-        If used to hole punch, WRITE_PLUS will result in the space_used
+        If used to hole punch, WRITE_HOLE will result in the space_used
         attribute being decreased by the number of bytes that were
         deallocated.  The space_freed attribute
         may or may not decrease, depending on the support and whether the
@@ -110,105 +98,14 @@
       </t>
 
       <t>
-        The WRITE_PLUS operation MUST NOT change the space reservation
+        The WRITE_HOLE operation MUST NOT change the space reservation
         guarantee of the file.  While the server can deallocate the blocks
         specified by di_offset and di_length, future writes to this region
         MUST NOT fail with NFSERR_NOSPC.
       </t>
     </section>
 
-    <section title="ADHs">
-      <t>
-        If the server supports ADHs, then it MUST support the
-        NFS4_CONTENT_APP_DATA_HOLE arm of the WRITE_PLUS operation.
-        The server has no concept of the structure imposed
-        by the application. It is only when the application
-        writes to a section of the file does order get imposed.
-        In order to detect corruption even before the application
-        utilizes the file, the application will want to initialize
-        a range of ADHs using WRITE_PLUS.
-      </t>
-
-      <t>
-        For ADHs, when the client invokes the WRITE_PLUS operation, it has
-        two desired results:
-      </t>
-
-      <t>
-        <list style='numbers'>
-          <t>
-            The structure described by the app_data_block4 be imposed
-            on the file.
-          </t>
-
-          <t>
-            The contents described by the app_data_block4 be sparse.
-          </t>
-        </list>
-      </t>
-
-      <t>
-        If the server supports the WRITE_PLUS operation, it still
-        might not support sparse files. So if it receives the
-        WRITE_PLUS operation, then it MUST populate the contents
-        of the file with the initialized ADHs. The server SHOULD
-        return an asynchronous result if it can determine the
-        operation will be long running
-        (see <xref target='op:write_plus:async' />).
-      </t>
-
-      <t>
-        If the data was already initialized, there are two
-        interesting scenarios:
-      </t>
-
-      <t>
-        <list style='numbers'>
-          <t>
-            The data blocks are allocated.
-          </t>
-
-          <t>
-            Initializing in the middle of an existing ADH.
-          </t>
-        </list>
-      </t>
-
-      <t>
-        If the data blocks were already allocated, then
-        the WRITE_PLUS is a hole punch operation. If
-        WRITE_PLUS supports sparse files, then the data
-        blocks are to be deallocated. If not, then the
-        data blocks are to be rewritten in the indicated
-        ADH format.
-      </t>
-
-      <t>
-        Since the server has no knowledge of ADHs, it
-        should not report misaligned creation of ADHs.
-        Even while it can detect them, it cannot disallow
-        them, as the application might be in the process of
-        changing the size of the ADHs. Thus the server
-        must be prepared to handle an WRITE_PLUS into
-        an existing ADH.
-      </t>
-
-      <t>
-        This document does not mandate the manner in
-        which the server stores ADHs sparsely for a
-        file. However, if an WRITE_PLUS arrives that
-        will force a new ADH to start inside an
-        existing ADH then the server will have three
-        ADHs instead of two. It will have one up to
-        the new one for the WRITE_PLUS, one for the
-        WRITE_PLUS, and one for after the WRITE_PLUS.
-        Note that depending on server specific policies
-        for block allocation, there may also be some
-        physical blocks allocated to align the boundaries.
-      </t>
-    </section>
-
-    <section anchor='op:write_plus:async' title='Asynchronous Transactions'>
+    <section anchor='op:write_hole:async' title='Asynchronous Transactions'>
       <t>
         Both hole punching and ADH initialization may 
         lead to server determining to service the
@@ -229,14 +126,14 @@
         to monitor the operation and
         OFFLOAD_ABORT (<xref target="op:offload_abort" />)
         to cancel the operation. An example of
-        a asynchronous WRITE_PLUS is shown in
-        <xref target='fig:async-write_plus' />. Note that
-        as with the COPY operation, WRITE_PLUS must
+        a asynchronous WRITE_HOLE is shown in
+        <xref target='fig:async-write_hole' />. Note that
+        as with the COPY operation, WRITE_HOLE must
         provide a stateid for tracking the asynchronous
         operation.
       </t>
 
-      <figure title="An asynchronous WRITE_PLUS." anchor="fig:async-write_plus">
+      <figure title="An asynchronous WRITE_HOLE." anchor="fig:async-write_hole">
         <artwork><![CDATA[
   Client                                  Server
      +                                      +
@@ -244,7 +141,7 @@
      |--- OPEN ---------------------------->| Client opens
      |<------------------------------------/| the file
      |                                      |
-     |--- WRITE_PLUS ---------------------->| Client punches
+     |--- WRITE_HOLE ---------------------->| Client punches
      |<------------------------------------/| a hole
      |                                      |
      |                                      |
@@ -267,10 +164,10 @@
 
       <t>
         When CB_OFFLOAD informs the client of
-        the successful WRITE_PLUS, the write_response4
+        the successful WRITE_HOLE, the write_response4
         embedded in the operation will provide
         the necessary information that a synchronous
-        WRITE_PLUS would have provided.
+        WRITE_HOLE would have provided.
       </t>
 
       <t>
@@ -278,7 +175,7 @@
         synchronous, it MUST still support the COMMIT operation semantics
         as outlined in Section 18.3 of <xref target="RFC5661" />.
         I.e., COMMIT works on one or more WRITE operations and the
-        WRITE_PLUS operation can appear as several WRITE operations
+        WRITE_HOLE operation can appear as several WRITE operations
         to the server.  The client can use locking operations to control the behavior
         on the server with respect to long running asynchronous
         write operations.

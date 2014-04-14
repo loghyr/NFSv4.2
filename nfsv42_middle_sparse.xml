@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:sparse" title="Sparse Files">
   <section anchor="ss:sparse:intro" title="Introduction">
@@ -35,15 +35,20 @@
     </t>
 
     <t>
-      Two new operations WRITE_PLUS (<xref target="op:write_plus" />)
-      and READ_PLUS (<xref target="op:read_plus" />) are introduced.
-      WRITE_PLUS allows for the creation of a sparse file and for hole
-      punching.  An application might want to zero out a range of the file.
-      READ_PLUS supports all the features of READ but includes an extension to support sparse
-      pattern files (<xref target="ss:adh:dc" />).  READ_PLUS is guaranteed to perform
-      no worse than READ, and can dramatically improve performance with
-      sparse files.  READ_PLUS does not depend on pNFS protocol features,
-      but can be used by pNFS to support sparse files.
+      Three new operations WRITE_HOLE (<xref target="op:write_hole" />),
+      WRITE_SAME (<xref target="op:write_same" />), and READ_PLUS
+      (<xref target="op:read_plus" />) are introduced.  WRITE_HOLE
+      allows for the creation of a sparse file and/or hole punching.
+      I.e, An application might want to zero out a range of the
+      file.  WRITE_SAME allows for the creation of application
+      specific block structures in a file which is treated by the
+      application as if it were a disk.  READ_PLUS supports all the
+      features of READ but includes an extension to support sparse
+      pattern files (<xref target="ss:adh:dc" />).  READ_PLUS is
+      guaranteed to perform no worse than READ, and can dramatically
+      improve performance with sparse files.  READ_PLUS does not
+      depend on pNFS protocol features, but can be used by pNFS to
+      support sparse files.
     </t>
   </section>
 
@@ -118,13 +123,14 @@
       </t>
     </section>
 
-    <section anchor="ss:sparse:write_plus" title="WRITE_PLUS">
+    <section anchor="ss:sparse:write_hole_same" title="WRITE_HOLE and WRITE_SAME">
       <t>
-        WRITE_PLUS can be used to either hole punch or initialize
-        ADHs. For either purpose, the client can avoid the
+        WRITE_HOLE can be used to hole punch and WRITE_SAME
+        can be used to initialize ADHs. For either purpose,
+        the client can avoid the
         transfer of a repetitive pattern across the network.
         If the filesystem on the server does not support
-        sparse files, the WRITE_PLUS operation may return
+        sparse files, the WRITE_HOLE and WRITE_SAME operations may return
         the result asynchronously via the CB_OFFLOAD operation.
         As a hole punch may entail deallocating data blocks,
         even if the filesystem supports sparse files, it

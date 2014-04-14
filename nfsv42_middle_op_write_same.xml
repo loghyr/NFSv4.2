@@ -1,0 +1,153 @@
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
+
+<section anchor='op:write_same' title='Operation 64: WRITE_SAME'>
+  <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/data_info4.xml'?>
+    <?rfc include='autogen/write_same_args.xml'?>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/write_response4.xml'?>
+    <?rfc include='autogen/write_same_res.xml'?>
+  </section>
+
+  <section toc='exclude' anchor='op:write_same:desc'  title="DESCRIPTION">
+    <t>
+      The WRITE_SAME operation is an extension of the NFSv4.1 WRITE
+      operation (see Section 18.2 of <xref target="RFC5661" />) and
+      writes data to the regular file identified by the
+      current filehandle.  The server MAY write fewer bytes than
+      requested by the client.
+    </t>
+
+    <t>
+      The WRITE_SAME argument is comprised of an array of rpr_contents, each of
+      which describe a data_content4 type of data (<xref target="ss:adh:dc" />).
+      For NFSv4.2, the allowed values are data, ADH, and hole.
+      The array contents MUST be contiguous in the file. A successful
+      WRITE_SAME will construct a reply for wr_count, wr_committed,
+      and wr_writeverf as per the NFSv4.1 WRITE operation results.
+      If wr_callback_id is set, it indicates an asynchronous reply
+      (see the WRITE_HOLE semantics in <xref target='op:write_hole:async' />).
+    </t>
+
+    <t>
+      WRITE_HOLE has to support all of the errors which are returned by WRITE
+      plus NFS4ERR_NOTSUPP, i.e., it is an OPTIONAL operation.
+      If the client supports WRITE_HOLE, it MUST support CB_OFFLOAD.
+    </t>
+
+    <section title="Data">
+      <t>
+        The d_offset specifies the offset where
+        the data should be written.  An d_offset of zero specifies
+        that the write should start at the beginning of the file.  The
+        d_count, as encoded as part of the opaque data parameter,
+        represents the number of bytes of data that are to be written.
+        If the d_count is zero, the WRITE_SAME will succeed and
+        return a d_count of zero subject to permissions checking.
+      </t>
+
+      <t>
+        Note that d_allocated has no meaning for WRITE_SAME.
+      </t>
+
+      <t>
+        The data MUST be written synchronously and MUST follow the
+        same semantics of COMMIT as does the WRITE operation.
+      </t>
+    </section>
+
+    <section title="ADHs">
+      <t>
+        If the server supports ADHs, then it MUST support the
+        NFS4_CONTENT_APP_DATA_HOLE arm of the WRITE_SAME operation.
+        The server has no concept of the structure imposed
+        by the application. It is only when the application
+        writes to a section of the file does order get imposed.
+        In order to detect corruption even before the application
+        utilizes the file, the application will want to initialize
+        a range of ADHs using WRITE_SAME.
+      </t>
+
+      <t>
+        For ADHs, when the client invokes the WRITE_SAME operation, it has
+        two desired results:
+      </t>
+
+      <t>
+        <list style='numbers'>
+          <t>
+            The structure described by the app_data_block4 be imposed
+            on the file.
+          </t>
+
+          <t>
+            The contents described by the app_data_block4 be sparse.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        If the server supports the WRITE_SAME operation, it still
+        might not support sparse files. So if it receives the
+        WRITE_SAME operation, then it MUST populate the contents
+        of the file with the initialized ADHs. The server SHOULD
+        return an asynchronous result if it can determine the
+        operation will be long running
+        (see <xref target='op:write_hole:async' />).
+      </t>
+
+      <t>
+        If the data was already initialized, there are two
+        interesting scenarios:
+      </t>
+
+      <t>
+        <list style='numbers'>
+          <t>
+            The data blocks are allocated.
+          </t>
+
+          <t>
+            Initializing in the middle of an existing ADH.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        If the data blocks were already allocated, then
+        the WRITE_SAME is a hole punch operation. If
+        WRITE_SAME supports sparse files, then the data
+        blocks are to be deallocated. If not, then the
+        data blocks are to be rewritten in the indicated
+        ADH format.
+      </t>
+
+      <t>
+        Since the server has no knowledge of ADHs, it
+        should not report misaligned creation of ADHs.
+        Even while it can detect them, it cannot disallow
+        them, as the application might be in the process of
+        changing the size of the ADHs. Thus the server
+        must be prepared to handle an WRITE_SAME into
+        an existing ADH.
+      </t>
+
+      <t>
+        This document does not mandate the manner in
+        which the server stores ADHs sparsely for a
+        file. However, if an WRITE_SAME arrives that
+        will force a new ADH to start inside an
+        existing ADH then the server will have three
+        ADHs instead of two. It will have one up to
+        the new one for the WRITE_SAME, one for the
+        WRITE_SAME, and one for after the WRITE_SAME.
+        Note that depending on server specific policies
+        for block allocation, there may also be some
+        physical blocks allocated to align the boundaries.
+      </t>
+    </section>
+  </section>
+</section>

@@ -118,14 +118,16 @@ FORE_OPS_AS_IS2 = \
                 offload_revoke_res.x \
                 offload_status_args.x \
                 offload_status_res.x \
-		write_plus_args.x \
-		write_plus_res.x \
+		write_hole_args.x \
+		write_hole_res.x \
 		io_advise_args.x \
 		io_advise_res.x \
 		read_plus_args.x \
 		read_plus_res.x \
 		seek_args.x \
-		seek_res.x
+		seek_res.x \
+		write_same_args.x \
+		write_same_res.x
 
 FORE_OPS = $(FORE_OPS_AS_IS1) open_args_gen.x $(FORE_OPS_AS_IS2)
 

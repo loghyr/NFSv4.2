@@ -342,8 +342,10 @@ AUTOGEN =	\
 		autogen/getdevicelist_res.xml \
 		autogen/getfh_res.xml \
 		autogen/illegal_res.xml \
-		autogen/write_plus_args.xml \
-		autogen/write_plus_res.xml \
+		autogen/write_hole_args.xml \
+		autogen/write_hole_res.xml \
+		autogen/write_same_args.xml \
+		autogen/write_same_res.xml \
 		autogen/io_advise_args.xml \
 		autogen/io_advise_res.xml \
 		autogen/layoutcommit_args.xml \
@@ -440,11 +442,12 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_offload_revoke.xml \
 	${DOC_PREFIX}_middle_op_offload_status.xml \
 	${DOC_PREFIX}_middle_op_exchange_id.xml \
-	${DOC_PREFIX}_middle_op_write_plus.xml \
+	${DOC_PREFIX}_middle_op_write_hole.xml \
 	${DOC_PREFIX}_middle_op_io_advise.xml \
 	${DOC_PREFIX}_middle_op_layoutreturn.xml \
 	${DOC_PREFIX}_middle_op_read_plus.xml \
 	${DOC_PREFIX}_middle_op_seek.xml \
+	${DOC_PREFIX}_middle_op_write_same.xml \
 	${DOC_PREFIX}_middle_op_zzz.xml \
 	${DOC_PREFIX}_middle_op_cb_aaa.xml \
 	${DOC_PREFIX}_middle_op_cb_offload.xml \
