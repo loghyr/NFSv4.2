@@ -442,11 +442,11 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_offload_revoke.xml \
 	${DOC_PREFIX}_middle_op_offload_status.xml \
 	${DOC_PREFIX}_middle_op_exchange_id.xml \
-	${DOC_PREFIX}_middle_op_write_hole.xml \
 	${DOC_PREFIX}_middle_op_io_advise.xml \
 	${DOC_PREFIX}_middle_op_layoutreturn.xml \
 	${DOC_PREFIX}_middle_op_read_plus.xml \
 	${DOC_PREFIX}_middle_op_seek.xml \
+	${DOC_PREFIX}_middle_op_write_hole.xml \
 	${DOC_PREFIX}_middle_op_write_same.xml \
 	${DOC_PREFIX}_middle_op_zzz.xml \
 	${DOC_PREFIX}_middle_op_cb_aaa.xml \

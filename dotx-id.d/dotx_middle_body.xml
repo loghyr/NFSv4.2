@@ -1,48 +1,50 @@
 <!-- Copyright (C) The IETF Trust (2007-2014) -->
 <!-- Copyright (C) The Internet Society (2006-2014) -->
 <section anchor="xdr_desc" title="XDR Description of NFSv4.2 " >
-<t>
+  <t>
+    This document contains the XDR (<xref target="RFC4506" />)
+    description of NFSv4.2 protocol (<xref target="NFSv42" />). In
+    order to facilitate implementations that support all of NFSv4.0,
+    NFSv4.1, and NFSv4.2, the description includes operations, and
+    other features of NFSv4.0 and NFSv4.1 that do not apply to
+    NFSv4.2.
+  </t>
 
- This document contains the XDR (<xref target="RFC4506" />)
- description of NFSv4.2 protocol (<xref
- target="I-D.ietf-nfsv4-minorversion2" />). In order to
- facilitate implementations that support all of NFSv4.0,
- NFSv4.1, and NFSv4.2, the description includes operations, and other
- features of NFSv4.0 and NFSv4.1 that do not apply to NFSv4.2.
+  <t>
+    The XDR description is provided in this document in a way that
+    makes it simple for the reader to extract into ready to compile
+    form. The reader can feed this document in the following shell
+    script to produce the machine readable XDR description of
+    NFSv4.2:
+  </t>
 
-
-</t>
-<t>
- The XDR description is provided in this document in a way
- that makes it simple for the reader to extract into ready
- to compile form. The reader can feed this document in the
- following shell script to produce the machine readable XDR
- description of NFSv4.2:
-</t>
-<figure>
-<artwork>
+  <figure>
+    <artwork>
 #!/bin/sh
 grep "^  *///" | sed 's?^  */// ??' | sed 's?^  *///$??'
+    </artwork>
+  </figure>
 
-</artwork>
-</figure>
-<t>
-I.e. if the above script is stored in a file called "extract.sh", and this document
-is in a file called "spec.txt", then the reader can do:
-</t>
-<figure>
-<artwork>
+  <t>
+    I.e., if the above script is stored in a file called "extract.sh",
+    and this document is in a file called "spec.txt", then the
+    reader can do:
+  </t>
+
+  <figure>
+    <artwork>
  sh extract.sh &lt; spec.txt &gt; nfs4_prot.x
-</artwork>
-</figure>
+    </artwork>
+  </figure>
 
-<t>
- The effect of the script is to remove leading white space
- from each line, plus a sentinel sequence of "///". 
-</t>
-<t>
- The XDR description, with the sentinel sequence follows:
-</t>
+  <t>
+     The effect of the script is to remove leading white space
+     from each line, plus a sentinel sequence of "///". 
+  </t>
+
+  <t>
+     The XDR description, with the sentinel sequence follows:
+  </t>
 
    <?rfc include='dotx_autogen.xml'?>
 

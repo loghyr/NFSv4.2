@@ -60,12 +60,12 @@
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
 	<author initials="T." surname="Haynes" fullname="T. Haynes">
-	  <organization>NetApp</organization>
+	  <organization>Primary Data</organization>
 	</author>
-	<date year="2013" month="March"/>
+	<date year="2014" month="April"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-19" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-22" />
     </reference>
 
 <reference anchor='RFC3986'>

@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='op:write_same' title='Operation 64: WRITE_SAME'>
+<section anchor='op:write_same' title='Operation 68: WRITE_SAME'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/write_same_args.xml'?>
@@ -29,40 +29,19 @@
       WRITE_SAME will construct a reply for wr_count, wr_committed,
       and wr_writeverf as per the NFSv4.1 WRITE operation results.
       If wr_callback_id is set, it indicates an asynchronous reply
-      (see the WRITE_HOLE semantics in <xref target='op:write_hole:async' />).
+      (see <xref target='op:write_same:async' />).
     </t>
 
     <t>
-      WRITE_HOLE has to support all of the errors which are returned by WRITE
+      WRITE_SAME has to support all of the errors which are returned by WRITE
       plus NFS4ERR_NOTSUPP, i.e., it is an OPTIONAL operation.
-      If the client supports WRITE_HOLE, it MUST support CB_OFFLOAD.
+      If the client supports WRITE_SAME, it MUST support CB_OFFLOAD.
     </t>
-
-    <section title="Data">
-      <t>
-        The d_offset specifies the offset where
-        the data should be written.  An d_offset of zero specifies
-        that the write should start at the beginning of the file.  The
-        d_count, as encoded as part of the opaque data parameter,
-        represents the number of bytes of data that are to be written.
-        If the d_count is zero, the WRITE_SAME will succeed and
-        return a d_count of zero subject to permissions checking.
-      </t>
-
-      <t>
-        Note that d_allocated has no meaning for WRITE_SAME.
-      </t>
-
-      <t>
-        The data MUST be written synchronously and MUST follow the
-        same semantics of COMMIT as does the WRITE operation.
-      </t>
-    </section>
 
     <section title="ADHs">
       <t>
         If the server supports ADHs, then it MUST support the
-        NFS4_CONTENT_APP_DATA_HOLE arm of the WRITE_SAME operation.
+        WRITE_SAME operation.
         The server has no concept of the structure imposed
         by the application. It is only when the application
         writes to a section of the file does order get imposed.
@@ -96,7 +75,7 @@
         of the file with the initialized ADHs. The server SHOULD
         return an asynchronous result if it can determine the
         operation will be long running
-        (see <xref target='op:write_hole:async' />).
+        (see <xref target='op:write_same:async' />).
       </t>
 
       <t>
@@ -147,6 +126,83 @@
         Note that depending on server specific policies
         for block allocation, there may also be some
         physical blocks allocated to align the boundaries.
+      </t>
+    </section>
+
+    <section anchor='op:write_same:async' title='Asynchronous Transactions'>
+      <t>
+        ADH initialization may 
+        lead to server determining to service the
+        operation asynchronously. If it decides to
+        do so, it sets the stateid in wr_callback_id
+        to be that of the ws_stateid. If it does
+        not set the wr_callback_id, then the result
+        is synchronous.
+      </t>
+
+      <t>
+        When the client determines that the reply
+        will be given asynchronously, it should not
+        assume anything about the contents of what
+        it wrote until it is informed by the server
+        that the operation is complete. It can
+        use OFFLOAD_STATUS (<xref target="op:offload_status" />)
+        to monitor the operation and
+        OFFLOAD_ABORT (<xref target="op:offload_abort" />)
+        to cancel the operation. An example of
+        a asynchronous WRITE_SAME is shown in
+        <xref target='fig:async-write_same' />. Note that
+        as with the COPY operation, WRITE_SAME must
+        provide a stateid for tracking the asynchronous
+        operation.
+      </t>
+
+      <figure title="An asynchronous WRITE_SAME." anchor="fig:async-write_same">
+        <artwork><![CDATA[
+  Client                                  Server
+     +                                      +
+     |                                      |
+     |--- OPEN ---------------------------->| Client opens
+     |<------------------------------------/| the file
+     |                                      |
+     |--- WRITE_SAME ---------------------->| Client initializes
+     |<------------------------------------/| an ADH
+     |                                      |
+     |                                      |
+     |--- OFFLOAD_STATUS ------------------>| Client may poll
+     |<------------------------------------/| for status
+     |                                      |
+     |                  .                   | Multiple OFFLOAD_STATUS
+     |                  .                   | operations may be sent.
+     |                  .                   |
+     |                                      |
+     |<-- CB_OFFLOAD -----------------------| Server reports results
+     |\------------------------------------>|
+     |                                      |
+     |--- CLOSE --------------------------->| Client closes
+     |<------------------------------------/| the file
+     |                                      |
+     |                                      |
+        ]]></artwork>
+      </figure>
+
+      <t>
+        When CB_OFFLOAD informs the client of
+        the successful WRITE_SAME, the write_response4
+        embedded in the operation will provide
+        the necessary information that a synchronous
+        WRITE_SAME would have provided.
+      </t>
+
+      <t>
+        Regardless of whether the operation is asynchronous or
+        synchronous, it MUST still support the COMMIT operation semantics
+        as outlined in Section 18.3 of <xref target="RFC5661" />.
+        I.e., COMMIT works on one or more WRITE operations and the
+        WRITE_SAME operation can appear as several WRITE operations
+        to the server.  The client can use locking operations to control the behavior
+        on the server with respect to long running asynchronous
+        write operations.
       </t>
     </section>
   </section>

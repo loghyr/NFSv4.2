@@ -34,35 +34,14 @@
       If the client supports WRITE_HOLE, it MUST support CB_OFFLOAD. 
     </t>
 
-    <section title="Data">
-      <t>
-        The d_offset specifies the offset where
-        the data should be written.  An d_offset of zero specifies
-        that the write should start at the beginning of the file.  The
-        d_count, as encoded as part of the opaque data parameter,
-        represents the number of bytes of data that are to be written.
-        If the d_count is zero, the WRITE_HOLE will succeed and
-        return a d_count of zero subject to permissions checking.
-      </t>
-
-      <t>
-        Note that d_allocated has no meaning for WRITE_HOLE.
-      </t>
-
-      <t>
-        The data MUST be written synchronously and MUST follow the
-        same semantics of COMMIT as does the WRITE operation.
-      </t>
-    </section>
-
     <section title="Hole punching">
       <t>
         Whenever a client wishes to zero the blocks backing a
         particular region in the file, it calls the WRITE_HOLE operation with
         the current filehandle set to the filehandle of the file in question,
         and the equivalent of start offset and length in bytes of the region
-        set in wpa_hole.di_offset and wpa_hole.di_length respectively.  If the
-        wpa_hole.di_allocated is set to TRUE, then the blocks will be zeroed and
+        set in wh_hole.di_offset and wh_hole.di_length respectively.  If the
+        wh_hole.di_allocated is set to TRUE, then the blocks will be zeroed and
         if it is set to FALSE, then they will be deallocated. All
         further reads to this region MUST return zeros until overwritten.
         The filehandle specified must be that of a regular file.
@@ -71,7 +50,7 @@
       <t>
         Situations may arise where di_offset and/or
         di_offset + di_length will not be aligned to a
-        boundary that the server does allocations/deallocations in.  For
+        boundary for which the server does allocations/deallocations.  For
         most file systems, this is the block size of
         the file system.  In such a case, the server can deallocate as many
         bytes as it can in the region.  The blocks that cannot be deallocated
@@ -107,11 +86,11 @@
 
     <section anchor='op:write_hole:async' title='Asynchronous Transactions'>
       <t>
-        Both hole punching and ADH initialization may 
+        Hole punching may 
         lead to server determining to service the
         operation asynchronously. If it decides to
         do so, it sets the stateid in wr_callback_id
-        to be that of the wp_stateid. If it does
+        to be that of the wh_stateid. If it does
         not set the wr_callback_id, then the result
         is synchronous.
       </t>

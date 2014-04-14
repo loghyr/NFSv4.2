@@ -36,17 +36,17 @@
       <format type='TXT' octets='55477' target='ftp://ftp.isi.edu/in-notes/rfc4506.txt' />
     </reference>
 
-    <reference anchor='I-D.ietf-nfsv4-minorversion2'>
+    <reference anchor='NFSv42'>
       <front>
         <title>NFS Version 4 Minor Version 2</title>
 
         <author initials='T' surname='Haynes' fullname='Thomas Haynes'>
-          <organization abbrev='NetApp' />
+          <organization abbrev='Primary Data' />
         </author>
 
-        <date month='March' year='2013' />
+        <date month='April' year='2014' />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-minorversion2-19" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-minorversion2-22" value="(Work In Progress)"/>
     </reference>
 
 </references>
