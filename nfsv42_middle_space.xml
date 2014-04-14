@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:space" title="Space Reservation">
   <section anchor="ss:space:intro" title="Introduction">
@@ -96,8 +96,8 @@
           deleted, taking block sharing into consideration.
         </t>
 
-        <t hangText="WRITE_PLUS">
-          This operation zeroes and/or deallocates the blocks
+        <t hangText="WRITE_HOLE and WRITE_SAME">
+          These operations zero and/or deallocate the blocks
           backing a region of the file.
         </t>
       </list>

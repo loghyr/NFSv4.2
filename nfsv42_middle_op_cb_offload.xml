@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="op:cb_offload" title="Operation 15: CB_OFFLOAD - Report results of an asynchronous operation">
   <section toc='exclude' title="ARGUMENT">
@@ -30,8 +30,7 @@
           the COPY operation
         </t>
         <t>
-          the WRITE_PLUS operation and any arm of the discriminated
-          union other than NFS4_CONTENT_DATA
+          either the WRITE_HOLE or WRITE_SAME operations
         </t>
       </list>
 
@@ -55,12 +54,13 @@
       </t>
     </section>
 
-    <section toc='exclude' title='WRITE_PLUS'>
+    <section toc='exclude' title='WRITE_HOLE and WRITE_SAME'>
       <t>
         CB_OFFLOAD is used to report the completion of either
         a hole punch or an ADH initialization. Upon success,
         the coa_resok4 will contain the same information that
-        a synchronous WRITE_PLUS would have returned.
+        the corresponding synchronous WRITE_HOLE or WRITE_SAME
+        would have returned.
       </t>
     </section>
   </section>

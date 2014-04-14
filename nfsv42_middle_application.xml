@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor='sec:adh' title='Application Data Hole Support'>
   <t>
@@ -260,7 +260,7 @@
 
     <figure>
       <artwork>
-   WRITE_PLUS {0, 4k, 100, 0, 0, 8, 0xfeedface}
+   WRITE_SAME {0, 4k, 100, 0, 0, 8, 0xfeedface}
       </artwork>
     </figure>
 
