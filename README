@@ -10,9 +10,17 @@ http://www.ietf.org/mail-archive/web/nfsv4/index.html
 To compile the XML files into text files:
 
 1. Install xml2rfc
-   http://xml.resource.org/
+   Check with http://xml.resource.org/, but basically:
 
-   These instructions have been tested with version 2
+#
+# Install xml2rfc
+#
+curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+python get-pip.py
+pip install xml2rfc
+
+   These instructions have been tested with version 2. The
+   documents no longer build with the version 1.36.
 
 2. Build
 
