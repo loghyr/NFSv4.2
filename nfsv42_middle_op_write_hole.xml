@@ -36,7 +36,7 @@
 
     <section title="Hole punching">
       <t>
-        Whenever a client wishes to zero the blocks backing a
+        Whenever a client wishes to reinitialize the blocks backing a
         particular region in the file, it calls the WRITE_HOLE operation with
         the current filehandle set to the filehandle of the file in question,
         and the equivalent of start offset and length in bytes of the region
