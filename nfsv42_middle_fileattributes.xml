@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:file_attributes" title="New File Attributes">
   <section anchor="ss:file_attributes:REC" title="New RECOMMENDED Attributes - List and Definition References">
@@ -199,7 +199,6 @@ typedef uint32_t  policy4;
     </section>
 
     <section toc='exclude' anchor='ss:fattr:chsec' title='Attribute 81: change_sec_label'>
-
       <t>
         The change_sec_label attribute is a read-only attribute per file.
         If the value of sec_label for a file is not the same at two
@@ -255,8 +254,25 @@ typedef uint32_t  policy4;
         changed.
       </t>
 
-      <t>
-      </t>
+      <section toc='exclude' anchor='ss:fattr:sr:ex' title='Example of Space Reservation'>
+        <t>
+          If an application used posix_fallocate (<xref target='posix_fallocate' />)
+          to establish a space reservation on a file of size 2G, it might send
+          a compound like this:
+        </t>
+
+        <figure>
+          <artwork>
+  SETATTR (space_reserved = true)
+  SETATTR (size = 2G)
+          </artwork>
+        </figure>
+
+        <t>
+          Note that the ordering of the two SETATTRs does not matter, the second
+          one will return NFS4ERR_NOSPC if the initial guarantee cannot be met.
+        </t>
+      </section>
     </section>
 
     <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 78: space_freed">

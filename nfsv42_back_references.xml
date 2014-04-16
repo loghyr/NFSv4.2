@@ -146,8 +146,18 @@ specifications of each URI scheme.
      <title>Section 'posix_fadvise()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
      </title>
   <author>
-    <organization>The Open Group
-    </organization>
+    <organization>The Open Group</organization>
+  </author>
+  <date year="2004" />
+      </front>
+    </reference>
+
+  <reference anchor="posix_fallocate">
+      <front>
+     <title>Section 'posix_fallocate()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
+     </title>
+  <author>
+    <organization>The Open Group</organization>
   </author>
   <date year="2004" />
       </front>

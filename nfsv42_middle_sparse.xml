@@ -35,16 +35,26 @@
     </t>
 
     <t>
+      No new operation is needed to allow the creation of a sparsely
+      populated file, when a file is created and a write occurs past
+      the current size of the file, the non-allocated region will either
+      be a hole or filled with zeros.  The choice of behavior is dictated
+      by the underlying filesystem and is transparent to the application.
+      What is needed are the abilities to read sparse files and to punch
+      holes to reinitialize the contents of a file.
+    </t>
+
+    <t>
       Three new operations WRITE_HOLE (<xref target="op:write_hole" />),
       WRITE_SAME (<xref target="op:write_same" />), and READ_PLUS
       (<xref target="op:read_plus" />) are introduced.  WRITE_HOLE
-      allows for the creation of a sparse file and/or hole punching.
-      I.e, An application might want to zero out a range of the
-      file.  WRITE_SAME allows for the creation of application
+      allows for the hole punching.  I.e., an application might want
+      to reinitialize a range of the file.  WRITE_SAME allows for
+      the creation of application
       specific block structures in a file which is treated by the
       application as if it were a disk.  READ_PLUS supports all the
-      features of READ but includes an extension to support sparse
-      pattern files (<xref target="ss:adh:dc" />).  READ_PLUS is
+      features of READ but includes extensions to support both sparse
+      files and sparse pattern files (<xref target="ss:adh:dc" />).  READ_PLUS is
       guaranteed to perform no worse than READ, and can dramatically
       improve performance with sparse files.  READ_PLUS does not
       depend on pNFS protocol features, but can be used by pNFS to
@@ -60,7 +70,7 @@
         </t>
 
         <t hangText="Sparse file:">
-          A Regular file that contains one or more Holes.
+          A Regular file that contains one or more holes.
         </t>
 
         <t hangText="Hole:">
@@ -98,16 +108,16 @@
 
     <section anchor="ss:sparse:read_plus" title="READ_PLUS">
       <t>
-        For holes, READ_PLUS extends the response
-        to avoid returning data for portions of
-        the file which are initialized and contain no backing store.
-        Additionally it will do so if the result would appear to be a hole. I.e., if the result was
-        a data block composed entirely of zeros, then it is easier to return
-        a hole. Returning data blocks of uninitialized data wastes computational
-        and network resources, thus reducing performance.
-        For ADHs, READ_PLUS is used to return the metadata describing the
-        portions of the file which are initialized and contain no backing
-        store.
+       For holes, READ_PLUS extends the response to avoid returning
+       data for portions of the file which are initialized and
+       contain no backing store.  Additionally it will do so if
+       the result would appear to be a hole. I.e., if the result
+       was a data block composed entirely of zeros, then it is
+       easier to return a hole. Returning data blocks of uninitialized
+       data wastes computational and network resources, thus
+       reducing performance.  For ADHs, READ_PLUS is used to return
+       the metadata describing the portions of the file which are
+       initialized and contain no backing store.
       </t>
 
       <t>
