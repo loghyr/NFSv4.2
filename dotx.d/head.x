@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) The IETF Trust (2007-2012)
+ *  Copyright (C) The IETF Trust (2007-2014)
  *  All Rights Reserved.
  *
  *  Copyright (C) The Internet Society (1998-2006).
@@ -448,7 +448,7 @@ typedef uint32_t	fattr4_maxlink;
 typedef uint32_t	fattr4_maxname;
 typedef uint64_t	fattr4_maxread;
 typedef uint64_t	fattr4_maxwrite;
-typedef utf8str_cs	fattr4_mimetype;
+typedef ascii_REQUIRED4	fattr4_mimetype;
 typedef mode4		fattr4_mode;
 typedef mode_masked4	fattr4_mode_set_masked;
 typedef uint64_t	fattr4_mounted_on_fileid;

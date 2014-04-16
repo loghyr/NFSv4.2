@@ -1,5 +1,5 @@
 #!/bin/sh
-# Copyright (C) The IETF Trust (2007-2011)
+# Copyright (C) The IETF Trust (2007-2014)
 
 for i in $* ;
 do
@@ -35,11 +35,12 @@ typedef :uint32_t:seqid4:Sequence identifier used for file locking.
 typedef :opaque:sessionid4[NFS4_SESSIONID_SIZE]:Session identifier.
 typedef :uint32_t:slotid4:Sequencing artifact for various session operations (SEQUENCE, CB_SEQUENCE).
 typedef :opaque:utf8string<>:UTF-8 encoding for strings.
-typedef :utf8string:utf8str_cis:Case-insensitive UTF-8 string.
-typedef :utf8string:utf8str_cs:Case-sensitive UTF-8 string.
+typedef :utf8string:utf8str_cis:Case insensitive UTF-8 string.
+typedef :utf8string:utf8str_cs:Case sensitive UTF-8 string.
 typedef :utf8string:utf8str_mixed:UTF-8 strings with a case sensitive prefix and a case insensitive suffix.
 typedef :utf8str_cs:component4:Represents path name components.
-typedef :utf8str_cs:linktext4:Symbolic link contents.
+typedef :opaque:linktext4<>:Symbolic link contents ("symbolic link" is defined in an Open Group <xref target='openg_symlink' /> standard).
+typedef :utf8string:ascii_REQUIRED4:String MUST be sent as ASCII and thus is automatically UTF-8.
 typedef :component4:pathname4<>:Represents path name for fs_locations.
 typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operations (COMMIT, CREATE, EXCHANGE_ID, OPEN, READDIR, WRITE) NFS4_VERIFIER_SIZE is defined as 8.
 :enum:netloc_type4:Specifies network locations.
@@ -94,6 +95,7 @@ EOF
 cat << EOF > $i
 const NFS4_FHSIZE		= 128;
 const NFS4_VERIFIER_SIZE	= 8;
+const NFS4_OTHER_SIZE		= 12;
 const NFS4_OPAQUE_LIMIT		= 1024;
 const NFS4_SESSIONID_SIZE	= 16;
 
@@ -263,7 +265,7 @@ EOF
 cat << EOF > $i
 struct stateid4 {
 	uint32_t	seqid;
-	opaque		other[12];
+	opaque		other[NFS4_OTHER_SIZE];
 };
 EOF
 	;;
