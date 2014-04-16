@@ -59,7 +59,8 @@
         </t>
 
         <t>
-          be under development as a new standard, e.g., SEEK
+          be under development as a new standard, e.g., SEEK pulls in
+          both SEEK_HOLE and SEEK_DATA
         </t>
 
         <t>
