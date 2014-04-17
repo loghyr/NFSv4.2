@@ -114,8 +114,8 @@
       <t>
         When a file is sparse, one concern applications have is ensuring
         that there will always be enough data blocks available for the
-        file during future writes. A new attribute, space_reserved
-        (see <xref target='ss:fattr:sr' />) provides the client
+        file during future writes. ALLOCATE
+	(see <xref target='op:allocate' />) allows a client to request
         a guarantee that space will be available.
       </t>
     </section>

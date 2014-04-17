@@ -270,6 +270,8 @@ AUTOGEN =	\
 		$(SPITGENXML) \
 		autogen/access_args.xml \
 		autogen/access_res.xml \
+		autogen/allocate_args.xml \
+		autogen/allocate_res.xml \
 		autogen/backchannel_ctl_args.xml \
 		autogen/backchannel_ctl_res.xml \
 		autogen/bind_conn_to_session_args.xml \
@@ -436,6 +438,7 @@ IDXMLSRC_BASE = \
         ${DOC_PREFIX}_middle_fileattributes.xml \
 	${DOC_PREFIX}_middle_op_mandlist.xml \
 	${DOC_PREFIX}_middle_op_aaa.xml \
+	${DOC_PREFIX}_middle_op_allocate.xml \
 	${DOC_PREFIX}_middle_op_copy.xml \
 	${DOC_PREFIX}_middle_op_offload_abort.xml \
 	${DOC_PREFIX}_middle_op_copy_notify.xml \

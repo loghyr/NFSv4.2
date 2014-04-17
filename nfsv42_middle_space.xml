@@ -4,21 +4,28 @@
 <section anchor="sec:space" title="Space Reservation">
   <section anchor="ss:space:intro" title="Introduction">
     <t>
-      Applications such as hypervisors want to be able to
-      reserve space for a file, report the amount of
-      actual disk space a file occupies, and free-up the backing space of a
-      file when it is not required.  In virtualized environments, virtual
-      disk files are often stored on NFS mounted volumes.  Since virtual
-      disk files represent the hard disks of virtual machines, hypervisors
-      often have to guarantee certain properties for the file.
+      Applications want to be able to reserve space for a file, report the
+      amount of actual disk space a file occupies, and free-up the backing
+      space of a file when it is not required.
     </t>
 
     <t>
-      One such example is space reservation.  When a hypervisor creates a
-      virtual disk file, it often tries to preallocate the space for the
-      file so that there are no future allocation related errors during the
-      operation of the virtual machine.  Such errors prevent a virtual
-      machine from continuing execution and result in downtime.
+      One example is the posix_fallocate (<xref target='posix_fallocate' />)
+      which allows applications to ask for space reservations from the
+      operating system, usually to provide a better file layout and reduce
+      overhead for random or slow growing file appending workloads.
+    </t>
+
+    <t>
+      Another example is space reservation for virtual disks in a hypervisor.
+      In virtualized environments, virtual disk files are often stored on NFS
+      mounted volumes.  
+
+      When a hypervisor creates a virtual disk file, it often tries to
+      preallocate the space for the file so that there are no future
+      allocation related errors during the operation of the virtual machine.
+      Such errors prevent a virtual machine from continuing execution and
+      result in downtime.
     </t>
 
     <t>
@@ -32,13 +39,10 @@
     </t>
 
     <t>
-      We define a "reservation" as being the combination of the 
-      space_reserved attribute (see <xref target='ss:fattr:sr' />) and
-      the size attribute (see Section 5.8.1.5 of <xref target="RFC5661" />).
-      If space_reserved attribute is
-      set on a file, it is guaranteed that writes that do not grow the file
-      past the size will not fail with NFS4ERR_NOSPC. Once the size is
-      changed, then the reservation is changed to that new size.
+      The new ALLOCATE operation (see <xref target='op:allocate' />)
+      allows a client to request a guarantee that space will be available.
+      The ALLOCATE operation gurantees that any future writes to the
+      region it was successfully called for will not fail with NFS4ERR_NOSPC.
     </t>
 
     <t>
@@ -87,8 +91,8 @@
     <t>
       <list style="hanging">
         <t hangText="space_reserved">
-          This attribute specifies that writes to the reserved
-          area of the file will not fail with NFS4ERR_NOSPACE.
+          This attribute specifies that there are some space reservations
+          on a file.
         </t>
 
         <t hangText="space_freed">

@@ -215,65 +215,10 @@ typedef uint32_t  policy4;
 
     <section toc='exclude' anchor="ss:fattr:sr" title="Attribute 77: space_reserved">
       <t>
-        The space_reserve attribute is a read/write attribute of type
-        boolean.  It is a per file attribute and applies during the
-        lifetime of the file or until it is turned off.  When the space_reserved
-        attribute is set via SETATTR, the server must ensure that there is
-        disk space to accommodate every byte in the file before it can return
-        success.  If the server cannot guarantee this, it must return
-        NFS4ERR_NOSPC.
+        The space_reserved attribute is a read-only attribute per file.
+        If it is true if there are any space reservations on the file, or false
+        otherwise.
       </t>
-
-      <t>
-        If the client tries to grow a file which has the space_reserved
-        attribute set, the server must guarantee that there is disk space to
-        accommodate every byte in the file with the new size before it can
-        return success.  If the server cannot guarantee this, it must return
-        NFS4ERR_NOSPC.
-      </t>
-
-      <t>
-        It is not required that the server allocate the space to the file
-        before returning success.  The allocation can be deferred, however,
-        it must be guaranteed that it will not fail for lack of space.
-      </t>
-
-      <t>
-        The value of space_reserved can be obtained at any time through
-        GETATTR. If the size is retrieved at the same time, the client
-        can determine the size of the reservation.
-      </t>
-
-      <t>
-        In order to avoid ambiguity, the space_reserve bit cannot be set
-        along with the size bit in SETATTR.  Increasing the size of a file
-        with space_reserve set will fail if space reservation cannot be
-        guaranteed for the new size.  If the file size is decreased, space
-        reservation is only guaranteed for the new size.
-        If a hole is punched into the file, then the reservation is not
-        changed.
-      </t>
-
-      <section toc='exclude' anchor='ss:fattr:sr:ex' title='Example of Space Reservation'>
-        <t>
-          If an application used posix_fallocate (<xref target='posix_fallocate' />)
-          to establish a space reservation on a file of size 2G, it might send
-          a compound like this:
-        </t>
-
-        <figure>
-          <artwork>
-  SETATTR (space_reserved = true)
-  SETATTR (size = 2G)
-          </artwork>
-        </figure>
-
-        <t>
-          Note that the ordering of the two SETATTRs does not matter, the second
-          one will return NFS4ERR_NOSPC if the initial guarantee cannot be met.
-        </t>
-      </section>
-    </section>
 
     <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 78: space_freed">
       <t>

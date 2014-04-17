@@ -1,0 +1,50 @@
+<!-- Copyright (C) The IETF Trust (2013) -->
+<!-- Copyright (C) The Internet Society (2013) -->
+
+<section anchor='op:allocate' title='Operation 68: ALLOCATE'>
+  <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/allocate_args.xml'?>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/allocate_res.xml'?>
+  </section>
+
+  <section toc='exclude' title="DESCRIPTION">
+    <t>
+      Whenever a client wishes to reserve space for a region in a file it calls
+      the ALLOCATE operation with the current filehandle set to the filehandle
+      of the file in question, and the start offset and length in bytes of
+      the region set in aa_offset and aa_length respectively.
+    </t>
+
+    <t>
+      The server will ensure that backing blocks are reserved to the region
+      specified by aa_offset and aa_length, and that no future writes into
+      this region will return NFS4ERR_NOSPC. If the region lies partially or
+      fully outside the current file size the file size will be set to
+      aa_offset + aa_length implicitly. If the server cannot guarantee this,
+      it must return NFS4ERR_NOSPC.
+    </t>
+
+    </t>
+      The ALLOCATE operation can also be used to extend the size of a file
+      if the region specified by aa_offset and aa_length extends beyond the
+      current file size.  In that case any data outside of the previous
+      file size will return zeroes when read before data is written to it.
+    </t>
+
+    <t>
+      It is not required that the server allocate the space to the file
+      before returning success.  The allocation can be deferred, however,
+      it must be guaranteed that it will not fail for lack of space.
+    </t>
+
+    <t>
+      The ALLOCATE operation will result in the space_used attribute and
+      space_freed attributes being increased by the number of bytes reserved
+      unless they were previously reserved or written and not shared.
+    </t>
+
+  </section>
+</section>
