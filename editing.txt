@@ -43,7 +43,7 @@ b) http://schacon.github.com/git/user-manual.html#telling-git-your-name
 $ vi ~/.gitconfig
 [user]
         name = Tom Haynes
-        email = mr.x@netapp.com
+        email = mr.x@primarydata.com
 
 $ cd NFSv4.2
 
@@ -73,7 +73,7 @@ This spits out a bunch of files like
 
 f) Mail them by running:
 
-$ git send-email --to "Tom Haynes <Tom.Haynes@netapp.com>" --cc "nfsv4@ietf.org" 00*
+$ git send-email --to "Thomas Haynes <Thomas.Haynes@primarydata.com>" --cc "nfsv4@ietf.org" 00*
 
 That will send the patches, one to an email.  If you have a bunch of
 logically related patches and would like to preface them by an
