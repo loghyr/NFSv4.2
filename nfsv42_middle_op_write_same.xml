@@ -3,7 +3,7 @@
 
 <section anchor='op:write_same' title='Operation 68: WRITE_SAME'>
   <section toc='exclude' title="ARGUMENT">
-    <?rfc include='autogen/data_info4.xml'?>
+    <?rfc include='autogen/app_data_hole4.xml'?>
     <?rfc include='autogen/write_same_args.xml'?>
   </section>
 
