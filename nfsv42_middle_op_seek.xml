@@ -14,6 +14,8 @@
   </section>
 
   <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/data_info4.xml'?>
+    <?rfc include='autogen/app_data_hole4.xml'?>
     <?rfc include='autogen/seek_res.xml'?>
   </section>
 
