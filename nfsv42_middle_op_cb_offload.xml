@@ -24,13 +24,19 @@
     </t>
 
     <t>
-      If the client supports either
-      <list style="numbers">
-        <t>
-          the COPY operation
+      If the client supports any of the following operations:
+
+      <list style="hanging">
+        <t hangText='COPY:'>
+          for both intra- and inter-server asynchronous copies
         </t>
-        <t>
-          either the WRITE_HOLE or WRITE_SAME operations
+
+        <t hangText='WRITE_HOLE:'>
+          for a hole punch
+        </t>
+
+        <t hangText='WRITE_SAME:'>
+          for ADB initialization
         </t>
       </list>
 
@@ -44,24 +50,25 @@
       describe how to handle this type of issue.
     </t>
 
-    <section toc='exclude' title='Server-side Copy'>
-      <t>
-        CB_OFFLOAD is used for both intra- and inter-server asynchronous
-        copies. This operation is sent by the
-        destination server to the client in a CB_COMPOUND request.
-        Upon success, the coa_resok4.wr_count presents the total
-        number of bytes copied.
-      </t>
-    </section>
+    <t>
+      Upon success, the coa_resok4.wr_count presents for each
+      operation:
 
-    <section toc='exclude' title='WRITE_HOLE and WRITE_SAME'>
-      <t>
-        CB_OFFLOAD is used to report the completion of either
-        a hole punch or an ADH initialization. Upon success,
-        the coa_resok4 will contain the same information that
-        the corresponding synchronous WRITE_HOLE or WRITE_SAME
-        would have returned.
-      </t>
-    </section>
+      <list style="hanging">
+        <t hangText='COPY:'>
+          the total number of bytes copied
+        </t>
+
+        <t hangText='WRITE_HOLE:'>
+          the same information that a synchronous WRITE_HOLE
+          would provide
+        </t>
+
+        <t hangText='WRITE_SAME:'>
+          the same information that a synchronous WRITE_SAME
+          would provide
+        </t>
+      </list>
+    </t>
   </section>
 </section>

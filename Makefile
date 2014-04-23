@@ -169,7 +169,7 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/copy_confirm_auth.x \
 		dotx.d/copy_from_auth.x \
 		dotx.d/copy_to_auth.x \
-		dotx.d/app_data_hole4.x \
+		dotx.d/app_data_block4.x \
 		dotx.d/data_info4.x \
 		dotx.d/data4.x \
 		dotx.d/data_content4.x \
@@ -247,7 +247,7 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/copy_confirm_auth.xml \
 		autogen/copy_from_auth.xml \
 		autogen/copy_to_auth.xml \
-		autogen/app_data_hole4.xml \
+		autogen/app_data_block4.xml \
 		autogen/data_info4.xml \
 		autogen/data4.xml \
 		autogen/data_content4.xml \

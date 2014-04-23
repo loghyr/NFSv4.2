@@ -96,8 +96,8 @@
           deleted, taking block sharing into consideration.
         </t>
 
-        <t hangText="WRITE_HOLE and WRITE_SAME">
-          These operations zero and/or deallocate the blocks
+        <t hangText="WRITE_HOLE">
+          This operation zeros and/or deallocates the blocks
           backing a region of the file.
         </t>
       </list>

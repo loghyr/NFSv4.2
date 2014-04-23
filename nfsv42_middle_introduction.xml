@@ -120,12 +120,13 @@
       </t>
     </section>
 
-    <section title="Application Data Hole (ADH) Support">
+    <section title="Application Data Block (ADB) Support">
       <t>
         Some applications treat a file as if it were a disk and as such
-        want to initialize (or format) the file image. We extend both
-        READ_PLUS and introduce WRITE_SAME (see <xref target='op:write_same' />)
-        to understand this metadata as a new form of a hole.
+        want to initialize (or format) the file image. We 
+        introduce WRITE_SAME (see <xref target='op:write_same' />)
+        to send this metadata to the server to allow it to write
+        the block contents.
       </t>
     </section>
 

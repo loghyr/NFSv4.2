@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor='op:read_plus' title='Operation 65: READ_PLUS'>
   <section toc='exclude' title="ARGUMENT">
@@ -29,15 +29,14 @@
     </t>
 
     <t>
-      The READ_PLUS result is comprised of an array of rpr_contents, each of
-      which describe a data_content4 type of data (<xref target="ss:adh:dc" />).
-      For NFSv4.2, the allowed
-      values are data, ADH, and hole. A server is required to support the
-      data type, but neither ADH nor hole. Both an ADH and a hole must be
-      returned in its entirety - clients must be prepared to get more
-      information than they requested. Both the start and the end of the
-      hole may exceed what was requested. The array contents MUST be
-      contiguous in the file.
+      The READ_PLUS result is comprised of an array of rpr_contents,
+      each of which describe a data_content4 type of data.  For
+      NFSv4.2, the allowed values are data and hole. A server MUST
+      support the data type, but not the hole. The hole must be
+      returned in its entirety - clients must be prepared to get
+      more information than they requested. Both the start and the
+      end of the hole may exceed what was requested. The array
+      contents MUST be contiguous in the file.
     </t>
 
     <t>
@@ -52,11 +51,10 @@
     </t>
 
     <t>
-      The server may elect to return adjacent elements of the same type. For
-      example, the guard pattern or block size of an ADH might change, which
-      would require adjacent elements of type ADH. Likewise if the server
-      has a range of data comprised entirely of zeros and then a hole, it
-      might want to return two adjacent holes to the client.
+      The server may elect to return adjacent elements of the same
+      type. For example, if the server has a range of data comprised
+      entirely of zeros and then a hole, it might want to return
+      two adjacent holes to the client.
     </t>
 
     <t>
@@ -137,18 +135,11 @@
     <section toc='exclude' title="Additional pNFS Implementation Information">
       <t>
         With pNFS, the semantics of using READ_PLUS remains the same.  Any
-        data server MAY return a hole or ADH result for a READ_PLUS request that
+        data server MAY return a hole result for a READ_PLUS request that
         it receives.  When a data server chooses to return such a result, it has the
         option of returning information for the data stored on that
         data server (as defined by the data layout), but it MUST NOT return
         results for a byte range that includes data managed by another data server.
-      </t>
-
-      <t>
-        A data server should do its best to return as much information about
-        a ADH as is feasible without having to contact the metadata server.
-        If communication with the metadata server is required, then every
-        attempt should be taken to minimize the number of requests.
       </t>
 
       <t>
@@ -179,10 +170,12 @@
     </texttable>
 
     <t>
-      Under the given circumstances, if a client was to read from the file
-      with a max read size of 64K, the following will be
-      the results for the given READ_PLUS calls.  This assumes the client has already opened the file,
-      acquired a valid stateid ('s' in the example), and just needs to issue READ_PLUS requests.
+      Under the given circumstances, if a client was to read from
+      the file with a max read size of 64K, the following will be
+      the results for the given READ_PLUS calls.  This assumes the
+      client has already opened the file, acquired a valid stateid
+      ('s' in the example), and just needs to issue READ_PLUS
+      requests.
     </t>
 
     <t>

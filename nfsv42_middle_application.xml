@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='sec:adh' title='Application Data Hole Support'>
+<section anchor='sec:adb' title='Application Data Block Support'>
   <t>
     At the OS level, files are contained on disk
     blocks.  Applications are also free to impose structure on the
@@ -9,7 +9,7 @@
     Block (ADB) to be such a structure. From the application's
     viewpoint, it only wants to handle ADBs and not raw bytes (see
     <xref target='Strohm11' />). An ADB is typically
-    comprised of two sections: a header and data. The header
+    comprised of two sections: header and data. The header
     describes the characteristics of the block and can provide
     a means to detect corruption in the data payload.
     The data section is typically initialized to all zeros.
@@ -23,9 +23,11 @@
   <t>
     <list style='numbers'>
       <t>
-        A logical block number which allows the application to determine which
-        data block is being referenced.  This is useful when the
-        client is not storing the blocks in contiguous memory.
+        An Application Data Block Number (ADBN) which allows
+        the application to determine which data block is being
+        referenced.  This is useful when the client is not
+        storing the blocks in contiguous memory, i.e., a logical
+        block number.
       </t>
 
       <t>
@@ -46,34 +48,30 @@
     in data blocks <xref target='Ashdown08' />.
     What they are not able to do is efficiently transfer and
     store ADBs. To initialize a file with ADBs, the client
-    must send the full ADB to the server and that must be stored
+    must send each full ADB to the server and that must be stored
     on the server.
   </t>
 
   <t>
-    In this section, we are going to define an Application Data
-    Hole (ADH), which is a generic framework
-    for transferring the  ADB, present one approach to detecting corruption in
-    a given ADH implementation, and describe the model for
-    how the client and server can support efficient initialization
-    of ADHs, reading of ADH holes, punching ADH holes in a file, and space
-    reservation. We define the ADHN to be the Application Data Hole
-    Number, which is the logical block number discussed earlier.
+    In this section, we are going to define a framework
+    for transferring the ADB from client to server and
+    present one approach to detecting corruption in
+    a given ADB implementation.
   </t>
 
-  <section anchor='ss:adh:framework' title='Generic Framework'>
+  <section anchor='ss:adb:framework' title='Generic Framework'>
     <t>
-      We want the representation of the ADH to be flexible
+      We want the representation of the ADB to be flexible
       enough to support many different applications. The most
       basic approach is no imposition of a block at all, which
       means we are working with the raw bytes. Such an approach
       would be useful for storing holes, punching holes, etc.
       In more complex deployments, a server might be supporting
       multiple applications, each with their own definition of
-      the ADH. One might store the ADHN at the start of the block
+      the ADB. One might store the ADBN at the start of the block
       and then have a guard pattern to detect corruption
       <xref target='McDougall07' />. The next
-      might store the ADHN at an offset of 100 bytes within the
+      might store the ADBN at an offset of 100 bytes within the
       block and have no guard pattern at all, i.e.,
       existing applications might already have well defined
       formats for their data blocks.
@@ -83,7 +81,7 @@
       The guard pattern can be used to represent the state of
       the block, to protect against corruption, or both. Again,
       it needs to be able to be placed anywhere within the
-      ADH.
+      ADB.
     </t>
 
     <t>
@@ -93,41 +91,30 @@
       sized blocks in a file.
     </t>
 
-    <section anchor='ss:adh:dh' title='Data Hole Representation'>
-      <?rfc include='autogen/app_data_hole4.xml'?>
+    <section anchor='ss:adb:dh' title='Data Block Representation'>
+      <?rfc include='autogen/app_data_block4.xml'?>
 
       <t>
-        The app_data_hole4 structure captures the abstraction presented
-        for the ADH. The additional fields present are to allow
-        the transmission of adh_block_count ADHs at one time.  We
-        also use adh_block_num to convey the ADHN of the first block
-        in the sequence.  Each ADH will contain the same adh_pattern
+        The app_data_block4 structure captures the abstraction presented
+        for the ADB. The additional fields present are to allow
+        the transmission of adb_block_count ADBs at one time.  We
+        also use adb_block_num to convey the ADBN of the first block
+        in the sequence.  Each ADB will contain the same adb_pattern
         string.
       </t>
 
       <t>
-        As both adh_block_num and adh_pattern are optional, if
-        either adh_reloff_pattern or adh_reloff_blocknum is set
+        As both adb_block_num and adb_pattern are optional, if
+        either adb_reloff_pattern or adb_reloff_blocknum is set
         to NFS4_UINT64_MAX, then the corresponding field is not
-        set in any of the ADH.
-      </t>
-    </section>
-
-    <section anchor='ss:adh:dc' title='Data Content'>
-      <?rfc include='autogen/data_content4.xml'?>
-
-      <t>
-        New operations might need to differentiate between
-        wanting to access data versus an ADH. Also, future
-        minor versions might want to introduce new data
-        formats. This enumeration allows that to occur.
+        set in any of the ADB.
       </t>
     </section>
   </section>
 
-  <section anchor='ss:adh:corrupt' title='An Example of Detecting Corruption'>
+  <section anchor='ss:adb:corrupt' title='An Example of Detecting Corruption'>
     <t>
-      In this section, we define an ADH format in which
+      In this section, we define an ADB format in which
       corruption can be detected. Note that this is just
       one possible format and means to detect corruption.
     </t>
@@ -155,7 +142,7 @@
       <list style='hanging'>
         <t hangText='0xfeedface - '>
           This is the FREE state and indicates that the
-          ADH format has been applied.
+          ADB format has been applied.
         </t>
 
         <t hangText='0xcafedead - '>
@@ -183,7 +170,7 @@
       contents of the block. If the state is FREE, then
       that checksum is trivially zero. As such, the application
       has no need to transfer the checksum implicitly inside the
-      ADH - it need not make the transfer layer aware of the
+      ADB - it need not make the transfer layer aware of the
       fact that there is a checksum (see
       <xref target='Ashdown08' /> for an example
       of checksums used to detect corruption in application
@@ -191,7 +178,7 @@
     </t>
 
     <t>
-      Corruption in each ADH can thus be detected:
+      Corruption in each ADB can thus be detected:
     </t>
 
     <t>
@@ -203,7 +190,7 @@
 
         <t>
           If the guard pattern is FREE and any other
-          byte in the remainder of the ADH is anything other
+          byte in the remainder of the ADB is anything other
           than zero.
         </t>
 
@@ -216,7 +203,7 @@
         <t>
           If the guard pattern is INDIRECT and one of the
           stored indirect block numbers has a value greater
-          than the number of ADHs in the file.
+          than the number of ADBs in the file.
         </t>
 
         <t>
@@ -231,7 +218,7 @@
       As can be seen, the application can detect errors based
       on the combination of the guard pattern state and the
       checksum. But also, the application can detect corruption
-      based on the state and the contents of the ADH.
+      based on the state and the contents of the ADB.
       This last point is important in validating the minimum
       amount of data we incorporated into our generic
       framework. I.e., the guard pattern is sufficient
@@ -252,10 +239,11 @@
   <section anchor='ss:adh:ex_rp' title='Example of READ_PLUS'>
     <t>
       The hypothetical application presented in
-      <xref target='ss:adh:corrupt' /> can be used to
+      <xref target='ss:adb:corrupt' /> can be used to
       illustrate how READ_PLUS would return an array
       of results. A file is created and initialized
-      with 100 4k ADHs in the FREE state:
+      with 100 4k ADBs in the FREE state with the WRITE_SAME
+      operation (see <xref target='op:write_same' />):
     </t>
 
     <figure>
@@ -266,28 +254,40 @@
 
     <t>
       Further, assume the application writes a single
-      ADH at 16k, changing the guard pattern to 0xcafedead,
+      ADB at 16k, changing the guard pattern to 0xcafedead,
       we would then have in memory:
     </t>
 
     <figure>
       <artwork>
-   0 -> (16k - 1)   : 4k, 4, 0, 0, 8, 0xfeedface
-   16k -> (20k - 1) : 00 00 00 05 ca fe de ad XX XX ... XX XX
-   20k -> 400k      : 4k, 95, 0, 6, 0xfeedface
+    0k ->   (4k - 1) : 00 00 00 00 fe ed fa ce 00 00 ... 00 00
+    4k ->   (8k - 1) : 00 00 00 01 fe ed fa ce 00 00 ... 00 00
+    8k ->  (12k - 1) : 00 00 00 02 fe ed fa ce 00 00 ... 00 00
+   12k ->  (16k - 1) : 00 00 00 03 fe ed fa ce 00 00 ... 00 00
+   16k ->  (20k - 1) : 00 00 00 04 ca fe de ad 00 00 ... 00 00
+   20k ->  (24k - 1) : 00 00 00 05 fe ed fa ce 00 00 ... 00 00
+   24k ->  (28k - 1) : 00 00 00 06 fe ed fa ce 00 00 ... 00 00
+      ...
+  396k -> (400k - 1) : 00 00 00 63 fe ed fa ce 00 00 ... 00 00
       </artwork>
     </figure>
 
     <t>
      And when the client did a READ_PLUS of 64k at the start of the file,
-     it would get back a result of an ADH, some data, and a final ADH:
+     it could get back a result of data:
     </t>
 
     <figure>
       <artwork>
-   ADH {0, 4, 0, 0, 8, 0xfeedface}
-   data 4k
-   ADH {20k, 4k, 59, 0, 6, 0xfeedface}
+    0k ->   (4k - 1) : 00 00 00 00 fe ed fa ce 00 00 ... 00 00
+    4k ->   (8k - 1) : 00 00 00 01 fe ed fa ce 00 00 ... 00 00
+    8k ->  (12k - 1) : 00 00 00 02 fe ed fa ce 00 00 ... 00 00
+   12k ->  (16k - 1) : 00 00 00 03 fe ed fa ce 00 00 ... 00 00
+   16k ->  (20k - 1) : 00 00 00 04 ca fe de ad 00 00 ... 00 00
+   20k ->  (24k - 1) : 00 00 00 05 fe ed fa ce 00 00 ... 00 00
+   24k ->  (24k - 1) : 00 00 00 06 fe ed fa ce 00 00 ... 00 00
+      ...
+   62k ->  (64k - 1) : 00 00 00 15 fe ed fa ce 00 00 ... 00 00
       </artwork>
     </figure>
   </section>

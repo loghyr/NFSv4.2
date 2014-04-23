@@ -465,14 +465,15 @@ specifications of each URI scheme.
   <format type='HTML' target='http://www.usenix.org/events/fast08/tech/full_papers/bairavasundaram/bairavasundaram.pdf' />
 </reference>
 
-    <reference anchor="Quigley11">
+    <reference anchor="Quigley14">
       <front>
-        <title>Registry Specification for MAC Security Label Formats</title>
+        <title>Registry Specification for Mandatory Access Control (MAC) Security Label Formats</title>
         <author initials="D." surname="Quigley" />
         <author initials="J." surname="Lu" />
-        <date year="2011" />
+        <author initials="T." surname="Haynes" />
+        <date year="2014" />
       </front>
-      <seriesInfo name="draft-quigley-label-format-registry" value="(work in progress)"/>
+      <seriesInfo name="draft-quigley-nfsv4-lfs-registry-00" value="(work in progress)"/>
     </reference>
 
   <reference anchor='MLS'>
@@ -489,17 +490,37 @@ specifications of each URI scheme.
 ml/Deployment_Guide/sec-mls-ov.html' />
   </reference>
 
-    <reference anchor="Haynes13">
+    <reference anchor='RFC7204'>
       <front>
-        <title>
-          Requirements for Labeled NFS
-        </title>
-        <author initials='T.' surname='Haynes' fullname='T. Haynes'>
-          <organization>NetApp</organization>
+        <title>Requirements for Labeled NFS</title>
+        <author initials="T." surname="Haynes" fullname="T. Haynes">
+          <organization>Primary Data, Inc.</organization>
         </author>
-        <date year="2013" />
+        <date year="2014" month="April" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-labreqs-04" value="(work in progress)" />
+        <seriesInfo name="RFC" value="7204"/>
+        <format type="TXT" octets="40348"
+          target="ftp://ftp.isi.edu/in-notes/rfc7204.txt"/>
     </reference>
+
+     <reference anchor="T10-SBC2">
+       <front>
+         <title>
+           ANSI INCITS 405-2005, Information Technology - SCSI Block Commands - 2 (SBC-2)
+         </title>
+         <author role="editor" initials="R." surname="Elliott" fullname="R. Elliot">
+           <organization>Hewlett-Packard Corporation</organization>
+         </author>
+         <date year="2004" month="November"/>
+         <abstract>
+           <t>  
+             SBC-2 describes the second-generation command sets for
+             block-oriented direct-access devices such as magnetic disk drives.
+           </t> 
+         </abstract>
+       </front>
+       <format type="TXT" 
+         target="ftp://www.t10.org/t10/document.05/05-344r0.pdf"/>
+     </reference>
 
 </references>

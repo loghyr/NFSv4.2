@@ -3,6 +3,7 @@
 
 <section anchor='op:write_hole' title='Operation 64: WRITE_HOLE'>
   <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/stable_how4.xml'?>
     <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/write_hole_args.xml'?>
   </section>
@@ -14,18 +15,50 @@
 
   <section toc='exclude' anchor='op:write_hole:desc'  title="DESCRIPTION">
     <t>
-      The WRITE_HOLE operation is an extension of the NFSv4.1 WRITE
-      operation (see Section 18.2 of <xref target="RFC5661" />) and
-      writes holes to the regular file identified by the
-      current filehandle.  The server MAY write fewer bytes than
-      requested by the client.
+      Whenever a client wishes to reinitialize the blocks backing
+      a particular region in the file, it calls the WRITE_HOLE
+      operation with the current filehandle set to the filehandle
+      of the file in question, and the equivalent of start offset
+      and length in bytes of the region set in wh_hole.di_offset
+      and wh_hole.di_length respectively.  If the wh_hole.di_allocated
+      is set to TRUE, then the blocks will be zeroed and if it is
+      set to FALSE, then they will be deallocated. All further reads
+      to this region MUST return zeros until overwritten.  The
+      filehandle specified must be that of a regular file.
     </t>
 
     <t>
-      A successful WRITE_HOLE will construct a reply for wr_count, wr_committed,
-      and wr_writeverf as per the NFSv4.1 WRITE operation results.
-      If wr_callback_id is set, it indicates an asynchronous reply
-      (see <xref target='op:write_hole:async' />).
+      The client specifies with the ws_stable parameter the method of how the
+      data is to be processed by the server.  It is treated like the stable
+      parameter in the NFSv4.1 WRITE operation (see Section 18.2 of
+      <xref target="RFC5661" />).
+    </t>
+
+    <t>
+      Situations may arise where di_offset and/or di_offset +
+      di_length will not be aligned to a boundary for which the
+      server does allocations or deallocations.  For most file
+      systems, this is the block size of the file system.  In such
+      a case, the server can deallocate as many bytes as it can in
+      the region.  The blocks that cannot be deallocated MUST be
+      zeroed.  Except for the block deallocation and maximum hole
+      punching capability, a WRITE_HOLE operation is to be treated
+      similar to a write of zeroes.
+    </t>
+
+    <t>
+      The server is not required to complete deallocating the blocks
+      specified in the operation before returning.  The server
+      SHOULD return an asynchronous result if it can determine the
+      operation will be long running (see
+      <xref target='op:write_hole:async' />).
+    </t>
+
+    <t>
+      A successful WRITE_HOLE will construct a reply for wr_count,
+      wr_committed, and wr_writeverf as per the NFSv4.1 WRITE
+      operation results.  If wr_callback_id is set, it indicates
+      an asynchronous reply (see <xref target='op:write_hole:async' />).
     </t>
 
     <t>
@@ -34,55 +67,21 @@
       If the client supports WRITE_HOLE, it MUST support CB_OFFLOAD. 
     </t>
 
-    <section title="Hole punching">
-      <t>
-        Whenever a client wishes to reinitialize the blocks backing a
-        particular region in the file, it calls the WRITE_HOLE operation with
-        the current filehandle set to the filehandle of the file in question,
-        and the equivalent of start offset and length in bytes of the region
-        set in wh_hole.di_offset and wh_hole.di_length respectively.  If the
-        wh_hole.di_allocated is set to TRUE, then the blocks will be zeroed and
-        if it is set to FALSE, then they will be deallocated. All
-        further reads to this region MUST return zeros until overwritten.
-        The filehandle specified must be that of a regular file.
-      </t>
+    <t>
+      If used to hole punch, WRITE_HOLE will result in the space_used
+      attribute being decreased by the number of bytes that were
+      deallocated.  The space_freed attribute
+      may or may not decrease, depending on the support and whether the
+      blocks backing the specified range were shared or not.  The size
+      attribute will remain unchanged.
+    </t>
 
-      <t>
-        Situations may arise where di_offset and/or
-        di_offset + di_length will not be aligned to a
-        boundary for which the server does allocations/deallocations.  For
-        most file systems, this is the block size of
-        the file system.  In such a case, the server can deallocate as many
-        bytes as it can in the region.  The blocks that cannot be deallocated
-        MUST be zeroed.  Except for the block deallocation and maximum hole
-        punching capability, a WRITE_HOLE operation is to be treated similar
-        to a write of zeroes.
-      </t>
-
-      <t>
-        The server is not required to complete deallocating the blocks
-        specified in the operation before returning.  The server SHOULD
-        return an asynchronous result if it can determine the
-        operation will be long running
-        (see <xref target='op:write_hole:async' />).
-      </t>
-
-      <t>
-        If used to hole punch, WRITE_HOLE will result in the space_used
-        attribute being decreased by the number of bytes that were
-        deallocated.  The space_freed attribute
-        may or may not decrease, depending on the support and whether the
-        blocks backing the specified range were shared or not.  The size
-        attribute will remain unchanged.
-      </t>
-
-      <t>
-        The WRITE_HOLE operation MUST NOT change the space reservation
-        guarantee of the file.  While the server can deallocate the blocks
-        specified by di_offset and di_length, future writes to this region
-        MUST NOT fail with NFSERR_NOSPC.
-      </t>
-    </section>
+    <t>
+      The WRITE_HOLE operation MUST NOT change the space reservation
+      guarantee of the file.  While the server can deallocate the blocks
+      specified by di_offset and di_length, future writes to this region
+      MUST NOT fail with NFSERR_NOSPC.
+    </t>
 
     <section anchor='op:write_hole:async' title='Asynchronous Transactions'>
       <t>

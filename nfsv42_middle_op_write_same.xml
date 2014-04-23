@@ -3,7 +3,8 @@
 
 <section anchor='op:write_same' title='Operation 68: WRITE_SAME'>
   <section toc='exclude' title="ARGUMENT">
-    <?rfc include='autogen/app_data_hole4.xml'?>
+    <?rfc include='autogen/stable_how4.xml'?>
+    <?rfc include='autogen/app_data_block4.xml'?>
     <?rfc include='autogen/write_same_args.xml'?>
   </section>
 
@@ -14,147 +15,90 @@
 
   <section toc='exclude' anchor='op:write_same:desc'  title="DESCRIPTION">
     <t>
-      The WRITE_SAME operation is an extension of the NFSv4.1 WRITE
-      operation (see Section 18.2 of <xref target="RFC5661" />) and
-      writes data to the regular file identified by the
-      current filehandle.  The server MAY write fewer bytes than
-      requested by the client.
+      The WRITE_SAME operation writes an application data block to
+      the regular file identified by the current filehandle (see
+      WRITE SAME (10) in <xref target='T10-SBC2' />).  The
+      target file is specified by the current filehandle.  The data
+      to be written is specified by an app_data_block4 structure
+      (<xref target="ss:adb:dh"/>).  The client specifies with the
+      ws_stable parameter the method of how the data is to be
+      processed by the server.  It is treated like the stable
+      parameter in the NFSv4.1 WRITE operation (see Section 18.2
+      of <xref target="RFC5661" />).
     </t>
 
     <t>
-      The WRITE_SAME argument is comprised of an array of rpr_contents, each of
-      which describe a data_content4 type of data (<xref target="ss:adh:dc" />).
-      For NFSv4.2, the allowed values are data, ADH, and hole.
-      The array contents MUST be contiguous in the file. A successful
-      WRITE_SAME will construct a reply for wr_count, wr_committed,
-      and wr_writeverf as per the NFSv4.1 WRITE operation results.
-      If wr_callback_id is set, it indicates an asynchronous reply
-      (see <xref target='op:write_same:async' />).
+      A successful WRITE_SAME will construct a reply for wr_count,
+      wr_committed, and wr_writeverf as per the NFSv4.1 WRITE
+      operation results.  If wr_callback_id is set, it indicates
+      an asynchronous reply (see <xref target='op:write_same:async' />).
     </t>
 
     <t>
-      WRITE_SAME has to support all of the errors which are returned by WRITE
-      plus NFS4ERR_NOTSUPP, i.e., it is an OPTIONAL operation.
-      If the client supports WRITE_SAME, it MUST support CB_OFFLOAD.
+      WRITE_SAME has to support all of the errors which are returned
+      by WRITE plus NFS4ERR_NOTSUPP, i.e., it is an OPTIONAL
+      operation.  If the client supports WRITE_SAME, it MUST support
+      CB_OFFLOAD.
     </t>
 
-    <section title="ADHs">
-      <t>
-        If the server supports ADHs, then it MUST support the
-        WRITE_SAME operation.
-        The server has no concept of the structure imposed
-        by the application. It is only when the application
-        writes to a section of the file does order get imposed.
-        In order to detect corruption even before the application
-        utilizes the file, the application will want to initialize
-        a range of ADHs using WRITE_SAME.
-      </t>
+    <t>
+     If the server supports ADBs, then it MUST support the
+     WRITE_SAME operation.  The server has no concept of the
+     structure imposed by the application. It is only when the
+     application writes to a section of the file does order get
+     imposed.  In order to detect corruption even before the
+     application utilizes the file, the application will want
+     to initialize a range of ADBs using WRITE_SAME.
+    </t>
 
-      <t>
-        For ADHs, when the client invokes the WRITE_SAME operation, it has
-        two desired results:
-      </t>
+    <t>
+      When the client invokes the WRITE_SAME operation, it wants
+      to record the block structure described by the app_data_block4
+      on to the file.
+    </t>
 
-      <t>
-        <list style='numbers'>
-          <t>
-            The structure described by the app_data_block4 be imposed
-            on the file.
-          </t>
+    <t>
+      When the server receives the WRITE_SAME operation, it MUST
+      populate adb_block_count ADBs in the file starting at adb_offset.
+      The block size will be given by adb_block_size. The ADBN (if
+      provided) will start at adb_reloff_blocknum and each block
+      will be monotonically numbered starting from adb_block_num
+      in the first block. The pattern (if provided) will be at
+      adb_reloff_pattern of each block and will be provided in
+      adb_pattern.
+    </t>
 
-          <t>
-            The contents described by the app_data_block4 be sparse.
-          </t>
-        </list>
-      </t>
-
-      <t>
-        If the server supports the WRITE_SAME operation, it still
-        might not support sparse files. So if it receives the
-        WRITE_SAME operation, then it MUST populate the contents
-        of the file with the initialized ADHs. The server SHOULD
-        return an asynchronous result if it can determine the
-        operation will be long running
-        (see <xref target='op:write_same:async' />).
-      </t>
-
-      <t>
-        If the data was already initialized, there are two
-        interesting scenarios:
-      </t>
-
-      <t>
-        <list style='numbers'>
-          <t>
-            The data blocks are allocated.
-          </t>
-
-          <t>
-            Initializing in the middle of an existing ADH.
-          </t>
-        </list>
-      </t>
-
-      <t>
-        If the data blocks were already allocated, then
-        the WRITE_SAME is a hole punch operation. If
-        WRITE_SAME supports sparse files, then the data
-        blocks are to be deallocated. If not, then the
-        data blocks are to be rewritten in the indicated
-        ADH format.
-      </t>
-
-      <t>
-        Since the server has no knowledge of ADHs, it
-        should not report misaligned creation of ADHs.
-        Even while it can detect them, it cannot disallow
-        them, as the application might be in the process of
-        changing the size of the ADHs. Thus the server
-        must be prepared to handle an WRITE_SAME into
-        an existing ADH.
-      </t>
-
-      <t>
-        This document does not mandate the manner in
-        which the server stores ADHs sparsely for a
-        file. However, if an WRITE_SAME arrives that
-        will force a new ADH to start inside an
-        existing ADH then the server will have three
-        ADHs instead of two. It will have one up to
-        the new one for the WRITE_SAME, one for the
-        WRITE_SAME, and one for after the WRITE_SAME.
-        Note that depending on server specific policies
-        for block allocation, there may also be some
-        physical blocks allocated to align the boundaries.
-      </t>
-    </section>
+    <t>
+      The server SHOULD return an asynchronous result if it can
+      determine the operation will be long running (see
+      <xref target='op:write_same:async' />). This document does not mandate
+      the manner in which the server stores ADBs for a file. Once
+      either the WRITE_SAME finishes synchronously or the server
+      uses CB_OFFLOAD to inform the client of the asynchronous
+      completion of the WRITE_SAME, the server MUST return the ADBs
+      to clients as data.
+    </t>
 
     <section anchor='op:write_same:async' title='Asynchronous Transactions'>
       <t>
-        ADH initialization may 
-        lead to server determining to service the
-        operation asynchronously. If it decides to
-        do so, it sets the stateid in wr_callback_id
-        to be that of the ws_stateid. If it does
-        not set the wr_callback_id, then the result
-        is synchronous.
+	      ADB initialization may lead to server determining to service
+	      the operation asynchronously. If it decides to do so, it
+	      sets the stateid in wr_callback_id to be that of the
+	      ws_stateid. If it does not set the wr_callback_id, then the
+	      result is synchronous.
       </t>
 
       <t>
-        When the client determines that the reply
-        will be given asynchronously, it should not
-        assume anything about the contents of what
-        it wrote until it is informed by the server
-        that the operation is complete. It can
-        use OFFLOAD_STATUS (<xref target="op:offload_status" />)
-        to monitor the operation and
-        OFFLOAD_ABORT (<xref target="op:offload_abort" />)
-        to cancel the operation. An example of
-        a asynchronous WRITE_SAME is shown in
-        <xref target='fig:async-write_same' />. Note that
-        as with the COPY operation, WRITE_SAME must
-        provide a stateid for tracking the asynchronous
-        operation.
+	      When the client determines that the reply will be given
+	      asynchronously, it should not assume anything about the
+	      contents of what it wrote until it is informed by the server
+	      that the operation is complete. It can use OFFLOAD_STATUS
+	      (<xref target="op:offload_status" />) to monitor the operation
+	      and OFFLOAD_ABORT (<xref target="op:offload_abort" />) to
+	      cancel the operation. An example of a asynchronous WRITE_SAME
+	      is shown in <xref target='fig:async-write_same' />. Note
+	      that as with the COPY operation, WRITE_SAME must provide a
+	      stateid for tracking the asynchronous operation.
       </t>
 
       <figure title="An asynchronous WRITE_SAME." anchor="fig:async-write_same">
@@ -165,8 +109,8 @@
      |--- OPEN ---------------------------->| Client opens
      |<------------------------------------/| the file
      |                                      |
-     |--- WRITE_SAME ---------------------->| Client initializes
-     |<------------------------------------/| an ADH
+     |--- WRITE_SAME ----------------------->| Client initializes
+     |<------------------------------------/| an ADB
      |                                      |
      |                                      |
      |--- OFFLOAD_STATUS ------------------>| Client may poll
@@ -200,9 +144,9 @@
         as outlined in Section 18.3 of <xref target="RFC5661" />.
         I.e., COMMIT works on one or more WRITE operations and the
         WRITE_SAME operation can appear as several WRITE operations
-        to the server.  The client can use locking operations to control the behavior
-        on the server with respect to long running asynchronous
-        write operations.
+        to the server.  The client can use locking operations to
+        control the behavior on the server with respect to long running
+        asynchronous write operations.
       </t>
     </section>
   </section>

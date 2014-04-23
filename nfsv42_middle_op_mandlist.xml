@@ -105,8 +105,8 @@
         Server Side Copy
       </t>
 
-      <t hangText='ADH'>
-        Application Data Holes
+      <t hangText='ADB'>
+        Application Data Blocks
       </t>
     </list>
   </t>
@@ -159,7 +159,7 @@
       <c>READ                 </c> <c> REQ (OBS)</c> <c>              </c>
       <c>READDIR              </c> <c> REQ </c> <c>              </c>
       <c>READLINK             </c> <c> OPT </c> <c>              </c>
-      <c>READ_PLUS            </c> <c> OPT </c> <c> ADH (REQ)    </c>
+      <c>READ_PLUS            </c> <c> OPT </c> <c>              </c>
       <c>RECLAIM_COMPLETE     </c> <c> REQ </c> <c>              </c>
       <c>RELEASE_LOCKOWNER    </c> <c> MNI </c> <c>              </c>
       <c>REMOVE               </c> <c> REQ </c> <c>              </c>
@@ -179,7 +179,7 @@
       <c>WANT_DELEGATION      </c> <c> OPT </c> <c> FDELG (OPT)  </c>
       <c>WRITE                </c> <c> REQ </c> <c>              </c>
       <c>WRITE_HOLE           </c> <c> OPT </c> <c>              </c>
-      <c>WRITE_SAME           </c> <c> OPT </c> <c> ADH (REQ)    </c>
+      <c>WRITE_SAME           </c> <c> OPT </c> <c> ADB (REQ)    </c>
   </texttable>
 
   <texttable>

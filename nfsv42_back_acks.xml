@@ -47,7 +47,11 @@
     Sorin Faibish, Nico Williams, and David Black also contributed in the
     final push to get this accepted.
   </t>
-
+  <t>
+    Christoph Hellwig was very helpful in getting the WRITE_SAME semantics
+    to model more of what T10 was doing for WRITE SAME (10)
+    <xref target='T10-SBC2' />.
+  </t>
   <t>
     During the review process, Talia Reyes-Ortiz helped the sessions
     run smoothly. While many people contributed here and there, the

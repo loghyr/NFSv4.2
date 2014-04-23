@@ -1003,7 +1003,7 @@ enum nfs_opnum4 {
  OP_READ_PLUS		= 65,
  OP_SEEK		= 66,
  OP_IO_ADVISE		= 67,
- OP_WRITE_SAME		= 68,
+ OP_WRITE_ADB		= 68,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1124,7 +1124,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
  case OP_SEEK:		SEEK4args opseek;
  case OP_IO_ADVISE:	IO_ADVISE4args opio_advise;
- case OP_WRITE_SAME:	WRITE_SAME4args opwrite_same;
+ case OP_WRITE_ADB:	WRITE_ADB4args opwrite_adb;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	void;
@@ -1255,7 +1255,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
  case OP_SEEK:		SEEK4res opseek;
  case OP_IO_ADVISE:	IO_ADVISE4res opio_advise;
- case OP_WRITE_SAME:	WRITE_SAME4res opwrite_same;
+ case OP_WRITE_ADB:	WRITE_ADB4res opwrite_adb;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	ILLEGAL4res opillegal;
@@ -1371,17 +1371,17 @@ EOF
 
 	;;
 
-	app_data_hole4.x )
+	app_data_block4.x )
 
 cat << EOF > $i
-struct app_data_hole4 {
-	offset4		adh_offset;
-	length4		adh_block_size;
-	length4		adh_block_count;
-	length4		adh_reloff_blocknum;
-	count4		adh_block_num;
-	length4		adh_reloff_pattern;
-	opaque		adh_pattern<>;
+struct app_data_block4 {
+	offset4		adb_offset;
+	length4		adb_block_size;
+	length4		adb_block_count;
+	length4		adb_reloff_blocknum;
+	count4		adb_block_num;
+	length4		adb_reloff_pattern;
+	opaque		adb_pattern<>;
 };
 EOF
 
@@ -1419,8 +1419,7 @@ cat << EOF > $i
  */
 enum data_content4 {
 	NFS4_CONTENT_DATA = 0,
-	NFS4_CONTENT_APP_DATA_HOLE = 1,
-	NFS4_CONTENT_HOLE = 2
+	NFS4_CONTENT_HOLE = 1
 };
 EOF
 
