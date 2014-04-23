@@ -1003,7 +1003,7 @@ enum nfs_opnum4 {
  OP_READ_PLUS		= 65,
  OP_SEEK		= 66,
  OP_IO_ADVISE		= 67,
- OP_WRITE_ADB		= 68,
+ OP_WRITE_SAME		= 68,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1124,7 +1124,7 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
  case OP_SEEK:		SEEK4args opseek;
  case OP_IO_ADVISE:	IO_ADVISE4args opio_advise;
- case OP_WRITE_ADB:	WRITE_ADB4args opwrite_adb;
+ case OP_WRITE_SAME:	WRITE_SAME4args opwrite_same;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	void;
@@ -1255,7 +1255,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
  case OP_SEEK:		SEEK4res opseek;
  case OP_IO_ADVISE:	IO_ADVISE4res opio_advise;
- case OP_WRITE_ADB:	WRITE_ADB4res opwrite_adb;
+ case OP_WRITE_SAME:	WRITE_SAME4res opwrite_same;
 
  /* Operations not new to NFSv4.1 */
  case OP_ILLEGAL:	ILLEGAL4res opillegal;
