@@ -1,0 +1,57 @@
+1) space_reserved flag - what does it mean now that reservations
+   are byte ranges?
+
+   See the recent chatter on the WG.
+
+2) Do we want to maintain punch hole versus write zeros OR do we
+   want to leave that to the server?
+
+   We added this, but is it realistic?
+
+   Also, is it a hint or mandatory?
+
+   Either way, I want us to revisit it.
+
+3) Need to document that we honor all NFSv4.1 Layout Types, stateids
+   have not changed, etc.
+
+   See the recent WG ML chatter over all of this.
+
+4) Labeled NFS - FATTR4_CHANGE_SEC_LABEL - how big does it need to
+   be?  Is seLinux going to support it?
+
+   The Labeled NFS prototype in use does not currently support
+   change_sec_label.
+
+   In the past, we argued about how big it needed to be - we need
+   to close down on this.
+
+5) Consecutive byte copy flag and status updates for SSC
+
+   Source modifies the cnr_copy_source to inform both the client
+   and the destination as to whether each copy engine is going to
+   copy bytes in consecutive order or not.
+
+   Destination will need to modify the return from COPY to tell the
+   client whether the copy engine it selected is doing consecutive
+   order or not.
+
+   Actually, it could return the item in the ca_copy_source that
+   it selected.  This would allow the client to be aware of the
+   selected copy engine as well.
+
+6) Client wants to only do synchronous SSC or ALLOCATE or WRITE_HOLE
+
+   The client wants to inform the destination in a SSC that it only
+   wants to do the COPY iff the operation is going to synchronous.
+
+   The client wants to inform the server that it only wants to
+   do the ALLOCATE iff the operation is going to synchronous.
+
+   The client wants to inform the server that it only wants to
+   do the WRITE_HOLE iff the operation is going to synchronous.
+
+   Some issues here are that for the SSC, the destination might
+   have done some I/O before it decides that the COPY is going to
+   be asynchronous???
+
