@@ -5,7 +5,7 @@
   <section anchor="sec:pLeh:intro" toc='exclude' title="Introduction">
     <t>
       In the pNFS description provided in <xref target="RFC5661" />,
-      the client is not capable to relay an error code from the
+      the client is not capable of relaying an error code from the
       DS to the MDS. In the specification of the Object
       Layout Type <xref target='RFC5664' />, use is made of the
       opaque lrf_body field of the LAYOUTRETURN argument to
