@@ -18,7 +18,7 @@
     <t>
       In addition many modern filesystems support the concept of 'unwritten'
       or 'uninitialized' blocks, which have uninitialized space allocated to
-      them on disk, but will return 0s until data is written to them.  Such
+      them on disk, but will return zeros until data is written to them.  Such
       functionality is already present in the data model of the pNFS
       Block/Volume Layout (see <xref target="RFC5663" />).  Uninitialized
       blocks can thought as holes inside a space reservation window.

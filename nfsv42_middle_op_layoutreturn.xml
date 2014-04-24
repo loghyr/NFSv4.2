@@ -1,13 +1,13 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:pLeh:LAYOUTRETURN" title="Changes to Operation 51: LAYOUTRETURN">
   <section anchor="sec:pLeh:intro" toc='exclude' title="Introduction">
     <t>
       In the pNFS description provided in <xref target="RFC5661" />,
       the client is not capable to relay an error code from the
-      DS to the MDS. In the specification of the Objects-Based
-      Layout protocol <xref target='RFC5664' />, use is made of the
+      DS to the MDS. In the specification of the Object
+      Layout Type <xref target='RFC5664' />, use is made of the
       opaque lrf_body field of the LAYOUTRETURN argument to
       do such a relaying of error codes. In this section,
       we define a new data structure to enable the passing
@@ -69,7 +69,6 @@
     </t>
 
     <?rfc include='autogen/type_layoutreturn_errs.xml'?>
-
   </section>
 
   <section anchor="sec:pLeh:LAYOUTRETURN:res" toc='exclude' title="RESULT">
@@ -90,10 +89,11 @@
       then if the lrf_body field is NULL, it indicates to the MDS
       that the client experienced no errors. If lrf_body is non-NULL,
       then the field references error information which is layout type
-      specific. I.e., the Objects-Based Layout protocol
-      can continue to utilize lrf_body as specified in <xref target='RFC5664' />.
-      For both Files-Based and Block-Based Layouts, the field references a
-      layoutreturn_device_error4, which contains an array of layoutreturn_device_error4.
+      specific. I.e., the Object Layout Type can continue to utilize
+      lrf_body as specified in <xref target='RFC5664' />.  For both
+      File <xref target="RFC5661" /> and Block <xref target="RFC5663" />
+      Layout Types, the field references a layoutreturn_device_error4,
+      which contains an array of layoutreturn_device_error4.
     </t>
 
     <t>
