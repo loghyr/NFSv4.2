@@ -1,0 +1,43 @@
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
+
+<section anchor='op:deallocate' title='Operation 70: DEALLOCATE'>
+  <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/deallocate_args.xml'?>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/deallocate_res.xml'?>
+  </section>
+
+  <section toc='exclude' anchor='op:deallocate:desc'  title="DESCRIPTION">
+    <t>
+      Whenever a client wishes to unreserve space for a region in a file it calls
+      the DEALLOCATE operation with the current filehandle set to the filehandle
+      of the file in question, and the start offset and length in bytes of
+      the region set in aa_offset and aa_length respectively.  If no space was
+      allocated to or reservered for all or parts of the region, the DEALLOCATE
+      operation will have no effect for the region that already is in unreserved
+      state.
+      All further reads from the region passed to DEALLOCATE MUST return zeros
+      until overwritten.  The filehandle specified must be that of a regular file.
+    </t>
+
+    <t>
+      Situations may arise where da_offset and/or da_offset + da_length will
+      not be aligned to a boundary for which the server does allocations or
+      deallocations.  For most file systems, this is the block size of the
+      filesystem.  In such a case, the server can deallocate as many bytes as
+      it can in the region.  The blocks that cannot be deallocated MUST be
+      zeroed.
+    </t>
+
+    <t>
+      DEALLOCATE will result in the space_used attribute being decreased by
+      the number of bytes that were deallocated.  The space_freed attribute
+      may or may not decrease, depending on the support and whether the
+      blocks backing the specified range were shared or not.  The size
+      attribute will remain unchanged.
+    </t>
+  </section>
+</section>

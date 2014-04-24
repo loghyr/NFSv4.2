@@ -31,10 +31,6 @@
           for both intra- and inter-server asynchronous copies
         </t>
 
-        <t hangText='WRITE_HOLE:'>
-          for a hole punch
-        </t>
-
         <t hangText='WRITE_SAME:'>
           for ADB initialization
         </t>
@@ -57,11 +53,6 @@
       <list style="hanging">
         <t hangText='COPY:'>
           the total number of bytes copied
-        </t>
-
-        <t hangText='WRITE_HOLE:'>
-          the same information that a synchronous WRITE_HOLE
-          would provide
         </t>
 
         <t hangText='WRITE_SAME:'>

@@ -103,7 +103,7 @@
         blocks as holes in the file. Such holes are typically transferred
         as 0s during I/O. READ_PLUS (see <xref target='op:read_plus' />)
         allows a server to send back to the client metadata describing
-        the hole and WRITE_HOLE (see <xref target='op:write_hole' />)
+        the hole and DEALLOCATE (see <xref target='op:deallocate' />)
         allows the client to punch holes into a file. In addition,
         SEEK (see <xref target='op:seek' />) is provided to scan
         for the next hole or data from a given location.
@@ -116,7 +116,9 @@
         that there will always be enough data blocks available for the
         file during future writes. ALLOCATE
 	(see <xref target='op:allocate' />) allows a client to request
-        a guarantee that space will be available.
+        a guarantee that space will be available. And DEALLOCATE
+        (see <xref target='op:deallocate' />) allows the client
+	to punch a hole into a file, thus releasing a space reservation.
       </t>
     </section>
 

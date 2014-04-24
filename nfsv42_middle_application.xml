@@ -291,4 +291,17 @@
       </artwork>
     </figure>
   </section>
+  <section anchor='ss:adb:zero' title='An Example of Zeroing Space'>
+    <t>
+      A simpler use case for WRITE_SAME are applications that want to
+      efficiently zero out a file, but do not want to modify space
+      reservations.  This can easily be archived by a call to WRITE_SAME
+      without a ADB block numbers and pattern, e.g.:
+    </t>
+    <figure>
+      <artwork>
+   WRITE_SAME {0, 1k, 10000, 0, 0, 0, 0}
+      </artwork>
+    </figure>
+  </section>
 </section>
