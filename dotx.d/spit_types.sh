@@ -1396,7 +1396,7 @@ cat << EOF > $i
 enum space_info4 {
 	SPACE_RESERVED4		= 0,
 	SPACE_UNRESERVED4	= 1,
-	SPACE_UNKNOWN4		= 2,
+	SPACE_UNKNOWN4		= 2
 };
 EOF
 	;;
