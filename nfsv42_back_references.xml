@@ -22,6 +22,25 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
+    <reference anchor='RFC5663'>
+      <front>
+	<title>Parallel NFS (pNFS) Block/Volume Layout</title>
+	<author initials="D." surname="Black" fullname="D. Black">
+	  <organization>EMC Corporation</organization>
+	</author>
+	<author initials="S." surname="Fridella" fullname="S. Fridella">
+	  <organization>Nasuni Inc</organization>
+	</author>
+	<author initials="J." surname="Glasgow" fullname="J. Glasgow">
+	  <organization>Google</organization>
+	</author>
+	<date year="2010" month="January"/>
+      </front>
+      <seriesInfo name="RFC" value="5663"/>
+      <format type="TXT"
+	      target="ftp://ftp.isi.edu/in-notes/rfc5663.txt"/>
+    </reference>
+
     <reference anchor='RFC5664'>
       <front>
 	<title>Object-Based Parallel NFS (pNFS) Operations</title>

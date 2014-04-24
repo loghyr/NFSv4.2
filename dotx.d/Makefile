@@ -228,6 +228,7 @@ SPITGEN =	basic_types.x \
 		type_COMPOUND4args.x \
 		type_COMPOUND4res.x \
 		type_netloc_type4.x \
+		type_space_info4.x \
 		copy_confirm_auth.x \
 		copy_from_auth.x \
 		copy_to_auth.x \

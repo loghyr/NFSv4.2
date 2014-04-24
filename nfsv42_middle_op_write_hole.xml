@@ -4,6 +4,7 @@
 <section anchor='op:write_hole' title='Operation 64: WRITE_HOLE'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/stable_how4.xml'?>
+    <?rfc include='autogen/type_space_info4.xml'?>
     <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/write_hole_args.xml'?>
   </section>
@@ -20,11 +21,13 @@
       operation with the current filehandle set to the filehandle
       of the file in question, and the equivalent of start offset
       and length in bytes of the region set in wh_hole.di_offset
-      and wh_hole.di_length respectively.  If the wh_hole.di_allocated
-      is set to TRUE, then the blocks will be zeroed and if it is
-      set to FALSE, then they will be deallocated. All further reads
-      to this region MUST return zeros until overwritten.  The
-      filehandle specified must be that of a regular file.
+      and wh_hole.di_length respectively.  If wh_hole.di_reserved
+      is set to SPACE_RESERVED4, then the blocks will be zeroed and
+      if it is set to SPACE_UNRESERVED4, then they will be deallocated.
+      A server must reject a WRITE_HOLE call with wh_hole.di_reserved
+      set to SPACE_UNKNOWN4 with NFS4ERR_INVAL. All further reads to
+      this region MUST return zeros until overwritten.  The filehandle
+      specified must be that of a regular file.
     </t>
 
     <t>

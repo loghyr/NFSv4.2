@@ -16,6 +16,15 @@
     </t>
 
     <t>
+      In addition many modern filesystems support the concept of 'unwritten'
+      or 'uninitialized' blocks, which have uninitialized space allocated to
+      them on disk, but will return 0s until data is written to them.  Such
+      functionality is already present in the data model of the pNFS
+      Block/Volume Layout (see <xref target="RFC5663" />).  Uninitialized
+      blocks can thought as holes inside a space reservation window.
+    </t>
+
+    <t>
       If an application reads a hole in a sparse file, the file system must
       return all zeros to the application.   For local data access there
       is little penalty, but with NFS these zeroes must be transferred back
@@ -71,8 +80,8 @@
 
         <t hangText="Hole:">
           A byte range within a Sparse file that contains regions of
-          all zeroes.  For block-based file systems, this could also be an
-          unallocated region of the file.
+          all zeroes.  A hole might or might not have space allocated
+          or reserved to it.
         </t>
 
         <t hangText='Hole Threshold:'>
@@ -86,27 +95,24 @@
   </section>
 
   <section anchor="ss:sparse:new_ops" title="New Operations">
-    <t>
-      READ_PLUS and WRITE_HOLE are new variants of the NFSv4.1 READ
-      and WRITE operations <xref target="RFC5661" />.  Besides being
-      able to support all of the data semantics of those operations,
-      they can also be used by the client and server to efficiently
-      transfer holes.  Note that as the client has no a priori
-      knowledge of whether a hole is present or not, if it supports
-      these operations and so does the server, then it should always
-      use the READ_PLUS operation in preference to the READ operation..
-    </t>
-
     <section anchor="ss:sparse:read_plus" title="READ_PLUS">
       <t>
-       For holes, READ_PLUS extends the response to avoid returning
-       data for portions of the file which are initialized and
-       contain no backing store.  Additionally it will do so if
-       the result would appear to be a hole. I.e., if the result
-       was a data block composed entirely of zeros, then it is
-       easier to return a hole. Returning data blocks of uninitialized
-       data wastes computational and network resources, thus
-       reducing performance.
+       READ_PLUS is a new variant of the NFSv4.1 READ operation
+       <xref target="RFC5661" />.  Besides being able to support all of
+       the data semantics of the READ operation, it can also be used by
+       the client and server to efficiently transfer holes.  Note that as
+       the client has no a priori knowledge of whether a hole is present
+       or not, if the client supports READ_PLUS and so does the server,
+       then it should always use the READ_PLUS operation in preference
+       to the READ operation.
+      </t>
+
+      <t>
+       READ_PLUS extends the response with a new arm representing holes to
+       avoid returning data for portions of the file which are initialized
+       to zero and may or may not contain a backing store. Returning data
+       blocks of uninitialized data wastes computational and network
+       resources, thus reducing performance.
       </t>
 
       <t>

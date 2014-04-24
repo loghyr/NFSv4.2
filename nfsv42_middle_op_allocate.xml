@@ -43,8 +43,7 @@
     <t>
       The ALLOCATE operation will result in the space_used attribute and
       space_freed attributes being increased by the number of bytes reserved
-      unless they were previously reserved or written and not shared. And
-      it will set the space_reserved attribute to be true.
+      unless they were previously reserved or written and not shared.
     </t>
   </section>
 </section>

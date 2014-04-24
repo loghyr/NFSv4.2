@@ -404,7 +404,7 @@ include(copy_confirm_auth.x)
 include(app_data_block4.x)
 
 include(data4.x)
-
+include(type_space_info4.x)
 include(data_info4.x)
 
 include(data_content4.x)
@@ -498,7 +498,6 @@ typedef change_policy4	fattr4_change_policy;
 /*
  * attributes new to NFSv4.2
  */
-typedef bool		fattr_space_reserved;
 typedef uint64_t	fattr_space_freed;
 typedef change_attr_type4
 		fattr4_change_attr_type;

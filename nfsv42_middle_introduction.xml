@@ -99,8 +99,8 @@
 
     <section title="Sparse Files">
       <t>
-        Sparse files are ones which have unallocated data blocks
-        as holes in the file. Such holes are typically transferred
+        Sparse files are ones which have unallocated or uninitialized data
+        blocks as holes in the file. Such holes are typically transferred
         as 0s during I/O. READ_PLUS (see <xref target='op:read_plus' />)
         allows a server to send back to the client metadata describing
         the hole and WRITE_HOLE (see <xref target='op:write_hole' />)
