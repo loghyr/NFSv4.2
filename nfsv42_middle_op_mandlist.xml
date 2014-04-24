@@ -156,7 +156,7 @@
       <c>PUTFH                </c> <c> REQ </c> <c>              </c>
       <c>PUTPUBFH             </c> <c> REQ </c> <c>              </c>
       <c>PUTROOTFH            </c> <c> REQ </c> <c>              </c>
-      <c>READ                 </c> <c> REQ (OBS)</c> <c>              </c>
+      <c>READ                 </c> <c> REQ </c> <c>              </c>
       <c>READDIR              </c> <c> REQ </c> <c>              </c>
       <c>READLINK             </c> <c> OPT </c> <c>              </c>
       <c>READ_PLUS            </c> <c> OPT </c> <c>              </c>

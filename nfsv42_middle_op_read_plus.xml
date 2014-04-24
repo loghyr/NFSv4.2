@@ -15,39 +15,42 @@
   <section toc='exclude' anchor='op:read_plus:desc'  title="DESCRIPTION">
     <t>
       The READ_PLUS operation is based upon the NFSv4.1 READ operation
-      (see Section 18.22 of <xref target="RFC5661" />) and similarly reads data from the
-      regular file identified by the current filehandle.
+      (see Section 18.22 of <xref target="RFC5661" />) and similarly
+      reads data from the regular file identified by the current
+      filehandle.
     </t>
 
     <t>
-      The client provides a rpa_offset of where the READ_PLUS is to start and a
-      rpa_count of how many bytes are to be read.  A rpa_offset of zero means to
-      read data starting at the beginning of the file.  If rpa_offset is
-      greater than or equal to the size of the file, the status NFS4_OK is
-      returned with di_length (the data length) set to zero and eof
-      set to TRUE.
+      The client provides a rpa_offset of where the READ_PLUS is
+      to start and a rpa_count of how many bytes are to be read.
+      A rpa_offset of zero means to read data starting at the
+      beginning of the file.  If rpa_offset is greater than or equal
+      to the size of the file, the status NFS4_OK is returned with
+      di_length (the data length) set to zero and eof set to TRUE.
     </t>
 
     <t>
       The READ_PLUS result is comprised of an array of rpr_contents,
       each of which describe a data_content4 type of data.  For
       NFSv4.2, the allowed values are data and hole. A server MUST
-      support the data type, but not the hole. The hole must be
-      returned in its entirety - clients must be prepared to get
-      more information than they requested. Both the start and the
-      end of the hole may exceed what was requested. The array
-      contents MUST be contiguous in the file.
+      support both the data type and the hole if it uses READ_PLUS.
+      If it does not want to support a hole, it MUST use READ. The
+      hole must be returned in its entirety - clients must be
+      prepared to get more information than they requested. Both
+      the start and the end of the hole may exceed what was requested.
+      The array contents MUST be contiguous in the file.
     </t>
 
     <t>
-      If the data to be returned is comprised entirely of zeros, then
-      the server may elect to return that data as a hole. The server
-      differentiates this to the client by setting di_allocated to TRUE
-      in this case. Note that in such a scenario, the server is not
-      required to determine the full extent of the "hole" - it does not
-      need to determine where the zeros start and end. If the server
-      elects to return the hole as data, then it can set the d_allocted
-      to FALSE in the rpc_data to indicate it is a hole.
+      If the data to be returned is comprised entirely of zeros,
+      then the server may elect to return that data as a hole. The
+      server differentiates this to the client by setting di_allocated
+      to TRUE in this case. Note that in such a scenario, the server
+      is not required to determine the full extent of the "hole" -
+      it does not need to determine where the zeros start and end.
+      If the server elects to return the hole as data, then it can
+      set the d_allocted to FALSE in the rpc_data to indicate it
+      is a hole.
     </t>
 
     <t>
@@ -122,6 +125,17 @@
     <t>
       On success, the current filehandle retains its value.
     </t>
+
+    <section toc='exclude' title="Note on Client Support of Arms of the Union">
+      <t>
+        It was decided not to add a means for the client to inform
+        the server as to which arms of READ_PLUS it would support.
+        In a later minorversion, it may become necessary for the
+        introduction of a new operation which would allow the client
+        to inform the server as to whether it supported the new
+        arms of the union of data types available in READ_PLUS.
+      </t>
+    </section>
   </section>
 
   <section toc='exclude' title="IMPLEMENTATION">
