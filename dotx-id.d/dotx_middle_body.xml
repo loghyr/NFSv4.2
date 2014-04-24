@@ -39,7 +39,7 @@ grep "^  *///" | sed 's?^  */// ??' | sed 's?^  *///$??'
 
   <t>
      The effect of the script is to remove leading white space
-     from each line, plus a sentinel sequence of "///". 
+     from each line, plus a sentinel sequence of "///".
   </t>
 
   <t>

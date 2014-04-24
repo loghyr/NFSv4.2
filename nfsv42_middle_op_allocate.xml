@@ -37,7 +37,8 @@
     <t>
       It is not required that the server allocate the space to the file
       before returning success.  The allocation can be deferred, however,
-      it must be guaranteed that it will not fail for lack of space.
+      it must be guaranteed that it will not fail for lack of space. The
+      deferral does not result in an asynchronous reply.
     </t>
 
     <t>

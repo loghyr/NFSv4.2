@@ -71,7 +71,7 @@ clean:
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) clean
 
 # Parallel All
-pall: 
+pall:
 	$(MAKE) xml
 	( $(MAKE) txt ; echo .txt done ) & \
 	( $(MAKE) html ; echo .html done ) & \
@@ -489,7 +489,7 @@ genhtml: Makefile gendraft html txt dotx dotx-txt draft-$(VERS).tar
 		dotx.d/nfsv4.x \
 		draft-$(VERS).tar.gz
 
-testx: 
+testx:
 	rm -rf testx.d
 	mkdir testx.d
 	$(MAKE) dotx

@@ -39,7 +39,7 @@ clean:
 	cd ../dotx.d ; make clean
 
 # Parallel All
-pall: 
+pall:
 	make xml
 	( make txt ; echo .txt done ) & \
 	wait
