@@ -5,7 +5,7 @@
   <t>
     NFSv4.2 has all of the security concerns present in NFSv4.1
     (see Section 21 of <xref target='RFC5661' />) and those present in
-    the Server-side Copy (see <xref target='ss:copy:security' />)
+    the Server Side Copy (see <xref target='ss:copy:security' />)
     and in Labeled NFS (see <xref target='ss:lnfs:security' />).
   </t>
 </section>

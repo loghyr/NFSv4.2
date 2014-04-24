@@ -17,15 +17,13 @@
     </t>
 
     <t>
-      Another example is space reservation for virtual disks in a hypervisor.
-      In virtualized environments, virtual disk files are often stored on NFS
-      mounted volumes.  
-
-      When a hypervisor creates a virtual disk file, it often tries to
-      preallocate the space for the file so that there are no future
-      allocation related errors during the operation of the virtual machine.
-      Such errors prevent a virtual machine from continuing execution and
-      result in downtime.
+      Another example is space reservation for virtual disks in a
+      hypervisor.  In virtualized environments, virtual disk files are
+      often stored on NFS mounted volumes.  When a hypervisor creates
+      a virtual disk file, it often tries to preallocate the space for
+      the file so that there are no future allocation related errors
+      during the operation of the virtual machine.  Such errors prevent
+      a virtual machine from continuing execution and result in downtime.
     </t>
 
     <t>
@@ -41,7 +39,7 @@
     <t>
       The new ALLOCATE operation (see <xref target='op:allocate' />)
       allows a client to request a guarantee that space will be available.
-      The ALLOCATE operation gurantees that any future writes to the
+      The ALLOCATE operation guarantees that any future writes to the
       region it was successfully called for will not fail with NFS4ERR_NOSPC.
     </t>
 

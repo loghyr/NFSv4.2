@@ -3,11 +3,11 @@
 
 <section anchor='sec:ioadvise' title='Support for Application IO Hints'>
   <t>
-    Applications can issue client I/O hints via 
+    Applications can issue client I/O hints via
     posix_fadvise() <xref target="posix_fadvise" /> to the NFS client.
     While this can help the NFS
     client optimize I/O and caching for a file, it does not allow the NFS
-    server and its exported file system to do likewise. 
+    server and its exported file system to do likewise.
     We add an IO_ADVISE procedure (<xref target='op:io_advise' />) to communicate the
     client file access patterns to the NFS server.
     The NFS server upon

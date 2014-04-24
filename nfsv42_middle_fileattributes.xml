@@ -219,6 +219,7 @@ typedef uint32_t  policy4;
         If it is true if there are any space reservations on the file, or false
         otherwise.
       </t>
+    </section>
 
     <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 78: space_freed">
       <t>

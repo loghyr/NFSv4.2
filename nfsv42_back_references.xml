@@ -513,13 +513,13 @@ ml/Deployment_Guide/sec-mls-ov.html' />
          </author>
          <date year="2004" month="November"/>
          <abstract>
-           <t>  
+           <t>
              SBC-2 describes the second-generation command sets for
              block-oriented direct-access devices such as magnetic disk drives.
-           </t> 
+           </t>
          </abstract>
        </front>
-       <format type="TXT" 
+       <format type="TXT"
          target="ftp://www.t10.org/t10/document.05/05-344r0.pdf"/>
      </reference>
 

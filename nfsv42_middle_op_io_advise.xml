@@ -182,7 +182,7 @@
 
     <t>
       If NFL42_UFLG_IO_ADVISE_THRU_MDS is set, the client MUST send the
-      IO_ADVISE operation to the MDS in order for it to be honored by the DS.  
+      IO_ADVISE operation to the MDS in order for it to be honored by the DS.
       Once the MDS receives the IO_ADVISE operation, it will communicate the
       advice to each DS.
     </t>

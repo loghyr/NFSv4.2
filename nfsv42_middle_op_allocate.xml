@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2013) -->
-<!-- Copyright (C) The Internet Society (2013) -->
+<!-- Copyright (C) The IETF Trust (2014) -->
+<!-- Copyright (C) The Internet Society (2014) -->
 
 <section anchor='op:allocate' title='Operation 68: ALLOCATE'>
   <section toc='exclude' title="ARGUMENT">
@@ -27,7 +27,7 @@
       it must return NFS4ERR_NOSPC.
     </t>
 
-    </t>
+    <t>
       The ALLOCATE operation can also be used to extend the size of a file
       if the region specified by aa_offset and aa_length extends beyond the
       current file size.  In that case any data outside of the previous
@@ -43,8 +43,8 @@
     <t>
       The ALLOCATE operation will result in the space_used attribute and
       space_freed attributes being increased by the number of bytes reserved
-      unless they were previously reserved or written and not shared.
+      unless they were previously reserved or written and not shared. And
+      it will set the space_reserved attribute to be true.
     </t>
-
   </section>
 </section>

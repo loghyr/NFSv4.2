@@ -433,9 +433,9 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_application.xml \
 	${DOC_PREFIX}_middle_lnfs.xml \
 	${DOC_PREFIX}_middle_chattr.xml \
-        ${DOC_PREFIX}_middle_security.xml \
+	${DOC_PREFIX}_middle_security.xml \
 	${DOC_PREFIX}_middle_new_errors.xml \
-        ${DOC_PREFIX}_middle_fileattributes.xml \
+	${DOC_PREFIX}_middle_fileattributes.xml \
 	${DOC_PREFIX}_middle_op_mandlist.xml \
 	${DOC_PREFIX}_middle_op_aaa.xml \
 	${DOC_PREFIX}_middle_op_allocate.xml \

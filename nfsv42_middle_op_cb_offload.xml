@@ -14,7 +14,7 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       CB_OFFLOAD is used to report to the client the results of
-      an asynchronous operation, e.g., Server-side Copy or a hole punch. 
+      an asynchronous operation, e.g., Server Side Copy or a hole punch
       The coa_fh and coa_stateid identify the transaction and the coa_status
       indicates success or failure. The coa_resok4.wr_callback_id MUST NOT
       be set. If the transaction failed, then the coa_bytes_copied

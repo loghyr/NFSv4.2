@@ -116,6 +116,7 @@
     <ttcol align='left'>Operation</ttcol>
     <ttcol align='left'>EOL, REQ, REC, OPT, or MNI</ttcol>
     <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
+      <c>ALLOCATE             </c> <c> OPT </c> <c>              </c>
       <c>ACCESS               </c> <c> REQ </c> <c>              </c>
       <c>BACKCHANNEL_CTL      </c> <c> REQ </c> <c>              </c>
       <c>BIND_CONN_TO_SESSION </c> <c> REQ </c> <c>              </c>

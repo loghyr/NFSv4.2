@@ -64,7 +64,7 @@
     <t>
       WRITE_HOLE has to support all of the errors which are returned by WRITE
       plus NFS4ERR_NOTSUPP, i.e., it is an OPTIONAL operation.
-      If the client supports WRITE_HOLE, it MUST support CB_OFFLOAD. 
+      If the client supports WRITE_HOLE, it MUST support CB_OFFLOAD.
     </t>
 
     <t>
@@ -85,30 +85,23 @@
 
     <section anchor='op:write_hole:async' title='Asynchronous Transactions'>
       <t>
-        Hole punching may 
-        lead to server determining to service the
-        operation asynchronously. If it decides to
-        do so, it sets the stateid in wr_callback_id
-        to be that of the wh_stateid. If it does
-        not set the wr_callback_id, then the result
-        is synchronous.
+        Hole punching may lead to server determining to service the
+        operation asynchronously. If it decides to do so, it sets the
+        stateid in wr_callback_id to be that of the wh_stateid. If it
+        does not set the wr_callback_id, then the result is synchronous.
       </t>
 
       <t>
-        When the client determines that the reply
-        will be given asynchronously, it should not
-        assume anything about the contents of what
-        it wrote until it is informed by the server
-        that the operation is complete. It can
-        use OFFLOAD_STATUS (<xref target="op:offload_status" />)
-        to monitor the operation and
-        OFFLOAD_ABORT (<xref target="op:offload_abort" />)
-        to cancel the operation. An example of
-        a asynchronous WRITE_HOLE is shown in
-        <xref target='fig:async-write_hole' />. Note that
-        as with the COPY operation, WRITE_HOLE must
-        provide a stateid for tracking the asynchronous
-        operation.
+        When the client determines that the reply will be given
+        asynchronously, it should not assume anything about the
+        contents of what it wrote until it is informed by the server
+        that the operation is complete. It can use OFFLOAD_STATUS
+        (<xref target="op:offload_status" />) to monitor the operation
+        and OFFLOAD_ABORT (<xref target="op:offload_abort" />) to cancel
+        the operation. An example of a asynchronous WRITE_HOLE is shown
+        in <xref target='fig:async-write_hole' />. Note that as with the
+        COPY operation, WRITE_HOLE must provide a stateid for tracking
+        the asynchronous operation.
       </t>
 
       <figure title="An asynchronous WRITE_HOLE." anchor="fig:async-write_hole">

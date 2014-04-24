@@ -74,7 +74,7 @@
   </section>
 
   <section title="Overview of NFSv4.2 Features">
-    <section title="Server-side Copy">
+    <section title="Server Side Copy">
       <t>
         A traditional file copy from one server to another results in the
         data being put on the network twice - source to client and then
@@ -123,7 +123,7 @@
     <section title="Application Data Block (ADB) Support">
       <t>
         Some applications treat a file as if it were a disk and as such
-        want to initialize (or format) the file image. We 
+        want to initialize (or format) the file image. We
         introduce WRITE_SAME (see <xref target='op:write_same' />)
         to send this metadata to the server to allow it to write
         the block contents.
@@ -135,7 +135,7 @@
         While both clients and servers can employ Mandatory Access Control (MAC)
         security models to enforce data access, there has been no protocol
         support to allow full interoperability. A new file object attribute,
-        sec_label (see <xref target='ss:fattr:sec' />) allows for the 
+        sec_label (see <xref target='ss:fattr:sec' />) allows for the
         server to store and enforce MAC labels. The format of the sec_label
         accommodates any MAC security system.
       </t>

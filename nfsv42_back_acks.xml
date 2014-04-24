@@ -17,14 +17,14 @@
     clients, the original draft was by Trond Myklebust.
   </t>
   <t>
-    For the NFS Server-side Copy, the original draft was by
+    For the NFS Server Side Copy, the original draft was by
     James Lentini, Mike Eisler, Deepak Kenchammana, Anshul Madan,
     and Rahul Iyer. Tom Talpey co-authored an unpublished version
     of that document.  It was also was reviewed by a number of individuals:
     Pranoop Erasani, Tom Haynes, Arthur Lent, Trond Myklebust,
     Dave Noveck, Theresa Lingutla-Raj, Manjunath Shankararao, Satyam
     Vaghani, and Nico Williams. Anna Schumaker's early
-    prototyping experience helped us avoid some traps. 
+    prototyping experience helped us avoid some traps.
   </t>
   <t>
     For the NFS space reservation operations, the original draft was
@@ -50,7 +50,8 @@
   <t>
     Christoph Hellwig was very helpful in getting the WRITE_SAME semantics
     to model more of what T10 was doing for WRITE SAME (10)
-    <xref target='T10-SBC2' />.
+    <xref target='T10-SBC2' />. And he led the push to get space reservations
+    to more closely model the posix_fallocate.
   </t>
   <t>
     During the review process, Talia Reyes-Ortiz helped the sessions
