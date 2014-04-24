@@ -45,7 +45,7 @@
     <t>
       If the data to be returned is comprised entirely of zeros,
       then the server SHOULD return that data as a hole. The di_reserved
-      field is used to tell the client if a hole is unreservers, that is
+      field is used to tell the client if a hole is unreserved, that is
       writes to it MAY return NFS4ERR_NOSPC, or it is reserved in which
       cases writes into the hole MUST NOT return ENOSPC.  If the server
       does not know the reservations status it may set the di_reserved

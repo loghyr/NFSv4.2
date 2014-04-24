@@ -55,7 +55,7 @@
       <ttcol align="left">Defined in</ttcol>
       <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
       <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
-      <c>change_sec_label</c> <c>81</c> <c>change_sec_label4</c>  <c>R  </c> <c><xref target="ss:fattr:chsec" /></c>
+      <c>change_sec_label</c> <c>77</c> <c>change_sec_label4</c>  <c>R  </c> <c><xref target="ss:fattr:chsec" /></c>
       <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
     </texttable>
   </section>

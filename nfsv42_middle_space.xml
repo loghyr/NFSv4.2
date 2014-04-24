@@ -97,7 +97,7 @@
           This operation zeros and/or deallocates the blocks
           backing a region of the file.
         </t>
-        
+
 	<t hangText="READ_PLUS or SEEK">
           These operations can return the reservation status of blocks
 	  backing a region of the file.
