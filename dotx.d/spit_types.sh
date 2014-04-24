@@ -1352,11 +1352,11 @@ struct copy_to_auth_priv {
 	 * user principal RPCSEC_GSSv1 (or v2) handle shared
 	 * with the source server
 	 */
-	opaque               ctap_handle;
+	opaque               ctap_handle<>;
 	int                  ctap_handle_vers;
 	/* A nounce and a mic of the nounce using ctap_handle */
-	opaque               ctap_nounce;
-	opaque               ctap_nounce_mic;
+	opaque               ctap_nounce<>;
+	opaque               ctap_nounce_mic<>;
 };
 EOF
 	;;
