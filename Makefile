@@ -428,6 +428,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_start.xml \
 	${DOC_PREFIX}_middle_introduction.xml \
 	${DOC_PREFIX}_middle_minorv.xml \
+	${DOC_PREFIX}_middle_pnfs.xml \
 	${DOC_PREFIX}_middle_copy.xml \
 	${DOC_PREFIX}_middle_advise.xml \
 	${DOC_PREFIX}_middle_sparse.xml \

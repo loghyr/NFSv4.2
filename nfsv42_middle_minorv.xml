@@ -209,10 +209,17 @@
       </t>
 
       <t>
-        A client MUST NOT attempt to use a stateid, filehandle, or
+        A client SHOULD NOT attempt to use a stateid, filehandle, or
         similar returned object from the COMPOUND procedure with minor
         version X for another COMPOUND procedure with minor version Y,
         where X != Y.
+          <vspace blankLines="1"/>
+        Note that this is a "SHOULD" and not a "MUST" because of the
+        possibility that a NFSv4.2 metadata server could hand out a
+        layout to a NFSv4.1 storage device. Section 13.9.1 of
+        <xref target='RFC5661' /> discusses how the client gets
+        a stateid from the metadata server to present to a storage
+        device.
       </t>
     </list>
   </t>

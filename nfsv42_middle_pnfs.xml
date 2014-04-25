@@ -1,0 +1,46 @@
+<!-- Copyright (C) The IETF Trust (2014) -->
+<!-- Copyright (C) The Internet Society (2014) -->
+
+<section anchor="ss:pnfs" title="pNFS considerations for New Operations">
+  <section anchor="ss:pnfs:atom" title="Atomicty for ALLOCATE and DEALLOCATE">
+    <t>
+      Both ALLOCATE (see <xref target='op:allocate' />) and
+      DEALLOCATE (see <xref target='op:deallocate' />) are sent to the
+      metadata server, which is responsible for coordinating the
+      changes onto the storage devices. In particular, both operations
+      must either fully succeed or fail, it cannot be the case that
+      one storage device succeeds whilst another fails.
+    </t>
+  </section>
+
+  <section anchor="ss:pnfs:flt" title="NFSv4.2 as a Storage Protocol in pNFS: the File Layout Type">
+    <t>
+      A file layout provided by a NFSv4.2 server may refer either to a DS
+      that only implements NFSv4.1 as specified in <xref target='RFC5661' />,
+      or to a DS that implements additions from NFSv4.2, in which
+      case the rules in <xref target='ss:pnfs:ops' /> apply. As the File
+      Layout Type does not provide a means for informing the client as
+      to which minor version a particular DS is providing, it will have
+      to negotiate this via the normal RPC semantics of major and minor
+      version discovery.
+    </t>
+
+    <section anchor="ss:pnfs:ops" title="Operations Sent to NFSv4.2 Data Servers">
+      <t>
+        In addition to the commands listed in <xref target='RFC5661' />,
+        NFSv4.2 data servers MAY accept a COMPOUND containing the following
+        additional operations: READ_PLUS (see
+        <xref target='op:read_plus' />), WRITE_SAME (see
+        <xref target='op:write_same' />), and SEEK (see
+        <xref target='op:seek' />), which will be treated like the
+        subset specified as "Operations Sent to NFSv4.1 Data Servers"
+        in Section 13.6 of <xref target='RFC5661' />.
+      </t>
+
+      <t>
+        Additional details on the implementation of these operations in a pNFS
+        context are documented in the operation specific sections.
+      </t>
+    </section>
+  </section>
+</section>

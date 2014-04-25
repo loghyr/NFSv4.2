@@ -83,7 +83,7 @@
 
     <t>
       The following operations and attributes can be used to resolve
-      this issues:
+      these issues:
     </t>
 
     <t>
@@ -93,14 +93,20 @@
           deleted, taking block sharing into consideration.
         </t>
 
-        <t hangText="WRITE_HOLE">
-          This operation zeros and/or deallocates the blocks
-          backing a region of the file.
+        <t hangText="DEALLOCATE">
+          This operation delallocates the blocks backing a
+          region of the file.
         </t>
 
-	<t hangText="READ_PLUS or SEEK">
+        <t hangText="WRITE_SAME">
+          This operation zeros the blocks backing a region of the
+          file. It does not deallocate the blocks, so it does not
+          reduce the space reservation.
+        </t>
+
+        <t hangText="READ_PLUS or SEEK">
           These operations can return the reservation status of blocks
-	  backing a region of the file.
+          backing a region of the file.
         </t>
       </list>
     </t>
@@ -146,18 +152,19 @@
       over-reported.  However, over-reporting is better than under-reporting.
     </t>
   </section>
+
   <section anchor='ss:space:info' title='Space Reservation Information'>
   <?rfc include='autogen/type_space_info4.xml'?>
       <t>
         The space_info4 type is used to report the reservation space
-	in the READ_PLUS (see <xref target='op:read_plus' />) and SEEK
-	(see <xref target='op:seek' /> operations to report the
-	reservation state of a data block or hole.  A data block or
-	hole may either be reserved, that means a future write MUST not
-	return NFS4ERR_NOSPC, or it might be unreserved in which case
-	a future write may return NFS4ERR_NOSPC.  Servers may not know
-	the allocation state, in which case it might return unknown
-	in the space_info fields in the READ_PLUS and SEEK return values.
+        in the READ_PLUS (see <xref target='op:read_plus' />) and SEEK
+        (see <xref target='op:seek' /> operations to report the
+        reservation state of a data block or hole.  A data block or
+        hole may either be reserved, that means a future write MUST not
+        return NFS4ERR_NOSPC, or it might be unreserved in which case
+        a future write may return NFS4ERR_NOSPC.  Servers may not know
+        the allocation state, in which case it might return unknown
+        in the space_info fields in the READ_PLUS and SEEK return values.
       </t>
   </section>
 </section>
