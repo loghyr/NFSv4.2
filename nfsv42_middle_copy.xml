@@ -406,7 +406,7 @@
 
         <t>
           In a heterogeneous environment, using a protocol other than NFSv4.x
-          (e.g., HTTP <xref target="RFC2616" /> or FTP <xref target="RFC0959" />)
+          (e.g., HTTP <xref target="RFC2616" /> or FTP <xref target="RFC959" />)
           presents some challenges. In particular, the destination
           server is presented with the challenge of accessing the source file
           given only an NFSv4.x filehandle.
@@ -1159,8 +1159,8 @@
         <t>
           The same techniques as <xref target="sec:SSC-rpc-no-gss" />,
           using unique URLs for each destination server, can be used for other
-          protocols (e.g., HTTP <xref target="RFC2616" /> and FTP <xref target="RFC0959" />)
-          as well.
+          protocols (e.g., HTTP <xref target="RFC2616" /> and
+          FTP <xref target="RFC959" />) as well.
         </t>
       </section>
     </section>

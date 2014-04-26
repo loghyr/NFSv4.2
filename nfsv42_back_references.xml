@@ -3,6 +3,71 @@
 
   <references title="Normative References">
 
+  <reference anchor="posix_fadvise">
+      <front>
+     <title>Section 'posix_fadvise()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
+     </title>
+  <author>
+    <organization>The Open Group</organization>
+  </author>
+  <date year="2004" />
+      </front>
+    </reference>
+
+  <reference anchor="posix_fallocate">
+      <front>
+     <title>Section 'posix_fallocate()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
+     </title>
+  <author>
+    <organization>The Open Group</organization>
+  </author>
+  <date year="2004" />
+      </front>
+    </reference>
+
+<reference anchor='RFC3986'>
+<front>
+<title abbrev='URI Generic Syntax'>Uniform Resource Identifier (URI): Generic Syntax</title>
+<author initials='T.' surname='Berners-Lee' fullname='Tim Berners-Lee'>
+<organization abbrev='W3C/MIT'>World Wide Web Consortium</organization>
+<address>
+<postal>
+<street>Massachusetts Institute of Technology</street>
+<street>77 Massachusetts Avenue</street>
+<city>Cambridge</city>
+<region>MA</region>
+<code>02139</code>
+<country>USA</country></postal>
+<phone>+1-617-253-5702</phone>
+<facsimile>+1-617-258-5999</facsimile>
+<email>timbl@w3.org</email>
+<uri>http://www.w3.org/People/Berners-Lee/</uri></address></author>
+<author initials='R.' surname='Fielding' fullname='Roy T. Fielding'>
+<organization abbrev='Day Software'>Day Software</organization>
+<address>
+<postal>
+<street>5251 California Ave., Suite 110</street>
+<city>Irvine</city>
+<region>CA</region>
+<code>92617</code>
+<country>USA</country></postal>
+<phone>+1-949-679-2960</phone>
+<facsimile>+1-949-679-2972</facsimile>
+<email>fielding@gbiv.com</email>
+<uri>http://roy.gbiv.com/</uri></address></author>
+<author initials='L.' surname='Masinter' fullname='Larry Masinter'>
+<organization abbrev='Adobe Systems'>Adobe Systems Incorporated</organization>
+</author>
+<date year='2005' month='January' />
+</front>
+
+<seriesInfo name='STD' value='66' />
+<seriesInfo name='RFC' value='3986' />
+<format type='TXT' octets='141811' target='ftp://ftp.isi.edu/in-notes/rfc3986.txt' />
+<format type='HTML' octets='213584' target='http://xml.resource.org/public/rfc/html/rfc3986.html' />
+<format type='XML' octets='163534' target='http://xml.resource.org/public/rfc/xml/rfc3986.xml' />
+</reference>
+
     <reference anchor='RFC5661'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 1 Protocol</title>
@@ -41,6 +106,18 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5664.txt"/>
     </reference>
 
+    <reference anchor='NFSv42xdr'>
+      <front>
+	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
+	<author initials="T." surname="Haynes" fullname="T. Haynes">
+	  <organization>Primary Data</organization>
+	</author>
+	<date year="2014" month="April"/>
+      </front>
+      <format type="TXT"
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-22" />
+    </reference>
+
     <reference anchor='rpcsec_gssv3'>
       <front>
         <title>Remote Procedure Call (RPC) Security Version 3</title>
@@ -56,116 +133,34 @@
               target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-06.txt"/>
     </reference>
 
-    <reference anchor='NFSv42xdr'>
-      <front>
-	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
-	<author initials="T." surname="Haynes" fullname="T. Haynes">
-	  <organization>Primary Data</organization>
-	</author>
-	<date year="2014" month="April"/>
-      </front>
-      <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-22" />
-    </reference>
-
-<reference anchor='RFC3986'>
-
-<front>
-<title abbrev='URI Generic Syntax'>Uniform Resource Identifier (URI): Generic Syntax</title>
-<author initials='T.' surname='Berners-Lee' fullname='Tim Berners-Lee'>
-<organization abbrev='W3C/MIT'>World Wide Web Consortium</organization>
-<address>
-<postal>
-<street>Massachusetts Institute of Technology</street>
-<street>77 Massachusetts Avenue</street>
-<city>Cambridge</city>
-<region>MA</region>
-<code>02139</code>
-<country>USA</country></postal>
-<phone>+1-617-253-5702</phone>
-<facsimile>+1-617-258-5999</facsimile>
-<email>timbl@w3.org</email>
-<uri>http://www.w3.org/People/Berners-Lee/</uri></address></author>
-<author initials='R.' surname='Fielding' fullname='Roy T. Fielding'>
-<organization abbrev='Day Software'>Day Software</organization>
-<address>
-<postal>
-<street>5251 California Ave., Suite 110</street>
-<city>Irvine</city>
-<region>CA</region>
-<code>92617</code>
-<country>USA</country></postal>
-<phone>+1-949-679-2960</phone>
-<facsimile>+1-949-679-2972</facsimile>
-<email>fielding@gbiv.com</email>
-<uri>http://roy.gbiv.com/</uri></address></author>
-<author initials='L.' surname='Masinter' fullname='Larry Masinter'>
-<organization abbrev='Adobe Systems'>Adobe Systems Incorporated</organization>
-<address>
-<postal>
-<street>345 Park Ave</street>
-<city>San Jose</city>
-<region>CA</region>
-<code>95110</code>
-<country>USA</country></postal>
-<phone>+1-408-536-3024</phone>
-<email>LMM@acm.org</email>
-<uri>http://larry.masinter.net/</uri></address></author>
-<date year='2005' month='January' />
-<area>Applications</area>
-<keyword>uniform resource identifier</keyword>
-<keyword>URI</keyword>
-<keyword>URL</keyword>
-<keyword>URN</keyword>
-<keyword>WWW</keyword>
-<keyword>resource</keyword>
-<abstract>
-<t>
-A Uniform Resource Identifier (URI) is a compact sequence of characters
-that identifies an abstract or physical resource.  This specification
-defines the generic URI syntax and a process for resolving URI references
-that might be in relative form, along with guidelines and security
-considerations for the use of URIs on the Internet.
-The URI syntax defines a grammar that is a superset of all valid URIs,
-allowing an implementation to parse the common components of a URI
-reference without knowing the scheme-specific requirements of every
-possible identifier.  This specification does not define a generative
-grammar for URIs; that task is performed by the individual
-specifications of each URI scheme.
-</t></abstract></front>
-
-<seriesInfo name='STD' value='66' />
-<seriesInfo name='RFC' value='3986' />
-<format type='TXT' octets='141811' target='ftp://ftp.isi.edu/in-notes/rfc3986.txt' />
-<format type='HTML' octets='213584' target='http://xml.resource.org/public/rfc/html/rfc3986.html' />
-<format type='XML' octets='163534' target='http://xml.resource.org/public/rfc/xml/rfc3986.xml' />
-</reference>
-
-  <reference anchor="posix_fadvise">
-      <front>
-     <title>Section 'posix_fadvise()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
-     </title>
-  <author>
-    <organization>The Open Group</organization>
-  </author>
-  <date year="2004" />
-      </front>
-    </reference>
-
-  <reference anchor="posix_fallocate">
-      <front>
-     <title>Section 'posix_fallocate()' of System Interfaces of The Open Group Base Specifications Issue 6, IEEE Std 1003.1, 2004 Edition
-     </title>
-  <author>
-    <organization>The Open Group</organization>
-  </author>
-  <date year="2004" />
-      </front>
-    </reference>
-
   </references>
 
   <references title="Informative References">
+
+  <reference anchor='IESG08'>
+   <front>
+     <title>IESG Processing of RFC Errata for the IETF Stream</title>
+     <author>
+       <organization>ISEG</organization>
+     </author>
+     <date year="2008" />
+   </front>
+  </reference>
+
+<reference anchor='RFC959'>
+
+<front>
+<title abbrev='File Transfer Protocol'>File Transfer Protocol</title>
+<author initials='J.' surname='Postel' fullname='J. Postel'>
+<organization>Information Sciences Institute (ISI)</organization></author>
+<author initials='J.' surname='Reynolds' fullname='J. Reynolds'>
+<organization /></author>
+<date year='1985' day='1' month='October' /></front>
+
+<seriesInfo name='STD' value='9' />
+<seriesInfo name='RFC' value='959' />
+<format type='TXT' octets='147316' target='ftp://ftp.isi.edu/in-notes/rfc959.txt' />
+</reference>
 
     <reference anchor='RFC2119'>
       <front>
@@ -183,6 +178,19 @@ specifications of each URI scheme.
       </front>
     </reference>
 
+  <reference anchor='RFC4506'>
+    <front>
+      <title>XDR: External Data Representation Standard</title>
+      <author initials='M.' surname='Eisler' fullname='Michael Eisler'>
+        <organization>NetApp</organization>
+      </author>
+      <date year="2006" month="May" />
+    </front>
+    <seriesInfo name="RFC" value="4506" />
+    <format type="TXT"
+      target="ftp://ftp.isi.edu/in-notes/rfc4506.txt"/>
+  </reference>
+
    <reference anchor='RFC5226'>
 
    <front>
@@ -199,30 +207,6 @@ specifications of each URI scheme.
    <format type='TXT' octets='66160' target='ftp://ftp.isi.edu/in-notes/rfc5226.txt' />
    </reference>
 
-
-  <reference anchor='IESG08'>
-   <front>
-     <title>IESG Processing of RFC Errata for the IETF Stream</title>
-     <author>
-       <organization>ISEG</organization>
-     </author>
-     <date year="2008" />
-   </front>
-  </reference>
-
-  <reference anchor='RFC4506'>
-    <front>
-      <title>XDR: External Data Representation Standard</title>
-      <author initials='M.' surname='Eisler' fullname='Michael Eisler'>
-        <organization>NetApp</organization>
-      </author>
-      <date year="2006" month="May" />
-    </front>
-    <seriesInfo name="RFC" value="4506" />
-    <format type="TXT"
-      target="ftp://ftp.isi.edu/in-notes/rfc4506.txt"/>
-  </reference>
-
     <reference anchor='I-D.ietf-nfsv4-rfc3530bis'>
       <front>
         <title>Network File System (NFS) version 4 Protocol</title>
@@ -236,21 +220,6 @@ specifications of each URI scheme.
       </front>
       <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-25" value="(Work In Progress)"/>
     </reference>
-
-<reference anchor='RFC0959'>
-
-<front>
-<title abbrev='File Transfer Protocol'>File Transfer Protocol</title>
-<author initials='J.' surname='Postel' fullname='J. Postel'>
-<organization>Information Sciences Institute (ISI)</organization></author>
-<author initials='J.' surname='Reynolds' fullname='J. Reynolds'>
-<organization /></author>
-<date year='1985' day='1' month='October' /></front>
-
-<seriesInfo name='STD' value='9' />
-<seriesInfo name='RFC' value='959' />
-<format type='TXT' octets='147316' target='ftp://ftp.isi.edu/in-notes/rfc959.txt' />
-</reference>
 
 
 <reference anchor='RFC2616'>
