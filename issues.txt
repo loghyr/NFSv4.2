@@ -21,6 +21,8 @@
 
    See the recent WG ML chatter over all of this.
 
+   Done - 4/26 by loghyr@proimarydata.com
+
 4) Labeled NFS - FATTR4_CHANGE_SEC_LABEL - how big does it need to
    be?  Is seLinux going to support it?
 
