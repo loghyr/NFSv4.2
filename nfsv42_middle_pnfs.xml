@@ -13,6 +13,15 @@
     </t>
   </section>
 
+  <section anchor="ss:pnfs:atom" title="Atomicty for ALLOCATE and DEALLOCATE">
+    <t>
+      A NFSv4.2 metadata server can hand out a layout to a NFSv4.1
+      storage device. Section 13.9.1 of <xref target='RFC5661' />
+      discusses how the client gets a stateid from the metadata
+      server to present to a storage device.
+    </t>
+  </section>
+
   <section anchor="ss:pnfs:flt" title="NFSv4.2 as a Storage Protocol in pNFS: the File Layout Type">
     <t>
       A file layout provided by a NFSv4.2 server may refer either to a DS

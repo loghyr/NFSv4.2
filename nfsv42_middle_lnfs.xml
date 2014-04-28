@@ -24,32 +24,34 @@
       The first change necessary is to devise a method for transporting
       and storing security label data on NFSv4 file objects.  Security
       labels have several semantics that are met by NFSv4 recommended
-      attributes such as the ability to set the label value upon object
-      creation.  Access control on these attributes are done through a
-      combination of two mechanisms.  As with other recommended attributes
-      on file objects the usual DAC checks (ACLs and permission bits) will
-      be performed to ensure that proper file ownership is enforced.  In
-      addition a MAC system MAY be employed on the client, server, or both to
-      enforce additional policy on what subjects may modify security label
+      attributes such as the ability to set the label value upon
+      object creation.  Access control on these attributes are done
+      through a combination of two mechanisms.  As with other
+      recommended attributes on file objects the usual DAC checks
+      (ACLs and permission bits) will be performed to ensure that
+      proper file ownership is enforced.  In addition a MAC system
+      MAY be employed on the client, server, or both to enforce
+      additional policy on what subjects may modify security label
       information.
     </t>
 
     <t>
       The second change is to provide methods for the client to
       determine if the security label has changed. A client which
-      needs to know if a label is going to change SHOULD request
-      a delegation on that file. In order to change the security
+      needs to know if a label is going to change SHOULD request a
+      delegation on that file. In order to change the security
       label, the server will have to recall all delegations. This
       will inform the client of the change. If a client wants to
       detect if the label has changed, it MAY use VERIFY and NVERIFY
-      on FATTR4_CHANGE_SEC_LABEL to detect that the FATTR4_SEC_LABEL has been
-      modified.
+      on FATTR4_CHANGE_SEC_LABEL to detect that the FATTR4_SEC_LABEL
+      has been modified.
     </t>
 
     <t>
       An additional useful change would be modification to the RPC layer
       used in NFSv4 to allow RPC calls to carry security labels.  Such
-      modifications are outside the scope of this document.
+      modifications are outside the scope of this document
+      (see <xref target='rpcsec_gssv3' />).
     </t>
   </section>
 
