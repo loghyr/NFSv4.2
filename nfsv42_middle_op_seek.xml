@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='op:seek' title='Operation 66: SEEK'>
+<section anchor='op:seek' title='Operation 68: SEEK'>
   <t>
     SEEK is an operation that allows a client to determine the location of
     the next data_content4 in a file. It allows an implementation of the

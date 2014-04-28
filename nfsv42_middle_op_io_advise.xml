@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor='op:io_advise' title='Operation 67: IO_ADVISE - Application I/O access pattern hints'>
+<section anchor='op:io_advise' title='Operation 63: IO_ADVISE - Application I/O access pattern hints'>
   <section toc='exclude' title="ARGUMENT">
    <?rfc include='autogen/io_advise_args.xml'?>
   </section>

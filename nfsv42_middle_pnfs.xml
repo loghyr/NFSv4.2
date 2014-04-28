@@ -13,7 +13,7 @@
     </t>
   </section>
 
-  <section anchor="ss:pnfs:atom" title="Atomicty for ALLOCATE and DEALLOCATE">
+  <section anchor="ss:pnfs:stateids" title="Sharing of stateids with NFSv4.1">
     <t>
       A NFSv4.2 metadata server can hand out a layout to a NFSv4.1
       storage device. Section 13.9.1 of <xref target='RFC5661' />

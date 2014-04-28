@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2014) -->
 <!-- Copyright (C) The Internet Society (2014) -->
 
-<section anchor='op:allocate' title='Operation 68: ALLOCATE'>
+<section anchor='op:allocate' title='Operation 59: ALLOCATE'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/allocate_args.xml'?>
   </section>
