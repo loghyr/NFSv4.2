@@ -1,14 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='op:seek' title='Operation 68: SEEK'>
-  <t>
-    SEEK is an operation that allows a client to determine the location of
-    the next data_content4 in a file. It allows an implementation of the
-    emerging extension to lseek(2) to allow clients to determine the next
-    hole whilst in data or the next data whilst in a hole.
-  </t>
-
+<section anchor='op:seek' title='Operation 68: SEEK - Find the Next Data or Hole'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/seek_args.xml'?>
   </section>
@@ -20,6 +13,13 @@
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
+    <t>
+      SEEK is an operation that allows a client to determine the location
+      of the next data_content4 in a file. It allows an implementation
+      of the emerging extension to lseek(2) to allow clients to determine
+      the next hole whilst in data or the next data whilst in a hole.
+    </t>
+
     <t>
       From the given sa_offset, find the next data_content4 of type
       sa_what in the file. For a hole, this must return
