@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='op:read_plus' title='Operation 67: READ_PLUS - READ Data or Holes From a Regular File'>
+<section anchor='op:read_plus' title='Operation 67: READ_PLUS - READ Data or Holes from a File'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/read_plus_args.xml'?>
   </section>

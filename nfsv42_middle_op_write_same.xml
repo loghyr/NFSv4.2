@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='op:write_same' title='Operation 69: WRITE_SAME - WRITE a Block Multiple Times to a Regular File'>
+<section anchor='op:write_same' title='Operation 69: WRITE_SAME - WRITE a Block Multiple Times to a File'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/stable_how4.xml'?>
     <?rfc include='autogen/app_data_block4.xml'?>
