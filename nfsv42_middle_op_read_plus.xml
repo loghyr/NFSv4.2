@@ -195,7 +195,7 @@
       <list style="numbers">
         <t>
           READ_PLUS(s, 0, 64K) --> NFS_OK, eof = false, &lt;data[0,32K], hole[32K,224K]&gt;.
-          Since the first hole is less than the server's Hole Threshhold, the
+          Since the first hole is less than the server's Hole Threshold, the
           first 32K of the file is returned as data and the remaining 32K is
           returned as a hole which actually extends to 256K.
         </t>
