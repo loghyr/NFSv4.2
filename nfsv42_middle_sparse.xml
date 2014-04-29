@@ -84,13 +84,6 @@
           all zeroes.  A hole might or might not have space allocated
           or reserved to it.
         </t>
-
-        <t hangText='Hole Threshold:'>
-          The minimum length of a Hole as determined by the server.
-          If a server chooses to define a Hole Threshold, then it
-          would not return hole information about holes with a length
-          shorter than the Hole Threshold.
-        </t>
       </list>
     </t>
   </section>
