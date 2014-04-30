@@ -2,7 +2,7 @@
 <!-- Copyright (C) The Internet Society (2014) -->
 
 <section anchor="ss:pnfs" title="pNFS considerations for New Operations">
-  <section anchor="ss:pnfs:atom" title="Atomicty for ALLOCATE and DEALLOCATE">
+  <section anchor="ss:pnfs:atom" title="Atomicity for ALLOCATE and DEALLOCATE">
     <t>
       Both ALLOCATE (see <xref target='op:allocate' />) and
       DEALLOCATE (see <xref target='op:deallocate' />) are sent to the
