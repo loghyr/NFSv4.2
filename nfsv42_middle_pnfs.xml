@@ -38,8 +38,8 @@
       <t>
         In addition to the commands listed in <xref target='RFC5661' />,
         NFSv4.2 data servers MAY accept a COMPOUND containing the following
-        additional operations: READ_PLUS (see
-        <xref target='op:read_plus' />), WRITE_SAME (see
+        additional operations: IO_ADVISE (see <xref target='op:io_advise' />),
+        READ_PLUS (see <xref target='op:read_plus' />), WRITE_SAME (see
         <xref target='op:write_same' />), and SEEK (see
         <xref target='op:seek' />), which will be treated like the
         subset specified as "Operations Sent to NFSv4.1 Data Servers"
