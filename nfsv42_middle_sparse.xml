@@ -16,7 +16,7 @@
     </t>
 
     <t>
-      In addition many modern filesystems support the concept of 'unwritten'
+      In addition many modern file systems support the concept of 'unwritten'
       or 'uninitialized' blocks, which have uninitialized space allocated to
       them on disk, but will return zeros until data is written to them.  Such
       functionality is already present in the data model of the pNFS
@@ -48,7 +48,7 @@
       populated file, when a file is created and a write occurs past
       the current size of the file, the non-allocated region will either
       be a hole or filled with zeros.  The choice of behavior is dictated
-      by the underlying filesystem and is transparent to the application.
+      by the underlying file system and is transparent to the application.
       What is needed are the abilities to read sparse files and to punch
       holes to reinitialize the contents of a file.
     </t>

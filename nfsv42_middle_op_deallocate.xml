@@ -27,7 +27,7 @@
       Situations may arise where da_offset and/or da_offset + da_length will
       not be aligned to a boundary for which the server does allocations or
       deallocations.  For most file systems, this is the block size of the
-      filesystem.  In such a case, the server can deallocate as many bytes as
+      file system.  In such a case, the server can deallocate as many bytes as
       it can in the region.  The blocks that cannot be deallocated MUST be
       zeroed.
     </t>

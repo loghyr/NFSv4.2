@@ -142,16 +142,25 @@
   <section toc='exclude' title="IO_ADVISE4_INIT_PROXIMITY">
     <t>
       The IO_ADVISE4_INIT_PROXIMITY hint is non-posix in origin and
-      conveys that the client has recently accessed the byte range in
-      its own cache. I.e., it has not accessed it on the server, but
-      it has locally.  When the server reaches
-      resource exhaustion, knowing which data is more important allows the
-      server to make better choices about which data to, for example purge
-      from a cache, or move to secondary storage.  It also informs the
-      server which delegations are more important, since if delegations are
-      working correctly, once delegated to a client and the client
-      has read the content for that byte range, a server might never
-      receive another read request for that byte range.
+      can be used to convey that the client has recently accessed
+      the byte range in its own cache. I.e., it has not accessed
+      it on the server, but it has locally.  When the server reaches
+      resource exhaustion, knowing which data is more important
+      allows the server to make better choices about which data to,
+      for example purge from a cache, or move to secondary storage.
+      It also informs the server which delegations are more important,
+      since if delegations are working correctly, once delegated
+      to a client and the client has read the content for that byte
+      range, a server might never receive another read request for
+      that byte range.
+    </t>
+
+    <t>
+      The IO_ADVISE4_INIT_PROXIMITY hint can also be used in a pNFS
+      setting to let the client inform the metadata server as to
+      the I/O statistics between the client and the storage devices.
+      The metadata server is then free to use this information
+      about client I/O to optimize the data storage location.
     </t>
 
     <t>
