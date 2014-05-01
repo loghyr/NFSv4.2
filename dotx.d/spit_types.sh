@@ -1419,7 +1419,6 @@ EOF
 cat << EOF > $i
 struct data4 {
 	offset4		d_offset;
-	space_info4	d_reserved;
 	opaque		d_data<>;
 };
 EOF
