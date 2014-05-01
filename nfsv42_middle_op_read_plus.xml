@@ -68,13 +68,17 @@
     </t>
 
     <t>
-      If the client specifies an rpa_offset and rpa_count value that is entirely
-      contained within a hole of the file, then the di_offset and di_length
-      returned must be for the entire hole.  This result is considered valid
-      until the file is changed (detected via the change attribute).  The
-      server MUST provide the same semantics for the hole as if the client
-      read the region and received zeroes; the implied holes contents
-      lifetime MUST be exactly the same as any other read data.
+      If the client specifies an rpa_offset and rpa_count value
+      that is entirely contained within a hole of the file, then
+      the di_offset and di_length returned MAY be for the entire
+      hole.  If the the owner has a locked byte range covering
+      rpa_offset and rpa_count entirely the di_offset and di_length
+      MUST NOT be extended outside the locked byte range.  This
+      result is considered valid until the file is changed (detected
+      via the change attribute).  The server MUST provide the same
+      semantics for the hole as if the client read the region and
+      received zeroes; the implied holes contents lifetime MUST be
+      exactly the same as any other read data.
     </t>
 
     <t>
@@ -140,9 +144,7 @@
   <section toc='exclude' title="IMPLEMENTATION">
     <t>
       In general, the IMPLEMENTATION notes for READ in Section 18.22.4 of
-      <xref target="RFC5661" /> also apply to READ_PLUS. One delta is
-      that when the owner has a locked byte range, the server
-      MUST return an array of rpr_contents with values inside that range.
+      <xref target="RFC5661" /> also apply to READ_PLUS.
     </t>
 
     <section toc='exclude' title="Additional pNFS Implementation Information">
