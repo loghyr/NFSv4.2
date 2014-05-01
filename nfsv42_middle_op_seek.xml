@@ -23,8 +23,7 @@
     <t>
       From the given sa_offset, find the next data_content4 of type
       sa_what in the file. For a hole, this must return
-      the data_content4 in its entirety. For data, it must not return
-      the actual data.
+      the data_content4 in its entirety.
     </t>
 
     <t>
