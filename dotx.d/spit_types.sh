@@ -46,7 +46,6 @@ typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operatio
 :enum:netloc_type4:Specifies network locations.
 typedef :string:secret4<>:Secret value to share between servers.
 typedef :uint32_t:policy4:Label format specifier or policy identifier.
-typedef :uint64_t:change_sec_label4:Used to detect label changes.
 EOF
 
 	fi
