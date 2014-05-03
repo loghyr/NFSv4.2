@@ -49,23 +49,21 @@
     </t>
 
     <t>
-      If a server supports the
-      server-to-server COPY feature, a PUTFH followed by a SAVEFH
-      MUST NOT return NFS4ERR_STALE for either operation. These
-      restrictions do not pose substantial difficulties for
-      servers. The CURRENT_FH and SAVED_FH may be validated in the
+      If a server supports the server-to-server COPY feature, a PUTFH
+      followed by a SAVEFH MUST NOT return NFS4ERR_STALE for either
+      operation. These restrictions do not pose substantial difficulties
+      for servers. The CURRENT_FH and SAVED_FH may be validated in the
       context of the operation referencing them and an NFS4ERR_STALE
       error returned for an invalid file handle at that point.
     </t>
 
     <t>
-      For an intra-server copy, both the ca_src_stateid and
-      ca_dst_stateid MUST refer to either open or locking
-      states provided earlier by the server. If either
-      stateid is invalid, then the operation MUST fail.
-      If the request is for a inter-server copy, then the
-      ca_src_stateid can be ignored. If ca_dst_stateid
-      is invalid, then the operation MUST fail.
+      For an intra-server copy, both the ca_src_stateid and ca_dst_stateid
+      MUST refer to either open or locking states provided earlier by the
+      server. If either stateid is invalid, then the operation MUST fail.
+      If the request is for a inter-server copy, then the ca_src_stateid
+      can be ignored. If ca_dst_stateid is invalid, then the operation
+      MUST fail.
     </t>
 
     <t>
@@ -73,30 +71,30 @@
       The CURRENT_FH MUST be a regular file and not a directory. Note,
       the file MUST exist before the COPY operation begins. It is the
       responsibility of the client to create the file if necessary,
-      regardless of the actual copy protocol used.
-      If the file cannot be created in the destination file system (due to
-      file name restrictions, such as case or length), the COPY
-      operation MUST NOT be called.
+      regardless of the actual copy protocol used.  If the file cannot
+      be created in the destination file system (due to file name
+      restrictions, such as case or length), the COPY operation MUST
+      NOT be called.
     </t>
 
     <t>
-      The ca_src_offset is the offset within the source file from
-      which the data will be read, the ca_dst_offset is the offset
-      within the destination file to which the data will be
-      written, and the ca_count is the number of bytes that will be
-      copied. An offset of 0 (zero) specifies the start of the file. A
-      count of 0 (zero) requests that all bytes from ca_src_offset
-      through EOF be copied to the destination. If concurrent modifications
-      to the source file overlap with the source file region being copied,
-      the data copied may include all, some, or none of the
-      modifications. The client can use standard NFS operations (e.g., OPEN with
-      OPEN4_SHARE_DENY_WRITE or mandatory byte range locks) to protect against
-      concurrent modifications if the client is concerned about this. If the
-      source file's end of file is being modified in parallel with a copy that
+      The ca_src_offset is the offset within the source file from which
+      the data will be read, the ca_dst_offset is the offset within
+      the destination file to which the data will be written, and the
+      ca_count is the number of bytes that will be copied. An offset
+      of 0 (zero) specifies the start of the file. A count of 0 (zero)
+      requests that all bytes from ca_src_offset through EOF be copied
+      to the destination. If concurrent modifications to the source file
+      overlap with the source file region being copied, the data copied
+      may include all, some, or none of the modifications. The client can
+      use standard NFS operations (e.g., OPEN with OPEN4_SHARE_DENY_WRITE
+      or mandatory byte range locks) to protect against concurrent
+      modifications if the client is concerned about this. If the source
+      file's end of file is being modified in parallel with a copy that
       specifies a count of 0 (zero) bytes, the amount of data copied is
-      implementation dependent (clients may guard against this case by specifying
-      a non-zero count value or preventing modification of the source file as
-      mentioned above).
+      implementation dependent (clients may guard against this case by
+      specifying a non-zero count value or preventing modification of
+      the source file as mentioned above).
     </t>
 
     <t>
@@ -106,22 +104,27 @@
       offset or destination offset plus count may be greater than
       the size of the destination file. This allows for the client
       to issue parallel copies to implement operations such as
-      "cat file1 file2 file3 file4 > dest".
     </t>
 
+    <figure>
+      <artwork>
+   % cat file1 file2 file3 file4 > dest
+      </artwork>
+    </figure>
+
     <t>
-      If the ca_source_server list is specified, then this is an inter-server
-      copy operation and the source file is on a remote server.  The client
-      is expected to have previously issued a successful COPY_NOTIFY request
-      to the remote source server. The ca_source_server list MUST be the
-      same as the COPY_NOTIFY response's cnr_source_server list. If the client
-      includes the entries from the COPY_NOTIFY response's cnr_source_server
-      list in the ca_source_server list, the source server can indicate a
-      specific copy protocol for the destination server to use by returning
-      a URL, which specifies both a protocol service and server name.
+      If the ca_source_server list is specified, then this is an
+      inter-server copy operation and the source file is on a remote
+      server.  The client is expected to have previously issued a
+      successful COPY_NOTIFY request to the remote source server. The
+      ca_source_server list MUST be the same as the COPY_NOTIFY
+      response's cnr_source_server list. If the client includes the
+      entries from the COPY_NOTIFY response's cnr_source_server list in
+      the ca_source_server list, the source server can indicate a specific
+      copy protocol for the destination server to use by returning a
+      URL, which specifies both a protocol service and server name.
       Server-to-server copy protocol considerations are described in
-      <xref target="sec:SSC-proto" /> and
-      <xref target="sec:SSC-sec" />.
+      <xref target="sec:SSC-proto" /> and <xref target="sec:SSC-sec" />.
     </t>
 
     <t>
@@ -172,27 +175,27 @@
 
     <t>
       If the wr_callback_id is returned, this indicates that the operation
-      was initiated and a CB_OFFLOAD callback will deliver the final results
-      of the operation. The wr_callback_id stateid is termed a copy stateid
-      in this context. The server is given the option of returning the
-      results in a callback because the data may require a relatively long
-      period of time to copy.
+      was initiated and a CB_OFFLOAD callback will deliver the final
+      results of the operation. The wr_callback_id stateid is termed a
+      copy stateid in this context. The server is given the option of
+      returning the results in a callback because the data may require
+      a relatively long period of time to copy.
     </t>
 
     <t>
-      If no wr_callback_id is returned, the operation completed synchronously
-      and no callback will be issued by the server. The completion status of
-      the operation is indicated by cr_status.
+      If no wr_callback_id is returned, the operation completed
+      synchronously and no callback will be issued by the server. The
+      completion status of the operation is indicated by cr_status.
     </t>
 
     <t>
       If the copy completes successfully, either synchronously or
-      asynchronously, the data copied from the source file to the destination
-      file MUST appear identical to the NFS client. However, the NFS server's
-      on disk representation of the data in the source file and destination file
-      MAY differ. For example, the NFS server might encrypt, compress,
-      deduplicate, or otherwise represent the on disk data in the source and
-      destination file differently.
+      asynchronously, the data copied from the source file to the
+      destination file MUST appear identical to the NFS client. However,
+      the NFS server's on disk representation of the data in the source
+      file and destination file MAY differ. For example, the NFS server
+      might encrypt, compress, deduplicate, or otherwise represent the
+      on disk data in the source and destination file differently.
     </t>
   </section>
 </section>
