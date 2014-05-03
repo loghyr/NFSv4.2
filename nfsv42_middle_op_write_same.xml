@@ -21,7 +21,7 @@
       target file is specified by the current filehandle.  The data
       to be written is specified by an app_data_block4 structure
       (<xref target="ss:adb:dh"/>).  The client specifies with the
-      ws_stable parameter the method of how the data is to be
+      wsa_stable parameter the method of how the data is to be
       processed by the server.  It is treated like the stable
       parameter in the NFSv4.1 WRITE operation (see Section 18.2
       of <xref target="RFC5661" />).
@@ -84,7 +84,7 @@
 	      ADB initialization may lead to server determining to service
 	      the operation asynchronously. If it decides to do so, it
 	      sets the stateid in wr_callback_id to be that of the
-	      ws_stateid. If it does not set the wr_callback_id, then the
+	      wsa_stateid. If it does not set the wr_callback_id, then the
 	      result is synchronous.
       </t>
 

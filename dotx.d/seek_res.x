@@ -1,5 +1,5 @@
 
-union seek_content switch (data_content4 content) {
+union seek_content switch (data_content4 sc_content) {
 case NFS4_CONTENT_DATA:
 	data_info4	sc_data;
 case NFS4_CONTENT_HOLE:
@@ -13,7 +13,7 @@ struct seek_res4 {
 	seek_content		sr_contents;
 };
 
-union SEEK4res switch (nfsstat4 status) {
+union SEEK4res switch (nfsstat4 sa_status) {
 case NFS4_OK:
 	seek_res4	resok4;
 default:

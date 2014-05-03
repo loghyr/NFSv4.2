@@ -11,13 +11,15 @@
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
+
     <t>
-      The IO_ADVISE operation sends an I/O access pattern hint to the
-      server for the owner of the stateid for a given byte range specified by
-      iar_offset and iar_count.  The byte range specified by iar_offset and iar_count need
-      not currently exist in the file, but the iar_hints will apply to the byte
-      range when it does exist.  If iar_count is 0, all data following
-      iar_offset is specified.  The server MAY ignore the advice.
+      The IO_ADVISE operation sends an I/O access pattern hint to
+      the server for the owner of the stateid for a given byte range
+      specified by iar_offset and iar_count.  The byte range specified
+      by iaa_offset and iaa_count need not currently exist in the file,
+      but the iaa_hints will apply to the byte range when it does exist.
+      If iaa_count is 0, all data following iaa_offset is specified.
+      The server MAY ignore the advice.
     </t>
 
     <t>
@@ -79,16 +81,14 @@
     </t>
 
     <t>
-      Since IO_ADVISE is a hint, a server SHOULD NOT return an
-      error and invalidate a entire Compound request if one of
-      the sent hints in iar_hints is not supported by the server.  Also, the
-      server MUST NOT return an error if the client sends
-      contradictory hints to the server, e.g.,
-      IO_ADVISE4_SEQUENTIAL and IO_ADVISE4_RANDOM in a single
-      IO_ADVISE operation.  In these cases, the server MUST
-      return success and a ior_hints value that indicates
-      the hint it intends to implement. This may mean simply
-      returning IO_ADVISE4_NORMAL.
+      Since IO_ADVISE is a hint, a server SHOULD NOT return an error and
+      invalidate a entire Compound request if one of the sent hints in
+      iar_hints is not supported by the server.  Also, the server MUST
+      NOT return an error if the client sends contradictory hints to
+      the server, e.g., IO_ADVISE4_SEQUENTIAL and IO_ADVISE4_RANDOM in a
+      single IO_ADVISE operation.  In these cases, the server MUST return
+      success and a ior_hints value that indicates the hint it intends
+      to implement. This may mean simply returning IO_ADVISE4_NORMAL.
     </t>
 
     <t>
@@ -133,9 +133,9 @@
 
     <t>
       The most obvious is in direct response to an application's execution
-      of posix_fadvise().  In this case, IO_ADVISE4_WRITE and IO_ADVISE4_READ
-      may be set based upon the type of file access specified when the file
-      was opened.
+      of posix_fadvise().  In this case, IO_ADVISE4_WRITE and
+      IO_ADVISE4_READ may be set based upon the type of file access
+      specified when the file was opened.
     </t>
   </section>
 
@@ -222,23 +222,23 @@
 
       <t>
         E.g., if NFL4_UFLG_DENSE is present, and a READ or WRITE to the DS
-        for iar_offset 0 really means iar_offset 10000 in the logical file, then
-        an IO_ADVISE for iar_offset 0 means iar_offset 10000.
+        for iaa_offset 0 really means iaa_offset 10000 in the logical file, then
+        an IO_ADVISE for iaa_offset 0 means iaa_offset 10000.
       </t>
 
       <t>
         E.g., if NFL4_UFLG_DENSE is absent, then a READ or WRITE to the DS
-        for iar_offset 0 really means iar_offset 0 in the logical file, then an
-        IO_ADVISE for iar_offset 0 means iar_offset 0 in the logical file.
+        for iaa_offset 0 really means iaa_offset 0 in the logical file, then an
+        IO_ADVISE for iaa_offset 0 means iaa_offset 0 in the logical file.
       </t>
 
       <t>
         E.g., if NFL4_UFLG_DENSE is present, the stripe unit is 1000 bytes and
         the stripe count is 10, and the dense DS file is serving iar_offset 0.
-        A  READ or WRITE to the DS for iar_offsets 0, 1000, 2000, and 3000,
-        really mean iar_offsets 10000, 20000, 30000, and 40000 (implying a stripe
+        A  READ or WRITE to the DS for iaa_offsets 0, 1000, 2000, and 3000,
+        really mean iaa_offsets 10000, 20000, 30000, and 40000 (implying a stripe
         count of 10 and a stripe unit of 1000), then an IO_ADVISE sent to the
-        same DS with an iar_offset of 500, and a iar_count of 3000 means that the
+        same DS with an iaa_offset of 500, and an iaa_count of 3000 means that the
         IO_ADVISE applies to these byte ranges of the dense DS file:
       </t>
 
@@ -271,12 +271,12 @@
 
       <t>
         E.g., if NFL4_UFLG_DENSE is absent, the stripe unit is 250 bytes, the
-        stripe count is 4, and the sparse DS file is serving iar_offset 0.
-        Then a READ or WRITE to the DS for iar_offsets 0, 1000, 2000, and
-        3000, really mean iar_offsets 0, 1000, 2000, and 3000 in the logical
-        file, keeping in mind that on the DS file,. byte ranges 250 to 999,
+        stripe count is 4, and the sparse DS file is serving iaa_offset 0.
+        Then a READ or WRITE to the DS for iaa_offsets 0, 1000, 2000, and
+        3000, really means iaa_offsets 0, 1000, 2000, and 3000 in the logical
+        file, keeping in mind that on the DS file, byte ranges 250 to 999,
         1250 to 1999, 2250 to 2999, and 3250 to 3999 are not accessible. Then
-        an IO_ADVISE sent to the same DS with an iar_offset of 500, and a iar_count
+        an IO_ADVISE sent to the same DS with an iaa_offset of 500, and a iaa_count
         of 3000 means that the IO_ADVISE applies to these byte ranges of the
         logical file and the sparse DS file:
       </t>
