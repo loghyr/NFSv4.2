@@ -12,7 +12,7 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      OFFLOAD_STATUS is used for both intra- and inter-server asynchronous
+      OFFLOAD_STATUS is used for both intra-server and inter-server asynchronous
       copies. The OFFLOAD_STATUS operation allows the client to poll the
       destination server to determine the status of an asynchronous copy operation.
     </t>

@@ -12,7 +12,7 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      OFFLOAD_ABORT is used for both intra- and inter-server
+      OFFLOAD_ABORT is used for both intra-server and inter-server
       asynchronous copies. The OFFLOAD_ABORT operation allows the client
       to cancel a server-side copy operation that it initiated. This operation
       is sent in a COMPOUND request from the client to the destination

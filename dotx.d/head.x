@@ -179,7 +179,8 @@ enum nfsstat4 {
  NFS4ERR_UNION_NOTSUPP  = 10090,/* Arm of union not supp   */
  NFS4ERR_OFFLOAD_DENIED = 10091,/* dest not allowing copy  */
  NFS4ERR_WRONG_LFS      = 10092,/* LFS not supported       */
- NFS4ERR_BADLABEL       = 10093 /* incorrect label         */
+ NFS4ERR_BADLABEL       = 10093,/* incorrect label         */
+ NFS4ERR_OFFLOAD_NO_REQS= 10094 /* dest not meeting reqs   */
 };
 
 /*

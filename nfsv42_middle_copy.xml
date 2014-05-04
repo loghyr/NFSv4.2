@@ -1,5 +1,5 @@
-<!-- Copyright (C) The IETF Trust (2011-2013) -->
-<!-- Copyright (C) The Internet Society (2011-2013) -->
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:copy" title="Server Side Copy">
   <section title="Introduction">
@@ -10,7 +10,7 @@
       transmitted back and forth over the network through the NFS client.
       Without this feature, an NFS client copies data from one location
       to another by reading the data from the source server over the network, and
-      then writing the data back over the network to the destiniation server.
+      then writing the data back over the network to the destination server.
     </t>
 
     <t>
@@ -370,13 +370,28 @@
 
     <section title="Server-to-Server Copy Protocol" anchor="sec:SSC-proto">
       <t>
-        The source server and
-        destination server are not required to use a specific protocol to
-        transfer the file data. The choice of what protocol to use
-        is ultimately the destination server's decision.
+        The source server and destination server are not required to
+        use a specific protocol to transfer the file data. The choice
+        of what protocol to use is ultimately the destination server's
+        decision. However, the destination server has to be cognizant
+        that it is working on behalf of the client.
       </t>
 
-      <section title="Using NFSv4.x as a Server-to-Server Copy Protocol">
+      <section title="Considerations on Selecting a Copy Protocol">
+        <t>
+          The client may have requirements over both the size of
+          transactions and error recovery semantics. It may want to
+          split the copy up such that each chunk is synchronously
+          transferred. It may want the copy protocol to copy the bytes
+          in consecutive order such that upon an error, the client can
+          restart the copy at the last known good offset. If the
+          destination server cannot meet these requirements, the client
+          may prefer the traditional copy mechanism such that it
+          can meet those requirements.
+        </t>
+      </section>
+
+      <section title="Using NFSv4.x as the Copy Protocol">
         <t>
           The destination server MAY use standard NFSv4.x (where x >= 1)
           operations to read the data from the source server. If NFSv4.x is used
@@ -387,7 +402,7 @@
         </t>
       </section>
 
-      <section title="Using an alternative Server-to-Server Copy Protocol">
+      <section title="Using an Alternative Copy Protocol">
         <t>
           In a homogeneous environment, the source and destination servers
           might be able to perform the file copy extremely efficiently using
@@ -669,7 +684,7 @@
          compound authentication and RPC application defined structured
          privilege assertions. The combination of these features allows the
          destination server to authenticate to the source server as acting on
-         behalf of the user prinicpal, and to authorize the destination server
+         behalf of the user principal, and to authorize the destination server
          to perform READs of the file to be copied from the source on behalf
          of the user principal. Once the copy is complete, the client can
          destroy the RPCSEC_GSSv3 handles to end the source and destination
@@ -678,7 +693,7 @@
         <t>
          RPCSEC_GSSv3 introduces the notion of RPC application defined
          structured privileges.  We define three structured privileges
-         that work in tandum to authorize the copy:
+         that work in tandem to authorize the copy:
         </t>
 
         <t>
@@ -769,7 +784,7 @@
          and the source server to OPEN the file to be copied to provide the
          the necessary user principal identification to the source server
          from the destination server (acting as a client). This is accomplished
-         by sending the user principal indentification information: e.g
+         by sending the user principal identification information: e.g
          the rpc_gss3_gss_binding fields, in the
          copy_to_auth privilege established between the client and the
          destination server. This same information is then placed in the
@@ -835,7 +850,7 @@
              as explained above.
              A nounce is created, and GSS_MIC() is invoked on the
              nounce using the RPCSEC_GSSv1 (or v2) context shared between
-             user prinicpal and the source server. The nounce, nounce MIC,
+             user principal and the source server. The nounce, nounce MIC,
              context handle used to create the nounce MIC, and the context
              handle version are added to the copy_to_auth_priv instance which
              is placed in
@@ -921,7 +936,7 @@
              initiator principal, and nfs@&lt;source&gt; as the target
              principal.
              If NFS is to be used as the copy protocol, this means that the
-             destiniation server must mount the source server using RPCSEC_GSS.
+             destination server must mount the source server using RPCSEC_GSS.
            </t>
 
             <t>
@@ -943,7 +958,7 @@
             <t>
              The copy_confirm_auth RPCSEC_GSS3_CREATE call also includes
              a compound authentication component. The rpc_gss3_gss_binding
-             fields are filled in with information from the estalished
+             fields are filled in with information from the established
              "copy_to_auth" privilege
              (see <xref target="sec:SSC-sec-estab" />).
              The ctap_handle_vers, ctap_handle,
@@ -981,7 +996,7 @@
              All subsequent ONC RPC requests sent from the destination to
              copy data from the source to the destination will use the
              RPCSEC_GSSv3 handle returned by the source's RPCSEC_GSS3_CREATE
-             response. Note that as per the Compound Authenticaion section of
+             response. Note that as per the Compound Authentication section of
              <xref target="rpcsec_gssv3" />
              the resultant RPCSEC_GSSv3 context handle is bound to
              the user principal RPCSEC_GSS context and so it MUST be treated by
@@ -1010,7 +1025,7 @@
         </t>
 
       </section>
-      <section title="Finishing or Stoping a Secure Inter-Server Copy">
+      <section title="Finishing or Stopping a Secure Inter-Server Copy">
         <t>
          Under normal operation, the client MUST destroy the copy_from_auth
          and the copy_to_auth RPCSEC_GSSv3 handle once the COPY operation
@@ -1044,7 +1059,7 @@
          check on the status of an asynchronous copy, it uses the privileged
          "copy_to_auth" RPCSEC_GSSv3 handle and the osa_stateid in
          OFFLOAD_STATUS MUST be the same as the wr_callback_id specified
-         in the "copy_to_auth" privilege stored on the destiniation server.
+         in the "copy_to_auth" privilege stored on the destination server.
         </t>
 
         <t>
@@ -1052,7 +1067,7 @@
          cancel an asynchronous copy, it uses the privileged "copy_to_auth"
          RPCSEC_GSSv3 handle and the oaa_stateid in OFFLOAD_ABORT MUST be
          the same as the wr_callback_id specified in the "copy_to_auth"
-         privilege stored on the destiniation server. The destiniation server
+         privilege stored on the destination server. The destination server
          will then delete the &lt;"copy_to_auth", user id, source list,
          nounce, nounce MIC, context handle, handle version&gt; privilege and
          the associated "copy_confirm_auth" RPCSEC_GSSv3 handle.

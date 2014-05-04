@@ -22,6 +22,7 @@
 
       <c>NFS4ERR_BADLABEL</c>         <c>10093</c> <c><xref target="err_BADLABEL" /></c>
       <c>NFS4ERR_OFFLOAD_DENIED</c>   <c>10091</c> <c><xref target="err_OFFLOAD_DENIED" /></c>
+      <c>NFS4ERR_OFFLOAD_NO_REQS</c>  <c>10094</c> <c><xref target="err_OFFLOAD_NO_REQS" /></c>
       <c>NFS4ERR_PARTNER_NO_AUTH</c>  <c>10089</c> <c><xref target="err_PARTNER_NO_AUTH" /></c>
       <c>NFS4ERR_PARTNER_NOTSUPP</c>  <c>10088</c> <c><xref target="err_PARTNER_NOTSUPP" /></c>
       <c>NFS4ERR_UNION_NOTSUPP</c>    <c>10090</c> <c><xref target="err_UNION_NOTSUPP" /></c>
@@ -50,10 +51,20 @@
 
       <section title="NFS4ERR_OFFLOAD_DENIED (Error Code 10091)" anchor="err_OFFLOAD_DENIED">
         <t>
-          The copy offload operation is supported by
-          both the source and the destination, but the destination is not
-          allowing it for this file.  If the client sees this error, it
-          should fall back to the normal copy semantics.
+          The copy offload operation is supported by both the source
+          and the destination, but the destination is not allowing it
+          for this file.  If the client sees this error, it should fall
+          back to the normal copy semantics.
+        </t>
+      </section>
+
+      <section title="NFS4ERR_OFFLOAD_NO_REQS (Error Code 10094)" anchor="err_OFFLOAD_NO_REQS">
+        <t>
+          The copy offload operation is supported by both the source and
+          the destination, but the destination can not meet the client
+          requirements for either consecutive byte copy or synchronous
+          copy. If the client sees this error, it should either relax the
+          requirements (if any) or fall back to the normal copy semantics.
         </t>
       </section>
 

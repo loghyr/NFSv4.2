@@ -128,6 +128,44 @@
     </t>
 
     <t>
+      If ca_consecutive is set, then the client has specified that
+      the copy protocol selected MUST copy bytes in consecutive
+      order from ca_src_offset to ca_count. If the destination
+      server cannot meet this requirement, then it MUST return
+      an error of NFS4ERR_OFFLOAD_NO_REQS and set cr_consecutive
+      to be false. Likewise, if ca_synchronous is set, then the
+      client has required that the copy protocol selected MUST
+      perform a synchronous copy. If the destination server
+      cannot meet this requirement, then it MUST return an
+      error of NFS4ERR_OFFLOAD_NO_REQS and set cr_synchronous
+      to be false.
+    </t>
+
+    <t>
+      If both are set by the client, then the destination SHOULD
+      try to determine if it can respond to both requirements
+      at the same time. If it cannot make that determination,
+      it must set to false the one it can and set to true the
+      other. The client, upon getting an NFS4ERR_OFFLOAD_NO_REQS
+      error, has to examine both cr_consecutive and cr_synchronous
+      against the respective values of ca_consecutive and
+      ca_synchronous to determine the possible requirement
+      not met. It MUST be prepared for the destination server
+      not being able to determine both requirements at the same
+      time.
+    </t>
+
+    <t>
+      Upon receiving the NFS4ERR_OFFLOAD_NO_REQS error, the client has
+      to determine if it wants to either re-request the copy with a
+      relaxed set of requirements or if it wants to revert
+      to manually copying the data. If it decides to manually
+      copy the data and this is a remote copy, then the
+      client is responsible for informing the source that the
+      earlier COPY_NOTIFY by sending it an OFFLOAD_REVOKE.
+    </t>
+
+    <t>
       The copying of any and all attributes on the source file is
       the responsibility of both the client and the copy protocol.
       Any attribute which is both exposed via the NFS protocol on
@@ -161,10 +199,11 @@
     </t>
 
     <t>
-      If an immediate failure does occur, cr_bytes_copied will be
-      set to the number of bytes copied to the destination file before
-      the error occurred. The cr_bytes_copied value indicates the number
-      of bytes copied but not which specific bytes have been copied.
+      If an immediate failure does occur, wr_count will be set to the
+      number of bytes copied to the destination file before the error
+      occurred. If cr_consecutive is true, then the bytes were copied
+      in order. Otherwise, there is no assurance as to exactly which
+      bytes in the range were copied.
     </t>
 
     <t>
