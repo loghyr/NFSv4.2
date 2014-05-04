@@ -1389,25 +1389,12 @@ EOF
 
 	;;
 
-	type_space_info4.x )
-
-cat << EOF > $i
-enum space_info4 {
-	SPACE_RESERVED4		= 0,
-	SPACE_UNRESERVED4	= 1,
-	SPACE_UNKNOWN4		= 2
-};
-EOF
-	;;
-
-
 	data_info4.x )
 
 cat << EOF > $i
 struct data_info4 {
 	offset4		di_offset;
 	length4		di_length;
-	space_info4	di_reserved;
 };
 EOF
 
