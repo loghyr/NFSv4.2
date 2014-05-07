@@ -24,12 +24,12 @@
 
   <section anchor="ss:pnfs:flt" title="NFSv4.2 as a Storage Protocol in pNFS: the File Layout Type">
     <t>
-      A file layout provided by a NFSv4.2 server may refer either to a DS
+      A file layout provided by a NFSv4.2 server may refer either to a storage device
       that only implements NFSv4.1 as specified in <xref target='RFC5661' />,
-      or to a DS that implements additions from NFSv4.2, in which
+      or to a storage device that implements additions from NFSv4.2, in which
       case the rules in <xref target='ss:pnfs:ops' /> apply. As the File
       Layout Type does not provide a means for informing the client as
-      to which minor version a particular DS is providing, it will have
+      to which minor version a particular storage device is providing, it will have
       to negotiate this via the normal RPC semantics of major and minor
       version discovery.
     </t>

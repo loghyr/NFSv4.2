@@ -379,7 +379,7 @@
 
       <section title="Considerations on Selecting a Copy Protocol">
         <t>
-          The client may have requirements over both the size of
+          The client can have requirements over both the size of
           transactions and error recovery semantics. It may want to
           split the copy up such that each chunk is synchronously
           transferred. It may want the copy protocol to copy the bytes
@@ -551,12 +551,6 @@
       </t>
 
       <t>
-        Section 8.2.4 of <xref target="RFC5661" /> specifies that
-        stateids are valid until either (A) the client or server
-        restart or (B) the client returns the resource.
-      </t>
-
-      <t>
         A copy offload stateid will be valid until either (A) the client or
         server restarts or (B) the client returns the resource by issuing a
         OFFLOAD_ABORT operation or the client replies to a CB_OFFLOAD
@@ -609,24 +603,6 @@
         <t>
           <list style="symbols">
             <t>
-              The specification must not mandate an inter-server copy
-              protocol. There are many ways to copy data. Some will be
-              more optimal than others depending on the identities of
-              the source server and destination server. For example
-              the source and destination servers might be two nodes sharing
-              a common file system format for the source and destination
-              file systems. Thus the source and destination are in an
-              ideal position to efficiently render the image of the source
-              file to the destination file by replicating
-              the file system formats at the block level. In other cases, the
-              source and destination might be two nodes
-              sharing a common storage area network, and thus there is no
-              need to copy any data at all, and instead
-              ownership of the file and its contents simply gets re-assigned
-              to the destination.
-            </t>
-
-            <t>
               The specification must provide guidance for using NFSv4.x as
               a copy protocol. For those source and destination servers
               willing to use NFSv4.x there are specific security considerations
@@ -634,11 +610,11 @@
             </t>
 
             <t>
-              The specification must not mandate pre-configuration between the
+              The specification must not mandate preconfiguration between the
               source and destination server. Requiring that the source and
               destination first have a "copying relationship" increases the
               administrative burden. However the specification MUST NOT
-              preclude implementations that require pre-configuration.
+              preclude implementations that require preconfiguration.
             </t>
 
             <t>
@@ -665,6 +641,7 @@
          authenticate the destination's copy, and does not allow the
          destination server to exceed this authorization, is necessary.
         </t>
+
         <t>
          An approach that sends delegated credentials of the client's user
          principal to the destination server is not used for the following
@@ -678,6 +655,7 @@
          do so.  This is counter to the requirements, and therefore is not
          considered.
         </t>
+
         <t>
          Instead, we employ a combination of two features of the
          RPCSEC_GSSv3 <xref target="rpcsec_gssv3" /> protocol:
@@ -690,6 +668,7 @@
          destroy the RPCSEC_GSSv3 handles to end the source and destination
          servers authorization to copy.
         </t>
+
         <t>
          RPCSEC_GSSv3 introduces the notion of RPC application defined
          structured privileges.  We define three structured privileges
@@ -698,7 +677,6 @@
 
         <t>
           <list style="hanging">
-
             <t hangText="copy_from_auth:">
               A user principal is authorizing a source principal
               ("nfs@&lt;source&gt;") to allow a destination principal
@@ -736,9 +714,9 @@
               ctap_shared_secret is the automatically generated secret value
               used to establish the copy_from_auth privilege with the
               source principal.
-              ctap_handle, ctap_handle_vers, ctap_nounce and ctap_nounce_mic are
+              ctap_handle, ctap_handle_vers, ctap_nounce, and ctap_nounce_mic are
               used to construct the compound authentication portion of the
-              copy_confirm_auth RPCGSS_GSSv3 context between the destination
+              copy_confirm_auth RPCSEC_GSSv3 context between the destination
               server and the source server. See
               <xref target="sec:SSC-sec-estab" />
             </t>
@@ -760,9 +738,9 @@
               <?rfc include='autogen/copy_confirm_auth.xml'?>
               <vspace blankLines="1" />
             </t>
-
           </list>
         </t>
+
       <section title="Establishing a Security Context" anchor="sec:SSC-sec-estab">
         <t>
          The RPCSEC_GSSv3 compound authentication feature allows a server to
@@ -771,6 +749,7 @@
          server is the source server, and the client is the destination server
          acting as a client when performing the copy.
 	</t>
+
         <t>
          The user principal is not required (nor expected) to have an
          RPCSEC_GSS secured connection and context between the destination
@@ -779,6 +758,7 @@
          context between the client and the source server established for
          the OPEN of the file to be copied.
         </t>
+
         <t>
          We use the RPCSEC_GSS context established between the user principal
          and the source server to OPEN the file to be copied to provide the
@@ -792,11 +772,13 @@
          RPCSEC_GSS3_CREATE message sent from the destination server
          (acting as a client) to the source server.
         </t>
+
         <t>
          When the user principal wants to COPY a file between two servers, if
          it has not established copy_from_auth and copy_to_auth privileges on
          the servers, it establishes them:
         </t>
+
         <t>
           <list style="symbols">
             <t>
@@ -872,6 +854,7 @@
             </t>
           </list>
         </t>
+
         <t>
          As noted in <xref target="rpcsec_gssv3" />
          section 2.3.1 "Create Request", both the client and the source
@@ -1007,8 +990,8 @@
         </t>
 
         <t>
-         Note that the use of the "copy_confirm_auth" privilege accomplishes
-         the following:
+          Note that the use of the "copy_confirm_auth" privilege accomplishes
+          the following:
 
           <list style="symbols">
             <t>
@@ -1023,8 +1006,8 @@
             </t>
           </list>
         </t>
-
       </section>
+
       <section title="Finishing or Stopping a Secure Inter-Server Copy">
         <t>
          Under normal operation, the client MUST destroy the copy_from_auth
@@ -1074,11 +1057,10 @@
          The client MUST destroy both the copy_to_auth and
          copy_from_auth RPCSEC_GSSv3 handles.
         </t>
+      </section>
+      </section>
 
-      </section>
-      </section>
       <section title="Inter-Server Copy via ONC RPC without RPCSEC_GSS" anchor="sec:SSC-rpc-no-gss">
-
         <t>
          ONC RPC security flavors other than RPCSEC_GSS MAY be used with the
          server-side copy offload operations described in this chapter.  In

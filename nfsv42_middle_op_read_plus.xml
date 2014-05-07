@@ -132,7 +132,7 @@
       <t>
         It was decided not to add a means for the client to inform
         the server as to which arms of READ_PLUS it would support.
-        In a later minorversion, it may become necessary for the
+        In a later minor version, it may become necessary for the
         introduction of a new operation which would allow the client
         to inform the server as to whether it supported the new
         arms of the union of data types available in READ_PLUS.

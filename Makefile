@@ -520,7 +520,7 @@ testx:
 		$(MAKE) -f make* )
 
 spellcheck: $(IDXMLSRC)
-	for f in $(IDXMLSRC); do echo "Spell Check of $$f"; aspell check $$f; done
+	for f in $(IDXMLSRC); do echo "Spell Check of $$f"; aspell check -p dictionary.pws $$f; done
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) spellcheck
 
 AUXFILES = \
