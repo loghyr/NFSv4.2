@@ -3,7 +3,8 @@
 tmp.*
 draft*.xml
 draft*.html
-draft*.txt
+*.txt
+*.bak
 *.m4
 *.mbox
 *.patch
