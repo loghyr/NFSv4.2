@@ -158,10 +158,9 @@
       such, new arms of a discriminated union MUST follow the same
       guidelines for minor versioning as operations in NFSv4.1 -
       i.e., they may not be made REQUIRED. To support this, a new
-      error code, NFS4ERR_UNION_NOTSUPP, is introduced which allows
-      the server to communicate to the client that the operation
-      is supported, but the specific arm of the discriminated union
-      is not.
+      error code, NFS4ERR_UNION_NOTSUPP, allows the server to
+      communicate to the client that the operation is supported,
+      but the specific arm of the discriminated union is not.
     </t>
   </section>
 </section>
