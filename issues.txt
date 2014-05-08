@@ -34,6 +34,7 @@
 
    We've decided to just go with delegations in 4.2, we can
    revisit FATTR4_CHANGE_SEC_LABEL in 4.3 if needed!
+
    Done - 5/2 by loghyr@primarydata.com
 
 5) Consecutive byte copy flag and status updates for SSC
@@ -50,6 +51,8 @@
    it selected.  This would allow the client to be aware of the
    selected copy engine as well.
 
+   Done - 5/4 by loghyr@primarydata.com
+
 6) Client wants to only do synchronous SSC or ALLOCATE or WRITE_HOLE
 
    The client wants to inform the destination in a SSC that it only
@@ -64,4 +67,11 @@
    Some issues here are that for the SSC, the destination might
    have done some I/O before it decides that the COPY is going to
    be asynchronous???
+
+   Done - 5/4 by loghyr@primarydata.com
+
+   Not done for WRITE_SAME.
+
+7) Describe error conditions for WRITE_SAME and COPY
+
 
