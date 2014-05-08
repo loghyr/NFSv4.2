@@ -97,12 +97,6 @@
           This operation delallocates the blocks backing a
           region of the file.
         </t>
-
-        <t hangText="WRITE_SAME">
-          This operation zeros the blocks backing a region of the
-          file. It does not deallocate the blocks, so it does not
-          reduce the space reservation.
-        </t>
       </list>
     </t>
 
