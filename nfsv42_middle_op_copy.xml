@@ -203,26 +203,12 @@
     </t>
 
     <t>
-      If an immediate failure does occur, wr_count will be set to the
-      number of bytes copied to the destination file before the error
-      occurred. If cr_consecutive is true, then the bytes were copied
-      in order. Otherwise, there is no assurance as to exactly which
-      bytes in the range were copied.
-    </t>
-
-    <t>
-      A return of NFS4_OK indicates that either the operation is
-      complete or the operation was initiated and a callback will
-      be used to deliver the final status of the operation.
-    </t>
-
-    <t>
-      If the wr_callback_id is returned, this indicates that the operation
-      was initiated and a CB_OFFLOAD callback will deliver the final
-      results of the operation. The wr_callback_id stateid is termed a
-      copy stateid in this context. The server is given the option of
-      returning the results in a callback because the data may require
-      a relatively long period of time to copy.
+      If the wr_callback_id is returned, this indicates that the
+      operation was initiated and a CB_OFFLOAD callback will deliver
+      the final results of the operation. The wr_callback_id stateid
+      is termed a copy stateid in this context. The server is given
+      the option of returning the results in a callback because the
+      data may require a relatively long period of time to copy.
     </t>
 
     <t>
@@ -240,5 +226,29 @@
       might encrypt, compress, deduplicate, or otherwise represent the
       on disk data in the source and destination file differently.
     </t>
+
+    <t>
+      If a failure does occur for a synchronous copy, wr_count
+      will be set to the number of bytes copied to the destination
+      file before the error occurred. If cr_consecutive is true,
+      then the bytes were copied in order. If the failure occured
+      for an asynchronous copy, then the client will have gotten
+      the notification of the consecutive copy order when it got
+      the copy stateid. It will be able to determine the bytes
+      copied from the coa_bytes_copied in the CB_OFFLOAD argument.
+    </t>
+
+    <t>
+      In either case, if cr_consecutive was not true, there is no
+      assurance as to exactly which bytes in the range were copied.
+      The client MUST assume that there exists a mixture of the
+      original contents of the range and the new bytes. If the COPY
+      wrote past the end of the file on the destination, then the
+      last byte written to will determine the new file size. The
+      contents of any block not written to and past the original
+      size of the file will be as if a normal WRITE extended the
+      file.
+    </t>
+
   </section>
 </section>
