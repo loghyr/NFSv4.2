@@ -395,54 +395,61 @@
 
       <section title="Using an Alternative Copy Protocol">
         <t>
-          In a homogeneous environment, the source and destination servers
-          might be able to perform the file copy extremely efficiently using
-          specialized protocols. For example the source and destination
-          servers might be two nodes sharing a common file system format for
-          the source and destination file systems. Thus the source and destination
-          are in an ideal position to efficiently render the image of the source
-          file to the destination file by replicating the file system formats
-          at the block level. Another possibility is that the source and
-          destination might be two nodes sharing a common storage area network,
-          and thus there is no need to copy any data at all, and instead
-          ownership of the file and its contents might simply be re-assigned
-          to the destination. To allow for these possibilities, the destination
-          server is allowed to use a server-to-server copy protocol of its choice.
+          In a homogeneous environment, the source and destination
+          servers might be able to perform the file copy extremely
+          efficiently using specialized protocols. For example the
+          source and destination servers might be two nodes sharing
+          a common file system format for the source and destination
+          file systems. Thus the source and destination are in an
+          ideal position to efficiently render the image of the
+          source file to the destination file by replicating the
+          file system formats at the block level. Another possibility
+          is that the source and destination might be two nodes
+          sharing a common storage area network, and thus there is
+          no need to copy any data at all, and instead ownership
+          of the file and its contents might simply be re-assigned
+          to the destination. To allow for these possibilities, the
+          destination server is allowed to use a server-to-server
+          copy protocol of its choice.
         </t>
 
         <t>
-          In a heterogeneous environment, using a protocol other than NFSv4.x
-          (e.g., HTTP <xref target="RFC2616" /> or FTP <xref target="RFC959" />)
-          presents some challenges. In particular, the destination
-          server is presented with the challenge of accessing the source file
-          given only an NFSv4.x filehandle.
+          In a heterogeneous environment, using a protocol other
+          than NFSv4.x (e.g., HTTP <xref target="RFC2616" /> or FTP
+          <xref target="RFC959" />) presents some challenges. In
+          particular, the destination server is presented with the
+          challenge of accessing the source file given only an
+          NFSv4.x filehandle.
         </t>
 
         <t>
-          One option for protocols that identify source files with path names
-          is to use an ASCII hexadecimal representation of the source filehandle
-          as the file name.
+          One option for protocols that identify source files with
+          path names is to use an ASCII hexadecimal representation
+          of the source filehandle as the file name.
         </t>
 
         <t>
-          Another option for the source server is to use URLs to direct the
-          destination server to a specialized service. For example, the response
-          to COPY_NOTIFY could include the URL ftp://s1.example.com:9999/_FH/0x12345,
-          where 0x12345 is the ASCII hexadecimal representation of the source
-          filehandle. When the destination server receives the source server's
-          URL, it would use "_FH/0x12345" as the file name to pass to the FTP
-          server listening on port 9999 of s1.example.com. On port
-          9999 there would be a special instance of the FTP service that
-          understands how to convert NFS filehandles to an open file descriptor
-          (in many operating systems, this would require a new system call, one
-          which is the inverse of the makefh() function that the pre-NFSv4 MOUNT
-          service needs).
+          Another option for the source server is to use URLs to
+          direct the destination server to a specialized service.
+          For example, the response to COPY_NOTIFY could include
+          the URL ftp://s1.example.com:9999/_FH/0x12345, where
+          0x12345 is the ASCII hexadecimal representation of the
+          source filehandle. When the destination server receives
+          the source server's URL, it would use "_FH/0x12345" as
+          the file name to pass to the FTP server listening on port
+          9999 of s1.example.com. On port 9999 there would be a
+          special instance of the FTP service that understands how
+          to convert NFS filehandles to an open file descriptor (in
+          many operating systems, this would require a new system
+          call, one which is the inverse of the makefh() function
+          that the pre-NFSv4 MOUNT service needs).
         </t>
 
         <t>
-          Authenticating and identifying the destination server to the source
-          server is also a challenge. Recommendations for how to accomplish
-          this are given in <xref target="sec:SSC-no-rpc" />.
+          Authenticating and identifying the destination server to
+          the source server is also a challenge. Recommendations
+          for how to accomplish this are given in <xref
+          target="sec:SSC-no-rpc" />.
         </t>
       </section>
     </section>
@@ -740,7 +747,7 @@
             and trusts the client. In the inter-server server side copy
             case, the server is the source server, and the client is the
             destination server acting as a client when performing the copy.
-	  </t>
+          </t>
 
           <t>
             The user principal is not required (nor expected) to have
