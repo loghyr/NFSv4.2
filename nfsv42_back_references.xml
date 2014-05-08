@@ -324,53 +324,6 @@
 <format type='XML' octets='493420' target='http://xml.resource.org/public/rfc/xml/rfc2616.xml' />
 </reference>
 
-<reference anchor="FEDFS-NSDB">
-        <front>
-                <title>NSDB Protocol for Federated Filesystems</title>
-                <author initials="J." surname="Lentini">
-                        <organization />
-                </author>
-                <author initials="C." surname="Everhart">
-                        <organization />
-                </author>
-                <author initials="D." surname="Ellard">
-                        <organization />
-                </author>
-                <author initials="R." surname="Tewari">
-                        <organization />
-                </author>
-                <author initials="M." surname="Naik">
-                        <organization />
-                </author>
-                <date year="2010" />
-        </front>
-        <seriesInfo name="draft-ietf-nfsv4-federated-fs-protocol" value="(Work In Progress)"/>
-</reference>
-
-
-<reference anchor="FEDFS-ADMIN">
-        <front>
-                <title>Administration Protocol for Federated Filesystems</title>
-                <author initials="J." surname="Lentini">
-                        <organization />
-                </author>
-                <author initials="C." surname="Everhart">
-                        <organization />
-                </author>
-                <author initials="D." surname="Ellard">
-                        <organization />
-                </author>
-                <author initials="R." surname="Tewari">
-                        <organization />
-                </author>
-                <author initials="M." surname="Naik">
-                        <organization />
-                </author>
-                <date year="2010" />
-        </front>
-        <seriesInfo name="draft-ietf-nfsv4-federated-fs-admin" value="(Work In Progress)"/>
-</reference>
-
 <reference anchor='Strohm11'>
   <front>
     <title>

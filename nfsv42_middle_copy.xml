@@ -47,14 +47,7 @@
       or using other techniques. For example if the user wishes to copy
       a directory, the client can synthesize a directory copy by first
       creating the destination directory and then copying the source
-      directory's files to the new destination directory. If the user
-      wishes to copy a namespace junction <xref target="FEDFS-NSDB" />
-      <xref target="FEDFS-ADMIN" />, the client can use the ONC RPC
-      Federated Filesystem protocol <xref target="FEDFS-ADMIN" /> to
-      perform the copy. Specifically the client can determine the
-      source junction's attributes using the FEDFS_LOOKUP_FSN procedure
-      and create a duplicate junction using the FEDFS_CREATE_JUNCTION
-      procedure.
+      directory's files to the new destination directory.
     </t>
 
     <t>
