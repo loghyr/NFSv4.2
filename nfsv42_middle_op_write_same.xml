@@ -42,13 +42,13 @@
     </t>
 
     <t>
-     If the server supports ADBs, then it MUST support the
-     WRITE_SAME operation.  The server has no concept of the
-     structure imposed by the application. It is only when the
-     application writes to a section of the file does order get
-     imposed.  In order to detect corruption even before the
-     application utilizes the file, the application will want
-     to initialize a range of ADBs using WRITE_SAME.
+      If the server supports ADBs, then it MUST support the
+      WRITE_SAME operation.  The server has no concept of the
+      structure imposed by the application. It is only when the
+      application writes to a section of the file does order get
+      imposed.  In order to detect corruption even before the
+      application utilizes the file, the application will want
+      to initialize a range of ADBs using WRITE_SAME.
     </t>
 
     <t>
@@ -71,34 +71,33 @@
     <t>
       The server SHOULD return an asynchronous result if it can
       determine the operation will be long running (see
-      <xref target='op:write_same:async' />). This document does not mandate
-      the manner in which the server stores ADBs for a file. Once
-      either the WRITE_SAME finishes synchronously or the server
-      uses CB_OFFLOAD to inform the client of the asynchronous
-      completion of the WRITE_SAME, the server MUST return the ADBs
-      to clients as data.
+      <xref target='op:write_same:async' />).  Once either the
+      WRITE_SAME finishes synchronously or the server uses CB_OFFLOAD
+      to inform the client of the asynchronous completion of the
+      WRITE_SAME, the server MUST return the ADBs to clients as
+      data.
     </t>
 
     <section anchor='op:write_same:async' title='Asynchronous Transactions'>
       <t>
-	      ADB initialization may lead to server determining to service
-	      the operation asynchronously. If it decides to do so, it
-	      sets the stateid in wr_callback_id to be that of the
-	      wsa_stateid. If it does not set the wr_callback_id, then the
-	      result is synchronous.
+        ADB initialization may lead to server determining to service
+        the operation asynchronously. If it decides to do so, it
+        sets the stateid in wr_callback_id to be that of the
+        wsa_stateid. If it does not set the wr_callback_id, then the
+        result is synchronous.
       </t>
 
       <t>
-	      When the client determines that the reply will be given
-	      asynchronously, it should not assume anything about the
-	      contents of what it wrote until it is informed by the server
-	      that the operation is complete. It can use OFFLOAD_STATUS
-	      (<xref target="op:offload_status" />) to monitor the operation
-	      and OFFLOAD_ABORT (<xref target="op:offload_abort" />) to
-	      cancel the operation. An example of a asynchronous WRITE_SAME
-	      is shown in <xref target='fig:async-write_same' />. Note
-	      that as with the COPY operation, WRITE_SAME must provide a
-	      stateid for tracking the asynchronous operation.
+        When the client determines that the reply will be given
+        asynchronously, it should not assume anything about the
+        contents of what it wrote until it is informed by the server
+        that the operation is complete. It can use OFFLOAD_STATUS
+        (<xref target="op:offload_status" />) to monitor the operation
+        and OFFLOAD_ABORT (<xref target="op:offload_abort" />) to
+        cancel the operation. An example of a asynchronous WRITE_SAME
+        is shown in <xref target='fig:async-write_same' />. Note
+        that as with the COPY operation, WRITE_SAME must provide a
+        stateid for tracking the asynchronous operation.
       </t>
 
       <figure title="An asynchronous WRITE_SAME." anchor="fig:async-write_same">
@@ -131,22 +130,34 @@
       </figure>
 
       <t>
-        When CB_OFFLOAD informs the client of
-        the successful WRITE_SAME, the write_response4
-        embedded in the operation will provide
-        the necessary information that a synchronous
+        When CB_OFFLOAD informs the client of the successful
+        WRITE_SAME, the write_response4 embedded in the operation
+        will provide the necessary information that a synchronous
         WRITE_SAME would have provided.
       </t>
 
       <t>
         Regardless of whether the operation is asynchronous or
-        synchronous, it MUST still support the COMMIT operation semantics
-        as outlined in Section 18.3 of <xref target="RFC5661" />.
-        I.e., COMMIT works on one or more WRITE operations and the
-        WRITE_SAME operation can appear as several WRITE operations
-        to the server.  The client can use locking operations to
-        control the behavior on the server with respect to long running
-        asynchronous write operations.
+        synchronous, it MUST still support the COMMIT operation
+        semantics as outlined in Section 18.3 of <xref target="RFC5661" />.
+        I.e., COMMIT works on one or more WRITE operations and
+        the WRITE_SAME operation can appear as several WRITE
+        operations to the server.  The client can use locking
+        operations to control the behavior on the server with respect
+        to long running asynchronous write operations.
+      </t>
+    </section>
+
+    <section anchor='op:write_same:errors' title='Error Handling of a Partially Complete WRITE_SAME'>
+      <t>
+        WRITE_SAME will clone adb_block_count copies of the given
+        ADB in consecutive order in the file starting at adb_offset.
+        An error can occur after writing the Nth ADB to the file.
+        WRITE_SAME MUST appear to populate the range of the file
+        as if the client used WRITE to transfer the instantiated
+        ADBs. I.e., the contents of the range will be easy for
+        the client to determine in case of a partially complete
+        WRITE_SAME.
       </t>
     </section>
   </section>
