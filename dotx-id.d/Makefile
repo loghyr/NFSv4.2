@@ -132,7 +132,7 @@ ${DRAFT_BASE}-$(VERS).xml: ${DOC_PREFIX}_autogen.xml draft-tmp.xml $(IDCONTENTS)
 
 
 spellcheck: $(IDXMLSRC)
-	for f in $(IDXMLSRC); do echo "Spell Check of $$f"; spell +../dictionary.txt $$f; done
+	for f in $(IDXMLSRC); do echo "Spell Check of $$f"; aspell check -p ../dictionary.pws $$f; done
 
 AUXFILES = \
 	../dictionary.txt \

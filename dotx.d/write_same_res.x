@@ -1,7 +1,7 @@
 
-union WRITE_SAME4res switch (nfsstat4 ws_status) {
+union WRITE_SAME4res switch (nfsstat4 wsr_status) {
 case NFS4_OK:
-	write_response4		ws_resok4;
+	write_response4		resok4;
 default:
 	void;
 };

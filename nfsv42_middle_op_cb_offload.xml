@@ -28,7 +28,7 @@
 
       <list style="hanging">
         <t hangText='COPY:'>
-          for both intra- and inter-server asynchronous copies
+          for both intra-server and inter-server asynchronous copies
         </t>
 
         <t hangText='WRITE_SAME:'>

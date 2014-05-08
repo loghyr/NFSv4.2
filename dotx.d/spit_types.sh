@@ -46,7 +46,6 @@ typedef :opaque:verifier4[NFS4_VERIFIER_SIZE]:Verifier used for various operatio
 :enum:netloc_type4:Specifies network locations.
 typedef :string:secret4<>:Secret value to share between servers.
 typedef :uint32_t:policy4:Label format specifier or policy identifier.
-typedef :uint64_t:change_sec_label4:Used to detect label changes.
 EOF
 
 	fi
@@ -1390,25 +1389,12 @@ EOF
 
 	;;
 
-	type_space_info4.x )
-
-cat << EOF > $i
-enum space_info4 {
-	SPACE_RESERVED4		= 0,
-	SPACE_UNRESERVED4	= 1,
-	SPACE_UNKNOWN4		= 2
-};
-EOF
-	;;
-
-
 	data_info4.x )
 
 cat << EOF > $i
 struct data_info4 {
 	offset4		di_offset;
 	length4		di_length;
-	space_info4	di_reserved;
 };
 EOF
 
@@ -1419,7 +1405,6 @@ EOF
 cat << EOF > $i
 struct data4 {
 	offset4		d_offset;
-	bool		d_allocated;
 	opaque		d_data<>;
 };
 EOF

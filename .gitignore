@@ -4,8 +4,9 @@ tmp.*
 draft*.xml
 draft*.html
 *.txt
+*.swp
+*.bak
 *.m4
-*.mbox
 *.patch
 *.mbox
 testx.d

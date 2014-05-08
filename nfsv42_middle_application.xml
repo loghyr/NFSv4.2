@@ -31,50 +31,48 @@
       </t>
 
       <t>
-        Fields to describe
-        the state of the ADB and a means to detect block corruption.
-        For both pieces of data, a useful property is that allowed
-        values be unique in that if passed across the network,
-        corruption due to translation between big and little endian
-        architectures are detectable.  For example, 0xF0DEDEF0 has
-        the same bit pattern in both architectures.
+        Fields to describe the state of the ADB and a means to
+        detect block corruption.  For both pieces of data, a useful
+        property is that allowed values be unique in that if passed
+        across the network, corruption due to translation between
+        big and little endian architectures are detectable.  For
+        example, 0xF0DEDEF0 has the same bit pattern in both
+        architectures.
       </t>
     </list>
   </t>
 
   <t>
+
     Applications already impose structures on files
-    <xref target='Strohm11' /> and detect corruption
-    in data blocks <xref target='Ashdown08' />.
-    What they are not able to do is efficiently transfer and
-    store ADBs. To initialize a file with ADBs, the client
-    must send each full ADB to the server and that must be stored
-    on the server.
+    <xref target='Strohm11' /> and detect corruption in data blocks
+    <xref target='Ashdown08' />.  What they are not able to do is
+    efficiently transfer and store ADBs. To initialize a file with
+    ADBs, the client must send each full ADB to the server and that
+    must be stored on the server.
+
   </t>
 
   <t>
-    In this section, we are going to define a framework
-    for transferring the ADB from client to server and
-    present one approach to detecting corruption in
-    a given ADB implementation.
+    In this section, we define a framework for transferring the ADB
+    from client to server and present one approach to detecting
+    corruption in a given ADB implementation.
   </t>
 
   <section anchor='ss:adb:framework' title='Generic Framework'>
     <t>
-      We want the representation of the ADB to be flexible
-      enough to support many different applications. The most
-      basic approach is no imposition of a block at all, which
-      means we are working with the raw bytes. Such an approach
-      would be useful for storing holes, punching holes, etc.
-      In more complex deployments, a server might be supporting
-      multiple applications, each with their own definition of
-      the ADB. One might store the ADBN at the start of the block
-      and then have a guard pattern to detect corruption
-      <xref target='McDougall07' />. The next
-      might store the ADBN at an offset of 100 bytes within the
-      block and have no guard pattern at all, i.e.,
-      existing applications might already have well defined
-      formats for their data blocks.
+      We want the representation of the ADB to be flexible enough
+      to support many different applications. The most basic approach
+      is no imposition of a block at all, which means we are working
+      with the raw bytes. Such an approach would be useful for
+      storing holes, punching holes, etc.  In more complex deployments,
+      a server might be supporting multiple applications, each with
+      their own definition of the ADB. One might store the ADBN at
+      the start of the block and then have a guard pattern to detect
+      corruption <xref target='McDougall07' />. The next might store
+      the ADBN at an offset of 100 bytes within the block and have
+      no guard pattern at all, i.e., existing applications might
+      already have well defined formats for their data blocks.
     </t>
 
     <t>
@@ -93,7 +91,6 @@
 
     <section anchor='ss:adb:dh' title='Data Block Representation'>
       <?rfc include='autogen/app_data_block4.xml'?>
-
       <t>
         The app_data_block4 structure captures the abstraction presented
         for the ADB. The additional fields present are to allow
@@ -164,16 +161,14 @@
     </t>
 
     <t>
-      Finally, it also defines an 8 byte
-      checksum <xref target='Baira08' /> starting at
-      byte 16 which applies to the remaining
-      contents of the block. If the state is FREE, then
-      that checksum is trivially zero. As such, the application
+      Finally, it also defines an 8 byte checksum
+      <xref target='Baira08' /> starting at byte 16 which applies
+      to the remaining contents of the block. If the state is FREE,
+      then that checksum is trivially zero. As such, the application
       has no need to transfer the checksum implicitly inside the
-      ADB - it need not make the transfer layer aware of the
-      fact that there is a checksum (see
-      <xref target='Ashdown08' /> for an example
-      of checksums used to detect corruption in application
+      ADB - it need not make the transfer layer aware of the fact
+      that there is a checksum (see <xref target='Ashdown08' /> for
+      an example of checksums used to detect corruption in application
       data blocks).
     </t>
 
@@ -291,6 +286,7 @@
       </artwork>
     </figure>
   </section>
+
   <section anchor='ss:adb:zero' title='An Example of Zeroing Space'>
     <t>
       A simpler use case for WRITE_SAME are applications that want to
@@ -298,6 +294,7 @@
       reservations.  This can easily be archived by a call to WRITE_SAME
       without a ADB block numbers and pattern, e.g.:
     </t>
+
     <figure>
       <artwork>
    WRITE_SAME {0, 1k, 10000, 0, 0, 0, 0}

@@ -53,15 +53,14 @@
       <ttcol align="left">Data Type</ttcol>
       <ttcol align="left">Acc</ttcol>
       <ttcol align="left">Defined in</ttcol>
-      <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
-      <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
-      <c>change_sec_label</c> <c>77</c> <c>change_sec_label4</c>  <c>R  </c> <c><xref target="ss:fattr:chsec" /></c>
-      <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
+      <c>space_freed</c>      <c>77</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
+      <c>change_attr_type</c> <c>78</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
+      <c>sec_label</c>        <c>79</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
     </texttable>
   </section>
 
   <section anchor="ss:file_attributes:AD" title="Attribute Definitions">
-    <section toc='exclude' anchor="ss:fattr:chattr" title="Attribute 79: change_attr_type">
+    <section toc='exclude' anchor="ss:fattr:chattr" title="Attribute 78: change_attr_type">
 
       <?rfc include='autogen/type_chattr_type.xml'?>
 
@@ -111,10 +110,9 @@
           </t>
 
           <t hangText="NFS4_CHANGE_TYPE_IS_TIME_METADATA:">
-            The change attribute is implemented as
-            suggested in the NFSv4 spec
-            <xref target="I-D.ietf-nfsv4-rfc3530bis" /> in terms of
-            the time_metadata attribute.
+            The change attribute is implemented as suggested in
+            <xref target="I-D.ietf-nfsv4-rfc3530bis" /> in terms
+            of the time_metadata attribute.
           </t>
         </list>
       </t>
@@ -157,7 +155,7 @@
       </t>
     </section>
 
-    <section toc='exclude' anchor='ss:fattr:sec' title='Attribute 80: sec_label'>
+    <section toc='exclude' anchor='ss:fattr:sec' title='Attribute 79: sec_label'>
       <figure>
         <artwork>
 typedef uint32_t  policy4;
@@ -197,7 +195,7 @@ typedef uint32_t  policy4;
       </t>
     </section>
 
-    <section toc='exclude' anchor='ss:fattr:chsec' title='Attribute 81: change_sec_label'>
+    <section toc='exclude' anchor='ss:fattr:chsec' title='Attribute 79: change_sec_label'>
       <t>
         The change_sec_label attribute is a read-only attribute per file.
         If the value of sec_label for a file is not the same at two
@@ -212,7 +210,7 @@ typedef uint32_t  policy4;
       </t>
     </section>
 
-    <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 78: space_freed">
+    <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 77: space_freed">
       <t>
         space_freed gives the number of bytes freed if the file is deleted.
         This attribute is read only and is of type length4.  It is a per file

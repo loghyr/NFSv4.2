@@ -14,8 +14,8 @@ enum IO_ADVISE_type4 {
 
 struct IO_ADVISE4args {
 	/* CURRENT_FH: file */
-	stateid4	iar_stateid;
-	offset4		iar_offset;
-	length4		iar_count;
-	bitmap4		iar_hints;
+	stateid4	iaa_stateid;
+	offset4		iaa_offset;
+	length4		iaa_count;
+	bitmap4		iaa_hints;
 };

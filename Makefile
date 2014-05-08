@@ -166,7 +166,6 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/type_netloc_type4.x \
 		dotx.d/type_chattr_type.x \
 		dotx.d/type_label_format.x \
-		dotx.d/type_space_info4.x \
 		dotx.d/copy_confirm_auth.x \
 		dotx.d/copy_from_auth.x \
 		dotx.d/copy_to_auth.x \
@@ -245,7 +244,6 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_netloc_type4.xml \
 		autogen/type_chattr_type.xml \
 		autogen/type_label_format.xml \
-		autogen/type_space_info4.xml \
 		autogen/copy_confirm_auth.xml \
 		autogen/copy_from_auth.xml \
 		autogen/copy_to_auth.xml \
@@ -522,7 +520,7 @@ testx:
 		$(MAKE) -f make* )
 
 spellcheck: $(IDXMLSRC)
-	for f in $(IDXMLSRC); do echo "Spell Check of $$f"; aspell check $$f; done
+	for f in $(IDXMLSRC); do echo "Spell Check of $$f"; aspell check -p dictionary.pws $$f; done
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) spellcheck
 
 AUXFILES = \
