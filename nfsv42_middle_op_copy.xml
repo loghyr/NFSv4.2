@@ -162,7 +162,8 @@
       to manually copying the data. If it decides to manually
       copy the data and this is a remote copy, then the
       client is responsible for informing the source that the
-      earlier COPY_NOTIFY by sending it an OFFLOAD_REVOKE.
+      earlier COPY_NOTIFY is no longer valid by sending it
+      an OFFLOAD_REVOKE.
     </t>
 
     <t>
