@@ -8,14 +8,14 @@
   </t>
 
   <t>
-    The base assumption with respect to minor versioning is that any
-    future accepted minor version will be documented in one or more
-    Standards Track RFCs.  Minor version 0 of the NFSv4 protocol is
-    represented by <xref target="I-D.ietf-nfsv4-rfc3530bis" />, minor version 1
-    by <xref target='RFC5661' />, and minor version
-    2 by this document.
-    The COMPOUND and CB_COMPOUND procedures support the encoding of the
-    minor version being requested by the client.
+    The base assumption with respect to minor versioning is that
+    any future accepted minor version will be documented in one or
+    more Standards Track RFCs.  Minor version 0 of the NFSv4 protocol
+    is represented by <xref target="I-D.ietf-nfsv4-rfc3530bis" />,
+    minor version 1 by <xref target='RFC5661' />, and minor version
+    2 by this document.  The COMPOUND and CB_COMPOUND procedures
+    support the encoding of the minor version being requested by
+    the client.
   </t>
 
   <t>
