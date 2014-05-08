@@ -42,7 +42,7 @@
     </t>
 
     <t>
-      The operations described below are designed to copy files. Other
+      The new operations are designed to copy files. Other
       file system objects can be copied by building on these operations
       or using other techniques. For example if the user wishes to copy
       a directory, the client can synthesize a directory copy by first
@@ -57,20 +57,19 @@
       they are authorized at the destination for writing.
     </t>
 
-    <section title="Overview of Copy Operations">
+    <section anchor='ss:cp:over' title="Overview of Copy Operations">
       <t>
         <list style="hanging">
           <t hangText="COPY_NOTIFY:">
-            For inter-server copies, the client sends
-            this operation to the source server to notify it of a future
-            file copy from a given destination server for the given user.
-            (<xref target="op:copy_notify" />)
+            Used by the client to notify the source server of a
+            future file copy from a given destination server for
+            the given user.  (<xref target="op:copy_notify" />)
           </t>
 
           <t hangText="OFFLOAD_REVOKE:">
-            Also for inter-server copies, the client
-            sends this operation to the source server to revoke permission
-            to copy a file for the given user.
+            Used by the client to revoke on the source server to
+            revoke permission to copy a file from a given
+            destination server for the given user.
             (<xref target="op:offload_revoke" />)
           </t>
 
