@@ -4,20 +4,19 @@
 <section anchor="sec:intro" title="Introduction">
   <section title="The NFS Version 4 Minor Version 2 Protocol">
     <t>
-      The NFS version 4 minor version 2 (NFSv4.2) protocol is the third
-      minor version of the NFS version 4 (NFSv4) protocol.  The first minor
-      version, NFSv4.0, is described in <xref target="I-D.ietf-nfsv4-rfc3530bis" /> and the second minor version,
-      NFSv4.1, is described in <xref target="RFC5661" />.  It follows the
-      guidelines for minor versioning that are listed in Section 11 of
-      <xref target="I-D.ietf-nfsv4-rfc3530bis" />.
+      The NFS version 4 minor version 2 (NFSv4.2) protocol is the
+      third minor version of the NFS version 4 (NFSv4) protocol.
+      The first minor version, NFSv4.0, is described in <xref
+      target="I-D.ietf-nfsv4-rfc3530bis" /> and the second minor
+      version, NFSv4.1, is described in <xref target="RFC5661" />.
     </t>
 
     <t>
-      As a minor version, NFSv4.2 is consistent with the overall goals for
-      NFSv4, but extends the protocol so as to better meet those goals,
-      based on experiences with NFSv4.1.  In addition, NFSv4.2 has adopted
-      some additional goals, which motivate some of the major extensions in
-      NFSv4.2.
+      As a minor version, NFSv4.2 is consistent with the overall
+      goals for NFSv4, but extends the protocol so as to better
+      meet those goals, based on experiences with NFSv4.1.  In
+      addition, NFSv4.2 has adopted some additional goals, which
+      motivate some of the major extensions in NFSv4.2.
     </t>
   </section>
 
@@ -68,6 +67,7 @@
           Labeled NFS
         </t>
       </list>
+
       but the clients are not able to leverage them on the server within the
       confines of the NFS protocol.
     </t>
@@ -112,13 +112,13 @@
 
     <section title="Space Reservation">
       <t>
-        When a file is sparse, one concern applications have is ensuring
-        that there will always be enough data blocks available for the
-        file during future writes. ALLOCATE
-	(see <xref target='op:allocate' />) allows a client to request
+        When a file is sparse, one concern applications have is
+        ensuring that there will always be enough data blocks
+        available for the file during future writes. ALLOCATE (see
+        <xref target='op:allocate' />) allows a client to request
         a guarantee that space will be available. And DEALLOCATE
-        (see <xref target='op:deallocate' />) allows the client
-	to punch a hole into a file, thus releasing a space reservation.
+        (see <xref target='op:deallocate' />) allows the client to
+        punch a hole into a file, thus releasing a space reservation.
       </t>
     </section>
 
@@ -146,18 +146,21 @@
 
   <section title="Differences from NFSv4.1">
     <t>
-      In NFSv4.1, the only way to introduce new variants of an operation was
-      to introduce a new operation. I.e., READ becomes either READ2 or READ_PLUS.
-      With the use of discriminated unions as parameters to such functions in
-      NFSv4.2, it is possible to add a new arm in a subsequent minor version. And
-      it is also possible to move such an operation from OPTIONAL/RECOMMENDED to
-      REQUIRED. Forcing an implementation to adopt each arm of a discriminated
-      union at such a time does not meet the spirit of the minor versioning rules.
-      As such, new arms of a discriminated union MUST follow the same guidelines
-      for minor versioning as operations in NFSv4.1 - i.e., they may not be
-      made REQUIRED. To support this, a new error code, NFS4ERR_UNION_NOTSUPP, is
-      introduced which allows the server to communicate to the client that the
-      operation is supported, but the specific arm of the discriminated union
+      In NFSv4.1, the only way to introduce new variants of an
+      operation was to introduce a new operation. I.e., READ becomes
+      either READ2 or READ_PLUS.  With the use of discriminated
+      unions as parameters to such functions in NFSv4.2, it is
+      possible to add a new arm in a subsequent minor version. And
+      it is also possible to move such an operation from
+      OPTIONAL/RECOMMENDED to REQUIRED. Forcing an implementation
+      to adopt each arm of a discriminated union at such a time
+      does not meet the spirit of the minor versioning rules.  As
+      such, new arms of a discriminated union MUST follow the same
+      guidelines for minor versioning as operations in NFSv4.1 -
+      i.e., they may not be made REQUIRED. To support this, a new
+      error code, NFS4ERR_UNION_NOTSUPP, is introduced which allows
+      the server to communicate to the client that the operation
+      is supported, but the specific arm of the discriminated union
       is not.
     </t>
   </section>
