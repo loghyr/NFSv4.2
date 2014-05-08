@@ -567,12 +567,9 @@
   <section anchor="ss:copy:security" title="Security Considerations">
     <t>
       The security considerations pertaining to NFSv4 <xref target="I-D.ietf-nfsv4-rfc3530bis" />
-      apply to this chapter.
-    </t>
-
-    <t>
-      The standard security mechanisms provide by NFSv4 <xref target="I-D.ietf-nfsv4-rfc3530bis" />
-      may be used to secure the protocol described in this chapter.
+      apply to this chapter. And as such, the standard security
+      mechanisms used by the protocol can be used to secure
+      the server-to-server operations.
     </t>
 
     <t>
@@ -598,14 +595,14 @@
         <t>
           <list style="symbols">
             <t>
-              The specification must provide guidance for using NFSv4.x
+              The specification MUST provide guidance for using NFSv4.x
               as a copy protocol. For those source and destination
               servers willing to use NFSv4.x there are specific security
               considerations that this specification can and does address.
             </t>
 
             <t>
-              The specification must not mandate preconfiguration
+              The specification MUST NOT mandate preconfiguration
               between the source and destination server. Requiring
               that the source and destination first have a "copying
               relationship" increases the administrative burden. However
@@ -614,7 +611,7 @@
             </t>
 
             <t>
-              The specification must not mandate a trust relationship
+              The specification MUST NOT mandate a trust relationship
               between the source and destination server. The NFSv4
               security model requires mutual authentication between
               a principal on an NFS client and a principal on an NFS
@@ -656,16 +653,17 @@
         </t>
 
         <t>
-          Instead, we employ a combination of two features of the
-          RPCSEC_GSSv3 <xref target="rpcsec_gssv3" /> protocol: compound
-          authentication and RPC application defined structured privilege
-          assertions. The combination of these features allows the
-          destination server to authenticate to the source server as
-          acting on behalf of the user principal, and to authorize the
-          destination server to perform READs of the file to be copied
-          from the source on behalf of the user principal. Once the copy
-          is complete, the client can destroy the RPCSEC_GSSv3 handles
-          to end the source and destination servers authorization to copy.
+          Instead, a combination of two features of the RPCSEC_GSSv3
+          <xref target="rpcsec_gssv3" /> protocol can be used:
+          compound authentication and RPC application defined
+          structured privilege assertions. These features allow the
+          destination server to authenticate to the source server
+          as acting on behalf of the user principal, and to authorize
+          the destination server to perform READs of the file to
+          be copied from the source on behalf of the user principal.
+          Once the copy is complete, the client can destroy the
+          RPCSEC_GSSv3 handles to end the authorization of both the
+          source and destination servers to copy.
         </t>
 
         <t>
@@ -764,7 +762,7 @@
             to provide the the necessary user principal identification
             to the source server from the destination server (acting as
             a client). This is accomplished by sending the user principal
-            identification information: e.g the rpc_gss3_gss_binding fields,
+            identification information: e.g., the rpc_gss3_gss_binding fields,
             in the copy_to_auth privilege established between the client and
             the destination server. This same information is then placed
             in the rpc_gss3_gss_binding fields of the copy_confirm_auth
@@ -1111,17 +1109,17 @@
         </t>
 
         <t>
-          The name component after _COPY is 24 characters of base 64, more than enough
-          to encode a 128 bit random number.
+          The name component after _COPY is 24 characters of base
+          64, more than enough to encode a 128 bit random number.
         </t>
 
         <t>
-          The client will then send these URLs to the destination server
-          in the COPY operation. Suppose that the 192.0.2.0/24 network
-          is a high speed network and the destination server decides to
-          transfer the file over this network. If the destination
-          contacts the source server from 192.0.2.56 over this network
-          using NFSv4.1, it does the following:
+          The client will then send these URLs to the destination
+          server in the COPY operation. Suppose that the 192.0.2.0/24
+          network is a high speed network and the destination server
+          decides to transfer the file over this network. If the
+          destination contacts the source server from 192.0.2.56
+          over this network using NFSv4.1, it does the following:
         </t>
 
         <t>
@@ -1135,14 +1133,16 @@
         </t>
 
         <t>
-          Provided that the random number is unpredictable and has been kept secret
-          by the parties involved, the source server will therefore know that these
-          NFSv4.x operations are being issued by the destination server identified
-          in the COPY_NOTIFY.  This random number technique only provides initial
-          authentication of the destination server, and cannot defend against
-          man-in-the-middle attacks after authentication or an eavesdropper that
-          observes the random number on the wire. Other secure communication
-          techniques (e.g., IPsec) are necessary to block these attacks.
+          Provided that the random number is unpredictable and has
+          been kept secret by the parties involved, the source
+          server will therefore know that these NFSv4.x operations
+          are being issued by the destination server identified in
+          the COPY_NOTIFY.  This random number technique only
+          provides initial authentication of the destination server,
+          and cannot defend against man-in-the-middle attacks after
+          authentication or an eavesdropper that observes the random
+          number on the wire. Other secure communication techniques
+          (e.g., IPsec) are necessary to block these attacks.
         </t>
 
         <t>
