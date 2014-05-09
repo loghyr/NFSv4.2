@@ -348,6 +348,7 @@ AUTOGEN =	\
 		autogen/deallocate_res.xml \
 		autogen/write_same_args.xml \
 		autogen/write_same_res.xml \
+		autogen/type_io_advise.xml \
 		autogen/io_advise_args.xml \
 		autogen/io_advise_res.xml \
 		autogen/layoutcommit_args.xml \
@@ -382,6 +383,8 @@ AUTOGEN =	\
 		autogen/read_args.xml \
 		autogen/read_res.xml \
 		autogen/read_plus_args.xml \
+		autogen/read_plus_content.xml \
+		autogen/read_plus_res_pre.xml \
 		autogen/read_plus_res.xml \
 		autogen/readdir_args.xml \
 		autogen/readdir_res.xml \
@@ -399,6 +402,7 @@ AUTOGEN =	\
 		autogen/secinfo_no_name_res.xml \
 		autogen/secinfo_res.xml \
 		autogen/seek_args.xml \
+		autogen/seek_res_pre.xml \
 		autogen/seek_res.xml \
 		autogen/sequence_args.xml \
 		autogen/sequence_res.xml \

@@ -191,22 +191,6 @@
       target="ftp://ftp.isi.edu/in-notes/rfc4506.txt"/>
   </reference>
 
-   <reference anchor='RFC5226'>
-
-   <front>
-   <title>Guidelines for Writing an IANA Considerations Section in RFCs</title>
-   <author initials='T.' surname='Narten' fullname='T. Narten'>
-   <organization /></author>
-   <author initials='H.' surname='Alvestrand' fullname='H. Alvestrand'>
-   <organization /></author>
-   <date year='2008' month='May' />
-   </front>
-
-   <seriesInfo name='BCP' value='26' />
-   <seriesInfo name='RFC' value='5226' />
-   <format type='TXT' octets='66160' target='ftp://ftp.isi.edu/in-notes/rfc5226.txt' />
-   </reference>
-
     <reference anchor='I-D.ietf-nfsv4-rfc3530bis'>
       <front>
         <title>Network File System (NFS) version 4 Protocol</title>
@@ -395,7 +379,7 @@
         <author initials="T." surname="Haynes" />
         <date year="2014" />
       </front>
-      <seriesInfo name="draft-quigley-nfsv4-lfs-registry-00" value="(work in progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-lfs-registry-00" value="(work in progress)"/>
     </reference>
 
   <reference anchor='MLS'>

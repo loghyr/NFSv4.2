@@ -122,11 +122,15 @@ FORE_OPS_AS_IS2 = \
 		allocate_res.x \
 		deallocate_args.x \
 		deallocate_res.x \
+		type_io_advise.x \
 		io_advise_args.x \
 		io_advise_res.x \
 		read_plus_args.x \
+		read_plus_content.x \
+		read_plus_res_pre.x \
 		read_plus_res.x \
 		seek_args.x \
+		seek_res_pre.x \
 		seek_res.x \
 		write_same_args.x \
 		write_same_res.x
@@ -224,8 +228,8 @@ SPITGEN =	basic_types.x \
 		type_CB_COMPOUND4args.x \
 		type_nfs_cb_resop4.x \
 		type_CB_COMPOUND4res.x \
-                type_nfs_opnum4.x \
-                type_nfs_argop4.x \
+		type_nfs_opnum4.x \
+		type_nfs_argop4.x \
 		type_nfs_resop4.x \
 		type_COMPOUND4args.x \
 		type_COMPOUND4res.x \

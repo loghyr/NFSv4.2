@@ -7,6 +7,7 @@
   </section>
 
   <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/seek_res_pre.xml'?>
     <?rfc include='autogen/seek_res.xml'?>
   </section>
 

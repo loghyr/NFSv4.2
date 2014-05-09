@@ -1,5 +1,4 @@
 *autogen*
-*.x
 tmp.*
 draft*.xml
 draft*.html
@@ -9,4 +8,5 @@ draft*.html
 *.m4
 *.patch
 *.mbox
+nfsv42.x
 testx.d

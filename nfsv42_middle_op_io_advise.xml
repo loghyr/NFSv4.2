@@ -3,7 +3,8 @@
 
 <section anchor='op:io_advise' title='Operation 63: IO_ADVISE - Application I/O access pattern hints'>
   <section toc='exclude' title="ARGUMENT">
-   <?rfc include='autogen/io_advise_args.xml'?>
+    <?rfc include='autogen/type_io_advise.xml'?>
+    <?rfc include='autogen/io_advise_args.xml'?>
   </section>
 
   <section toc='exclude' title="RESULT">
