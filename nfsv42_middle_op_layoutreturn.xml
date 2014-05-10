@@ -4,53 +4,53 @@
 <section anchor="sec:pLeh:LAYOUTRETURN" title="Changes to Operation 51: LAYOUTRETURN">
   <section anchor="sec:pLeh:intro" toc='exclude' title="Introduction">
     <t>
-      In the pNFS description provided in <xref target="RFC5661" />,
-      the client is not capable of relaying an error code from the
-      DS to the MDS. In the specification of the Object
-      Layout Type <xref target='RFC5664' />, use is made of the
-      opaque lrf_body field of the LAYOUTRETURN argument to
-      do such a relaying of error codes. In this section,
-      we define a new data structure to enable the passing
-      of error codes back to the MDS and provide some guidelines
-      on what both the client and MDS should expect in such
-      circumstances.
+      In the pNFS description provided in <xref target="RFC5661" />, the
+      client is not capable of relaying an error code from the storage
+      device to the metadata server. In the specification of the Object
+      Layout Type <xref target='RFC5664' />, use is made of the opaque
+      lrf_body field of the LAYOUTRETURN argument to do such a relaying
+      of error codes. In this section, we define a new data structure
+      to enable the passing of error codes back to the metadata server
+      and provide some guidelines on what both the client and metadata
+      server should expect in such circumstances.
     </t>
 
     <t>
       There are two broad classes of errors, transient and persistent.
-      The client SHOULD strive to only use this new mechanism to
-      report persistent errors. It MUST be able to deal with transient
-      issues by itself. Also, while the client might consider an issue
-      to be persistent, it MUST be prepared for the MDS to consider
-      such issues to be transient. A prime example of this is if
-      the MDS fences off a client from either a stateid or a filehandle.
-      The client will get an error from the DS and might relay either
-      NFS4ERR_ACCESS or NFS4ERR_BAD_STATEID back to the MDS, with the
-      belief that this is a hard error. If the MDS is informed by
-      the client that there is an error, it can safely ignore that.
-      For it, the mission is accomplished in that the client has
-      returned a layout that the MDS had most likely recalled.
+      The client SHOULD strive to only use this new mechanism to report
+      persistent errors. It MUST be able to deal with transient issues
+      by itself. Also, while the client might consider an issue to
+      be persistent, it MUST be prepared for the metadata server to
+      consider such issues to be transient. A prime example of this is
+      if the metadata server fences off a client from either a stateid
+      or a filehandle.  The client will get an error from the storage
+      device and might relay either NFS4ERR_ACCESS or NFS4ERR_BAD_STATEID
+      back to the metadata server, with the belief that this is a hard
+      error. If the metadata server is informed by the client that there
+      is an error, it can safely ignore that.  For it, the mission is
+      accomplished in that the client has returned a layout that the
+      metadata server had most likely recalled.
     </t>
 
     <t>
-      The client might also need to inform the MDS that it cannot
-      reach one or more of the DSes. While the MDS can detect the
-      connectivity of both of these paths:
+      The client might also need to inform the metadata server that
+      it cannot reach one or more of the storage devices. While the
+      metadata server can detect the connectivity of both of these paths:
 
       <list style='symbols'>
         <t>
-          MDS to DS
+          metadata server to storage device
         </t>
 
         <t>
-          MDS to client
+          metadata server to client
         </t>
       </list>
 
-      it cannot determine if the client and DS path is working. As with
-      the case of the DS passing errors to the client, it must be
-      prepared for the MDS to consider such outages as being
-      transitory.
+      it cannot determine if the client and storage device path is
+      working. As with the case of the storage device passing errors to
+      the client, it must be prepared for the metadata server to consider
+      such outages as being transitory.
     </t>
 
     <t>
@@ -86,33 +86,33 @@
 
     <t>
       When a client uses LAYOUTRETURN with a type of LAYOUTRETURN4_FILE,
-      then if the lrf_body field is NULL, it indicates to the MDS
-      that the client experienced no errors. If lrf_body is non-NULL,
-      then the field references error information which is layout type
-      specific. I.e., the Object Layout Type can continue to utilize
-      lrf_body as specified in <xref target='RFC5664' />.  For both
-      File <xref target="RFC5661" /> and Block <xref target="RFC5663" />
-      Layout Types, the field references a layoutreturn_device_error4,
+      then if the lrf_body field is NULL, it indicates to the metadata
+      server that the client experienced no errors. If lrf_body is
+      non-NULL, then the field references error information which is
+      layout type specific. I.e., the Object Layout Type can continue to
+      utilize lrf_body as specified in <xref target='RFC5664' />.  For
+      both File <xref target="RFC5661" /> and Block <xref target="RFC5663"
+      /> Layout Types, the field references a layoutreturn_device_error4,
       which contains an array of layoutreturn_device_error4.
     </t>
 
     <t>
       Each individual layoutreturn_device_error4 describes a single
-      error associated with a DS, which is identified via lrde_deviceid.
-      The operation which returned the error is identified
-      via lrde_opnum. Finally the NFS error value (nfsstat4) encountered
-      is provided via lrde_status and may consist of the following
-      error codes:
+      error associated with a storage device, which is identified
+      via lrde_deviceid.  The operation which returned the error is
+      identified via lrde_opnum. Finally the NFS error value (nfsstat4)
+      encountered is provided via lrde_status and may consist of the
+      following error codes:
     </t>
 
     <t>
       <list style='hanging'>
         <t hangText='NFS4ERR_NXIO:'>
-          The client was unable to establish any communication with the DS.
+          The client was unable to establish any communication with the storage device.
         </t>
 
         <t hangText='NFS4ERR_*:'>
-          The client was able to establish communication with the DS and
+          The client was able to establish communication with the storage device and
           is returning one of the allowed error codes for the operation
           denoted by lrde_opnum.
         </t>
@@ -127,55 +127,57 @@
     </t>
 
     <t>
-      Clients are expected to tolerate transient storage device errors, and
-      hence clients SHOULD NOT use the LAYOUTRETURN error handling for
-      device access problems that may be transient. The methods by which a
-      client decides whether a device access problem is transient vs. persistent
-      are implementation-specific, but may include retrying I/Os to a data
-      server under appropriate conditions.
+      Clients are expected to tolerate transient storage device errors,
+      and hence clients SHOULD NOT use the LAYOUTRETURN error handling
+      for device access problems that may be transient. The methods by
+      which a client decides whether a device access problem is transient
+      vs persistent are implementation-specific, but may include retrying
+      I/Os to a data server under appropriate conditions.
     </t>
 
     <t>
-      When an I/O fails to a storage device, the
-      client SHOULD retry the failed I/O via the MDS. In this situation,
+      When an I/O fails to a storage device, the client SHOULD retry
+      the failed I/O via the metadata server. In this situation,
       before retrying the I/O, the client SHOULD return the layout, or
       the affected portion thereof, and SHOULD indicate which storage
       device or devices was problematic. The client needs to do this
-      when the DS is being unresponsive in order to fence off any failed
-      write attempts, and ensure that they do not end up overwriting any
-      later data being written through the MDS.  If the client does not
-      do this, the MDS MAY issue a layout recall callback in order
-      to perform the retried I/O.
+      when the storage device is being unresponsive in order to fence
+      off any failed write attempts, and ensure that they do not end
+      up overwriting any later data being written through the metadata
+      server.  If the client does not do this, the metadata server MAY
+      issue a layout recall callback in order to perform the retried I/O.
     </t>
 
     <t>
-      The client needs to be cognizant that since this error handling
-      is optional in the MDS, the MDS may silently ignore this functionality.
-      Also, as the MDS may consider some issues the client reports to
-      be expected (see <xref target='sec:pLeh:intro' />), the client might
-      find it difficult to detect a MDS which has not implemented error
-      handling via LAYOUTRETURN.
+      The client needs to be cognizant that since this error handling is
+      optional in the metadata server, the metadata server may silently
+      ignore this functionality.  Also, as the metadata server may
+      consider some issues the client reports to be expected (see <xref
+      target='sec:pLeh:intro' />), the client might find it difficult to
+      detect a metadata server which has not implemented error handling
+      via LAYOUTRETURN.
     </t>
 
     <t>
-      If an MDS is aware that a storage device is proving problematic to a client,
-      the MDS SHOULD NOT include that storage device in any pNFS layouts
-      sent to that client. If the MDS is aware that a storage device is
-      affecting many clients, then the MDS SHOULD NOT include that
+      If an metadata server is aware that a storage device is proving
+      problematic to a client, the metadata server SHOULD NOT include
+      that storage device in any pNFS layouts sent to that client. If
+      the metadata server is aware that a storage device is affecting
+      many clients, then the metadata server SHOULD NOT include that
       storage device in any pNFS layouts sent out.  If a client asks
-      for a new layout for the file from the MDS, it MUST be prepared
-      for the MDS to return that storage device in the layout. The
-      MDS might not have any choice in using the storage
-      device, i.e., there might only be one possible layout for the system.
-      Also, in the case of existing files, the
-      MDS might have no choice in which storage devices to hand out to
-      clients.
+      for a new layout for the file from the metadata server, it MUST
+      be prepared for the metadata server to return that storage device
+      in the layout. The metadata server might not have any choice in
+      using the storage device, i.e., there might only be one possible
+      layout for the system.  Also, in the case of existing files, the
+      metadata server might have no choice in which storage devices to
+      hand out to clients.
     </t>
 
     <t>
-      The MDS is not required to indefinitely
-      retain per-client storage device error information. An MDS
-      is also not required to automatically reinstate use of a previously
+      The metadata server is not required to indefinitely retain
+      per-client storage device error information. An metadata server is
+      also not required to automatically reinstate use of a previously
       problematic storage device; administrative intervention may be
       required instead.
     </t>
