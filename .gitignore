@@ -8,5 +8,6 @@ draft*.html
 *.m4
 *.patch
 *.mbox
+*.x
 nfsv42.x
 testx.d
