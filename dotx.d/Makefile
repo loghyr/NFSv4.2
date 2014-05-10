@@ -125,6 +125,8 @@ FORE_OPS_AS_IS2 = \
 		type_io_advise.x \
 		io_advise_args.x \
 		io_advise_res.x \
+		layout_status_args.x \
+		layout_status_res.x \
 		read_plus_args.x \
 		read_plus_content.x \
 		read_plus_res_pre.x \
