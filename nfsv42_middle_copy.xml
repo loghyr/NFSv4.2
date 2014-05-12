@@ -57,7 +57,7 @@
       they are authorized at the destination for writing.
     </t>
 
-    <section anchor='ss:cp:over' title="Overview of Copy Operations">
+    <section anchor='ss:cp:over' title="Copy Operations">
       <t>
         <list style="hanging">
           <t hangText="COPY_NOTIFY:">
@@ -98,36 +98,134 @@
       </t>
     </section>
 
-    <section title="Locking the Files">
+    <section title="Requirements for Operations" anchor="ss:copy:ops">
       <t>
-        Both the source and destination file may need to be locked
-        to protect the content during the copy operations. A client
-        can achieve this by a combination of OPEN and LOCK operations.
-        I.e., either share or byte range locks might be desired.
+        The implementation of server-side copy is OPTIONAL by the
+        client and the server. However, in order to successfully copy
+        a file, some operations MUST be supported by the client and/or
+        server.
+      </t>
+
+      <t>
+        If a client desires an intra-server file copy, then it MUST
+        support the COPY and CB_OFFLOAD operations. If COPY returns
+        a stateid, then the client MAY use the OFFLOAD_ABORT and
+        OFFLOAD_STATUS operations.
+      </t>
+
+      <t>
+        If a client desires an inter-server file copy, then it MUST
+        support the COPY, COPY_NOTICE, and CB_OFFLOAD operations, and
+        MAY use the OFFLOAD_REVOKE operation. If COPY returns a stateid,
+        then the client MAY use the OFFLOAD_ABORT and OFFLOAD_STATUS
+        operations.
+      </t>
+
+      <t>
+        If a server supports intra-server copy, then the server MUST
+        support the COPY operation. If a server’s COPY operation
+        returns a stateid, then the server MUST also support these
+        operations: CB_OFFLOAD, OFFLOAD_ABORT, and OFFLOAD_STATUS.
+      </t>
+
+      <t>
+        If a source server supports inter-server copy, then the source
+        server MUST support all these operations: COPY_NOTIFY and
+        OFFLOAD_REVOKE. If a destination server supports inter-server
+        copy, then the destination server MUST support the COPY
+        operation. If a destination server’s COPY operation returns
+        a stateid, then the destination server MUST also support these
+        operations: CB_OFFLOAD, OFFLOAD_ABORT, COPY_NOTIFY, OFFLOAD_REVOKE,
+        and OFFLOAD_STATUS.
+      </t>
+
+      <t>
+        Each operation is performed in the context of the user
+        identified by the ONC RPC credential of its containing COMPOUND
+        or CB_COMPOUND request. For example, a OFFLOAD_ABORT operation
+        issued by a given user indicates that a specified COPY operation
+        initiated by the same user be canceled. Therefore a OFFLOAD_ABORT
+        MUST NOT interfere with a copy of the same file initiated by
+        another user.
+      </t>
+
+      <t>
+        An NFS server MAY allow an administrative user to monitor or
+        cancel copy operations using an implementation specific
+        interface.
       </t>
     </section>
+  </section>
 
-    <section title="Intra-Server Copy">
-      <t>
-        To copy a file on a single server, the client uses a COPY operation.
-        The server may respond to the copy operation with the final results of
-        the copy or it may perform the copy asynchronously and deliver the
-        results using a CB_OFFLOAD operation callback. If the copy is performed
-        asynchronously, the client may poll the status of the copy using
-        OFFLOAD_STATUS or cancel the copy using OFFLOAD_ABORT.
-      </t>
+  <section title="Requirements for Inter-Server Copy">
+    <t>
+      Inter-server copy is driven by several requirements:
+    </t>
 
-      <t>
-        A synchronous intra-server copy is shown in
-        <xref target="fig:sync-intra-server" />. In this example, the NFS
-        server chooses to perform the copy synchronously. The copy operation
-        is completed, either successfully or unsuccessfully, before the
-        server replies to the client's request. The server's reply contains
-        the final result of the operation.
-      </t>
+    <t>
+      <list style="symbols">
+        <t>
+          The specification MUST NOT mandate the server-to-server
+          protocol.
+        </t>
 
-      <figure title="A synchronous intra-server copy." anchor="fig:sync-intra-server">
-        <artwork><![CDATA[
+        <t>
+          The specification MUST provide guidance for using NFSv4.x
+          as a copy protocol. For those source and destination
+          servers willing to use NFSv4.x, there are specific security
+          considerations that this specification MUST address.
+        </t>
+
+        <t>
+          The specification MUST NOT mandate preconfiguration between
+          the source and destination server. Requiring that the
+          source and destination first have a "copying relationship"
+          increases the administrative burden. However the specification
+          MUST NOT preclude implementations that require preconfiguration.
+        </t>
+
+        <t>
+          The specification MUST NOT mandate a trust relationship
+          between the source and destination server. The NFSv4
+          security model requires mutual authentication between a
+          principal on an NFS client and a principal on an NFS
+          server. This model MUST continue with the introduction
+          of COPY.
+        </t>
+      </list>
+    </t>
+  </section>
+
+  <section title="Locking the Files">
+    <t>
+      Both the source and destination file may need to be locked
+      to protect the content during the copy operations. A client
+      can achieve this by a combination of OPEN and LOCK operations.
+      I.e., either share or byte range locks might be desired.
+    </t>
+  </section>
+
+  <section title="Intra-Server Copy">
+    <t>
+      To copy a file on a single server, the client uses a COPY operation.
+      The server may respond to the copy operation with the final results of
+      the copy or it may perform the copy asynchronously and deliver the
+      results using a CB_OFFLOAD operation callback. If the copy is performed
+      asynchronously, the client may poll the status of the copy using
+      OFFLOAD_STATUS or cancel the copy using OFFLOAD_ABORT.
+    </t>
+
+    <t>
+      A synchronous intra-server copy is shown in
+      <xref target="fig:sync-intra-server" />. In this example, the NFS
+      server chooses to perform the copy synchronously. The copy operation
+      is completed, either successfully or unsuccessfully, before the
+      server replies to the client's request. The server's reply contains
+      the final result of the operation.
+    </t>
+
+    <figure title="A synchronous intra-server copy." anchor="fig:sync-intra-server">
+      <artwork><![CDATA[
   Client                                  Server
      +                                      +
      |                                      |
@@ -147,23 +245,23 @@
      |<------------------------------------/| the source file
      |                                      |
      |                                      |
-        ]]></artwork>
-      </figure>
+      ]]></artwork>
+    </figure>
 
-      <t>
-        An asynchronous intra-server copy is shown in
-        <xref target="afig:sync-intra-server" />. In this example, the NFS
-        server performs the copy asynchronously. The server's reply to
-        the copy request indicates that the copy operation was initiated
-        and the final result will be delivered at a later time. The server's
-        reply also contains a copy stateid. The client may use this copy
-        stateid to poll for status information (as shown) or to cancel the copy
-        using a OFFLOAD_ABORT. When the server completes the copy, the server
-        performs a callback to the client and reports the results.
-      </t>
+    <t>
+      An asynchronous intra-server copy is shown in
+      <xref target="afig:sync-intra-server" />. In this example, the NFS
+      server performs the copy asynchronously. The server's reply to
+      the copy request indicates that the copy operation was initiated
+      and the final result will be delivered at a later time. The server's
+      reply also contains a copy stateid. The client may use this copy
+      stateid to poll for status information (as shown) or to cancel the copy
+      using a OFFLOAD_ABORT. When the server completes the copy, the server
+      performs a callback to the client and reports the results.
+    </t>
 
-      <figure title="An asynchronous intra-server copy." anchor="afig:sync-intra-server">
-        <artwork><![CDATA[
+    <figure title="An asynchronous intra-server copy." anchor="afig:sync-intra-server">
+      <artwork><![CDATA[
   Client                                  Server
      +                                      +
      |                                      |
@@ -194,27 +292,27 @@
      |<------------------------------------/| the source file
      |                                      |
      |                                      |
-        ]]></artwork>
-      </figure>
-    </section>
+      ]]></artwork>
+    </figure>
+  </section>
 
-    <section title="Inter-Server Copy">
-      <t>
-        A copy may also be performed between two servers. The copy
-        protocol is designed to accommodate a variety of network
-        topologies. As shown in <xref target="fig:inter-server" />,
-        the client and servers may be connected by multiple networks.
-        In particular, the servers may be connected by a specialized,
-        high speed network (network 192.0.2.0/24 in the diagram)
-        that does not include the client. The protocol allows the
-        client to setup the copy between the servers (over network
-        203.0.113.0/24 in the diagram) and for the servers to
-        communicate on the high speed network if they choose to
-        do so.
-      </t>
+  <section title="Inter-Server Copy">
+    <t>
+      A copy may also be performed between two servers. The copy
+      protocol is designed to accommodate a variety of network
+      topologies. As shown in <xref target="fig:inter-server" />,
+      the client and servers may be connected by multiple networks.
+      In particular, the servers may be connected by a specialized,
+      high speed network (network 192.0.2.0/24 in the diagram)
+      that does not include the client. The protocol allows the
+      client to setup the copy between the servers (over network
+      203.0.113.0/24 in the diagram) and for the servers to
+      communicate on the high speed network if they choose to
+      do so.
+    </t>
 
-      <figure title="An example inter-server network topology." anchor="fig:inter-server">
-        <artwork><![CDATA[
+    <figure title="An example inter-server network topology." anchor="fig:inter-server">
+      <artwork><![CDATA[
                           192.0.2.0/24
               +-------------------------------------+
               |                                     |
@@ -234,35 +332,35 @@
                            +-----+-----+
                            |   Client  |
                            +-----------+
-        ]]></artwork>
-      </figure>
+      ]]></artwork>
+    </figure>
 
-      <t>
-        For an inter-server copy, the client notifies the source
-        server that a file will be copied by the destination
-        server using a COPY_NOTIFY operation. The client then
-        initiates the copy by sending the COPY operation to the
-        destination server. The destination server may perform the
-        copy synchronously or asynchronously.
-      </t>
+    <t>
+      For an inter-server copy, the client notifies the source
+      server that a file will be copied by the destination
+      server using a COPY_NOTIFY operation. The client then
+      initiates the copy by sending the COPY operation to the
+      destination server. The destination server may perform the
+      copy synchronously or asynchronously.
+    </t>
 
-      <t>
-        A synchronous inter-server copy is shown in
-        <xref target="fig:sync-inter-server" />. In this case, the
-        destination server chooses to perform the copy before
-        responding to the client's COPY request.
-      </t>
+    <t>
+      A synchronous inter-server copy is shown in
+      <xref target="fig:sync-inter-server" />. In this case, the
+      destination server chooses to perform the copy before
+      responding to the client's COPY request.
+    </t>
 
-      <t>
-        An asynchronous copy is shown in
-        <xref target="fig:async-inter-server" />. In this case, the
-        destination server chooses to respond to the client's COPY
-        request immediately and then perform the copy
-        asynchronously.
-      </t>
+    <t>
+      An asynchronous copy is shown in
+      <xref target="fig:async-inter-server" />. In this case, the
+      destination server chooses to respond to the client's COPY
+      request immediately and then perform the copy
+      asynchronously.
+    </t>
 
-      <figure title="A synchronous inter-server copy." anchor="fig:sync-inter-server">
-        <artwork><![CDATA[
+    <figure title="A synchronous inter-server copy." anchor="fig:sync-inter-server">
+      <artwork><![CDATA[
   Client                Source         Destination
      +                    +                 +
      |                    |                 |
@@ -294,11 +392,11 @@
      |                    |                 |
      |--- CLOSE       --->|                 | Release open state
      |<------------------/|                 |
-        ]]></artwork>
-      </figure>
+      ]]></artwork>
+    </figure>
 
-      <figure title="An asynchronous inter-server copy." anchor="fig:async-inter-server">
-        <artwork><![CDATA[
+    <figure title="An asynchronous inter-server copy." anchor="fig:async-inter-server">
+      <artwork><![CDATA[
   Client                Source         Destination
     +                    +                 +
     |                    |                 |
@@ -355,213 +453,155 @@
     |--- CLOSE       --->|                 | Release open state
     |<------------------/|                 |
     |                    |                 |
-        ]]></artwork>
-      </figure>
+      ]]></artwork>
+    </figure>
+  </section>
+
+  <section title="Server-to-Server Copy Protocol" anchor="sec:SSC-proto">
+    <t>
+      The choice of what protocol to use in an inter-server copy
+      is ultimately the destination server's decision. However, the
+      destination server has to be cognizant that it is working on
+      behalf of the client.
+    </t>
+
+    <section title="Considerations on Selecting a Copy Protocol">
+      <t>
+        The client can have requirements over both the size of
+        transactions and error recovery semantics. It may want to
+        split the copy up such that each chunk is synchronously
+        transferred. It may want the copy protocol to copy the bytes
+        in consecutive order such that upon an error, the client can
+        restart the copy at the last known good offset. If the
+        destination server cannot meet these requirements, the client
+        may prefer the traditional copy mechanism such that it
+        can meet those requirements.
+      </t>
     </section>
 
-    <section title="Server-to-Server Copy Protocol" anchor="sec:SSC-proto">
+    <section title="Using NFSv4.x as the Copy Protocol">
       <t>
-        The source server and destination server are not required to
-        use a specific protocol to transfer the file data. The choice
-        of what protocol to use is ultimately the destination server's
-        decision. However, the destination server has to be cognizant
-        that it is working on behalf of the client.
+        The destination server MAY use standard NFSv4.x (where x >= 1)
+        operations to read the data from the source server. If NFSv4.x is used
+        for the server-to-server copy protocol, the destination server
+        can use the source filehandle and ca_src_stateid provided in the
+        COPY request with standard NFSv4.x operations to read data
+        from the source server.
+      </t>
+    </section>
+
+    <section title="Using an Alternative Copy Protocol">
+      <t>
+        In a homogeneous environment, the source and destination
+        servers might be able to perform the file copy extremely
+        efficiently using specialized protocols. For example the
+        source and destination servers might be two nodes sharing
+        a common file system format for the source and destination
+        file systems. Thus the source and destination are in an
+        ideal position to efficiently render the image of the
+        source file to the destination file by replicating the
+        file system formats at the block level. Another possibility
+        is that the source and destination might be two nodes
+        sharing a common storage area network, and thus there is
+        no need to copy any data at all, and instead ownership
+        of the file and its contents might simply be re-assigned
+        to the destination. To allow for these possibilities, the
+        destination server is allowed to use a server-to-server
+        copy protocol of its choice.
       </t>
 
-      <section title="Considerations on Selecting a Copy Protocol">
-        <t>
-          The client can have requirements over both the size of
-          transactions and error recovery semantics. It may want to
-          split the copy up such that each chunk is synchronously
-          transferred. It may want the copy protocol to copy the bytes
-          in consecutive order such that upon an error, the client can
-          restart the copy at the last known good offset. If the
-          destination server cannot meet these requirements, the client
-          may prefer the traditional copy mechanism such that it
-          can meet those requirements.
-        </t>
-      </section>
+      <t>
+        In a heterogeneous environment, using a protocol other
+        than NFSv4.x (e.g., HTTP <xref target="RFC2616" /> or FTP
+        <xref target="RFC959" />) presents some challenges. In
+        particular, the destination server is presented with the
+        challenge of accessing the source file given only an
+        NFSv4.x filehandle.
+      </t>
 
-      <section title="Using NFSv4.x as the Copy Protocol">
-        <t>
-          The destination server MAY use standard NFSv4.x (where x >= 1)
-          operations to read the data from the source server. If NFSv4.x is used
-          for the server-to-server copy protocol, the destination server
-          can use the source filehandle and ca_src_stateid provided in the
-          COPY request with standard NFSv4.x operations to read data
-          from the source server.
-        </t>
-      </section>
+      <t>
+        One option for protocols that identify source files with
+        path names is to use an ASCII hexadecimal representation
+        of the source filehandle as the file name.
+      </t>
 
-      <section title="Using an Alternative Copy Protocol">
-        <t>
-          In a homogeneous environment, the source and destination
-          servers might be able to perform the file copy extremely
-          efficiently using specialized protocols. For example the
-          source and destination servers might be two nodes sharing
-          a common file system format for the source and destination
-          file systems. Thus the source and destination are in an
-          ideal position to efficiently render the image of the
-          source file to the destination file by replicating the
-          file system formats at the block level. Another possibility
-          is that the source and destination might be two nodes
-          sharing a common storage area network, and thus there is
-          no need to copy any data at all, and instead ownership
-          of the file and its contents might simply be re-assigned
-          to the destination. To allow for these possibilities, the
-          destination server is allowed to use a server-to-server
-          copy protocol of its choice.
-        </t>
+      <t>
+        Another option for the source server is to use URLs to
+        direct the destination server to a specialized service.
+        For example, the response to COPY_NOTIFY could include
+        the URL ftp://s1.example.com:9999/_FH/0x12345, where
+        0x12345 is the ASCII hexadecimal representation of the
+        source filehandle. When the destination server receives
+        the source server's URL, it would use "_FH/0x12345" as
+        the file name to pass to the FTP server listening on port
+        9999 of s1.example.com. On port 9999 there would be a
+        special instance of the FTP service that understands how
+        to convert NFS filehandles to an open file descriptor (in
+        many operating systems, this would require a new system
+        call, one which is the inverse of the makefh() function
+        that the pre-NFSv4 MOUNT service needs).
+      </t>
 
-        <t>
-          In a heterogeneous environment, using a protocol other
-          than NFSv4.x (e.g., HTTP <xref target="RFC2616" /> or FTP
-          <xref target="RFC959" />) presents some challenges. In
-          particular, the destination server is presented with the
-          challenge of accessing the source file given only an
-          NFSv4.x filehandle.
-        </t>
-
-        <t>
-          One option for protocols that identify source files with
-          path names is to use an ASCII hexadecimal representation
-          of the source filehandle as the file name.
-        </t>
-
-        <t>
-          Another option for the source server is to use URLs to
-          direct the destination server to a specialized service.
-          For example, the response to COPY_NOTIFY could include
-          the URL ftp://s1.example.com:9999/_FH/0x12345, where
-          0x12345 is the ASCII hexadecimal representation of the
-          source filehandle. When the destination server receives
-          the source server's URL, it would use "_FH/0x12345" as
-          the file name to pass to the FTP server listening on port
-          9999 of s1.example.com. On port 9999 there would be a
-          special instance of the FTP service that understands how
-          to convert NFS filehandles to an open file descriptor (in
-          many operating systems, this would require a new system
-          call, one which is the inverse of the makefh() function
-          that the pre-NFSv4 MOUNT service needs).
-        </t>
-
-        <t>
-          Authenticating and identifying the destination server to
-          the source server is also a challenge. Recommendations
-          for how to accomplish this are given in <xref
-          target="sec:SSC-no-rpc" />.
-        </t>
-      </section>
+      <t>
+        Authenticating and identifying the destination server to
+        the source server is also a challenge. Recommendations
+        for how to accomplish this are given in <xref
+        target="sec:SSC-no-rpc" />.
+      </t>
     </section>
   </section>
 
-  <section title="Requirements for Operations" anchor="operations">
+  <section title="netloc4 - Network Locations">
     <t>
-      The implementation of server-side copy is OPTIONAL by the
-      client and the server. However, in order to successfully copy
-      a file, some operations MUST be supported by the client and/or
-      server.
+      The server-side copy operations specify network locations using
+      the netloc4 data type shown below:
+    </t>
+
+    <?rfc include='autogen/type_netloc_type4.xml'?>
+
+    <t>
+      If the netloc4 is of type NL4_NAME, the nl_name field MUST be
+      specified as a UTF-8 string. The nl_name is expected to be
+      resolved to a network address via DNS, LDAP, NIS, /etc/hosts,
+      or some other means. If the netloc4 is of type NL4_URL, a
+      server URL <xref target="RFC3986" /> appropriate for the
+      server-to-server copy operation is specified as a UTF-8 string.
+      If the netloc4 is of type NL4_NETADDR, the nl_addr field MUST
+      contain a valid netaddr4 as defined in Section 3.3.9 of
+      <xref target="RFC5661" />.
     </t>
 
     <t>
-      If a client desires an intra-server file copy, then it MUST
-      support the COPY and CB_OFFLOAD operations. If COPY returns a
-      stateid, then the client MAY use the OFFLOAD_ABORT and OFFLOAD_STATUS
-      operations.
+      When netloc4 values are used for an inter-server copy as
+      shown in <xref target="fig:inter-server" />, their values
+      may be evaluated on the source server, destination server,
+      and client. The network environment in which these systems
+      operate should be configured so that the netloc4 values
+      are interpreted as intended on each system.
+    </t>
+  </section>
+
+  <section title="Copy Offload Stateids" anchor="ss:copy:stateid">
+    <t>
+      A server may perform a copy offload operation asynchronously.  An
+      asynchronous copy is tracked using a copy offload stateid.  Copy
+      offload stateids are included in the COPY, OFFLOAD_ABORT,
+      OFFLOAD_STATUS, and CB_OFFLOAD operations.
     </t>
 
     <t>
-      If a client desires an inter-server file copy, then it MUST
-      support the COPY, COPY_NOTICE, and CB_OFFLOAD operations, and
-      MAY use the OFFLOAD_REVOKE operation. If COPY returns a stateid,
-      then the client MAY use the OFFLOAD_ABORT and OFFLOAD_STATUS
-      operations.
+      A copy offload stateid will be valid until either (A) the client or
+      server restarts or (B) the client returns the resource by issuing a
+      OFFLOAD_ABORT operation or the client replies to a CB_OFFLOAD
+      operation.
     </t>
 
     <t>
-      If a server supports intra-server copy, then the server MUST
-      support the COPY operation. If a server’s COPY operation
-      returns a stateid, then the server MUST also support these operations:
-      CB_OFFLOAD, OFFLOAD_ABORT, and OFFLOAD_STATUS.
+      A copy offload stateid's seqid MUST NOT be 0.  In the context of a
+      copy offload operation, it is ambiguous to indicate the most recent
+      copy offload operation using a stateid with seqid of 0.  Therefore a
+      copy offload stateid with seqid of 0 MUST be considered invalid.
     </t>
-
-    <t>
-      If a source server supports inter-server copy, then the source
-      server MUST support all these operations: COPY_NOTIFY and
-      OFFLOAD_REVOKE. If a destination server supports inter-server
-      copy, then the destination server MUST support the COPY
-      operation. If a destination server’s COPY operation returns
-      a stateid, then the destination server MUST also support these
-      operations: CB_OFFLOAD, OFFLOAD_ABORT, COPY_NOTIFY, OFFLOAD_REVOKE,
-      and OFFLOAD_STATUS.
-    </t>
-
-    <t>
-      Each operation is performed in the context of the user identified
-      by the ONC RPC credential of its containing COMPOUND or CB_COMPOUND
-      request. For example, a OFFLOAD_ABORT operation issued by a given user
-      indicates that a specified COPY operation initiated by the same user
-      be canceled. Therefore a OFFLOAD_ABORT MUST NOT interfere with a copy
-      of the same file initiated by another user.
-    </t>
-
-    <t>
-      An NFS server MAY allow an administrative user to monitor or cancel
-      copy operations using an implementation specific interface.
-    </t>
-
-    <section title="netloc4 - Network Locations">
-      <t>
-        The server-side copy operations specify network locations using
-        the netloc4 data type shown below:
-      </t>
-
-      <?rfc include='autogen/type_netloc_type4.xml'?>
-
-      <t>
-        If the netloc4 is of type NL4_NAME, the nl_name field MUST be
-        specified as a UTF-8 string. The nl_name is expected to be
-        resolved to a network address via DNS, LDAP, NIS, /etc/hosts,
-        or some other means. If the netloc4 is of type NL4_URL, a
-        server URL <xref target="RFC3986" /> appropriate for the
-        server-to-server copy operation is specified as a UTF-8 string.
-        If the netloc4 is of type NL4_NETADDR, the nl_addr field MUST
-        contain a valid netaddr4 as defined in Section 3.3.9 of
-        <xref target="RFC5661" />.
-      </t>
-
-      <t>
-        When netloc4 values are used for an inter-server copy as
-        shown in <xref target="fig:inter-server" />, their values
-        may be evaluated on the source server, destination server,
-        and client. The network environment in which these systems
-        operate should be configured so that the netloc4 values
-        are interpreted as intended on each system.
-      </t>
-    </section>
-
-    <section title="Copy Offload Stateids" anchor="ss:copy:stateid">
-      <t>
-        A server may perform a copy offload operation asynchronously.  An
-        asynchronous copy is tracked using a copy offload stateid.  Copy
-        offload stateids are included in the COPY, OFFLOAD_ABORT,
-        OFFLOAD_STATUS, and CB_OFFLOAD operations.
-      </t>
-
-      <t>
-        A copy offload stateid will be valid until either (A) the client or
-        server restarts or (B) the client returns the resource by issuing a
-        OFFLOAD_ABORT operation or the client replies to a CB_OFFLOAD
-        operation.
-      </t>
-
-      <t>
-        A copy offload stateid's seqid MUST NOT be 0.  In the context of a
-        copy offload operation, it is ambiguous to indicate the most recent
-        copy offload operation using a stateid with seqid of 0.  Therefore a
-        copy offload stateid with seqid of 0 MUST be considered invalid.
-      </t>
-    </section>
   </section>
 
   <section anchor="ss:copy:security" title="Security Considerations">
@@ -587,41 +627,6 @@
     </t>
 
     <section title="Inter-Server Copy Security" anchor="sec:SSC-sec">
-      <section title="Requirements for Secure Inter-Server Copy">
-        <t>
-          Inter-server copy is driven by several requirements:
-        </t>
-
-        <t>
-          <list style="symbols">
-            <t>
-              The specification MUST provide guidance for using NFSv4.x
-              as a copy protocol. For those source and destination
-              servers willing to use NFSv4.x there are specific security
-              considerations that this specification can and does address.
-            </t>
-
-            <t>
-              The specification MUST NOT mandate preconfiguration
-              between the source and destination server. Requiring
-              that the source and destination first have a "copying
-              relationship" increases the administrative burden. However
-              the specification MUST NOT preclude implementations that
-              require preconfiguration.
-            </t>
-
-            <t>
-              The specification MUST NOT mandate a trust relationship
-              between the source and destination server. The NFSv4
-              security model requires mutual authentication between
-              a principal on an NFS client and a principal on an NFS
-              server. This model MUST continue with the introduction
-              of COPY.
-            </t>
-          </list>
-        </t>
-      </section>
-
       <section title="Inter-Server Copy via ONC RPC with RPCSEC_GSSv3"  anchor="sec:SSC-rpc-with-gss">
         <t>
           When the client sends a COPY_NOTIFY to the source server to
