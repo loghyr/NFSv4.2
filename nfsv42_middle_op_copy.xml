@@ -26,9 +26,9 @@
     </t>
 
     <t>
-      In order to set SAVED_FH to the source file handle,
-      the compound procedure requesting the COPY will
-      include a sub-sequence of operations such as
+      In order to set SAVED_FH to the source file handle, the
+      compound procedure requesting the COPY will include a
+      sub-sequence of operations such as
     </t>
 
     <figure>
@@ -249,6 +249,5 @@
       size of the file will be as if a normal WRITE extended the
       file.
     </t>
-
   </section>
 </section>

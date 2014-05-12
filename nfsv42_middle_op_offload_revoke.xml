@@ -12,30 +12,31 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      This operation is used for an inter-server copy. A client sends this
-      operation in a COMPOUND request to the source server to revoke the
-      authorization of a destination server identified by
-      ora_destination_server from
-      reading the file specified by CURRENT_FH on behalf of given user. If the
-      ora_destination_server has already begun copying the file, a successful
-      return from this operation indicates that further access will be prevented.
+      This operation is used for an inter-server copy. A client
+      sends this operation in a COMPOUND request to the source
+      server to revoke the authorization of a destination server
+      identified by ora_destination_server from reading the file
+      specified by CURRENT_FH on behalf of given user. If the
+      ora_destination_server has already begun copying the file, a
+      successful return from this operation indicates that further
+      access will be prevented.
     </t>
 
     <t>
-      The ora_destination_server MUST be specified using the
-      netloc4 network location format. The server is not required
-      to resolve the ora_destination_server address before completing
-      this operation.
+      The ora_destination_server MUST be specified using the netloc4
+      network location format. The server is not required to resolve
+      the ora_destination_server address before completing this
+      operation.
     </t>
 
     <t>
-      The client uses OFFLOAD_ABORT to inform the destination to stop the
-      active transfer and OFFLOAD_REVOKE to inform the source to not allow
-      any more copy requests from the destination.
-      The OFFLOAD_REVOKE operation is also useful in situations in which the
-      source server granted a very long or infinite lease on the
-      destination server's ability to read the source file and
-      all copy operations on the source file have been completed.
+      The client uses OFFLOAD_ABORT to inform the destination to
+      stop the active transfer and OFFLOAD_REVOKE to inform the
+      source to not allow any more copy requests from the destination.
+      The OFFLOAD_REVOKE operation is also useful in situations in
+      which the source server granted a very long or infinite lease
+      on the destination server's ability to read the source file
+      and all copy operations on the source file have been completed.
     </t>
 
     <t>
