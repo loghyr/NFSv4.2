@@ -58,27 +58,19 @@
     </t>
 
     <t>
-      The cnr_lease_time is chosen by the source server. A
-      cnr_lease_time of 0 (zero) indicates an infinite lease.
-      To avoid the need for synchronized clocks, copy lease times
-      are granted by the server as a time delta.
-      To renew the copy lease time the client should resend the same
-      copy notification request to the source server.
+      The cnr_lease_time is chosen by the source server. A cnr_lease_time
+      of 0 (zero) indicates an infinite lease.  To avoid the need for
+      synchronized clocks, copy lease times are granted by the server
+      as a time delta.  To renew the copy lease time the client should
+      resend the same copy notification request to the source server.
     </t>
 
     <t>
-      A successful response will also contain a list of netloc4
-      network location formats
-      called cnr_source_server, on which the source is willing to
-      accept connections from the destination. These might not be reachable
-      from the client and might be located on networks to which the client
-      has no connection.
-    </t>
-
-    <t>
-      If the client wishes to perform an inter-server copy, the client
-      MUST send a COPY_NOTIFY to the source server. Therefore, the source
-      server MUST support COPY_NOTIFY.
+      A successful response will also contain a list of netloc4 network
+      location formats called cnr_source_server, on which the source is
+      willing to accept connections from the destination. These might
+      not be reachable from the client and might be located on networks
+      to which the client has no connection.
     </t>
 
     <t>

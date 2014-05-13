@@ -1,5 +1,5 @@
 struct OFFLOAD_STATUS4resok {
-	length4		osr_bytes_copied;
+	length4		osr_count;
 	nfsstat4	osr_complete<1>;
 };
 
