@@ -1,0 +1,59 @@
+<!-- Copyright (C) The IETF Trust (2014) -->
+<!-- Copyright (C) The Internet Society (2014) -->
+
+<section anchor='op:layout_event' title='Operation 70: LAYOUTEVENT - Update the Status of the Layout'>
+  <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/type_layoutupdate4.xml'?>
+    <?rfc include='autogen/layoutevent_args.xml'?>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/layoutevent_res.xml'?>
+  </section>
+
+  <section toc='exclude' title="DESCRIPTION">
+    <t>
+      The client can use LAYOUTEVENT to inform the metadata server
+      about its interaction with the layout represented by the
+      current filehandle, client ID (derived from the session ID
+      in the preceding SEQUENCE operation), byte-range (lea_offset
+      + lea_length), and lea_stateid. The information the client
+      is presenting is specific to the Layout Type and presented
+      in the lea_layoutupdate field. Each Layout Type MUST define
+      the contents of lea_layoutupdate in their respective
+      specifications. If a Layout Type specification is already
+      published and it does not define the payload, then it MUST
+      return NFS4ERR_NOTSUPP for this new operation.
+    </t>
+
+    <t>
+      While LAYOUTRETURN can be used to provide error information
+      to the metadata server (see <xref target='sec:pLeh:LAYOUTRETURN' />),
+      such updates are limited to when the client is normally done
+      processing the file. If the Layout Type allows for multiple
+      paths as targets for the I/O operations (e.g., the File Layout
+      Type's nflda_multipath_ds_list in Section 13.5 of <xref
+      target='RFC5661' />), then the client can inform the metadata
+      server of a non-responsive storage device which impacts
+      performance but does not prevent I/O.
+    </t>
+
+    <t>
+      LAYOUTEVENT can be combined with IO_ADVISE (see
+      <xref target='op:io_advise' />) to augment the decision making
+      process of how the metadata server handles a file.  I.e.,
+      IO_ADVISE lets the server know that a byte range has a certain
+      characteristic, but not necessarily the range of that
+      characteristic.
+    </t>
+
+    <t>
+      Both LAYOUTRETURN and LAYOUTCOMMIT are not effective in
+      providing this type of update in a timely fashion. For
+      LAYOUTRETURN, the client has to give up the layout when it
+      is actively processing the file. LAYOUTCOMMIT is tightly
+      coupled with WRITEs, the semantics of what the metadata server
+      needs to do upon receiving one is already complex.
+    </t>
+  </section>
+</section>
