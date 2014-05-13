@@ -110,12 +110,10 @@ FORE_OPS_AS_IS2 = \
                 reclaim_complete_res.x \
                 copy_args.x \
                 copy_res.x \
-                offload_abort_args.x \
-                offload_abort_res.x \
                 copy_notify_args.x \
                 copy_notify_res.x \
-                offload_revoke_args.x \
-                offload_revoke_res.x \
+                offload_cancel_args.x \
+                offload_cancel_res.x \
                 offload_status_args.x \
                 offload_status_res.x \
 		allocate_args.x \

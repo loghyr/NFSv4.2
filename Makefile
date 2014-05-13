@@ -309,12 +309,10 @@ AUTOGEN =	\
 		autogen/commit_res.xml \
 		autogen/copy_notify_args.xml \
 		autogen/copy_notify_res.xml \
-		autogen/offload_revoke_args.xml \
-		autogen/offload_revoke_res.xml \
+		autogen/offload_cancel_args.xml \
+		autogen/offload_cancel_res.xml \
 		autogen/copy_args.xml \
 		autogen/copy_res.xml \
-		autogen/offload_abort_args.xml \
-		autogen/offload_abort_res.xml \
 		autogen/offload_status_args.xml \
 		autogen/offload_status_res.xml \
 		autogen/create_args.xml \
@@ -450,8 +448,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_deallocate.xml \
 	${DOC_PREFIX}_middle_op_io_advise.xml \
 	${DOC_PREFIX}_middle_op_layoutreturn.xml \
-	${DOC_PREFIX}_middle_op_offload_abort.xml \
-	${DOC_PREFIX}_middle_op_offload_revoke.xml \
+	${DOC_PREFIX}_middle_op_offload_cancel.xml \
 	${DOC_PREFIX}_middle_op_offload_status.xml \
 	${DOC_PREFIX}_middle_op_read_plus.xml \
 	${DOC_PREFIX}_middle_op_seek.xml \

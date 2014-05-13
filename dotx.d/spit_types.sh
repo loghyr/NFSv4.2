@@ -998,8 +998,8 @@ enum nfs_opnum4 {
  OP_COPY_NOTIFY		= 61,
  OP_DEALLOCATE		= 62,
  OP_IO_ADVISE		= 63,
- OP_OFFLOAD_ABORT	= 64,
- OP_OFFLOAD_REVOKE	= 65,
+ OP_XXX_FOR_NOW		= 64,
+ OP_OFFLOAD_CANCEL	= 65,
  OP_OFFLOAD_STATUS	= 66,
  OP_READ_PLUS		= 67,
  OP_SEEK		= 68,
@@ -1120,8 +1120,8 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY_NOTIFY:	COPY_NOTIFY4args opoffload_notify;
  case OP_DEALLOCATE:	DEALLOCATE4args opdeallocate;
  case OP_IO_ADVISE:	IO_ADVISE4args opio_advise;
- case OP_OFFLOAD_ABORT:	OFFLOAD_ABORT4args opoffload_abort;
- case OP_OFFLOAD_REVOKE: OFFLOAD_REVOKE4args opcopy_revoke;
+ case OP_XXX_FOR_NOW:	void;
+ case OP_OFFLOAD_CANCEL: OFFLOAD_CANCEL4args opoffload_cancel;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4args opoffload_status;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
  case OP_SEEK:		SEEK4args opseek;
@@ -1252,8 +1252,8 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_COPY_NOTIFY:	COPY_NOTIFY4res opcopy_notify;
  case OP_DEALLOCATE:	DEALLOCATE4res opdeallocate;
  case OP_IO_ADVISE:	IO_ADVISE4res opio_advise;
- case OP_OFFLOAD_ABORT:	OFFLOAD_ABORT4res opoffload_abort;
- case OP_OFFLOAD_REVOKE: OFFLOAD_REVOKE4res opoffload_revoke;
+ case OP_XXX_FOR_NOW:	void;
+ case OP_OFFLOAD_CANCEL: OFFLOAD_CANCEL4res opoffload_cancel;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4res opoffload_status;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
  case OP_SEEK:		SEEK4res opseek;

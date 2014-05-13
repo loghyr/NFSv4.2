@@ -93,7 +93,7 @@
         contents of what it wrote until it is informed by the server
         that the operation is complete. It can use OFFLOAD_STATUS
         (<xref target="op:offload_status" />) to monitor the operation
-        and OFFLOAD_ABORT (<xref target="op:offload_abort" />) to
+        and OFFLOAD_CANCEL (<xref target="op:offload_close" />) to
         cancel the operation. An example of a asynchronous WRITE_SAME
         is shown in <xref target='fig:async-write_same' />. Note
         that as with the COPY operation, WRITE_SAME must provide a
