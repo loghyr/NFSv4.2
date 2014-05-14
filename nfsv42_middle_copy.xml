@@ -600,7 +600,7 @@
   <section anchor="ss:copy:security" title="Security Considerations">
     <t>
       The security considerations pertaining to NFSv4.1 <xref target="RFC5661" />
-      apply to this chapter. And as such, the standard security
+      apply to this section. And as such, the standard security
       mechanisms used by the protocol can be used to secure
       the server-to-server operations.
     </t>
