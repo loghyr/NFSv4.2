@@ -1,7 +1,7 @@
-<!-- Copyright (C) The IETF Trust (2011-2014) -->
-<!-- Copyright (C) The Internet Society (2011-2014) -->
+<!-- Copyright (C) The IETF Trust (2011-2012) -->
+<!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor="op:offload_status" title="Operation 66: OFFLOAD_STATUS - Poll for status of asynchronous operation">
+<section anchor="op:offload_status" title="Operation 66: OFFLOAD_STATUS - Poll for status of a server-side copy">
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/offload_status_args.xml'?>
   </section>
@@ -12,24 +12,35 @@
 
   <section toc='exclude' title="DESCRIPTION">
     <t>
-      OFFLOAD_STATUS can be used by the client to query the progress of an
-      asynchronous operation, which is identifed both by CURRENT_FH and
-      the osa_stateid.  If this operation is successful, the number of
-      bytes processed are returned to the client in the osr_count
-      field.
+      OFFLOAD_STATUS is used for both intra-server and inter-server
+      asynchronous copies. The OFFLOAD_STATUS operation allows the
+      client to poll the destination server to determine the status
+      of an asynchronous copy operation.
     </t>
 
     <t>
-      If the optional osr_complete field is present, the asynchronous
-      operation has completed. In this case the status value indicates
-      the result of the asynchronous operation. In all cases, the server
-      will also deliver the final results of the asynchronous operation
+      If this operation is successful, the number of bytes copied
+      are returned to the client in the osr_bytes_copied field. The
+      osr_bytes_copied value indicates the number of bytes copied
+      but not which specific bytes have been copied.
+    </t>
+
+    <t>
+      If the optional osr_complete field is present, the copy has
+      completed. In this case the status value indicates the result
+      of the asynchronous copy operation. In all cases, the server
+      will also deliver the final results of the asynchronous copy
       in a CB_OFFLOAD operation.
     </t>
 
     <t>
       The failure of this operation does not indicate the result of
-      the asynchronous operation in any way.
+      the asynchronous copy in any way.
+    </t>
+
+    <t>
+      If the server supports asynchronous copies, the server is
+      REQUIRED to support the OFFLOAD_STATUS operation.
     </t>
   </section>
 </section>

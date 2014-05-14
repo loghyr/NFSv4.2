@@ -35,5 +35,10 @@
       server's ability to read the source file and all copy operations
       on the source file have been completed.
     </t>
+
+    <t>
+      If the server supports COPY_NOTIFY, the server is REQUIRED to
+      support the OFFLOAD_CANCEL operation.
+    </t>
   </section>
 </section>
