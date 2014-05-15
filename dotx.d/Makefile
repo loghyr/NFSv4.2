@@ -106,16 +106,16 @@ FORE_OPS_AS_IS2 = \
 		want_delegation_res.x \
 		destroy_clientid_args.x \
 		destroy_clientid_res.x \
-                reclaim_complete_args.x \
-                reclaim_complete_res.x \
-                copy_args.x \
-                copy_res.x \
-                copy_notify_args.x \
-                copy_notify_res.x \
-                offload_cancel_args.x \
-                offload_cancel_res.x \
-                offload_status_args.x \
-                offload_status_res.x \
+		reclaim_complete_args.x \
+		reclaim_complete_res.x \
+		copy_args.x \
+		copy_res.x \
+		copy_notify_args.x \
+		copy_notify_res.x \
+		offload_cancel_args.x \
+		offload_cancel_res.x \
+		offload_status_args.x \
+		offload_status_res.x \
 		allocate_args.x \
 		allocate_res.x \
 		deallocate_args.x \
@@ -123,6 +123,9 @@ FORE_OPS_AS_IS2 = \
 		type_io_advise.x \
 		io_advise_args.x \
 		io_advise_res.x \
+		type_io_info.x \
+		layoutstats_args.x \
+		layoutstats_res.x \
 		read_plus_args.x \
 		read_plus_content.x \
 		read_plus_res_pre.x \

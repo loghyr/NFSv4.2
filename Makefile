@@ -355,6 +355,9 @@ AUTOGEN =	\
 		autogen/layoutget_res.xml \
 		autogen/layoutreturn_args.xml \
 		autogen/layoutreturn_res.xml \
+		autogen/type_io_info.xml \
+		autogen/layoutstats_args.xml \
+		autogen/layoutstats_res.xml \
 		autogen/link_args.xml \
 		autogen/link_res.xml \
 		autogen/lock_args.xml \
@@ -448,6 +451,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_deallocate.xml \
 	${DOC_PREFIX}_middle_op_io_advise.xml \
 	${DOC_PREFIX}_middle_op_layoutreturn.xml \
+	${DOC_PREFIX}_middle_op_layoutstats.xml \
 	${DOC_PREFIX}_middle_op_offload_cancel.xml \
 	${DOC_PREFIX}_middle_op_offload_status.xml \
 	${DOC_PREFIX}_middle_op_read_plus.xml \
