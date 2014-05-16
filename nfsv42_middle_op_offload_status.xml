@@ -13,7 +13,7 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       OFFLOAD_STATUS can be used by the client to query the progress of an
-      asynchronous operation, which is identifed both by CURRENT_FH and
+      asynchronous operation, which is identified both by CURRENT_FH and
       the osa_stateid.  If this operation is successful, the number of
       bytes processed are returned to the client in the osr_count
       field.

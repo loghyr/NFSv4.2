@@ -19,7 +19,7 @@
       current filehandle, client ID (derived from the session ID
       in the preceding SEQUENCE operation), byte-range (lea_offset
       + lea_length), and lea_stateid. lsa_read and lsa_write allow
-      for non-Layout Type specific statistices to be reported.  The
+      for non-Layout Type specific statistics to be reported.  The
       remaining information the client is presenting is specific
       to the Layout Type and presented in the lea_layoutupdate
       field. Each Layout Type MUST define the contents of
