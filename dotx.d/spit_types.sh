@@ -983,12 +983,13 @@ enum nfs_opnum4 {
  OP_COPY_NOTIFY		= 61,
  OP_DEALLOCATE		= 62,
  OP_IO_ADVISE		= 63,
- OP_XXX_FOR_NOW		= 64,
- OP_OFFLOAD_CANCEL	= 65,
- OP_OFFLOAD_STATUS	= 66,
- OP_READ_PLUS		= 67,
- OP_SEEK		= 68,
- OP_WRITE_SAME		= 69,
+ OP_LAYOUTERROR		= 64,
+ OP_LAYOUTSTATS		= 65,
+ OP_OFFLOAD_CANCEL	= 66,
+ OP_OFFLOAD_STATUS	= 67,
+ OP_READ_PLUS		= 68,
+ OP_SEEK		= 69,
+ OP_WRITE_SAME		= 70,
  OP_ILLEGAL		= 10044
 };
 EOF
@@ -1105,7 +1106,8 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY_NOTIFY:	COPY_NOTIFY4args opoffload_notify;
  case OP_DEALLOCATE:	DEALLOCATE4args opdeallocate;
  case OP_IO_ADVISE:	IO_ADVISE4args opio_advise;
- case OP_XXX_FOR_NOW:	void;
+ case OP_LAYOUTERROR: LAYOUTERRORargs4  oplayouterror;
+ case OP_LAYOUTSTATS: LAYOUTSTATSargs4  oplayoutstats;
  case OP_OFFLOAD_CANCEL: OFFLOAD_CANCEL4args opoffload_cancel;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4args opoffload_status;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
@@ -1237,7 +1239,8 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_COPY_NOTIFY:	COPY_NOTIFY4res opcopy_notify;
  case OP_DEALLOCATE:	DEALLOCATE4res opdeallocate;
  case OP_IO_ADVISE:	IO_ADVISE4res opio_advise;
- case OP_XXX_FOR_NOW:	void;
+ case OP_LAYOUTERROR: LAYOUTERROR4res oplayouterror;
+ case OP_LAYOUTSTATS: LAYOUTSTATS4res oplayputstats;
  case OP_OFFLOAD_CANCEL: OFFLOAD_CANCEL4res opoffload_cancel;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4res opoffload_status;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;

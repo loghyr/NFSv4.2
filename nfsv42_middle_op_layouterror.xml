@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor='op:layouterror' title='Operation XX: LAYOUTERROR - Provide Errors for the Layout'>
+<section anchor='op:layouterror' title='Operation 64: LAYOUTERROR - Provide Errors for the Layout'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/type_layoutupdate4.xml'?>
     <?rfc include='autogen/type_device_error.xml'?>
@@ -43,6 +43,15 @@
           codes for the operation denoted by de_opnum.
         </t>
       </list>
+    </t>
+
+    <t>
+      Note that while the metadata server may return an error
+      associated with the layout stateid or the open file, it
+      MUST NOT return an error in the processing of the errors.
+      If LAYOUTERROR is in a compound before LAYOUTRETURN, it
+      MUST NOT introduce an error other than what LAYOUTRETURN
+      would already encounter.
     </t>
   </section>
 
