@@ -24,10 +24,16 @@
     <t>
       Each individual device_error4 describes a single error
       associated with a storage device, which is identified via
-      de_deviceid.  The operation which returned the error is
-      identified via de_opnum. Finally the NFS error value (nfsstat4)
-      encountered is provided via de_status and may consist of the
-      following error codes:
+      de_deviceid.  If the Layout Type supports NFSv4 operations,
+      then the operation which returned the error is identified via
+      de_opnum. If the Layout Type does not support NFSv4 operations,
+      then it MAY chose to either map the operation onto one of the
+      allowed operations which can be sent to a storage device with
+      the File Layout Type (see <xref target ='ss:pnfs:flt' />) or
+      it can signal no support for operations by marking de_opnum
+      with the ILEGAL operation. Finally the NFS error value
+      (nfsstat4) encountered is provided via de_status and may
+      consist of the following error codes:
     </t>
 
     <t>
