@@ -19,7 +19,7 @@ autogen/%.xml : %.x
 	@mkdir -p autogen
 	@rm -f $@.tmp $@
 	@( cd dotx.d ; m4 `basename $<` > ../$@.tmp )
-	@cat $@.tmp | sed 's/^\%//' | sed 's/</\&lt;/g'| \
+	@cat $@.tmp | ./noFirstLast.pl | sed 's/^\%//' | sed 's/</\&lt;/g'| \
 	awk ' \
 		BEGIN	{ print "<figure>"; print" <artwork>"; } \
 			{ print $0 ; } \
