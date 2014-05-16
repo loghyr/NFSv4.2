@@ -1,0 +1,147 @@
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
+
+<section anchor='op:layouterror' title='Operation XX: LAYOUTERROR - Provide Errors for the Layout'>
+  <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/type_layoutupdate4.xml'?>
+    <?rfc include='autogen/type_device_error.xml'?>
+    <?rfc include='autogen/layouterror_args.xml'?>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/layouterror_res.xml'?>
+  </section>
+
+  <section toc='exclude' title="DESCRIPTION">
+    <t>
+      The client can use LAYOUTERROR to inform the metadata server
+      about errors in its interaction with the layout represented by the
+      current filehandle, client ID (derived from the session ID
+      in the preceding SEQUENCE operation), byte-range (lea_offset
+      + lea_length), and lea_stateid.
+    </t>
+
+    <t>
+      Each individual device_error4 describes a single error
+      associated with a storage device, which is identified via
+      de_deviceid.  The operation which returned the error is
+      identified via de_opnum. Finally the NFS error value (nfsstat4)
+      encountered is provided via de_status and may consist of the
+      following error codes:
+    </t>
+
+    <t>
+      <list style='hanging'>
+        <t hangText='NFS4ERR_NXIO:'>
+          The client was unable to establish any communication with
+          the storage device.
+        </t>
+
+        <t hangText='NFS4ERR_*:'>
+          The client was able to establish communication with the
+          storage device and is returning one of the allowed error
+          codes for the operation denoted by de_opnum.
+        </t>
+      </list>
+    </t>
+  </section>
+
+  <section anchor="sec:LAYOUTERROR:impl" toc='exclude' title="IMPLEMENTATION">
+    <t>
+      There are two broad classes of errors, transient and persistent.
+      The client SHOULD strive to only use this new mechanism to
+      report persistent errors. It MUST be able to deal with transient
+      issues by itself. Also, while the client might consider an
+      issue to be persistent, it MUST be prepared for the metadata
+      server to consider such issues to be transient. A prime example
+      of this is if the metadata server fences off a client from
+      either a stateid or a filehandle.  The client will get an
+      error from the storage device and might relay either
+      NFS4ERR_ACCESS or NFS4ERR_BAD_STATEID back to the metadata
+      server, with the belief that this is a hard error. If the
+      metadata server is informed by the client that there is an
+      error, it can safely ignore that.  For it, the mission is
+      accomplished in that the client has returned a layout that
+      the metadata server had most likely recalled.
+    </t>
+
+    <t>
+      The client might also need to inform the metadata server that
+      it cannot reach one or more of the storage devices. While the
+      metadata server can detect the connectivity of both of these
+      paths:
+
+      <list style='symbols'>
+        <t>
+          metadata server to storage device
+        </t>
+
+        <t>
+          metadata server to client
+        </t>
+      </list>
+
+      it cannot determine if the client and storage device path is
+      working. As with the case of the storage device passing errors
+      to the client, it must be prepared for the metadata server
+      to consider such outages as being transitory.
+    </t>
+
+    <t>
+      Clients are expected to tolerate transient storage device
+      errors, and hence clients SHOULD NOT use the LAYOUTERROR
+      error handling for device access problems that may be transient.
+      The methods by which a client decides whether a device access
+      problem is transient vs persistent are implementation-specific,
+      but may include retrying I/Os to a data server under appropriate
+      conditions.
+    </t>
+
+    <t>
+      When an I/O fails to a storage device, the client SHOULD retry
+      the failed I/O via the metadata server. In this situation,
+      before retrying the I/O, the client SHOULD return the layout, or
+      the affected portion thereof, and SHOULD indicate which storage
+      device or devices was problematic. The client needs to do this
+      when the storage device is being unresponsive in order to fence
+      off any failed write attempts, and ensure that they do not end
+      up overwriting any later data being written through the metadata
+      server.  If the client does not do this, the metadata server MAY
+      issue a layout recall callback in order to perform the retried I/O.
+    </t>
+
+    <t>
+      The client needs to be cognizant that since this error handling
+      is optional in the metadata server, the metadata server may
+      silently ignore this functionality.  Also, as the metadata
+      server may consider some issues the client reports to be
+      expected, the client might find it difficult to detect a
+      metadata server which has not implemented error handling via
+      LAYOUTERROR.
+    </t>
+
+    <t>
+      If an metadata server is aware that a storage device is proving
+      problematic to a client, the metadata server SHOULD NOT include
+      that storage device in any pNFS layouts sent to that client. If
+      the metadata server is aware that a storage device is affecting
+      many clients, then the metadata server SHOULD NOT include that
+      storage device in any pNFS layouts sent out.  If a client asks
+      for a new layout for the file from the metadata server, it MUST
+      be prepared for the metadata server to return that storage device
+      in the layout. The metadata server might not have any choice in
+      using the storage device, i.e., there might only be one possible
+      layout for the system.  Also, in the case of existing files, the
+      metadata server might have no choice in which storage devices to
+      hand out to clients.
+    </t>
+
+    <t>
+      The metadata server is not required to indefinitely retain
+      per-client storage device error information. An metadata server is
+      also not required to automatically reinstate use of a previously
+      problematic storage device; administrative intervention may be
+      required instead.
+    </t>
+  </section>
+</section>

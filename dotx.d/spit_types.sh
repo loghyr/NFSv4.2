@@ -470,21 +470,6 @@ union layoutreturn4 switch(layoutreturn_type4 lr_returntype) {
 EOF
         ;;
 
-	type_layoutreturn_errs.x )
-
-cat << EOF > $i
-struct layoutreturn_device_error4 {
-	deviceid4	lrde_deviceid;
-	nfsstat4	lrde_status;
-	nfs_opnum4	lrde_opnum;
-};
-
-struct layoutreturn_error_report4 {
-	layoutreturn_device_error4	lrer_errors<>;
-};
-EOF
-        ;;
-
 	type_client_owner4.x )
 
 cat << EOF > $i

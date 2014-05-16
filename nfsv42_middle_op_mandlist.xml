@@ -141,7 +141,8 @@
       <c>LAYOUTCOMMIT         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>LAYOUTGET            </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>LAYOUTRETURN         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
-      <c>LAYOUTSTATS          </c> <c> OPT </c> <c> pNFS (REQ)   </c>
+      <c>LAYOUTERROR          </c> <c> OPT </c> <c> pNFS (OPT)   </c>
+      <c>LAYOUTSTATS          </c> <c> OPT </c> <c> pNFS (OPT)   </c>
       <c>LINK                 </c> <c> OPT </c> <c>              </c>
       <c>LOCK                 </c> <c> REQ </c> <c>              </c>
       <c>LOCKT                </c> <c> REQ </c> <c>              </c>

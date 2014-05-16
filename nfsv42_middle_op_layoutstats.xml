@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2014) -->
 <!-- Copyright (C) The Internet Society (2014) -->
 
-<section anchor='op:layout_event' title='Operation 70: LAYOUTSTATS - Provide Statistics for the Layout'>
+<section anchor='op:layoutstats' title='Operation 70: LAYOUTSTATS - Provide Statistics for the Layout'>
   <section toc='exclude' title="ARGUMENT">
     <?rfc include='autogen/type_layoutupdate4.xml'?>
     <?rfc include='autogen/type_io_info.xml'?>

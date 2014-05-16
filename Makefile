@@ -125,7 +125,6 @@ SPITGEN =	dotx.d/type_nfstime4.x \
 		dotx.d/type_ssv_seal_plain_tkn4.x \
 		dotx.d/type_ssv_seal_cipher_tkn4.x \
 		dotx.d/type_layoutreturn4.x \
-		dotx.d/type_layoutreturn_errs.x \
 		dotx.d/type_client_owner4.x \
 		dotx.d/type_server_owner4.x \
 		dotx.d/type_device_addr4.x \
@@ -203,7 +202,6 @@ SPITGENXML =	autogen/type_nfstime4.xml \
 		autogen/type_ssv_seal_plain_tkn4.xml \
 		autogen/type_ssv_seal_cipher_tkn4.xml \
 		autogen/type_layoutreturn4.xml \
-		autogen/type_layoutreturn_errs.xml \
 		autogen/type_client_owner4.xml \
 		autogen/type_server_owner4.xml \
 		autogen/type_device_addr4.xml \
@@ -351,6 +349,9 @@ AUTOGEN =	\
 		autogen/io_advise_res.xml \
 		autogen/layoutcommit_args.xml \
 		autogen/layoutcommit_res.xml \
+		autogen/type_device_error.xml \
+		autogen/layouterror_args.xml \
+		autogen/layouterror_res.xml \
 		autogen/layoutget_args.xml \
 		autogen/layoutget_res.xml \
 		autogen/layoutreturn_args.xml \
@@ -450,7 +451,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_exchange_id.xml \
 	${DOC_PREFIX}_middle_op_deallocate.xml \
 	${DOC_PREFIX}_middle_op_io_advise.xml \
-	${DOC_PREFIX}_middle_op_layoutreturn.xml \
+	${DOC_PREFIX}_middle_op_layouterror.xml \
 	${DOC_PREFIX}_middle_op_layoutstats.xml \
 	${DOC_PREFIX}_middle_op_offload_cancel.xml \
 	${DOC_PREFIX}_middle_op_offload_status.xml \

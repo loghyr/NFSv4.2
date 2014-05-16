@@ -123,6 +123,9 @@ FORE_OPS_AS_IS2 = \
 		type_io_advise.x \
 		io_advise_args.x \
 		io_advise_res.x \
+		type_device_error.x \
+		layouterror_args.x \
+		layouterror_res.x \
 		type_io_info.x \
 		layoutstats_args.x \
 		layoutstats_res.x \
@@ -196,7 +199,6 @@ SPITGEN =	basic_types.x \
 		type_ssv_seal_plain_tkn4.x \
 		type_ssv_seal_cipher_tkn4.x \
 		type_layoutreturn4.x \
-		type_layoutreturn_errs.x \
 		type_client_owner4.x \
 		type_server_owner4.x \
 		type_device_addr4.x \
@@ -255,7 +257,7 @@ AUTOGEN =	hand_edit_warning.x \
 
 all:	nfsv42.x filelist
 
-nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x layout_errors.x fore_prog.x \
+nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x \
 		back_ops.x back_prog.x
 	m4 hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x back_ops.x back_prog.x | expand | tr -d "\r" > nfsv42.tmp
 	mv nfsv42.tmp nfsv42.x
