@@ -491,7 +491,7 @@ genhtml: Makefile gendraft html txt dotx dotx-txt draft-$(VERS).tar
 		draft-$(VERS) \
 		${DRAFT_BASE}-$(VERS).txt \
 		${DRAFT_BASE}-$(VERS).html \
-		dotx.d/nfsv4.x \
+		dotx.d/nfsv42.x \
 		draft-$(VERS).tar.gz
 
 testx:
