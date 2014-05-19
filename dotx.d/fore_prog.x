@@ -1,9 +1,8 @@
 
 /*
- * Operation arrays
+ * Operation arrays (the rest)
  */
 
-include(type_nfs_opnum4.x)
 include(type_nfs_argop4.x)
 include(type_nfs_resop4.x)
 include(type_COMPOUND4args.x)

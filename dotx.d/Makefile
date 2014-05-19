@@ -262,7 +262,7 @@ nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.
 	m4 hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_ops.x fore_prog.x back_ops.x back_prog.x | expand | tr -d "\r" > nfsv42.tmp
 	mv nfsv42.tmp nfsv42.x
 
-hand_edit_warning.x: Makefile ../Makefile head.x $(FORE_OPS) fore_prog.x $(BACK_OPS) back_prog.x
+hand_edit_warning.x: Makefile ../Makefile head.x fore_opnums.x $(FORE_OPS) fore_prog.x $(BACK_OPS) back_prog.x
 	( \
 		echo "/*" ; \
 		echo " * This file was machine generated for" ; \
