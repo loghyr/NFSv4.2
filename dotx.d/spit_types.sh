@@ -1106,8 +1106,8 @@ union nfs_argop4 switch (nfs_opnum4 argop) {
  case OP_COPY_NOTIFY:	COPY_NOTIFY4args opoffload_notify;
  case OP_DEALLOCATE:	DEALLOCATE4args opdeallocate;
  case OP_IO_ADVISE:	IO_ADVISE4args opio_advise;
- case OP_LAYOUTERROR: LAYOUTERRORargs4  oplayouterror;
- case OP_LAYOUTSTATS: LAYOUTSTATSargs4  oplayoutstats;
+ case OP_LAYOUTERROR: LAYOUTERROR4args  oplayouterror;
+ case OP_LAYOUTSTATS: LAYOUTSTATS4args  oplayoutstats;
  case OP_OFFLOAD_CANCEL: OFFLOAD_CANCEL4args opoffload_cancel;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4args opoffload_status;
  case OP_READ_PLUS:	READ_PLUS4args opread_plus;
