@@ -16,7 +16,8 @@
       operation, which is identifed both by CURRENT_FH and the
       oca_stateid. I.e., there can be multiple offloaded operations acting
       on the file, the stateid will identify to the server exactly which
-      one is to be stopped.
+      one is to be stopped.  Currently there are only two operations
+      which can decide to be asynchronous: COPY and WRITE_SAME.
     </t>
 
     <t>
