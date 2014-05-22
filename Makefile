@@ -444,11 +444,13 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_new_errors.xml \
 	${DOC_PREFIX}_middle_fileattributes.xml \
 	${DOC_PREFIX}_middle_op_mandlist.xml \
-	${DOC_PREFIX}_middle_op_aaa.xml \
+	${DOC_PREFIX}_middle_mod_op_start.xml \
+	${DOC_PREFIX}_middle_mod_op_exchange_id.xml \
+	${DOC_PREFIX}_middle_mod_op_end.xml \
+	${DOC_PREFIX}_middle_op_start.xml \
 	${DOC_PREFIX}_middle_op_allocate.xml \
 	${DOC_PREFIX}_middle_op_copy.xml \
 	${DOC_PREFIX}_middle_op_copy_notify.xml \
-	${DOC_PREFIX}_middle_op_exchange_id.xml \
 	${DOC_PREFIX}_middle_op_deallocate.xml \
 	${DOC_PREFIX}_middle_op_io_advise.xml \
 	${DOC_PREFIX}_middle_op_layouterror.xml \
@@ -458,10 +460,10 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_read_plus.xml \
 	${DOC_PREFIX}_middle_op_seek.xml \
 	${DOC_PREFIX}_middle_op_write_same.xml \
-	${DOC_PREFIX}_middle_op_zzz.xml \
-	${DOC_PREFIX}_middle_op_cb_aaa.xml \
+	${DOC_PREFIX}_middle_op_end.xml \
+	${DOC_PREFIX}_middle_op_cb_start.xml \
 	${DOC_PREFIX}_middle_op_cb_offload.xml \
-	${DOC_PREFIX}_middle_op_cb_zzz.xml \
+	${DOC_PREFIX}_middle_op_cb_end.xml \
 	${DOC_PREFIX}_middle_iana.xml \
 	${DOC_PREFIX}_middle_end.xml \
 	${DOC_PREFIX}_back_front.xml \
