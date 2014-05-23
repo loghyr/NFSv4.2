@@ -3,6 +3,7 @@
 
 <section anchor='op:seek' title='Operation 69: SEEK - Find the Next Data or Hole'>
   <section toc='exclude' title="ARGUMENT">
+    <?rfc include='autogen/data_content4.xml'?>
     <?rfc include='autogen/seek_args.xml'?>
   </section>
 

@@ -7,6 +7,7 @@
   </section>
 
   <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/data_content4.xml'?>
     <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/data4.xml'?>
     <?rfc include='autogen/read_plus_content.xml'?>
