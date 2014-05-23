@@ -25,7 +25,15 @@
       sa_what in the file. If the server can not find a corresponding
       sa_what, then the status will still be NFS4_OK, but sr_eof
       would be TRUE.  If the server can find the sa_what, then the
-      sr_offset is the start of that content.
+      sr_offset is the start of that content.  If the sa_offset is
+      beyond the end of the file, then SEEK MUST return NFS4ERR_NXIO.
+    </t>
+
+    <t>
+      All files MUST have a virtual hole at the end of the file. I.e.,
+      if a filesystem does not support sparse files, then a compound
+      with {SEEK 0 NFS4_CONTENT_HOLE;} would return a result of
+      {SEEK 1 X;} where 'X' was the size of the file.
     </t>
 
     <t>
