@@ -599,9 +599,10 @@ const FATTR4_RETENTEVT_SET	= 72;
 const FATTR4_RETENTION_HOLD	= 73;
 const FATTR4_MODE_SET_MASKED	= 74;
 const FATTR4_FS_CHARSET_CAP	= 76;
-const FATTR4_SPACE_FREED	= 77;
-const FATTR4_CHANGE_ATTR_TYPE	= 78;
-const FATTR4_SEC_LABEL		= 79;
+/* 77 is currently unused */
+const FATTR4_SPACE_FREED	= 78;
+const FATTR4_CHANGE_ATTR_TYPE	= 79;
+const FATTR4_SEC_LABEL		= 80;
 
 /*
  * File attribute container
