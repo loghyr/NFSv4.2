@@ -1402,9 +1402,6 @@ EOF
 	data_content4.x )
 
 cat << EOF > $i
-/*
- * Use an enum such that we can extend new types.
- */
 enum data_content4 {
 	NFS4_CONTENT_DATA = 0,
 	NFS4_CONTENT_HOLE = 1

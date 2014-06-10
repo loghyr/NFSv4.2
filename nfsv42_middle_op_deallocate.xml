@@ -15,7 +15,7 @@
       Whenever a client wishes to unreserve space for a region in a file it calls
       the DEALLOCATE operation with the current filehandle set to the filehandle
       of the file in question, and the start offset and length in bytes of
-      the region set in aa_offset and aa_length respectively.  If no space was
+      the region set in da_offset and da_length respectively.  If no space was
       allocated or reserved for all or parts of the region, the DEALLOCATE
       operation will have no effect for the region that already is in unreserved
       state.

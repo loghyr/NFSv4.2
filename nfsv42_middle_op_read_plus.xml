@@ -7,6 +7,7 @@
   </section>
 
   <section toc='exclude' title="RESULT">
+    <?rfc include='autogen/data_content4.xml'?>
     <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/data4.xml'?>
     <?rfc include='autogen/read_plus_content.xml'?>
@@ -36,21 +37,16 @@
       each of which describe a data_content4 type of data.  For
       NFSv4.2, the allowed values are data and hole. A server MUST
       support both the data type and the hole if it uses READ_PLUS.
-      If it does not want to support a hole, it MUST use READ. The
-      hole SHOULD be returned in its entirety - clients must be
-      prepared to get more information than they requested. Both
-      the start and the end of the hole may exceed what was requested.
-      The array contents MUST be contiguous in the file.
+      If it does not want to support a hole, it MUST use READ.  The
+      array contents MUST be contiguous in the file.
     </t>
 
     <t>
-      If the data to be returned is comprised entirely of zeros,
-      then the server SHOULD return that data as a hole. The di_reserved
-      field is used to tell the client if a hole is unreserved, that is
-      writes to it MAY return NFS4ERR_NOSPC, or it is reserved in which
-      cases writes into the hole MUST NOT return ENOSPC.  If the server
-      does not know the reservations status it may set the di_reserved
-      field to SPACE_UNKNOWN4.
+      Holes SHOULD be returned in their entirety - clients must be
+      prepared to get more information than they requested. Both
+      the start and the end of the hole may exceed what was requested.
+      If data to be returned is comprised entirely of zeros, then the
+      server SHOULD return that data as a hole instead.
     </t>
 
     <t>
