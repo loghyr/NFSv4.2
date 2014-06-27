@@ -1003,7 +1003,31 @@
           </t>
         </section>
 
-        <section title="Finishing or Stopping a Secure Inter-Server Copy">
+        <section title="Maintaining a Secure Inter-Server Copy">
+
+        <t>
+          The secure inter-server copy depends upon both the source server
+          and the destination server keeping the copy_from_auth and
+          copy_to_auth RPCSEC_GSS3 context handles valid during the copy.  The
+          client SHOULD use the copy_from_auth RPCSEC_GSS3 context handle for
+          the NFSv4 lease renewing operation to the source server, and
+          the copy_to_auth RPCSEC_GSS3 context handle for the NFSv4 lease
+          renewing operation to the destination server during the copy
+          to periodically
+          determine the continued validity of the respective GSS3 handles.
+          A periodic RPC NULL call can also be used for this purpose.
+        </t>
+
+        <t>
+          If the client determines that either handle becomes
+          invalid during a copy, then the copy MUST be aborted by the client
+          sending an OFFLOAD_CANCEL to both the source and destination
+          servers and destroying the respective copy related context handles
+          as described in <xref target="sec:SSC-finish" />.
+        </t>
+        </section>
+
+        <section  title="Finishing or Stopping a Secure Inter-Server Copy" anchor="sec:SSC-finish">
           <t>
             Under normal operation, the client MUST destroy the
             copy_from_auth and the copy_to_auth RPCSEC_GSSv3 handle once
