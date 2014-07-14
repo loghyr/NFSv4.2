@@ -226,9 +226,9 @@
         on the server and can change the label.
       </t>
       <t>
-        Clients which need to know if a label on a file or set of files 
+        Clients which need to know if a label on a file or set of files
         has changed SHOULD request a delegation on each labeled file so
-        that a label change by another client will be known via the process 
+        that a label change by another client will be known via the process
         described in <xref target='ss:macss:lnfs:delegs' />  which must be
         followed: the delegation will be recalled, which effectively
         notifies the client of the change.
@@ -236,7 +236,7 @@
       <t>
         Note that the MAC security policies on a client can be
         such that the client does not have access to the file
-        unless it has a delegation. 
+        unless it has a delegation.
       </t>
     </section>
   </section>

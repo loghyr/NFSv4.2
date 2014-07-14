@@ -608,7 +608,7 @@
     <t>
       NFSv4 clients and servers supporting the inter-server copy
       operations described in this chapter are REQUIRED to implement
-      the mechanism described in <xref target="sec:SSC-rpc-with-gss" />, 
+      the mechanism described in <xref target="sec:SSC-rpc-with-gss" />,
       and to support rejecting COPY_NOTIFY requests that do not use
       RPCSEC_GSS with privacy.  If the server-to-server copy protocol
       is ONC RPC based, the servers are also REQUIRED to implement <xref
