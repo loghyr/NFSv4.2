@@ -188,26 +188,6 @@ typedef uint32_t  policy4;
         of a specific MAC model, the client will be aware of the size.
       </t>
 
-      <t>
-        If a server supports sec_label, then it MUST also support
-        change_sec_label. Any modification to sec_label MUST modify
-        the value for change_sec_label.
-      </t>
-    </section>
-
-    <section toc='exclude' anchor='ss:fattr:chsec' title='Attribute 79: change_sec_label'>
-      <t>
-        The change_sec_label attribute is a read-only attribute per file.
-        If the value of sec_label for a file is not the same at two
-        disparate times then the values of change_sec_label at those
-        times MUST be different as well.  The value of change_sec_label
-        MAY change at other times as well, but this should be rare, as
-        that will require the client to abort any operation in progress,
-        re-read the label, and retry the operation.  As the
-        sec_label is not bounded by size, this attribute allows for
-        VERIFY and NVERIFY to quickly determine if the sec_label
-        has been modified.
-      </t>
     </section>
 
     <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 77: space_freed">
