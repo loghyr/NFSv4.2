@@ -138,8 +138,8 @@
         security models to enforce data access, there has been no protocol
         support to allow full interoperability. A new file object attribute,
         sec_label (see <xref target='ss:fattr:sec' />) allows for the
-        server to store and enforce MAC labels. The format of the sec_label
-        accommodates any MAC security system.
+        server to store MAC labels, which the client retrieves and enforces.
+        The format of the sec_label accommodates any MAC security system.
       </t>
     </section>
   </section>
