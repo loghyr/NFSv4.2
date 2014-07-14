@@ -216,29 +216,27 @@
 
     <section anchor='ss:macss:lnfs:changes' title='Label Changes'>
       <t>
-        If there are open delegations on the file
-        belonging to client other than the one making the label
-        change, then the process described in
-        <xref target='ss:macss:lnfs:delegs' /> must be followed.
-        In short, the delegation will be recalled, which effectively
+        Consider a <xref target='ss:modes:guest'> guest mode system </xref>
+        in which the clients enforce MAC checks
+        and the server has only a DAC security system which stores the
+        labels along with the file data.
+        In this type of system, a user with the appropriate DAC
+        credentials on a client with poorly configured or disabled MAC labeling
+        enforcement is allowed access to the file label (and data)
+        on the server and can change the label.
+      </t>
+      <t>
+        Clients which need to know if a label on a file or set of files 
+        has changed SHOULD request a delegation on each labeled file so
+        that a label change by another client will be known via the process 
+        described in <xref target='ss:macss:lnfs:delegs' />  which must be
+        followed: the delegation will be recalled, which effectively
         notifies the client of the change.
       </t>
-
       <t>
-        Consider a system in which the clients enforce MAC checks and
-        and the server has a very simple security
-        system which just stores the labels. In this system, the
-        MAC label check always allows access, regardless of the
-        subject label.
-      </t>
-
-      <t>
-        The way in which MAC labels are enforced is by the
-        client. The security policies on the client can be
+        Note that the MAC security policies on a client can be
         such that the client does not have access to the file
-        unless it has a delegation. The recall of the delegation
-        will force the client to flush any cached content of the
-        file.
+        unless it has a delegation. 
       </t>
     </section>
   </section>
