@@ -1044,6 +1044,15 @@
           </t>
 
           <t>
+           The copy_confirm_auth RPCSEC_GSS3 handle is associated with a
+           copy_from_auth RPCSEC_GSS3 handle on the source server via
+           the shared secret and MUST be locally destroyed
+           (there is no RPCSEC_GSS3_DESTROY as the source server is
+           not the initiator)
+           when the copy_from_auth RPCSEC_GSSv3 handle is destroyed.
+          </t>
+
+          <t>
             If the client sends an OFFLOAD_CANCEL to the source server to
             rescind the destination server's synchronous copy privilege, it
             uses the privileged "copy_from_auth" RPCSEC_GSSv3 handle and the
