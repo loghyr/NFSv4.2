@@ -54,6 +54,10 @@
     to more closely model the posix_fallocate.
   </t>
   <t>
+    Andy Adamson picked up the RPCSEC_GSSv3 work, which enabled both Labeled NFS
+    and Server Side Copy to be present more secure options.
+  </t>
+  <t>
     During the review process, Talia Reyes-Ortiz helped the sessions
     run smoothly. While many people contributed here and there, the
     core reviewers were Andy Adamson, Pranoop Erasani, Bruce Fields, Chuck Lever,
