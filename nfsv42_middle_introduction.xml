@@ -136,9 +136,11 @@
       <t>
         While both clients and servers can employ Mandatory Access Control (MAC)
         security models to enforce data access, there has been no protocol
-        support to allow full interoperability. A new file object attribute,
+        support for interoperability. A new file object attribute,
         sec_label (see <xref target='ss:fattr:sec' />) allows for the
-        server to store MAC labels, which the client retrieves and enforces.
+        server to store MAC labels on files, which the client
+        retrieves and uses to enforce data access
+        (see <xref target='ss:modes:guest' />).
         The format of the sec_label accommodates any MAC security system.
       </t>
     </section>
