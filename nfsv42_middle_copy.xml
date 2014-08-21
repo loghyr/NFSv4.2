@@ -197,6 +197,18 @@
         can achieve this by a combination of OPEN and LOCK operations.
         I.e., either share or byte range locks might be desired.
       </t>
+
+      <t>
+	Note that when the client establishes a lock stateid on the
+	source, the context of that stateid is for the client and
+	not the destination.  As such, there might already be an
+	outstanding stateid, issued to the destination as client
+	of the source, with the same value as that provided for the
+	lock stateid. The source MUST equate the lock stateid as
+	that of the client, i.e., when the destination presents it
+	in the context of a inter-server copy, it is on behalf of
+	the client.
+      </t>
     </section>
 
     <section title="Client Caches">
@@ -609,17 +621,6 @@
       copy offload operation, it is ambiguous to indicate the most recent
       copy offload operation using a stateid with seqid of 0.  Therefore a
       copy offload stateid with seqid of 0 MUST be considered invalid.
-    </t>
-
-    <t>
-      In the context of an inter-server copy, the copy offload
-      stateid is actually issued to the client and not the destination
-      server. As such, there might already be an outstanding stateid,
-      issued to the destination as client of the source, with the
-      same value as that provided for the copy offload stateid. The
-      source MUST equate the copy offload stateid as that of the
-      client, i.e., when the destination presents it in the context
-      of a inter-server copy, it is on behalf of the client.
     </t>
   </section>
 
