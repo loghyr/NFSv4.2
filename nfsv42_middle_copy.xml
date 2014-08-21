@@ -189,13 +189,28 @@
     </t>
   </section>
 
-  <section title="Locking the Files">
-    <t>
-      Both the source and destination file may need to be locked
-      to protect the content during the copy operations. A client
-      can achieve this by a combination of OPEN and LOCK operations.
-      I.e., either share or byte range locks might be desired.
-    </t>
+  <section title="Implementation Considerations">
+    <section title="Locking the Files">
+      <t>
+        Both the source and destination file may need to be locked
+        to protect the content during the copy operations. A client
+        can achieve this by a combination of OPEN and LOCK operations.
+        I.e., either share or byte range locks might be desired.
+      </t>
+    </section>
+
+    <section title="Client Caches">
+      <t>
+        In a traditional copy, if the client is in the process of
+        writiting to the file before the copy (and perhaps with
+        a write  delegation), it will be straightforward to update
+        the destination server.  With an inter-server copy, the
+        source has no insight into the changes cached on the client.
+        The client SHOULD write back the data to the source or be
+        prepared for the destination to get a corrupt copy of the
+        file.
+      </t>
+    </section>
   </section>
 
   <section title="Intra-Server Copy">
