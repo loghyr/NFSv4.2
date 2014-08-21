@@ -44,7 +44,7 @@
     <t>
       The new operations are designed to copy files. Other
       file system objects can be copied by building on these operations
-      or using other techniques. For example if the user wishes to copy
+      or using other techniques. For example, if the user wishes to copy
       a directory, the client can synthesize a directory copy by first
       creating the destination directory and then copying the source
       directory's files to the new destination directory.
@@ -594,6 +594,17 @@
       copy offload operation, it is ambiguous to indicate the most recent
       copy offload operation using a stateid with seqid of 0.  Therefore a
       copy offload stateid with seqid of 0 MUST be considered invalid.
+    </t>
+
+    <t>
+      In the context of an inter-server copy, the copy offload
+      stateid is actually issued to the client and not the destination
+      server. As such, there might already be an outstanding stateid,
+      issued to the destination as client of the source, with the
+      same value as that provided for the copy offload stateid. The
+      source MUST equate the copy offload stateid as that of the
+      client, i.e., when the destination presents it in the context
+      of a inter-server copy, it is on behalf of the client.
     </t>
   </section>
 
