@@ -446,6 +446,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_mandlist.xml \
 	${DOC_PREFIX}_middle_mod_op_start.xml \
 	${DOC_PREFIX}_middle_mod_op_exchange_id.xml \
+	${DOC_PREFIX}_middle_mod_op_getdevicelist.xml \
 	${DOC_PREFIX}_middle_mod_op_end.xml \
 	${DOC_PREFIX}_middle_op_start.xml \
 	${DOC_PREFIX}_middle_op_allocate.xml \

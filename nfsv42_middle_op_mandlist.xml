@@ -135,7 +135,7 @@
       <c>FREE_STATEID         </c> <c> REQ </c> <c>              </c>
       <c>GETATTR              </c> <c> REQ </c> <c>              </c>
       <c>GETDEVICEINFO        </c> <c> OPT </c> <c> pNFS (REQ)   </c>
-      <c>GETDEVICELIST        </c> <c> OPT </c> <c> pNFS (OPT)   </c>
+      <c>GETDEVICELIST        </c> <c> MNI </c> <c> pNFS (MNI)   </c>
       <c>GETFH                </c> <c> REQ </c> <c>              </c>
       <c>GET_DIR_DELEGATION   </c> <c> OPT </c> <c> DDELG (REQ)  </c>
       <c>LAYOUTCOMMIT         </c> <c> OPT </c> <c> pNFS (REQ)   </c>

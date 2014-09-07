@@ -1,0 +1,41 @@
+<!-- Copyright (C) The IETF Trust (2014) -->
+<!-- Copyright (C) The Internet Society (2014) -->
+
+<section title='Operation 48: GETDEVICELIST - Get All Device Mappings for a File System'>
+  <section toc='exclude' title="ARGUMENT">
+    <figure>
+      <artwork>
+   Unchanged
+      </artwork>
+    </figure>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <figure>
+      <artwork>
+   Unchanged
+      </artwork>
+    </figure>
+  </section>
+
+  <section toc='exclude' title='MOTIVATION'>
+    <t>
+       The GETDEVICELIST operation was introduced in <xref target='RFC5661' />
+       specificly to request a list of devices at filesystem mount time from
+       block layout type servers.  However use of the GETDEVICELIST operation
+       introduces a race condition vs notification about changes to pNFS
+       device IDs as provided by CB_NOTIFY_DEVICEID.
+       Furthermore there is no actual need for GETDEVICELIST to implement
+       a fully working block layout server, and clients have to be able
+       to request new devices ues GETDEVICEINFO at any time in response
+       to a new deviceid in LAYOUTGET results, or in response to the
+       CB_NOTIFY_DEVICEID callback operation anyway.
+    </t>
+  </section>
+
+  <section toc='exclude' title='DESCRIPTION'>
+    <t>
+      Clients and servers MUST NOT implement the GETDEVICELIST operation.
+    </t>
+  </section>
+</section>
