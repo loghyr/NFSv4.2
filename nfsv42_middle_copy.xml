@@ -214,7 +214,7 @@
     <section title="Client Caches">
       <t>
         In a traditional copy, if the client is in the process of
-        writiting to the file before the copy (and perhaps with
+        writing to the file before the copy (and perhaps with
         a write  delegation), it will be straightforward to update
         the destination server.  With an inter-server copy, the
         source has no insight into the changes cached on the client.

@@ -231,7 +231,7 @@
       If a failure does occur for a synchronous copy, wr_count
       will be set to the number of bytes copied to the destination
       file before the error occurred. If cr_consecutive is true,
-      then the bytes were copied in order. If the failure occured
+      then the bytes were copied in order. If the failure occurred
       for an asynchronous copy, then the client will have gotten
       the notification of the consecutive copy order when it got
       the copy stateid. It will be able to determine the bytes

@@ -13,7 +13,7 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       OFFLOAD_CANCEL is used by the client to terminate an asynchronous
-      operation, which is identifed both by CURRENT_FH and the
+      operation, which is identified both by CURRENT_FH and the
       oca_stateid. I.e., there can be multiple offloaded operations acting
       on the file, the stateid will identify to the server exactly which
       one is to be stopped.  Currently there are only two operations
