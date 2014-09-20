@@ -19,7 +19,7 @@
       current filehandle, client ID (derived from the session ID
       in the preceding SEQUENCE operation), byte-range (lea_offset
       + lea_length), and lea_stateid. lsa_read and lsa_write allow
-      for non-Layout Type specific statistices to be reported.  The
+      for non-Layout Type specific statistics to be reported.  The
       remaining information the client is presenting is specific
       to the Layout Type and presented in the lea_layoutupdate
       field. Each Layout Type MUST define the contents of
@@ -33,6 +33,14 @@
       IO_ADVISE lets the server know that a byte range has a certain
       characteristic, but not necessarily the intensity of that
       characteristic.
+    </t>
+
+    <t>
+      The client MUST reset the statistics after getting a
+      successfully reply from the metadata server.  The first
+      LAYOUTSTATS sent by the client SHOULD be from the opening
+      of the file.  The choice of how often to update the metadata
+      server is made by the client.
     </t>
 
     <t>
