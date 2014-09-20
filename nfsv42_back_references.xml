@@ -112,10 +112,10 @@
 	<author initials="T." surname="Haynes" fullname="T. Haynes">
 	  <organization>Primary Data</organization>
 	</author>
-	<date year="2014" month="April"/>
+	<date year="2014" month="September"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-22" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-27" />
     </reference>
 
     <reference anchor='rpcsec_gssv3'>
@@ -127,10 +127,10 @@
         <author initials="N." surname="Williams" fullname="N. Williams">
           <organization>Cryptonector</organization>
         </author>
-        <date year="2013" month="October"/>
+        <date year="2014" month="July"/>
       </front>
       <format type="TXT"
-              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-06.txt"/>
+              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-08.txt"/>
     </reference>
 
   </references>
@@ -198,11 +198,11 @@
           <organization>NetApp</organization>
         </author>
         <author initials="D." surname="Noveck" fullname="D. Noveck">
-          <organization>EMC Corporation</organization>
+          <organization></organization>
         </author>
-        <date year="2013" month="February" />
+        <date year="2014" month="April" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-25" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-33" value="(Work In Progress)"/>
     </reference>
 
 
@@ -371,29 +371,79 @@
   <format type='HTML' target='http://www.usenix.org/events/fast08/tech/full_papers/bairavasundaram/bairavasundaram.pdf' />
 </reference>
 
+  <reference anchor='BL73'>
+    <front>
+      <title>Secure Computer Systems: Mathematical Foundations and Model</title>
+      <author initials='D.E.' surname='Bell' fullname='D.E. Bell'> <organization /></author>
+      <author initials='L.J.' surname='LaPadula' fullname='L.J. LaPadula'> <organization /></author>
+      <date month='May' year='1973' />
+    </front>
+    <seriesInfo name='Technical Report M74-244,' value='The MITRE Corporation, Bedford, MA' />
+  </reference>
+
     <reference anchor="Quigley14">
       <front>
         <title>Registry Specification for Mandatory Access Control (MAC) Security Label Formats</title>
         <author initials="D." surname="Quigley" />
         <author initials="J." surname="Lu" />
         <author initials="T." surname="Haynes" />
-        <date year="2014" />
+        <date year="2014" month="September" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-lfs-registry-00" value="(work in progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-lfs-registry-01" value="(work in progress)"/>
     </reference>
 
-  <reference anchor='MLS'>
-    <front>
-      <title>
-        Section 46.6. Multi-Level Security (MLS) of Deployment Guide:
-        Deployment, configuration and administration of Red Hat Enterprise
-        Linux 5, Edition 6
-      </title>
-      <author />
-      <date year='2011' />
-    </front>
-    <format type='HTML' target='http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/5/ht
-ml/Deployment_Guide/sec-mls-ov.html' />
+  <reference anchor='RFC1108'>
+  <front>
+    <title>Security Options for the Internet Protocol</title>
+    <author initials='S.' surname='Kent' fullname='S. Kent'>
+    <organization /></author>
+    <date year='1991' month='November' />
+
+    <abstract>
+      <t>This RFC specifies the U.S. Department of Defense Basic Security
+      Option and the top-level description of the Extended Security Option
+      for use with the Internet Protocol.  This RFC obsoletes RFC 1038
+      "Revised IP Security Option", dated January 1988.</t>
+    </abstract>
+  </front>
+  <seriesInfo name='RFC' value='1108' />
+  <format type='TXT' octets='41791' target='http://www.rfc-editor.org/rfc/rfc1108.txt' />
+  </reference>
+
+  <reference anchor='RFC2401'>
+
+  <front>
+  <title abbrev='Security Architecture'>Security Architecture for the Internet Protocol</title>
+  <author initials='S.' surname='Kent' fullname='Stephen Kent'>
+  <organization>BBN Corporation</organization>
+  <address>
+  <postal>
+  <street>70 Fawcett Street</street>
+  <street>Cambridge</street>
+  <street>MA  02140</street>
+  <country>USA</country></postal>
+  <phone>+1 (617) 873-3988</phone>
+  <email>kent@bbn.com</email></address></author>
+  <author initials='R.' surname='Atkinson' fullname='Randall Atkinson'>
+  <organization>@Home Network</organization>
+  <address>
+  <postal>
+  <street>425 Broadway</street>
+  <street>Redwood City</street>
+  <street>CA 94063</street>
+  <country>USA</country></postal>
+  <phone>+1 (415) 569-5000</phone>
+  <email>rja@corp.home.net</email></address></author>
+  <date year='1998' month='November' />
+  <area>Security</area>
+  <keyword>IP security protocol</keyword>
+  <keyword>IPSEC</keyword>
+  <keyword>internet protocol version 6</keyword>
+  <keyword>security</keyword></front>
+
+  <seriesInfo name='RFC' value='2401' />
+  <format type='TXT' octets='168162' target='http://www.rfc-editor.org/rfc/rfc2401.txt' />
+  <format type='XML' octets='167135' target='http://xml.resource.org/public/rfc/xml/rfc2401.xml' />
   </reference>
 
     <reference anchor='RFC5663'>

@@ -66,9 +66,10 @@
         </t>
 
         <t hangText='Label Format Registry:'>
-          is the IANA registry containing all registered
-          LFS along with references to the documents that
-          describe the syntactic format and semantics of the security label.
+          is the IANA registry (see <xref target='Quigley14' />) containing
+          all registered LFSes along with references to the documents
+          that describe the syntactic format and semantics of the
+          security label.
         </t>
 
         <t hangText='Policy Identifier (PI):'>
@@ -101,7 +102,8 @@
         <t hangText='Multi-Level Security (MLS):'>
           is a traditional model where objects are given a sensitivity
           level (Unclassified, Secret, Top Secret,  etc) and a category set
-          <xref target='MLS' />.
+          (see <xref target='BL73' />, <xref target='RFC1108' />,
+          and <xref target='RFC2401' />).
         </t>
       </list>
     </t>
@@ -326,7 +328,7 @@
           LFS component.  This component is a mechanism for the host to
           identify the format and meaning of the opaque portion of the security
           attribute.  A full mode environment may contain hosts operating in
-          several different LFSs.  In this case a mechanism for
+          several different LFSes.  In this case a mechanism for
           translating the opaque portion of the security attribute is needed.
           The actual translation function will vary based on MAC model and
           policy and is out of the scope of this document.  If a translation is
