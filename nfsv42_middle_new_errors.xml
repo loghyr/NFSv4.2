@@ -269,6 +269,11 @@
         NFS4ERR_WRONG_TYPE
       </c>
 
+      <c>GETDEVICELIST</c>
+      <c>
+        NFS4ERR_NOTSUPP
+      </c>
+
       <c>LAYOUTERROR</c>
       <c>
         NFS4ERR_ADMIN_REVOKED,

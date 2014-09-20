@@ -58,6 +58,9 @@
     and Server Side Copy to be present more secure options.
   </t>
   <t>
+    Christoph Hellwig provided the update to GETDEVICELIST.
+  </t>
+  <t>
     During the review process, Talia Reyes-Ortiz helped the sessions
     run smoothly. While many people contributed here and there, the
     core reviewers were Andy Adamson, Pranoop Erasani, Bruce Fields, Chuck Lever,
