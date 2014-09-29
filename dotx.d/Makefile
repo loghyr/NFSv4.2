@@ -168,6 +168,7 @@ BACK_OPS =	cb_getattr_args.x \
 		cb_notify_lock_res.x \
 		cb_notify_deviceid_args.x \
 		cb_notify_deviceid_res.x \
+		offload_info4.x \
 		cb_offload_args.x \
 		cb_offload_res.x
 

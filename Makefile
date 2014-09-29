@@ -1,4 +1,4 @@
-# Copyright (C) The IETF Trust (2011-2013)
+# Copyright (C) The IETF Trust (2011-2014)
 #
 # Manage the .xml for the NFSv4 minorversion 2 document.
 #
@@ -274,6 +274,7 @@ AUTOGEN =	\
 		autogen/backchannel_ctl_res.xml \
 		autogen/bind_conn_to_session_args.xml \
 		autogen/bind_conn_to_session_res.xml \
+		autogen/offload_info4.xml \
 		autogen/cb_offload_args.xml \
 		autogen/cb_offload_res.xml \
 		autogen/cb_getattr_args.xml \
