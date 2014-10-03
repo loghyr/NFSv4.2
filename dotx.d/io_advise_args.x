@@ -1,4 +1,3 @@
-
 struct IO_ADVISE4args {
 	/* CURRENT_FH: file */
 	stateid4	iaa_stateid;

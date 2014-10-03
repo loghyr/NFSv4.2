@@ -1,4 +1,3 @@
-
 struct LAYOUT_STATUS4args {
         /* CURRENT_FH: file */
         offset4                 lsa_offset;

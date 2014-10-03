@@ -316,6 +316,7 @@ AUTOGEN =	\
 		autogen/offload_abort_args.xml \
 		autogen/offload_abort_res.xml \
 		autogen/offload_status_args.xml \
+		autogen/offload_status_res_pre.xml \
 		autogen/offload_status_res.xml \
 		autogen/create_args.xml \
 		autogen/exchange_id_args.xml \

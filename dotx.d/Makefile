@@ -117,6 +117,7 @@ FORE_OPS_AS_IS2 = \
                 offload_revoke_args.x \
                 offload_revoke_res.x \
                 offload_status_args.x \
+                offload_status_res_pre.x \
                 offload_status_res.x \
 		allocate_args.x \
 		allocate_res.x \

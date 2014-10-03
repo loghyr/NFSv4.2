@@ -1,4 +1,3 @@
-
 struct WRITE_SAME4args {
 	/* CURRENT_FH: file */
 	stateid4	wsa_stateid;
