@@ -104,28 +104,23 @@
         <artwork><![CDATA[
   Client                                  Server
      +                                      +
-     |                                      |
      |--- OPEN ---------------------------->| Client opens
      |<------------------------------------/| the file
      |                                      |
      |--- WRITE_SAME ----------------------->| Client initializes
      |<------------------------------------/| an ADB
      |                                      |
-     |                                      |
      |--- OFFLOAD_STATUS ------------------>| Client may poll
      |<------------------------------------/| for status
      |                                      |
      |                  .                   | Multiple OFFLOAD_STATUS
      |                  .                   | operations may be sent.
-     |                  .                   |
      |                                      |
      |<-- CB_OFFLOAD -----------------------| Server reports results
      |\------------------------------------>|
      |                                      |
      |--- CLOSE --------------------------->| Client closes
      |<------------------------------------/| the file
-     |                                      |
-     |                                      |
         ]]></artwork>
       </figure>
 
