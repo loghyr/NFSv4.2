@@ -118,19 +118,17 @@
       </t>
 
       <t>
-        A synchronous intra-server copy is shown in
-        <xref target="fig:sync-intra-server" />. In this example, the NFS
-        server chooses to perform the copy synchronously. The copy operation
-        is completed, either successfully or unsuccessfully, before the
-        server replies to the client's request. The server's reply contains
-        the final result of the operation.
+        An intra-server copy with the NFS server performing the
+        copy synchronously is shown in <xref target="fig:sync-intra-server" />.
+        The copy operation is completed, either successfully or unsuccessfully,
+        before the server replies to the client's request. The server's
+        reply contains the final result of the operation.
       </t>
 
       <figure title="A synchronous intra-server copy." anchor="fig:sync-intra-server">
         <artwork><![CDATA[
   Client                                  Server
      +                                      +
-     |                                      |
      |--- OPEN ---------------------------->| Client opens
      |<------------------------------------/| the source file
      |                                      |
@@ -145,28 +143,26 @@
      |                                      |
      |--- CLOSE --------------------------->| Client closes
      |<------------------------------------/| the source file
-     |                                      |
-     |                                      |
         ]]></artwork>
       </figure>
 
       <t>
-        An asynchronous intra-server copy is shown in
-        <xref target="afig:sync-intra-server" />. In this example, the NFS
-        server performs the copy asynchronously. The server's reply to
-        the copy request indicates that the copy operation was initiated
-        and the final result will be delivered at a later time. The server's
-        reply also contains a copy stateid. The client may use this copy
-        stateid to poll for status information (as shown) or to cancel the copy
-        using a OFFLOAD_ABORT. When the server completes the copy, the server
-        performs a callback to the client and reports the results.
+        An intra-server copy with the NFS server performing the copy
+        asynchronously is shown in <xref target="afig:sync-intra-server" />.
+        The server's reply to the copy request indicates that
+        the copy operation was initiated and the final result will
+        be delivered at a later time. The server's reply also
+        contains a copy stateid. The client may use this copy stateid
+        to poll for status information (as shown) or to cancel the
+        copy using a OFFLOAD_ABORT. When the server completes the
+        copy, the server performs a callback to the client and
+        reports the results.
       </t>
 
       <figure title="An asynchronous intra-server copy." anchor="afig:sync-intra-server">
         <artwork><![CDATA[
   Client                                  Server
      +                                      +
-     |                                      |
      |--- OPEN ---------------------------->| Client opens
      |<------------------------------------/| the source file
      |                                      |
@@ -176,13 +172,11 @@
      |--- COPY ---------------------------->| Client requests
      |<------------------------------------/| a file copy
      |                                      |
-     |                                      |
      |--- OFFLOAD_STATUS ------------------>| Client may poll
      |<------------------------------------/| for status
      |                                      |
      |                  .                   | Multiple OFFLOAD_STATUS
      |                  .                   | operations may be sent.
-     |                  .                   |
      |                                      |
      |<-- CB_OFFLOAD -----------------------| Server reports results
      |\------------------------------------>|
@@ -192,8 +186,6 @@
      |                                      |
      |--- CLOSE --------------------------->| Client closes
      |<------------------------------------/| the source file
-     |                                      |
-     |                                      |
         ]]></artwork>
       </figure>
     </section>
@@ -218,17 +210,14 @@
                           192.0.2.0/24
               +-------------------------------------+
               |                                     |
-              |                                     |
               | 192.0.2.18                          | 192.0.2.56
       +-------+------+                       +------+------+
       |     Source   |                       | Destination |
       +-------+------+                       +------+------+
               | 203.0.113.18                        | 203.0.113.56
               |                                     |
-              |                                     |
               |             203.0.113.0/24          |
               +------------------+------------------+
-                                 |
                                  |
                                  | 203.0.113.243
                            +-----+-----+
@@ -253,19 +242,10 @@
         responding to the client's COPY request.
       </t>
 
-      <t>
-        An asynchronous copy is shown in
-        <xref target="fig:async-inter-server" />. In this case, the
-        destination server chooses to respond to the client's COPY
-        request immediately and then perform the copy
-        asynchronously.
-      </t>
-
       <figure title="A synchronous inter-server copy." anchor="fig:sync-inter-server">
         <artwork><![CDATA[
   Client                Source         Destination
      +                    +                 +
-     |                    |                 |
      |--- OPEN        --->|                 | Returns os1
      |<------------------/|                 |
      |                    |                 |
@@ -277,14 +257,10 @@
      |                    |                 |
      |--- COPY ---------------------------->|
      |                    |                 |
-     |                    |                 |
      |                    |<----- read -----|
      |                    |\--------------->|
-     |                    |                 |
      |                    |        .        | Multiple reads may
      |                    |        .        | be necessary
-     |                    |        .        |
-     |                    |                 |
      |                    |                 |
      |<------------------------------------/| Destination replies
      |                    |                 | to COPY
@@ -297,11 +273,18 @@
         ]]></artwork>
       </figure>
 
+      <t>
+        An asynchronous copy is shown in
+        <xref target="fig:async-inter-server" />. In this case, the
+        destination server chooses to respond to the client's COPY
+        request immediately and then perform the copy
+        asynchronously.
+      </t>
+
       <figure title="An asynchronous inter-server copy." anchor="fig:async-inter-server">
         <artwork><![CDATA[
   Client                Source         Destination
     +                    +                 +
-    |                    |                 |
     |--- OPEN        --->|                 | Returns os1
     |<------------------/|                 |
     |                    |                 |
@@ -310,8 +293,6 @@
     |                    |                 |
     |--- COPY_NOTIFY --->|                 | Need to pass in
     |<------------------/|                 | os1 or lock state
-    |                    |                 |
-    |                    |                 |
     |                    |                 |
     |--- OPEN ---------------------------->| Returns os2
     |<------------------------------------/|
@@ -322,23 +303,15 @@
     |--- COPY ---------------------------->| Need to pass in
     |<------------------------------------/| os2 or lock state
     |                    |                 |
-    |                    |                 |
     |                    |<----- read -----|
     |                    |\--------------->|
-    |                    |                 |
     |                    |        .        | Multiple reads may
     |                    |        .        | be necessary
-    |                    |        .        |
-    |                    |                 |
     |                    |                 |
     |--- OFFLOAD_STATUS ------------------>| Client may poll
     |<------------------------------------/| for status
-    |                    |                 |
     |                    |        .        | Multiple OFFLOAD_STATUS
     |                    |        .        | operations may be sent
-    |                    |        .        |
-    |                    |                 |
-    |                    |                 |
     |                    |                 |
     |<-- CB_OFFLOAD -----------------------| Destination reports
     |\------------------------------------>| results
@@ -354,7 +327,6 @@
     |                    |                 |
     |--- CLOSE       --->|                 | Release open state
     |<------------------/|                 |
-    |                    |                 |
         ]]></artwork>
       </figure>
     </section>
