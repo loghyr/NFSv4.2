@@ -15,7 +15,7 @@ To compile the XML files into text files:
 #
 # Install xml2rfc
 #
-curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+curl -O https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 pip install xml2rfc
 
