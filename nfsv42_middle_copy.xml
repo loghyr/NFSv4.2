@@ -678,10 +678,10 @@
         </t>
 
         <t>
-          Instead, a combination of two features of the RPCSEC_GSSv3
+          Instead, a feature of the RPCSEC_GSSv3
           <xref target="rpcsec_gssv3" /> protocol can be used:
-          compound authentication and RPC application defined
-          structured privilege assertions. These features allow the
+          RPC application defined structured privilege assertion.
+          This features allow the
           destination server to authenticate to the source server
           as acting on behalf of the user principal, and to authorize
           the destination server to perform READs of the file to
@@ -692,8 +692,7 @@
         </t>
 
         <t>
-          RPCSEC_GSSv3 introduces the notion of RPC application defined
-          structured privileges.  We define three structured privileges
+          We define three RPCSEC_GSSv3 structured privilege assertions
           that work in tandem to authorize the copy:
         </t>
 
@@ -735,22 +734,14 @@
 
               ctap_shared_secret is the automatically generated secret
               value used to establish the copy_from_auth privilege with
-              the source principal.  ctap_handle, ctap_handle_vers,
-              ctap_nounce, and ctap_nounce_mic are used to construct the
-              compound authentication portion of the copy_confirm_auth
-              RPCSEC_GSSv3 context between the destination server and
-              the source server (See <xref target="sec:SSC-sec-estab" />).
+              the source principal. See <xref target="sec:SSC-sec-estab" />.
             </t>
 
             <t hangText="copy_confirm_auth:">
               A destination principal ("nfs@&lt;destination&gt;") is
               confirming with the source principal ("nfs@&lt;source&gt;")
-              that it is authorized to copy data from the source. Note
-              that besides the rpc_gss3_privs payload (struct
-              copy_confirm_auth_priv), the copy_confirm_auth
-              RPCSEC_GSS3_CREATE message also contains an
-              rpc_gss3_gss_binding payload so that the copy is done on
-              behalf of the user principal.  This privilege is established
+              that it is authorized to copy data from the source.
+              This privilege is established
               on the destination server before the file is copied from
               the source to the destination. The resultant RPCSEC_GSSv3
               context is used to secure the READ operations from the
@@ -765,37 +756,6 @@
 
         <section title="Establishing a Security Context" anchor="sec:SSC-sec-estab">
           <t>
-            The RPCSEC_GSSv3 compound authentication feature allows a server
-            to act on behalf of a user if the server identifies the user
-            and trusts the client. In the inter-server server side copy
-            case, the server is the source server, and the client is the
-            destination server acting as a client when performing the copy.
-          </t>
-
-          <t>
-            The user principal is not required (nor expected) to have
-            an RPCSEC_GSS secured connection and context between the
-            destination server (acting as a client) and the source server.
-            The user principal does have an RPCSEC_GSS secured connection
-            and context between the client and the source server established
-            for the OPEN of the file to be copied.
-          </t>
-
-          <t>
-            We use the RPCSEC_GSS context established between the user
-            principal and the source server to OPEN the file to be copied
-            to provide the the necessary user principal identification
-            to the source server from the destination server (acting as
-            a client). This is accomplished by sending the user principal
-            identification information: e.g., the rpc_gss3_gss_binding fields,
-            in the copy_to_auth privilege established between the client and
-            the destination server. This same information is then placed
-            in the rpc_gss3_gss_binding fields of the copy_confirm_auth
-            RPCSEC_GSS3_CREATE message sent from the destination server
-            (acting as a client) to the source server.
-          </t>
-
-          <t>
             When the user principal wants to COPY a file between two
             servers, if it has not established copy_from_auth and
             copy_to_auth privileges on the servers, it establishes them:
@@ -805,8 +765,9 @@
             <list style="symbols">
               <t>
                 As noted in <xref target="rpcsec_gssv3" /> the client uses
-                an existing RPCSEC_GSSv1 (or v2) context termed the "parent"
-                handle to establish and protect RPCSEC_GSSv3 exchanges.
+                an existing RPCSEC_GSSv3 context termed the "parent"
+                handle to establish and protect RPCSEC_GSSv3 structured
+                privilege assertion exchanges.
                 The copy_from_auth privilege will use the context
                 established between the user principal and the source
                 server used to OPEN the source file as the RPCSEC_GSSv3
@@ -839,26 +800,18 @@
                 the source server's mapping of the user principal.  If it
                 does, the privilege is established on the source server as:
                 &lt;"copy_from_auth", user id, destination&gt;.  The field
-                "handle" in a successful reply is the RPCSEC_GSSv3 "child"
+                "handle" in a successful reply is the RPCSEC_GSSv3
+                copy_from_auth "child"
                 handle that the client will use on COPY_NOTIFY requests
-                to the source server involving the destination server.
-                granted_assertions[0].assertion.privs.name will be equal to
-                "copy_from_auth".
+                to the source server.
               </t>
 
               <t>
                 An instance of copy_to_auth_priv is filled in with the
                 shared secret, the cnr_source_server list returned
                 by COPY_NOTIFY, and the NFSv4 user id of the user
-                principal.  The next four fields are passed in the
-                copy_to_auth privilege to be used by the copy_confirm_auth
-                rpc_gss3_gss_binding fields as explained above.  A nounce
-                is created, and GSS_MIC() is invoked on the nounce using
-                the RPCSEC_GSSv1 (or v2) context shared between user
-                principal and the source server. The nounce, nounce MIC,
-                context handle used to create the nounce MIC, and the
-                context handle version are added to the copy_to_auth_priv
-                instance which is placed in rpc_gss3_create_args
+                principal.  The copy_to_auth_priv
+                instance is placed in rpc_gss3_create_args
                 assertions[0].assertion.privs.privilege. The
                 string "copy_to_auth" is placed in
                 assertions[0].assertion.privs.name. The field
@@ -868,12 +821,10 @@
                 matches the destination server's mapping of the user
                 principal.  If it does, the privilege is established on
                 the destination server as: &lt;"copy_to_auth", user id,
-                source list, nounce, nounce MIC, context handle, handle
-                version&gt;.  The field "handle" in a successful reply is
-                the RPCSEC_GSSv3 "child" handle that the client will use
-                on COPY requests to the destination server involving the
-                source server.  granted_assertions[0].assertion.privs.name
-                will be equal to "copy_to_auth".
+                source list&gt;.  The field "handle" in a successful reply is
+                the RPCSEC_GSSv3 copy_to_auth "child" handle that the client
+                will use on COPY requests to the destination server involving
+                the source server.
               </t>
             </list>
           </t>
@@ -881,8 +832,8 @@
           <t>
             As noted in <xref target="rpcsec_gssv3" /> Section 2.3.1 "Create
             Request", both the client and the source server should associate
-            the RPCSEC_GSSv3 "child" handle with the parent RPCSEC_GSSv1
-            (or v2) handle used to create the RPCSEC_GSSv3 child handle.
+            the RPCSEC_GSSv3 "child" handle with the parent RPCSEC_GSSv3
+            handle used to create the RPCSEC_GSSv3 child handle.
           </t>
         </section>
 
@@ -908,8 +859,7 @@
             ca_source_server list in COPY MUST be the same as ctap_source
             list specified in copy_to_auth_priv.  Otherwise, COPY will fail
             with NFS4ERR_ACCESS.  The destination server verifies that the
-            privilege &lt;"copy_to_auth", user id, source list, nounce,
-            nounce MIC, context handle, handle version&gt; exists, and
+            privilege &lt;"copy_to_auth", user id, source list&gt; exists, and
             annotates it with the source and destination filehandles.
             If the COPY returns a wr_callback_id, then this is an
             asynchronous copy and the wr_callback_id must also must be
@@ -942,7 +892,7 @@
                 as the initiator principal, and nfs@&lt;source&gt;
                 as the target principal.  If NFS is to be used as the
                 copy protocol, this means that the destination server
-                must mount the source server using RPCSEC_GSS.
+                must mount the source server using RPCSEC_GSSv3.
               </t>
 
               <t>
@@ -963,17 +913,6 @@
               </t>
 
               <t>
-                The copy_confirm_auth RPCSEC_GSS3_CREATE call also
-                includes a compound authentication component. The
-                rpc_gss3_gss_binding fields are filled in with information
-                from the established "copy_to_auth" privilege (see <xref
-                target="sec:SSC-sec-estab" />).  The ctap_handle_vers,
-                ctap_handle, ctap_nounce, and ctap_nounce_mic are
-                assigned to the vers, handle, nounce, and mic fields of
-                an rpc_gss3_gss_binding instance respectively.
-              </t>
-
-              <t>
                 The RPCSEC_GSS3_CREATE copy_from_auth message is sent to the
                 source server with a QOP of rpc_gss_svc_privacy. The source
                 server unwraps the rpc_gss_svc_privacy RPCSEC_GSS3_CREATE
@@ -981,32 +920,30 @@
                 calling GSS_VerifyMIC() using the parent context on the
                 cfap_shared_secret from the established "copy_from_auth"
                 privilege, and verifies the that the ccap_username equals
-                the cfap_username.  The source server then locates the
-                ctap_handle in it's GSS context cache and verifies that
-                the handle belongs to the user principal that maps to
-                the ccap_username and that the cached handle version
-                equals ctap_handle_vers. The ctap_nounce_mic is verified
-                by calling GSS_VerifyMIC() on the ctap_nounce using the
-                cached handle context.  If all verification succeeds, the
-                "copy_confirm_auth" privilege is established on the source
-                server as &lt; "copy_confirm_auth", shared_secret_mic,
-                user id, nounce, nounce MIC, context handle, context
-                handle version&gt;, and the resultant child handle
-                is noted to be acting on behalf of the user principal.
-                If the source server fails to verify either the privilege
-                or the compound_binding, the COPY operation will be rejected
-                with NFS4ERR_PARTNER_NO_AUTH.
+                the cfap_username.
               </t>
 
               <t>
-                All subsequent ONC RPC requests sent from the destination
+                If all verification succeeds, the
+                "copy_confirm_auth" privilege is established on the source
+                server as &lt; "copy_confirm_auth", shared_secret_mic,
+                user id&gt; Because the shared secret has been verified,
+                the resultant copy_confirm_auth RPCSEC_GSSv3 child handle
+                is noted to be acting on behalf of the user principal.
+              </t>
+
+              <t>
+                If the source server fails to verify the copy_from_auth
+                privilege the COPY operation will be rejected with
+                NFS4ERR_PARTNER_NO_AUTH, causing in turn the client to
+                destroy the associated copy_from_auth and copy_to_auth
+                RPCSEC_GSSv3 structured privilege assertion handles.
+              </t>
+
+              <t>
+                All subsequent ONC RPC READ requests sent from the destination
                 to copy data from the source to the destination will
-                use the RPCSEC_GSSv3 handle returned by the source's
-                RPCSEC_GSS3_CREATE response. Note that as per the Compound
-                Authentication section of <xref target="rpcsec_gssv3" />
-                the resultant RPCSEC_GSSv3 context handle is bound to
-                the user principal RPCSEC_GSS context and so it MUST be
-                treated by servers as authenticating the user principal.
+                use the RPCSEC_GSSv3 copy_confirm_auth child handle.
               </t>
             </list>
           </t>
@@ -1063,8 +1000,7 @@
           </t>
 
           <t>
-            The copy_confirm_auth privilege and compound authentication
-            RPCSEC_GSSv3 handle is constructed from information held
+            The copy_confirm_auth privilege constructed from information held
             by the copy_to_auth privilege, and MUST be destroyed by the
             destination server (via an RPCSEC_GSS3_DESTROY call) when the
             copy_to_auth RPCSEC_GSSv3 handle is destroyed.
