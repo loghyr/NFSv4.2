@@ -1332,7 +1332,7 @@ cat << EOF > $i
 struct copy_to_auth_priv {
 	/* equal to cfap_shared_secret */
 	secret4              ctap_shared_secret;
-	netloc4              ctap_source;
+	netloc4              ctap_source<>;
 	/* the NFSv4 user name that the user principal maps to */
 	utf8str_mixed        ctap_username;
 	/*
