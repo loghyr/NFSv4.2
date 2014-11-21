@@ -2,219 +2,51 @@
 <!-- Copyright (C) The Internet Society (2012) -->
 <section anchor="ss:minorv" title="Minor Versioning">
   <t>
-    To address the requirement of an NFS protocol that can evolve as the
-    need arises, the NFSv4 protocol contains the rules and framework to
-    allow for future minor changes or versioning.
+    NFSv4.2 is a minor version of NFSv4 and is built upon NFSv4.1
+    as documented in <xref target="RFC5661" /> and
+    <xref target="RFC5662" />.
   </t>
 
   <t>
-    The base assumption with respect to minor versioning is that
-    any future accepted minor version will be documented in one or
-    more Standards Track RFCs.  Minor version 0 of the NFSv4 protocol
-    is represented by <xref target="I-D.ietf-nfsv4-rfc3530bis" />,
-    minor version 1 by <xref target='RFC5661' />, and minor version
-    2 by this document.  The COMPOUND and CB_COMPOUND procedures
-    support the encoding of the minor version being requested by
-    the client.
+    NFSv4.2 does not modify the rules applicable to the NFSv4
+    versioning process and follows the rules set out in
+    <xref target="RFC5661" /> or in standard-track documents updating
+    that document (e.g., in an RFC based on
+    <xref target="NFSv4-Versioning" />).
   </t>
 
   <t>
-    The following items represent the basic rules for the development of
-    minor versions.  Note that a future minor version may modify or add
-    to the following rules as part of the minor version definition.
-  </t>
+    NFSv4.2 only defines extensions to NFSv4.1, each of which may
+    be supported (or not) independently.  It does not
 
-  <t>
-    <list style='numbers'>
+    <list style='symbols'>
       <t>
-        Procedures are not added or deleted.
-        <vspace blankLines="1"/>
-        To maintain the general RPC model, NFSv4 minor versions will not
-        add to or delete procedures from the NFS program.
+        introduce infrastructural features 
       </t>
 
       <t>
-        Minor versions may add operations to the COMPOUND and
-        CB_COMPOUND procedures.
-        <vspace blankLines="1"/>
-        The addition of operations to the COMPOUND and CB_COMPOUND
-        procedures does not affect the RPC model.
-        <vspace blankLines="1"/>
-        <list style='symbols'>
-          <t>
-            Minor versions may append attributes to the bitmap4 that
-            represents sets of attributes and to the fattr4 that
-            represents sets of attribute values.
-            <vspace blankLines="1"/>
-            This allows for the expansion of the attribute model to allow
-            for future growth or adaptation.
-          </t>
-
-          <t>
-            Minor version X must append any new attributes after the last
-            documented attribute.
-            <vspace blankLines="1"/>
-            Since attribute results are specified as an opaque array of
-            per-attribute, XDR-encoded results, the complexity of adding
-            new attributes in the midst of the current definitions would
-            be too burdensome.
-          </t>
-        </list>
+        make existing features MANDATORY to NOT implement
       </t>
 
       <t>
-        Minor versions must not modify the structure of an existing
-        operation's arguments or results.
-        <vspace blankLines="1"/>
-        Again, the complexity of handling multiple structure definitions
-        for a single operation is too burdensome.  New operations should
-        be added instead of modifying existing structures for a minor
-        version.
-        <vspace blankLines="1"/>
-        This rule does not preclude the following adaptations in a minor
-        version:
-        <vspace blankLines="1"/>
-        <list style='symbols'>
-          <t>
-            adding bits to flag fields, such as new attributes to
-            GETATTR's bitmap4 data type, and providing corresponding
-            variants of opaque arrays, such as a notify4 used together
-            with such bitmaps
-          </t>
-
-          <t>
-            adding bits to existing attributes like ACLs that have flag
-            words
-          </t>
-
-          <t>
-            extending enumerated types (including NFS4ERR_*) with new
-            values
-          </t>
-
-          <t>
-            adding cases to a switched union
-          </t>
-        </list>
-      </t>
-
-      <t>
-        Note that when adding new cases to a switched union, a minor
-        version must not make new cases be REQUIRED. While the encapsulating
-        operation may be REQUIRED, the new cases (the specific arm
-        of the discriminated union) is not. The error code
-        NFS4ERR_UNION_NOTSUPP is used to notify the client when the
-        server does not support such a case.
-      </t>
-
-      <t>
-        Minor versions must not modify the structure of existing
-        attributes.
-      </t>
-
-      <t>
-        Minor versions must not delete operations.
-          <vspace blankLines="1"/>
-        This prevents the potential reuse of a particular operation
-        "slot" in a future minor version.
-      </t>
-
-      <t>
-        Minor versions must not delete attributes.
-      </t>
-
-      <t>
-        Minor versions must not delete flag bits or enumeration values.
-      </t>
-
-      <t>
-        Minor versions may declare an operation MUST NOT be implemented.
-        <vspace blankLines="1"/>
-        Specifying that an operation MUST NOT be implemented is
-        equivalent to obsoleting an operation.  For the client, it means
-        that the operation MUST NOT be sent to the server.  For the
-        server, an NFS error can be returned as opposed to "dropping"
-        the request as an XDR decode error.  This approach allows for
-        the obsolescence of an operation while maintaining its structure
-        so that a future minor version can reintroduce the operation.
-        <vspace blankLines="1"/>
-        <list style='numbers'>
-          <t>
-            Minor versions may declare that an attribute MUST NOT be
-            implemented.
-          </t>
-
-          <t>
-            Minor versions may declare that a flag bit or enumeration
-            value MUST NOT be implemented.
-          </t>
-        </list>
-      </t>
-
-      <t>
-        Minor versions may declare an operation to be OBSOLESCENT, which
-        indicates an intention to remove the operation (i.e., make it
-        MANDATORY TO NOT implement) in a subsequent minor version.  Such
-        labeling is separate from the question of whether the operation
-        is REQUIRED or RECOMMENDED or OPTIONAL in the current minor
-        version.  An operation may be both REQUIRED for the given minor
-        version and marked OBSOLESCENT, with the expectation that it
-        will be MANDATORY TO NOT implement in the next (or other
-        subsequent) minor version.
-      </t>
-
-      <t>
-        Note that the early notification of operation obsolescence is
-        put in place to mitigate the effects of design and
-        implementation mistakes, and to allow protocol development to
-        adapt to unexpected changes in the pace of implementation.  Even
-        if an operation is marked OBSOLESCENT in a given minor version,
-        it may end up not being marked MANDATORY TO NOT implement in the
-        next minor version.  In unusual circumstances, it might not be
-        marked OBSOLESCENT in a subsequent minor version, and never
-        become MANDATORY TO NOT implement.
-      </t>
-
-      <t>
-        Minor versions may downgrade features from REQUIRED to
-        RECOMMENDED, from RECOMMENDED to OPTIONAL, or from OPTIONAL to
-        MANDATORY TO NOT implement.  Also, if a feature was marked as
-        OBSOLESCENT in the prior minor version, it may be downgraded
-        from REQUIRED to OPTIONAL from RECOMMENDED to MANDATORY TO NOT
-        implement, or from REQUIRED to MANDATORY TO NOT implement.
-      </t>
-
-      <t>
-        Minor versions may upgrade features from OPTIONAL to
-        RECOMMENDED, or RECOMMENDED to REQUIRED.  Also, if a feature was
-        marked as OBSOLESCENT in the prior minor version, it may be
-        upgraded to not be OBSOLESCENT.
-      </t>
-
-      <t>
-        A client and server that support minor version X SHOULD support
-        minor versions 0 through X-1 as well.
-      </t>
-
-      <t>
-        Except for infrastructural changes, a minor version must not
-        introduce REQUIRED new features.
-          <vspace blankLines="1"/>
-        This rule allows for the introduction of new functionality and
-        forces the use of implementation experience before designating a
-        feature as REQUIRED.  On the other hand, some classes of
-        features are infrastructural and have broad effects.  Allowing
-        infrastructural features to be RECOMMENDED or OPTIONAL
-        complicates implementation of the minor version.
-      </t>
-
-      <t>
-        Unless explicitly documented in a minor version standard's
-        document, a client MUST NOT attempt to use a stateid,
-        filehandle, or similar returned object from the COMPOUND
-        procedure with minor version X for another COMPOUND procedure
-        with minor version Y, where X != Y.
+	change the status of existing features (i.e., by changing
+	their status among OPTIONAL, RECOMMENDED, REQUIRED).
       </t>
     </list>
+  </t>
+
+  <t>
+    NFSv4.2 is intended to use the least disruptive approach to the
+    adding of OPTIONAL features that is available in the NFSv4
+    versioning framework.  If necessary to maintain that status,
+    attributes added in this document can be considered to be
+    OPTIONAL (rather than RECOMMENDED).
+  </t>
+
+  <t>
+    As described in <xref target='ss:pnfs:stateids' />, NFSv4.2
+    pNFS metadata servers, when used with NFSv4.1 data servers,
+    will be handing out layout stateid's to be used in the
+    context of NFSv4.1 data IO operations.
   </t>
 </section>

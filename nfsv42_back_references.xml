@@ -87,6 +87,26 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5661.txt"/>
     </reference>
 
+    <reference anchor='RFC5662'>
+      <front>
+	<title>Network File System (NFS) Version 4 Minor Version 1
+        External Data Representation Standard (XDR) Description</title>
+	<author initials="S." surname="Shepler" fullname="S. Shepler">
+	  <organization>Storspeed, Inc.</organization>
+	</author>
+	<author initials="M." surname="Eisler" fullname="M. Eisler">
+	  <organization>NetApp</organization>
+	</author>
+	<author initials="D." surname="Noveck" fullname="D. Noveck">
+	  <organization>NetApp</organization>
+	</author>
+	<date year="2010" month="January"/>
+      </front>
+      <seriesInfo name="RFC" value="5662"/>
+      <format type="TXT" octets="600988"
+	      target="ftp://ftp.isi.edu/in-notes/rfc5662.txt"/>
+    </reference>
+
     <reference anchor='RFC5664'>
       <front>
 	<title>Object-Based Parallel NFS (pNFS) Operations</title>
@@ -497,5 +517,20 @@
        <format type="TXT"
          target="ftp://www.t10.org/t10/document.05/05-344r0.pdf"/>
      </reference>
+
+    <reference anchor='NFSv4-Versioning'>
+      <front>
+	<title>NFSv4 Version Management</title>
+	<author initials="T." surname="Haynes" fullname="T. Haynes">
+	  <organization>Primary Data</organization>
+	</author>
+	<author initials="D." surname="Noveck" fullname="D. Noveck">
+	  <organization>Dell</organization>
+	</author>
+	<date year="2014" month="November"/>
+      </front>
+      <format type="TXT"
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-versioning-00" />
+    </reference>
 
 </references>
