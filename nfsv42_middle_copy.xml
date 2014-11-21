@@ -793,8 +793,7 @@
                 of the user principal and is placed in rpc_gss3_create_args
                 assertions[0].assertion.privs.privilege. The
                 string "copy_from_auth" is placed in
-                assertions[0].assertion.privs.name.  The field
-                assertions[0].critical is set to TRUE. The source server
+                assertions[0].assertion.privs.name.  The source server
                 unwraps the rpc_gss_svc_privacy RPCSEC_GSS3_CREATE payload
                 and verifies that the NFSv4 user id being asserted matches
                 the source server's mapping of the user principal.  If it
@@ -814,8 +813,7 @@
                 instance is placed in rpc_gss3_create_args
                 assertions[0].assertion.privs.privilege. The
                 string "copy_to_auth" is placed in
-                assertions[0].assertion.privs.name. The field
-                assertions[0].critical is set to TRUE. The destination
+                assertions[0].assertion.privs.name.  The destination
                 server unwraps the rpc_gss_svc_privacy RPCSEC_GSS3_CREATE
                 payload and verifies that the NFSv4 user id being asserted
                 matches the destination server's mapping of the user
@@ -908,8 +906,7 @@
                 instance is placed in rpc_gss3_create_args
                 assertions[0].assertion.privs.privilege.
                 The string "copy_confirm_auth" is placed in
-                assertions[0].assertion.privs.name.  The field
-                assertions[0].critical is set to TRUE.
+                assertions[0].assertion.privs.name.
               </t>
 
               <t>
