@@ -709,9 +709,7 @@
               server, and the resultant RPCSEC_GSSv3 context is used to secure
               the COPY_NOTIFY operation.
 
-              <vspace blankLines="1" />
               <?rfc include='autogen/copy_from_auth.xml'?>
-              <vspace blankLines="1" />
 
               cfp_shared_secret is an automatically generated random number
               secret value.
@@ -728,9 +726,7 @@
               and the resultant RPCSEC_GSSv3 context is used to secure
               the COPY operation.
 
-              <vspace blankLines="1" />
               <?rfc include='autogen/copy_to_auth.xml'?>
-              <vspace blankLines="1" />
 
               ctap_shared_secret is the automatically generated secret
               value used to establish the copy_from_auth privilege with
@@ -747,9 +743,7 @@
               context is used to secure the READ operations from the
               source to the destination server.
 
-              <vspace blankLines="1" />
               <?rfc include='autogen/copy_confirm_auth.xml'?>
-              <vspace blankLines="1" />
             </t>
           </list>
         </t>
@@ -965,15 +959,14 @@
         </section>
 
         <section title="Maintaining a Secure Inter-Server Copy">
-
-        <t>
-          If the client determines that either the copy_from_auth or
-          the copy_to_auth handle becomes invalid during a copy,
-          then the copy MUST be aborted by the client
-          sending an OFFLOAD_CANCEL to both the source and destination
-          servers and destroying the respective copy related context handles
-          as described in <xref target="sec:SSC-finish" />.
-        </t>
+          <t>
+            If the client determines that either the copy_from_auth or
+            the copy_to_auth handle becomes invalid during a copy,
+            then the copy MUST be aborted by the client
+            sending an OFFLOAD_CANCEL to both the source and destination
+            servers and destroying the respective copy related context handles
+            as described in <xref target="sec:SSC-finish" />.
+          </t>
         </section>
 
         <section  title="Finishing or Stopping a Secure Inter-Server Copy" anchor="sec:SSC-finish">
