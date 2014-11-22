@@ -110,15 +110,15 @@
       </t>
 
       <t>
-        If the client sends a READ operation, it is explicitly
-        stating that it is not supporting sparse files. So
-        if a READ occurs on a sparse file, then the server must
-        expand such data to be raw bytes. If a READ occurs in
-        the middle of a hole, the server can only send back
-        bytes starting from that offset. In contrast, if a READ_PLUS
-        occurs in the middle of a hole, the server can send
-        back a range which starts before the offset and extends past
-        the range.
+	When a client sends a READ operation, it is not prepared
+	to accept a READ_PLUS-style response providing a compact
+	encoding of the scope of holes.  If a READ occurs on a
+	sparse file, then the server must expand such data to be
+	raw bytes. If a READ occurs in the middle of a hole, the
+	server can only send back bytes starting from that offset.
+	By contrast, if a READ_PLUS occurs in the middle of a hole,
+	the server can send back a range which starts before the
+	offset and extends past the range.
       </t>
     </section>
 
