@@ -218,9 +218,9 @@
         a write  delegation), it will be straightforward to update
         the destination server.  With an inter-server copy, the
         source has no insight into the changes cached on the client.
-        The client SHOULD write back the data to the source or be
-        prepared for the destination to get a corrupt copy of the
-        file.
+	The client SHOULD write back the data to the source.  If
+	it does not do so, it is possible that the destination will
+	receive a corrupt copy of file.
       </t>
     </section>
   </section>
