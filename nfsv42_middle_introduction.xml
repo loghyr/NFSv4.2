@@ -50,7 +50,7 @@
 
   <section title="NFSv4.2 Goals">
     <t>
-      The goal of the design of NFSv4.2 is to take common local file system
+      A major goal of the design of NFSv4.2 is to take common local file system
       features and offer them remotely.  These features might
       <list style='symbols'>
         <t>
@@ -68,8 +68,9 @@
         </t>
       </list>
 
-      but the clients are not able to leverage them on the server within the
-      confines of the NFS protocol.
+      NFSv4.2 provides means for clients to leverage these  features
+      on the server in cases in which that had previously not been
+      possible within the confines of the NFS protocol.
     </t>
   </section>
 
@@ -92,8 +93,9 @@
         accessed sequentially or randomly, and whether a file will or will
         not be accessed in the near future, allows servers to  optimize future I/O
         requests for a file by, for example, prefetching or evicting data.
-        This operation can be used to support the posix_fadvise function as
-        well as other applications such as databases and video editors.
+	This operation can be used to support the posix_fadvise
+	function.  In addition, it may be helpful to applications
+	such as databases and video editors.
       </t>
     </section>
 
@@ -116,7 +118,7 @@
         ensuring that there will always be enough data blocks
         available for the file during future writes. ALLOCATE (see
         <xref target='op:allocate' />) allows a client to request
-        a guarantee that space will be available. And DEALLOCATE
+        a guarantee that space will be available. Also DEALLOCATE
         (see <xref target='op:deallocate' />) allows the client to
         punch a hole into a file, thus releasing a space reservation.
       </t>
@@ -146,7 +148,7 @@
     </section>
   </section>
 
-  <section title="Differences from NFSv4.1">
+  <section title="Enhancements to Minor Versioning Model">
     <t>
       In NFSv4.1, the only way to introduce new variants of an
       operation was to introduce a new operation. I.e., READ becomes
