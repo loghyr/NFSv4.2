@@ -31,8 +31,8 @@
     <abstract>
       <t>
         This Internet-Draft describes NFS version 4 minor version two,
-        focusing mainly on the protocol extensions made from NFS
-        version 4 minor version 0 and NFS version 4 minor version 1. Major extensions
+        describing the protocol extensions made from NFS
+        version 4 minor version 1. Major extensions
         introduced in NFS version 4 minor version two include:
         Server Side Copy, Application I/O Advise, Space Reservations,
         Sparse Files, Application Data Blocks, and Labeled NFS.
