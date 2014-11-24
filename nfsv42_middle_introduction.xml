@@ -87,7 +87,7 @@
           <t>
             The intra-server copy feature allows the client to request the
             server to perform the copy internally, avoiding unnecessary network
-             raffic.
+             traffic.
           </t>
 
           <t>

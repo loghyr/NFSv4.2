@@ -13,7 +13,7 @@
   <section toc='exclude' title='MOTIVATION'>
     <t>
       The GETDEVICELIST operation was introduced in <xref target='RFC5661' />
-      specificly to request a list of devices at filesystem mount time
+      specifically to request a list of devices at filesystem mount time
       from block layout type servers.  However use of the GETDEVICELIST
       operation introduces a race condition versus notification about
       changes to pNFS device IDs as provided by CB_NOTIFY_DEVICEID.
