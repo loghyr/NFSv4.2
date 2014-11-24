@@ -49,23 +49,23 @@
 
   <t>
     <list style='hanging'>
-      <t hangText='REQ'>
+      <t hangText='REQ:'>
         REQUIRED to implement
       </t>
 
-      <t hangText='REC'>
+      <t hangText='REC:'>
         RECOMMENDED to implement
       </t>
 
-      <t hangText='OPT'>
+      <t hangText='OPT:'>
         OPTIONAL to implement
       </t>
 
-      <t hangText='MNI'>
+      <t hangText='MNI:'>
         MUST NOT implement
       </t>
 
-      <t hangText='OBS'>
+      <t hangText='OBS:'>
         Also OBSOLESCENT for future versions.
       </t>
     </list>
@@ -73,13 +73,14 @@
 
   <t>
     For the NFSv4.2 features that are OPTIONAL, the operations that
-    support those features are OPTIONAL, and the server would return
-    NFS4ERR_NOTSUPP in response to the client's use of those operations.
-    If an OPTIONAL feature is supported, it is possible that a set of
-    operations related to the feature become REQUIRED to implement.  The
-    third column of the table designates the feature(s) and if the
-    operation is REQUIRED or OPTIONAL in the presence of support for the
-    feature.
+    support those features are OPTIONAL, and the server MUST return
+    NFS4ERR_NOTSUPP in response to the client's use of those
+    operations, when those operations are not implemented by the
+    server.  If an OPTIONAL feature is supported, it is possible
+    that a set of operations related to the feature become REQUIRED
+    to implement.  The third column of the table designates the
+    feature(s) and if the operation is REQUIRED or OPTIONAL in the
+    presence of support for the feature.
   </t>
 
   <t>
@@ -89,23 +90,23 @@
 
   <t>
     <list style='hanging'>
-      <t hangText='pNFS'>
+      <t hangText='pNFS:'>
         Parallel NFS
       </t>
 
-      <t hangText='FDELG'>
+      <t hangText='FDELG:'>
         File Delegations
       </t>
 
-      <t hangText='DDELG'>
+      <t hangText='DDELG:'>
         Directory Delegations
       </t>
 
-      <t hangText='COPY'>
+      <t hangText='COPY:'>
         Server Side Copy
       </t>
 
-      <t hangText='ADB'>
+      <t hangText='ADB:'>
         Application Data Blocks
       </t>
     </list>
