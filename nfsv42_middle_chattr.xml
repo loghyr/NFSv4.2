@@ -2,41 +2,36 @@
 <!-- Copyright (C) The Internet Society (2011-2013) -->
 
 <section anchor="sec:chattr" title="Sharing change attribute implementation details with NFSv4 clients">
-  <section title="Introduction">
-    <t>
-      Although both the NFSv4 <xref target="I-D.ietf-nfsv4-rfc3530bis" />
-      and NFSv4.1 protocol <xref target="RFC5661" />,
-      define the change attribute as being mandatory
-      to implement, there is little in the way of
-      guidance. The only mandated feature
-      is that the value must change
-      whenever the file data or metadata change.
-    </t>
-    <t>
-      While this allows for a wide range of implementations,
-      it also leaves the client with a conundrum: how does
-      it determine which is the most recent value for the
-      change attribute in a case where several RPC calls
-      have been issued in parallel?
-      In other words if two COMPOUNDs, both containing
-      WRITE and GETATTR requests for the same file, have
-      been issued in parallel, how does the client determine
-      which of the two change attribute values
-      returned in the replies to the GETATTR requests
-      correspond to the most recent state of the file? In
-      some cases, the only recourse may be to send another
-      COMPOUND containing a third GETATTR that is fully
-      serialized with the first two.
-    </t>
-    <t>
-      NFSv4.2 avoids this kind of inefficiency by
-      allowing the server to share details
-      about how the change attribute is expected to evolve,
-      so that the client may immediately determine which, out
-      of the several change attribute values returned by the
-      server, is the most recent. change_attr_type is defined
-      as a new recommended attribute (see <xref target='ss:fattr:chattr' />),
-      and is per file system.
-    </t>
-  </section>
+  <t>
+    Although both the NFSv4 <xref target="I-D.ietf-nfsv4-rfc3530bis" />
+    and NFSv4.1 protocol <xref target="RFC5661" />, define the
+    change attribute as being mandatory to implement, there is
+    little in the way of guidance. The only mandated feature is
+    that the value must change whenever the file data or metadata
+    change.
+  </t>
+
+  <t>
+    While this allows for a wide range of implementations, it also
+    leaves the client with a conundrum: how does it determine which
+    is the most recent value for the change attribute in a case
+    where several RPC calls have been issued in parallel?  In other
+    words if two COMPOUNDs, both containing WRITE and GETATTR
+    requests for the same file, have been issued in parallel, how
+    does the client determine which of the two change attribute
+    values returned in the replies to the GETATTR requests correspond
+    to the most recent state of the file? In some cases, the only
+    recourse may be to send another COMPOUND containing a third
+    GETATTR that is fully serialized with the first two.
+  </t>
+
+  <t>
+    NFSv4.2 avoids this kind of inefficiency by allowing the server
+    to share details about how the change attribute is expected to
+    evolve, so that the client may immediately determine which, out
+    of the several change attribute values returned by the server,
+    is the most recent. change_attr_type is defined as a new
+    recommended attribute (see <xref target='ss:fattr:chattr' />),
+    and is per file system.
+  </t>
 </section>
