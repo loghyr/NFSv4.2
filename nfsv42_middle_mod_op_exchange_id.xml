@@ -56,12 +56,14 @@
         </t>
 
         <t>
-          The NFS server SHOULD support client ID trunking, and if it does
-          and the EXCHGID4_FLAG_SUPP_FENCE_OPS capability is enabled, then a
-          session ID created on one node of the storage cluster MUST be
-          destroyable via DESTROY_SESSION.  In addition, DESTROY_CLIENTID
-          and an EXCHANGE_ID with a new verifier affects all sessions
-          regardless what node the sessions were created on.
+	  In implementations where the NFS server is deployed as a
+	  cluster, it does support client ID trunking, and the
+	  EXCHGID4_FLAG_SUPP_FENCE_OPS capability is enabled, then
+	  a session ID created on one node of the storage cluster
+	  MUST be destroyable via DESTROY_SESSION.  In addition,
+	  DESTROY_CLIENTID and an EXCHANGE_ID with a new verifier
+	  affects all sessions regardless what node the sessions
+	  were created on.
         </t>
       </list>
     </t>
