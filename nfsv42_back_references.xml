@@ -132,10 +132,10 @@
 	<author initials="T." surname="Haynes" fullname="T. Haynes">
 	  <organization>Primary Data</organization>
 	</author>
-	<date year="2014" month="September"/>
+	<date year="2014" month="November"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-27" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-28" />
     </reference>
 
     <reference anchor='rpcsec_gssv3'>
@@ -147,10 +147,10 @@
         <author initials="N." surname="Williams" fullname="N. Williams">
           <organization>Cryptonector</organization>
         </author>
-        <date year="2014" month="July"/>
+        <date year="2014" month="November"/>
       </front>
       <format type="TXT"
-              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-08.txt"/>
+              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-09.txt"/>
     </reference>
 
   </references>
