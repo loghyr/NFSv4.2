@@ -36,17 +36,25 @@
   </t>
 
   <t>
-    NFSv4.2 is intended to use the least disruptive approach to the
-    adding of OPTIONAL features that is available in the NFSv4
-    versioning framework.  If necessary to maintain that status,
-    attributes added in this document can be considered to be
-    OPTIONAL (rather than RECOMMENDED).
-  </t>
+    The following versioning-related considerations should be noted.
 
-  <t>
-    As described in <xref target='ss:pnfs:stateids' />, NFSv4.2
-    pNFS metadata servers, when used with NFSv4.1 data servers,
-    will be handing out layout stateid's to be used in the
-    context of NFSv4.1 data IO operations.
+    <list style='symbols'>
+      <t>
+	When a new case is added to an existing switch, servers
+	need to report non-support of that new case by returning
+	NFS4ERR_UNION_NOTSUPP.
+      </t>
+
+      <t>
+	As regards the potential cross-minor-version transfer of
+	stateids, pNFS implementations of the file mapping type may
+	support of use of an NFSv4.2 metadata sever with NFSv4.1
+	data servers.  In this context, a stateid returned by an
+	NFSv4.2 COMPOUND will be used in an NFSv4.1 COMPOUND directed
+	to the data server (see Sections
+        <xref target='ss:pnfs:stateids' format="counter" />
+        and <xref target='ss:pnfs:flt' format="counter" />).
+      </t>
+    </list>
   </t>
 </section>
