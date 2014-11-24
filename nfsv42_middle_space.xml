@@ -2,143 +2,141 @@
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:space" title="Space Reservation">
-  <section anchor="ss:space:intro" title="Introduction">
-    <t>
-      Applications want to be able to reserve space for a file, report the
-      amount of actual disk space a file occupies, and free-up the backing
-      space of a file when it is not required.
-    </t>
+  <t>
+    Applications want to be able to reserve space for a file, report the
+    amount of actual disk space a file occupies, and free-up the backing
+    space of a file when it is not required.
+  </t>
 
-    <t>
-      One example is the posix_fallocate (<xref target='posix_fallocate' />)
-      which allows applications to ask for space reservations from the
-      operating system, usually to provide a better file layout and reduce
-      overhead for random or slow growing file appending workloads.
-    </t>
+  <t>
+    One example is the posix_fallocate (<xref target='posix_fallocate' />)
+    which allows applications to ask for space reservations from the
+    operating system, usually to provide a better file layout and reduce
+    overhead for random or slow growing file appending workloads.
+  </t>
 
-    <t>
-      Another example is space reservation for virtual disks in a
-      hypervisor.  In virtualized environments, virtual disk files are
-      often stored on NFS mounted volumes.  When a hypervisor creates
-      a virtual disk file, it often tries to preallocate the space for
-      the file so that there are no future allocation related errors
-      during the operation of the virtual machine.  Such errors prevent
-      a virtual machine from continuing execution and result in downtime.
-    </t>
+  <t>
+    Another example is space reservation for virtual disks in a
+    hypervisor.  In virtualized environments, virtual disk files are
+    often stored on NFS mounted volumes.  When a hypervisor creates
+    a virtual disk file, it often tries to preallocate the space for
+    the file so that there are no future allocation related errors
+    during the operation of the virtual machine.  Such errors prevent
+    a virtual machine from continuing execution and result in downtime.
+  </t>
 
-    <t>
-      Currently, in order to achieve such a guarantee, applications zero
-      the entire file.  The initial zeroing allocates the backing blocks
-      and all subsequent writes are overwrites of already allocated blocks.
-      This approach is not only inefficient in terms of the amount of I/O
-      done, it is also not guaranteed to work on file systems that are log
-      structured or deduplicated.  An efficient way of guaranteeing space
-      reservation would be beneficial to such applications.
-    </t>
+  <t>
+    Currently, in order to achieve such a guarantee, applications zero
+    the entire file.  The initial zeroing allocates the backing blocks
+    and all subsequent writes are overwrites of already allocated blocks.
+    This approach is not only inefficient in terms of the amount of I/O
+    done, it is also not guaranteed to work on file systems that are log
+    structured or deduplicated.  An efficient way of guaranteeing space
+    reservation would be beneficial to such applications.
+  </t>
 
-    <t>
-      The new ALLOCATE operation (see <xref target='op:allocate' />)
-      allows a client to request a guarantee that space will be available.
-      The ALLOCATE operation guarantees that any future writes to the
-      region it was successfully called for will not fail with NFS4ERR_NOSPC.
-    </t>
+  <t>
+    The new ALLOCATE operation (see <xref target='op:allocate' />)
+    allows a client to request a guarantee that space will be available.
+    The ALLOCATE operation guarantees that any future writes to the
+    region it was successfully called for will not fail with NFS4ERR_NOSPC.
+  </t>
 
-    <t>
-      Another useful feature is the ability to report the number of
-      blocks that would be freed when a file is deleted.  Currently, NFS
-      reports two size attributes:
-    </t>
+  <t>
+    Another useful feature is the ability to report the number of
+    blocks that would be freed when a file is deleted.  Currently, NFS
+    reports two size attributes:
+  </t>
 
-    <t>
-      <list style="hanging">
-        <t hangText="size">
-          The logical file size of the file.
-        </t>
+  <t>
+    <list style="hanging">
+      <t hangText="size">
+        The logical file size of the file.
+      </t>
 
-        <t hangText="space_used">
-          The size in bytes that the file occupies on disk
-        </t>
-      </list>
-    </t>
+      <t hangText="space_used">
+        The size in bytes that the file occupies on disk
+      </t>
+    </list>
+  </t>
 
-    <t>
-      While these attributes are sufficient for space accounting in
-      traditional file systems, they prove to be inadequate in modern
-      file systems that support block sharing.  In such file systems,
-      multiple inodes can point to a single block with a block reference
-      count to guard against premature freeing.  Having a way to tell the
-      number of blocks that would be freed if the file was deleted would be
-      useful to applications that wish to migrate files when a volume is
-      low on space.
-    </t>
+  <t>
+    While these attributes are sufficient for space accounting in
+    traditional file systems, they prove to be inadequate in modern
+    file systems that support block sharing.  In such file systems,
+    multiple inodes can point to a single block with a block reference
+    count to guard against premature freeing.  Having a way to tell the
+    number of blocks that would be freed if the file was deleted would be
+    useful to applications that wish to migrate files when a volume is
+    low on space.
+  </t>
 
-    <t>
-      Since virtual disks represent a hard drive in a virtual machine, a
-      virtual disk can be viewed as a file system within a file.  Since not
-      all blocks within a file system are in use, there is an opportunity to
-      reclaim blocks that are no longer in use.  A call to deallocate
-      blocks could result in better space efficiency.  Lesser space MAY be
-      consumed for backups after block deallocation.
-    </t>
+  <t>
+    Since virtual disks represent a hard drive in a virtual machine, a
+    virtual disk can be viewed as a file system within a file.  Since not
+    all blocks within a file system are in use, there is an opportunity to
+    reclaim blocks that are no longer in use.  A call to deallocate
+    blocks could result in better space efficiency.  Lesser space MAY be
+    consumed for backups after block deallocation.
+  </t>
 
-    <t>
-      The following operations and attributes can be used to resolve
-      these issues:
-    </t>
+  <t>
+    The following operations and attributes can be used to resolve
+    these issues:
+  </t>
 
-    <t>
-      <list style="hanging">
-        <t hangText="space_freed">
-          This attribute specifies the space freed when a file is
-          deleted, taking block sharing into consideration.
-        </t>
+  <t>
+    <list style="hanging">
+      <t hangText="space_freed">
+        This attribute specifies the space freed when a file is
+        deleted, taking block sharing into consideration.
+      </t>
 
-        <t hangText="DEALLOCATE">
-          This operation delallocates the blocks backing a
-          region of the file.
-        </t>
-      </list>
-    </t>
+      <t hangText="DEALLOCATE">
+        This operation delallocates the blocks backing a
+        region of the file.
+      </t>
+    </list>
+  </t>
 
-    <t>
-      If space_used of a file is interpreted to mean the size in bytes of
-      all disk blocks pointed to by the inode of the file, then shared
-      blocks get double counted, over-reporting the space utilization.
-      This also has the adverse effect that the deletion of a file with
-      shared blocks frees up less than space_used bytes.
-    </t>
+  <t>
+    If space_used of a file is interpreted to mean the size in bytes of
+    all disk blocks pointed to by the inode of the file, then shared
+    blocks get double counted, over-reporting the space utilization.
+    This also has the adverse effect that the deletion of a file with
+    shared blocks frees up less than space_used bytes.
+  </t>
 
-    <t>
-      On the other hand, if space_used is interpreted to mean the size in
-      bytes of those disk blocks unique to the inode of the file, then
-      shared blocks are not counted in any file, resulting in
-      under-reporting of the space utilization.
-    </t>
+  <t>
+    On the other hand, if space_used is interpreted to mean the size in
+    bytes of those disk blocks unique to the inode of the file, then
+    shared blocks are not counted in any file, resulting in
+    under-reporting of the space utilization.
+  </t>
 
-    <t>
-      For example, two files A and B have 10 blocks each.  Let 6 of these
-      blocks be shared between them.  Thus, the combined space utilized by
-      the two files is 14 * BLOCK_SIZE bytes.  In the former case, the
-      combined space utilization of the two files would be reported as 20 *
-      BLOCK_SIZE.  However, deleting either would only result in 4 *
-      BLOCK_SIZE being freed.  Conversely, the latter interpretation would
-      report that the space utilization is only 8 * BLOCK_SIZE.
-    </t>
+  <t>
+    For example, two files A and B have 10 blocks each.  Let 6 of these
+    blocks be shared between them.  Thus, the combined space utilized by
+    the two files is 14 * BLOCK_SIZE bytes.  In the former case, the
+    combined space utilization of the two files would be reported as 20 *
+    BLOCK_SIZE.  However, deleting either would only result in 4 *
+    BLOCK_SIZE being freed.  Conversely, the latter interpretation would
+    report that the space utilization is only 8 * BLOCK_SIZE.
+  </t>
 
-    <t>
-      Adding another size attribute, space_freed (see <xref target='ss:fattr:sf' />),
-      is helpful in solving this problem. space_freed is the number of
-      blocks that are allocated
-      to the given file that would be freed on its deletion.  In the
-      example, both A and B would report space_freed as 4 * BLOCK_SIZE and
-      space_used as 10 * BLOCK_SIZE.  If A is deleted, B will report
-      space_freed as 10 * BLOCK_SIZE as the deletion of B would result in
-      the deallocation of all 10 blocks.
-    </t>
+  <t>
+    Adding another size attribute, space_freed (see <xref target='ss:fattr:sf' />),
+    is helpful in solving this problem. space_freed is the number of
+    blocks that are allocated
+    to the given file that would be freed on its deletion.  In the
+    example, both A and B would report space_freed as 4 * BLOCK_SIZE and
+    space_used as 10 * BLOCK_SIZE.  If A is deleted, B will report
+    space_freed as 10 * BLOCK_SIZE as the deletion of B would result in
+    the deallocation of all 10 blocks.
+  </t>
 
-    <t>
-      The addition of this problem does not solve the problem of space being
-      over-reported.  However, over-reporting is better than under-reporting.
-    </t>
-  </section>
+  <t>
+    The addition of these attributes does not solve the problem of space being
+    over-reported.  However, over-reporting is better than under-reporting.
+  </t>
 </section>
