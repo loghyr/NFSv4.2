@@ -77,11 +77,28 @@
   <section title="Overview of NFSv4.2 Features">
     <section title="Server Side Copy">
       <t>
-        A traditional file copy from one server to another results in the
+        A traditional file copy of a remotely accessed, whether from one server
+        to another or between location in the same server, results in the
         data being put on the network twice - source to client and then
-        client to destination. New operations are introduced to allow
-        the client to authorize the two servers to interact directly.
-        As this copy can be lengthy, asynchronous support is also provided.
+        client to destination.  New operations are introduced to allow
+        unnecessary traffic to be eliminated:
+
+        <list>
+          <t>
+            The intra-server copy feature allows the client to request the
+            server to perform the copy internally, avoiding unnecessary network
+             raffic.
+          </t>
+
+          <t>
+            The inter-server copy feature allows the client to authorize the
+            source and destination servers to interact directly.
+          </t>
+        </list>
+      </t>
+
+      <t>
+        As such copies can be lengthy, asynchronous support is also provided.
       </t>
     </section>
 
