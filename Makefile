@@ -441,7 +441,6 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_application.xml \
 	${DOC_PREFIX}_middle_lnfs.xml \
 	${DOC_PREFIX}_middle_chattr.xml \
-	${DOC_PREFIX}_middle_security.xml \
 	${DOC_PREFIX}_middle_new_errors.xml \
 	${DOC_PREFIX}_middle_fileattributes.xml \
 	${DOC_PREFIX}_middle_op_mandlist.xml \
@@ -466,6 +465,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_cb_start.xml \
 	${DOC_PREFIX}_middle_op_cb_offload.xml \
 	${DOC_PREFIX}_middle_op_cb_end.xml \
+	${DOC_PREFIX}_middle_security.xml \
 	${DOC_PREFIX}_middle_iana.xml \
 	${DOC_PREFIX}_middle_end.xml \
 	${DOC_PREFIX}_back_front.xml \
