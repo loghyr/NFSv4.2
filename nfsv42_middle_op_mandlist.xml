@@ -102,8 +102,12 @@
         Directory Delegations
       </t>
 
-      <t hangText='COPY:'>
-        Server Side Copy
+      <t hangText='COPYra:'>
+        Intra-server Server Side Copy
+      </t>
+
+      <t hangText='COPYer:'>
+        Inter-server Server Side Copy
       </t>
 
       <t hangText='ADB:'>
@@ -123,8 +127,8 @@
       <c>BIND_CONN_TO_SESSION </c> <c> REQ </c> <c>              </c>
       <c>CLOSE                </c> <c> REQ </c> <c>              </c>
       <c>COMMIT               </c> <c> REQ </c> <c>              </c>
-      <c>COPY                 </c> <c> OPT </c> <c> COPY (REQ)   </c>
-      <c>COPY_NOTIFY          </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>COPY                 </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
+      <c>COPY_NOTIFY          </c> <c> OPT </c> <c> COPYer (REQ) </c>
       <c>DEALLOCATE           </c> <c> OPT </c> <c>              </c>
       <c>CREATE               </c> <c> REQ </c> <c>              </c>
       <c>CREATE_SESSION       </c> <c> REQ </c> <c>              </c>
@@ -151,8 +155,8 @@
       <c>LOOKUP               </c> <c> REQ </c> <c>              </c>
       <c>LOOKUPP              </c> <c> REQ </c> <c>              </c>
       <c>NVERIFY              </c> <c> REQ </c> <c>              </c>
-      <c>OFFLOAD_CANCEL       </c> <c> OPT </c> <c> COPY (REQ)   </c>
-      <c>OFFLOAD_STATUS       </c> <c> OPT </c> <c> COPY (REQ)   </c>
+      <c>OFFLOAD_CANCEL       </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
+      <c>OFFLOAD_STATUS       </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
       <c>OPEN                 </c> <c> REQ </c> <c>              </c>
       <c>OPENATTR             </c> <c> OPT </c> <c>              </c>
       <c>OPEN_CONFIRM         </c> <c> MNI </c> <c>              </c>
@@ -190,7 +194,7 @@
     <ttcol align='left'>Operation</ttcol>
     <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
     <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
-      <c>CB_OFFLOAD              </c> <c> OPT </c> <c> COPY (REQ) </c>
+      <c>CB_OFFLOAD              </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
       <c>CB_GETATTR              </c> <c> OPT </c> <c> FDELG (REQ) </c>
       <c>CB_LAYOUTRECALL         </c> <c> OPT </c> <c> pNFS (REQ)  </c>
       <c>CB_NOTIFY               </c> <c> OPT </c> <c> DDELG (REQ) </c>
