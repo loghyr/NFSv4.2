@@ -17,13 +17,15 @@
       The client can use LAYOUTSTATS to inform the metadata server
       about its interaction with the layout represented by the
       current filehandle, client ID (derived from the session ID
-      in the preceding SEQUENCE operation), byte-range (lea_offset
-      + lea_length), and lea_stateid. lsa_read and lsa_write allow
-      for non-Layout Type specific statistics to be reported.  The
+      in the preceding SEQUENCE operation), byte-range (lsa_offset
+      and lsa_length), and lsa_stateid. lsa_read and lsa_write allow
+      for non-Layout Type specific statistics to be reported.
+      lsa_deviceid allows the client to specify to which storage
+      device the statistics apply.  The
       remaining information the client is presenting is specific
-      to the Layout Type and presented in the lea_layoutupdate
+      to the Layout Type and presented in the lsa_layoutupdate
       field. Each Layout Type MUST define the contents of
-      lea_layoutupdate in their respective specifications.
+      lsa_layoutupdate in their respective specifications.
     </t>
 
     <t>
