@@ -304,10 +304,9 @@
 
       <t>
         Fully MAC-Functional NFSv4 servers are not possible in the
-        absence of RPC layer modifications to support subject label
-        transport.  However, servers may make decisions based on the
-        RPC credential information available and future specifications
-        may provide subject label transport.
+        absence of RPCSEC_GSSv3 <xref target='rpcsec_gssv3' /> support
+        for subject label transport.  However, servers may make decisions
+        based on the RPC credential information available.
       </t>
 
       <section anchor='ss:modes:fm_ilt' title='Initial Labeling and Translation'>
