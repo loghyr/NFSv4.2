@@ -107,35 +107,16 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5662.txt"/>
     </reference>
 
-    <reference anchor='RFC5664'>
-      <front>
-	<title>Object-Based Parallel NFS (pNFS) Operations</title>
-	<author initials="B." surname="Halevy" fullname="B. Halevy">
-	  <organization>Panasas</organization>
-	</author>
-	<author initials="B." surname="Welch" fullname="B. Welch">
-	  <organization>Panasas</organization>
-	</author>
-	<author initials="J." surname="Zelenka" fullname="J. Zelenka">
-	  <organization>Panasas</organization>
-	</author>
-	<date year="2010" month="January"/>
-      </front>
-      <seriesInfo name="RFC" value="5664"/>
-      <format type="TXT"
-	      target="ftp://ftp.isi.edu/in-notes/rfc5664.txt"/>
-    </reference>
-
     <reference anchor='NFSv42xdr'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
 	<author initials="T." surname="Haynes" fullname="T. Haynes">
 	  <organization>Primary Data</organization>
 	</author>
-	<date year="2014" month="November"/>
+	<date year="2014" month="December"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-28" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-29" />
     </reference>
 
     <reference anchor='rpcsec_gssv3'>
@@ -147,10 +128,10 @@
         <author initials="N." surname="Williams" fullname="N. Williams">
           <organization>Cryptonector</organization>
         </author>
-        <date year="2014" month="November"/>
+        <date year="2014" month="December"/>
       </front>
       <format type="TXT"
-              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-09.txt"/>
+              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-10.txt"/>
     </reference>
 
   </references>
@@ -220,9 +201,9 @@
         <author initials="D." surname="Noveck" fullname="D. Noveck">
           <organization></organization>
         </author>
-        <date year="2014" month="April" />
+        <date year="2014" month="November" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-33" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-35" value="(Work In Progress)"/>
     </reference>
 
 

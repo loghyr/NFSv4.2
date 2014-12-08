@@ -44,7 +44,8 @@
     </t>
 
     <t>
-      The full XDR for NFSv4.2 is presented in <xref target='NFSv42xdr' />.
+      The full External Data Representation (XDR) <xref target='RFC4506' />
+      for NFSv4.2 is presented in <xref target='NFSv42xdr' />.
     </t>
   </section>
 

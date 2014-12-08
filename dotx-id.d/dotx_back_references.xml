@@ -44,9 +44,9 @@
           <organization abbrev='Primary Data' />
         </author>
 
-        <date month='November' year='2014' />
+        <date month='December' year='2014' />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-minorversion2-28" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-minorversion2-29" value="(Work In Progress)"/>
     </reference>
 
 </references>
