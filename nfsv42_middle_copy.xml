@@ -785,9 +785,9 @@
                 An instance of copy_from_auth_priv is filled in with the
                 shared secret, the destination server, and the NFSv4 user id
                 of the user principal and is placed in rpc_gss3_create_args
-                assertions[0].assertion.privs.privilege. The
+                assertions[0].privs.privilege. The
                 string "copy_from_auth" is placed in
-                assertions[0].assertion.privs.name.  The source server
+                assertions[0].privs.name.  The source server
                 unwraps the rpc_gss_svc_privacy RPCSEC_GSS3_CREATE payload
                 and verifies that the NFSv4 user id being asserted matches
                 the source server's mapping of the user principal.  If it
@@ -805,9 +805,9 @@
                 by COPY_NOTIFY, and the NFSv4 user id of the user
                 principal.  The copy_to_auth_priv
                 instance is placed in rpc_gss3_create_args
-                assertions[0].assertion.privs.privilege. The
+                assertions[0].privs.privilege. The
                 string "copy_to_auth" is placed in
-                assertions[0].assertion.privs.name.  The destination
+                assertions[0].privs.name.  The destination
                 server unwraps the rpc_gss_svc_privacy RPCSEC_GSS3_CREATE
                 payload and verifies that the NFSv4 user id being asserted
                 matches the destination server's mapping of the user
@@ -898,9 +898,9 @@
                 and MUST be the same as the ctap_username in the
                 copy_to_auth privilege.  The copy_confirm_auth_priv
                 instance is placed in rpc_gss3_create_args
-                assertions[0].assertion.privs.privilege.
+                assertions[0].privs.privilege.
                 The string "copy_confirm_auth" is placed in
-                assertions[0].assertion.privs.name.
+                assertions[0].privs.name.
               </t>
 
               <t>
