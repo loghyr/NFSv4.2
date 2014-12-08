@@ -3,13 +3,29 @@
 
 <section anchor="op:cb_offload" title="Operation 15: CB_OFFLOAD - Report results of an asynchronous operation">
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/write_response4.xml'?>
     <?rfc include='autogen/offload_info4.xml'?>
     <?rfc include='autogen/cb_offload_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/cb_offload_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">

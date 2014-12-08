@@ -577,7 +577,15 @@
       the netloc4 data type shown below:
     </t>
 
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/type_netloc_type4.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
 
     <t>
       If the netloc4 is of type NL4_NAME, the nl_name field MUST be
@@ -709,7 +717,13 @@
               server, and the resultant RPCSEC_GSSv3 context is used to secure
               the COPY_NOTIFY operation.
 
+              <vspace blankLines="1" />
+              &lt;CODE BEGINS&gt;
+
               <?rfc include='autogen/copy_from_auth.xml'?>
+
+              &lt;CODE ENDS&gt;
+              <vspace blankLines="1" />
 
               cfp_shared_secret is an automatically generated random number
               secret value.
@@ -726,7 +740,13 @@
               and the resultant RPCSEC_GSSv3 context is used to secure
               the COPY operation.
 
+              <vspace blankLines="1" />
+              &lt;CODE BEGINS&gt;
+
               <?rfc include='autogen/copy_to_auth.xml'?>
+
+              &lt;CODE ENDS&gt;
+              <vspace blankLines="1" />
 
               ctap_shared_secret is the automatically generated secret
               value used to establish the copy_from_auth privilege with
@@ -743,7 +763,12 @@
               context is used to secure the READ operations from the
               source to the destination server.
 
+              <vspace blankLines="1" />
+              &lt;CODE BEGINS&gt;
+
               <?rfc include='autogen/copy_confirm_auth.xml'?>
+
+              &lt;CODE ENDS&gt;
             </t>
           </list>
         </t>

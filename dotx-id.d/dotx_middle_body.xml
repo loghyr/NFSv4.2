@@ -18,6 +18,10 @@
     NFSv4.2:
   </t>
 
+  <t>
+    &lt;CODE BEGINS&gt;
+  </t>
+
   <figure>
     <artwork>
 #!/bin/sh
@@ -26,9 +30,17 @@ grep "^  *///" | sed 's?^  */// ??' | sed 's?^  *///$??'
   </figure>
 
   <t>
+    &lt;CODE ENDS&gt;
+  </t>
+
+  <t>
     I.e., if the above script is stored in a file called "extract.sh",
     and this document is in a file called "spec.txt", then the
     reader can do:
+  </t>
+
+  <t>
+    &lt;CODE BEGINS&gt;
   </t>
 
   <figure>
@@ -36,6 +48,10 @@ grep "^  *///" | sed 's?^  */// ??' | sed 's?^  *///$??'
  sh extract.sh &lt; spec.txt &gt; nfs4_prot.x
     </artwork>
   </figure>
+
+  <t>
+    &lt;CODE ENDS&gt;
+  </t>
 
   <t>
      The effect of the script is to remove leading white space
@@ -46,6 +62,14 @@ grep "^  *///" | sed 's?^  */// ??' | sed 's?^  *///$??'
      The XDR description, with the sentinel sequence follows:
   </t>
 
+  <t>
+    &lt;CODE BEGINS&gt;
+  </t>
+
    <?rfc include='dotx_autogen.xml'?>
+
+  <t>
+    &lt;CODE ENDS&gt;
+  </t>
 
 </section>

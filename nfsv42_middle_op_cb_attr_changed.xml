@@ -3,11 +3,27 @@
 
 <section anchor='ss:cb:lc' title="Procedure 16: CB_ATTR_CHANGED - Notify Client that the File's Attributes Changed">
   <section toc='exclude' anchor="ss:cbac:args" title="ARGUMENTS">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/cb_attr_changed_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' anchor="ss:cbac:result" title="RESULTS">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/cb_attr_changed_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' anchor="ss:cbac:desc" title="DESCRIPTION">

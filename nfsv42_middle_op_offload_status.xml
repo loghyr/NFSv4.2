@@ -3,11 +3,27 @@
 
 <section anchor="op:offload_status" title="Operation 67: OFFLOAD_STATUS - Poll for Status of Asynchronous Operation">
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/offload_status_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/offload_status_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">

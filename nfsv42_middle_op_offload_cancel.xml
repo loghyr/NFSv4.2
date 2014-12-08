@@ -3,11 +3,27 @@
 
 <section anchor="op:offload_close" title="Operation 66: OFFLOAD_CANCEL - Stop an Offloaded Operation">
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/offload_cancel_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/offload_cancel_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">

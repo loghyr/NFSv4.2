@@ -3,11 +3,27 @@
 
 <section anchor="op:copy_notify" title="Operation 61: COPY_NOTIFY - Notify a source server of a future copy">
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/copy_notify_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/copy_notify_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">

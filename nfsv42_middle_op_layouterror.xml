@@ -3,12 +3,28 @@
 
 <section anchor='op:layouterror' title='Operation 64: LAYOUTERROR - Provide Errors for the Layout'>
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/type_device_error.xml'?>
     <?rfc include='autogen/layouterror_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/layouterror_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">

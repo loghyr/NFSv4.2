@@ -3,12 +3,28 @@
 
 <section anchor="op:copy" title="Operation 60: COPY - Initiate a server-side copy">
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/copy_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/write_response4.xml'?>
     <?rfc include='autogen/copy_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">
@@ -108,11 +124,19 @@
       parallel copies to implement operations such as
     </t>
 
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <figure>
       <artwork>
    % cat file1 file2 file3 file4 > dest
       </artwork>
     </figure>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
 
     <t>
       If the ca_source_server list is specified, then this is an

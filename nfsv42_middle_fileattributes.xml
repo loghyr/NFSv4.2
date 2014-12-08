@@ -62,7 +62,15 @@
   <section anchor="ss:file_attributes:AD" title="Attribute Definitions">
     <section toc='exclude' anchor="ss:fattr:chattr" title="Attribute 78: change_attr_type">
 
+      <t>
+        &lt;CODE BEGINS&gt;
+      </t>
+
       <?rfc include='autogen/type_chattr_type.xml'?>
+
+      <t>
+        &lt;CODE ENDS&gt;
+      </t>
 
       <t>
         change_attr_type is a per file system attribute which
@@ -156,6 +164,10 @@
     </section>
 
     <section toc='exclude' anchor='ss:fattr:sec' title='Attribute 79: sec_label'>
+      <t>
+        &lt;CODE BEGINS&gt;
+      </t>
+
       <figure>
         <artwork>
 typedef uint32_t  policy4;
@@ -163,6 +175,10 @@ typedef uint32_t  policy4;
       </figure>
 
       <?rfc include='autogen/type_label_format.xml'?>
+
+      <t>
+        &lt;CODE ENDS&gt;
+      </t>
 
       <t>
         The FATTR4_SEC_LABEL contains an array of two components with the first

@@ -3,16 +3,32 @@
 
 <section anchor='op:read_plus' title='Operation 68: READ_PLUS - READ Data or Holes from a File'>
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/read_plus_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/data_content4.xml'?>
     <?rfc include='autogen/data_info4.xml'?>
     <?rfc include='autogen/data4.xml'?>
     <?rfc include='autogen/read_plus_content.xml'?>
     <?rfc include='autogen/read_plus_res_pre.xml'?>
     <?rfc include='autogen/read_plus_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' anchor='op:read_plus:desc'  title="DESCRIPTION">

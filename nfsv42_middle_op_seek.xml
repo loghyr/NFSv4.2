@@ -3,13 +3,29 @@
 
 <section anchor='op:seek' title='Operation 69: SEEK - Find the Next Data or Hole'>
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/data_content4.xml'?>
     <?rfc include='autogen/seek_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/seek_res_pre.xml'?>
     <?rfc include='autogen/seek_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">

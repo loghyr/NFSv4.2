@@ -3,14 +3,30 @@
 
 <section anchor='op:write_same' title='Operation 70: WRITE_SAME - WRITE an ADB Multiple Times to a File'>
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/stable_how4.xml'?>
     <?rfc include='autogen/app_data_block4.xml'?>
     <?rfc include='autogen/write_same_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/write_response4.xml'?>
     <?rfc include='autogen/write_same_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' anchor='op:write_same:desc'  title="DESCRIPTION">

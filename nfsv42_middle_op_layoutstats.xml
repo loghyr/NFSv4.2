@@ -3,13 +3,29 @@
 
 <section anchor='op:layoutstats' title='Operation 65: LAYOUTSTATS - Provide Statistics for the Layout'>
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/type_layoutupdate4.xml'?>
     <?rfc include='autogen/type_io_info.xml'?>
     <?rfc include='autogen/layoutstats_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/layoutstats_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="DESCRIPTION">

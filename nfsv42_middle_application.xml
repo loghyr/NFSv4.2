@@ -90,7 +90,16 @@
     </t>
 
     <section anchor='ss:adb:dh' title='Data Block Representation'>
+      <t>
+        &lt;CODE BEGINS&gt;
+      </t>
+
       <?rfc include='autogen/app_data_block4.xml'?>
+
+      <t>
+        &lt;CODE ENDS&gt;
+      </t>
+
       <t>
         The app_data_block4 structure captures the abstraction presented
         for the ADB. The additional fields present are to allow

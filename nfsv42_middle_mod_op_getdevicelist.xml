@@ -3,11 +3,27 @@
 
 <section title='Operation 48: GETDEVICELIST - Get All Device Mappings for a File System'>
   <section toc='exclude' anchor="ss:op_GETDEVICELIST:A" title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/getdevicelist_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' anchor="ss:op_GETDEVICELIST:R" title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <?rfc include='autogen/getdevicelist_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title='MOTIVATION'>

@@ -3,12 +3,20 @@
 
 <section title='Operation 42: EXCHANGE_ID - Instantiate Client ID'>
   <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
     <figure>
       <artwork>
    /* new */
    const EXCHGID4_FLAG_SUPP_FENCE_OPS      = 0x00000004;
       </artwork>
     </figure>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
   </section>
 
   <section toc='exclude' title="RESULT">
