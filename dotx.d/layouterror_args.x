@@ -4,5 +4,5 @@ struct LAYOUTERROR4args {
         offset4			lea_offset;
         length4			lea_length;
         stateid4		lea_stateid;
-        device_error4		lea_errors;
+        device_error4		lea_errors<>;
 };
