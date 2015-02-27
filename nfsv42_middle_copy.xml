@@ -108,7 +108,7 @@
 
       <t>
         If a client desires an inter-server file copy, then it MUST
-        support the COPY, COPY_NOTICE, and CB_OFFLOAD operations, and
+        support the COPY, COPY_NOTIFY, and CB_OFFLOAD operations, and
         MAY use the OFFLOAD_CANCEL operation. If COPY returns a stateid,
         then the client MAY use the OFFLOAD_CANCEL and OFFLOAD_STATUS
         operations.
