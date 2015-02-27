@@ -55,7 +55,7 @@
     </figure>
 
     <t>
-      If the request is for a server-to-server copy, the source-fh
+      If the request is for an inter-server-to-server copy, the source-fh
       is a filehandle from the source server and the compound
       procedure is being executed on the destination server. In
       this case, the source-fh is a foreign filehandle on the server
@@ -65,7 +65,7 @@
     </t>
 
     <t>
-      If a server supports the server-to-server COPY feature, a
+      If a server supports the inter-server-to-server COPY feature, a
       PUTFH followed by a SAVEFH MUST NOT return NFS4ERR_STALE for
       either operation. These restrictions do not pose substantial
       difficulties for servers. The CURRENT_FH and SAVED_FH may be
