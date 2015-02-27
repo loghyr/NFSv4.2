@@ -66,7 +66,7 @@
         </t>
 
         <t>
-          The client has not issued a COPY_REVOKE for
+          The client has not issued a OFFLOAD_CANCEL for
           the same combination of user, filehandle,
           and destination server.
         </t>
