@@ -190,7 +190,7 @@
   </section>
 
   <section title="Implementation Considerations">
-    <section title="Locking the Files">
+    <section anchor="ss:copy:lock" title="Locking the Files">
       <t>
         Both the source and destination file may need to be locked
         to protect the content during the copy operations. A client
