@@ -1074,88 +1074,20 @@
           presence of multi-homed source and destination servers. In
           a multi-homed environment, the destination server might
           not contact the source server from the same network address
-          specified by the client in the COPY_NOTIFY. This can be overcome
-          using the procedure described below.
-        </t>
-
-        <t>
-          When the client sends the source server the COPY_NOTIFY
-          operation, the source server may reply to the client with
-          a list of target addresses, names, and/or URLs and assign
-          them to the unique quadruple: &lt;random number, source fh,
-          user ID, destination address Y&gt;.  If the destination uses
-          one of these target netlocs to contact the source server,
-          the source server will be able to uniquely identify the
-          destination server, even if the destination server does not
-          connect from the address specified by the client in COPY_NOTIFY.
-          The level of assurance in this identification depends on the
-          unpredictability, strength and secrecy of the random number.
-        </t>
-
-        <t>
-          For example, suppose the network topology is as shown in
-          <xref target="fig:inter-server" />.  If the source filehandle
-          is 0x12345, the source server may respond to a COPY_NOTIFY
-          for destination 203.0.113.56 with the URLs:
-        </t>
-
-        <t>
-          <list style="empty">
-            <t>nfs://203.0.113.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/203.0.113.56/_FH/0x12345</t>
-            <t>nfs://192.0.2.18//_COPY/FvhH1OKbu8VrxvV1erdjvR7N/203.0.113.56/_FH/0x12345</t>
-          </list>
-        </t>
-
-        <t>
-          The name component after _COPY is 24 characters of base
-          64, more than enough to encode a 128 bit random number.
-        </t>
-
-        <t>
-          The client will then send these URLs to the destination
-          server in the COPY operation. Suppose that the 192.0.2.0/24
-          network is a high speed network and the destination server
-          decides to transfer the file over this network. If the
-          destination contacts the source server from 192.0.2.56
-          over this network using NFSv4.1, it does the following:
-        </t>
-
-        <t>
-          <list style="hanging">
-            <t hangText="COMPOUND"> { PUTROOTFH, LOOKUP "_COPY" ;
-              LOOKUP "FvhH1OKbu8VrxvV1erdjvR7N" ;
-              LOOKUP "203.0.113.56";
-              LOOKUP "_FH" ; OPEN "0x12345" ; GETFH }
-            </t>
-          </list>
-        </t>
-
-        <t>
-          Provided that the random number is unpredictable and has
-          been kept secret by the parties involved, the source
-          server will therefore know that these NFSv4.x operations
-          are being issued by the destination server identified in
-          the COPY_NOTIFY.  This random number technique only
+          specified by the client in the COPY_NOTIFY.
+          The cnr_stateid returned from the COPY_NOTIFY can
+          be used to uiniquely identify the destination server to the
+          source server.  The use of cnr_stateid
           provides initial authentication of the destination server,
-          and cannot defend against man-in-the-middle attacks after
-          authentication or an eavesdropper that observes the random
-          number on the wire. Other secure communication techniques
+          but cannot defend against man-in-the-middle attacks after
+          authentication or an eavesdropper that observes the opaque
+          stateid on the wire. Other secure communication techniques
           (e.g., IPsec) are necessary to block these attacks.
         </t>
 
         <t>
-          Note that the cnr_stateid returned from the COPY_NOTIFY can
-          be used to uiniquely identify the destination server to the
-          source server. Part of this stateid could be randomly
-          generated in the same manner and the destination server could
-          avoid using the above URL and instead open the file directly
-          via NFSv4.x (where x >= 1) using a CLAIM_FH on the OPEN (see
-          Section 18.16.3 of <xref target='RFC5661' />).
-        </t>
-
-        <t>
           Servers SHOULD reject COPY_NOTIFY requests that do not use
-          RPCSEC_GSS with privacy, thus ensuring the URL in the
+          RPCSEC_GSS with privacy, thus ensuring the cnr_stateid in the
           COPY_NOTIFY reply is encrypted.  For the same reason, clients
           SHOULD send COPY requests to the destination using RPCSEC_GSS
           with privacy.
