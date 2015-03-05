@@ -75,15 +75,17 @@
     </t>
 
     <t>
-      For an intra-server copy, both the ca_src_stateid and
-      ca_dst_stateid MUST refer to either delegation, locking,
-      or open states provided earlier by the server (see
-      <xref target="ss:copy:lock" />). The order of selection
-      is explained in Section 8.2.5 of <xref target='RFC5661' />.
-      If either stateid is invalid, then the operation MUST fail.
-      If the request is for a inter-server copy, then the
-      ca_src_stateid can be ignored.  If ca_dst_stateid is invalid,
-      then the operation MUST fail.
+
+      For an intra-server copy, the ca_dst_stateid MUST refer to
+      either delegation, locking, or open states provided earlier
+      by the server (see <xref target="ss:copy:lock" />). The order
+      of selection is explained in Section 8.2.5 of
+      <xref target='RFC5661' />.  And the ca_src_stateid MUST be
+      the cnr_stateid returned from the earlier COPY_NOTIFY.  If
+      either stateid is invalid, then the operation MUST fail.  If
+      the request is for a inter-server copy, then the ca_src_stateid
+      can be ignored.  If ca_dst_stateid is invalid, then the
+      operation MUST fail.
     </t>
 
     <t>

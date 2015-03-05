@@ -82,6 +82,23 @@
     </t>
 
     <t>
+      The cnr_stateid is a copy stateid which uniquely describes the
+      state needed on the source server to track the proposed copy.
+      As defined in Section 8.2 of <xref target='RFC5661' />, a stateid
+      is tied to the current filehandle and if the same stateid is
+      presented by two different clients, it may refer to different
+      state. As the source does not know which netloc4 network
+      location the destinaton might use to establish the copy operation,
+      it can use the cnr_stateid to identify that the destination
+      is operating on behalf of the client. Thus the source server
+      SHOULD construct copy stateids such that they are unique from
+      all other stateids handed out to clients. These copy stateids
+      MUST equate to each of the earlier delegation, locking,
+      and open states for the client on the given file (see
+      <xref target='ss:copy:lock' />).
+    </t>
+
+    <t>
       A successful response will also contain a list of netloc4 network
       location formats called cnr_source_server, on which the source is
       willing to accept connections from the destination. These might
