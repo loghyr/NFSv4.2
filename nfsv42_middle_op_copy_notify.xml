@@ -91,7 +91,7 @@
       location the destinaton might use to establish the copy operation,
       it can use the cnr_stateid to identify that the destination
       is operating on behalf of the client. Thus the source server
-      SHOULD construct copy stateids such that they are unique from
+      MUST construct copy stateids such that they are unique from
       all other stateids handed out to clients. These copy stateids
       MUST equate to each of the earlier delegation, locking,
       and open states for the client on the given file (see
