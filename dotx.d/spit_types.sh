@@ -1279,9 +1279,9 @@ EOF
 
 cat << EOF > $i
 enum netloc_type4 {
-	NL4_NAME	= 0,
-	NL4_URL		= 1,
-	NL4_NETADDR	= 2
+	NL4_NAME	= 1,
+	NL4_URL		= 2,
+	NL4_NETADDR	= 3
 };
 union netloc4 switch (netloc_type4 nl_type) {
 	case NL4_NAME:		utf8str_cis nl_name;
