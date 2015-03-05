@@ -26,7 +26,8 @@
     Vaghani, and Nico Williams. Anna Schumaker's early
     prototyping experience helped us avoid some traps. Also, both
     Olga Kornievskaia and Andy Adamson brought implementation experience
-    to the use of copy stateids in inter-server copy.
+    to the use of copy stateids in inter-server copy. Jorge Mora
+    was able to optimize the handling of errors for the result of COPY.
   </t>
   <t>
     For the NFS space reservation operations, the original draft was
