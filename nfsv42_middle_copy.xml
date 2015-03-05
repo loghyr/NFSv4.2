@@ -506,7 +506,8 @@
         for the server-to-server copy protocol, the destination server
         can use the source filehandle and ca_src_stateid provided in the
         COPY request with standard NFSv4.x operations to read data
-        from the source server.
+        from the source server. Note that the ca_src_stateid MUST be
+        the cnr_stateid returned from the source via the COPY_NOTIFY.
       </t>
     </section>
 
@@ -1140,6 +1141,16 @@
           authentication or an eavesdropper that observes the random
           number on the wire. Other secure communication techniques
           (e.g., IPsec) are necessary to block these attacks.
+        </t>
+
+        <t>
+          Note that the cnr_stateid returned from the COPY_NOTIFY can
+          be used to uiniquely identify the destination server to the
+          source server. Part of this stateid could be randomly
+          generated in the same manner and the destination server could
+          avoid using the above URL and instead open the file directly
+          via NFSv4.x (where x >= 1) using a CLAIM_FH on the OPEN (see
+          Section 18.16.3 of <xref target='RFC5661' />).
         </t>
 
         <t>
