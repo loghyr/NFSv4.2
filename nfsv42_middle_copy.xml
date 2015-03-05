@@ -199,15 +199,15 @@
       </t>
 
       <t>
-	Note that when the client establishes a lock stateid on the
-	source, the context of that stateid is for the client and
-	not the destination.  As such, there might already be an
-	outstanding stateid, issued to the destination as client
-	of the source, with the same value as that provided for the
-	lock stateid. The source MUST equate the lock stateid as
-	that of the client, i.e., when the destination presents it
-	in the context of a inter-server copy, it is on behalf of
-	the client.
+        Note that when the client establishes a lock stateid on the
+        source, the context of that stateid is for the client and
+        not the destination.  As such, there might already be an
+        outstanding stateid, issued to the destination as client
+        of the source, with the same value as that provided for the
+        lock stateid. The source MUST equate the lock stateid as
+        that of the client, i.e., when the destination presents it
+        in the context of a inter-server copy, it is on behalf of
+        the client.
       </t>
     </section>
 
@@ -218,9 +218,9 @@
         a write  delegation), it will be straightforward to update
         the destination server.  With an inter-server copy, the
         source has no insight into the changes cached on the client.
-	The client SHOULD write back the data to the source.  If
-	it does not do so, it is possible that the destination will
-	receive a corrupt copy of file.
+        The client SHOULD write back the data to the source.  If
+        it does not do so, it is possible that the destination will
+        receive a corrupt copy of file.
       </t>
     </section>
   </section>
