@@ -93,7 +93,7 @@
       is operating on behalf of the client. Thus the source server
       MUST construct copy stateids such that they are distinct from
       all other stateids handed out to clients. These copy stateids
-      MUST equate to each of the earlier delegation, locking,
+      MUST denote the same set of locks as each of the earlier delegation, locking,
       and open states for the client on the given file (see
       <xref target='ss:copy:lock' />).
     </t>
