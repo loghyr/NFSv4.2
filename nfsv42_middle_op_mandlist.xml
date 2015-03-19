@@ -169,6 +169,7 @@
       <c>SAVEFH               </c> <c> REQ </c> <c>              </c>
       <c>SECINFO              </c> <c> REQ </c> <c>              </c>
       <c>SECINFO_NO_NAME      </c> <c> REC </c> <c> pNFS file layout (REQ) </c>
+      <c>SEEK                 </c> <c> OPT </c> <c>              </c>
       <c>SEQUENCE             </c> <c> REQ </c> <c>              </c>
       <c>SETATTR              </c> <c> REQ </c> <c>              </c>
       <c>SETCLIENTID          </c> <c> MNI </c> <c>              </c>

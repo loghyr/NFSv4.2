@@ -256,6 +256,11 @@ AUTOGEN =	hand_edit_warning.x \
 		$(SPITGEN) \
 		open_args_gen.x
 
+PARENT_BASE=draft-ietf-nfsv4-minorversion2
+DRAFT_BASE=draft-ietf-nfsv4-minorversion2-dot-x
+VERS=33
+DATE=`date`
+
 all:	nfsv42.x filelist
 
 nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_opnums.x fore_ops.x fore_prog.x \
@@ -263,14 +268,9 @@ nfsv42.x: $(AUTOGEN) hand_edit_warning.x head.x fs_locations_info.x file_layout.
 	m4 hand_edit_warning.x head.x fs_locations_info.x file_layout.x fore_opnums.x fore_ops.x fore_prog.x back_ops.x back_prog.x | expand | tr -d "\r" > nfsv42.tmp
 	mv nfsv42.tmp nfsv42.x
 
-hand_edit_warning.x: Makefile ../Makefile head.x fore_opnums.x $(FORE_OPS) fore_prog.x $(BACK_OPS) back_prog.x
-	( \
-		echo "/*" ; \
-		echo " * This file was machine generated for" ; \
-                echo " *  draft-ietf-nfsv4-minorversion2-$(VERS)" ; \
-		echo " * Last updated `date`" ; \
-		echo " */" ; \
-	)  > hand_edit_warning.x
+hand_edit_warning.x: copyright.x Makefile ../Makefile head.x fore_opnums.x $(FORE_OPS) fore_prog.x $(BACK_OPS) back_prog.x
+	sed -e s/DATEMOD/"${DATE}"/g -e s/PARENTVERSION/${PARENT_BASE}-${VERS}/g \
+	-e s/DRAFTVERSION/${DRAFT_BASE}-${VERS}/g < copyright.x > hand_edit_warning.x
 
 open_args_gen.x: open_args.x const_access_deny.x
 		rm -f $@ $@.tmp

@@ -66,7 +66,7 @@
         </t>
 
         <t>
-          The client has not issued a COPY_REVOKE for
+          The client has not issued a OFFLOAD_CANCEL for
           the same combination of user, filehandle,
           and destination server.
         </t>
@@ -79,6 +79,23 @@
       synchronized clocks, copy lease times are granted by the server
       as a time delta.  To renew the copy lease time the client should
       resend the same copy notification request to the source server.
+    </t>
+
+    <t>
+      The cnr_stateid is a copy stateid which uniquely describes the
+      state needed on the source server to track the proposed copy.
+      As defined in Section 8.2 of <xref target='RFC5661' />, a stateid
+      is tied to the current filehandle and if the same stateid is
+      presented by two different clients, it may refer to different
+      state. As the source does not know which netloc4 network
+      location the destinaton might use to establish the copy operation,
+      it can use the cnr_stateid to identify that the destination
+      is operating on behalf of the client. Thus the source server
+      MUST construct copy stateids such that they are unique from
+      all other stateids handed out to clients. These copy stateids
+      MUST equate to each of the earlier delegation, locking,
+      and open states for the client on the given file (see
+      <xref target='ss:copy:lock' />).
     </t>
 
     <t>

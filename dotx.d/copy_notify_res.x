@@ -1,5 +1,6 @@
 struct COPY_NOTIFY4resok {
 	nfstime4	cnr_lease_time;
+	stateid4	cnr_stateid;
 	netloc4		cnr_source_server<>;
 };
 

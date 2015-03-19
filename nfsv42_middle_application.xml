@@ -300,7 +300,7 @@
     <t>
       A simpler use case for WRITE_SAME are applications that want to
       efficiently zero out a file, but do not want to modify space
-      reservations.  This can easily be archived by a call to WRITE_SAME
+      reservations.  This can easily be achieved by a call to WRITE_SAME
       without a ADB block numbers and pattern, e.g.:
     </t>
 
