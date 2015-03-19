@@ -189,8 +189,7 @@
 
     <t>
       If the operation does not result in an immediate failure, the
-      server will return NFS4_OK, and the CURRENT_FH will remain
-      the destination's filehandle.
+      server will return NFS4_OK.
     </t>
 
     <t>
