@@ -32,13 +32,14 @@
       The COPY operation is used for both intra-server and inter-server
       copies. In both cases, the COPY is always sent from the client
       to the destination server of the file copy. The COPY operation
-      requests that a file be copied from the location specified by the
-      SAVED_FH value to the location specified by the CURRENT_FH.
+      requests that a range in the file specified by SAVED_FH
+      is copied to a range in the file specified by CURRENT_FH.
     </t>
 
     <t>
-      The SAVED_FH must be a regular file. If SAVED_FH is not a
-      regular file, the operation MUST fail and return NFS4ERR_WRONG_TYPE.
+      Both SAVED_FH and CURRENT_FH must be regular files. If neither SAVED_FH nor
+      CURRENT_FH are not regular files, the operation MUST fail and
+      return NFS4ERR_WRONG_TYPE.
     </t>
 
     <t>
@@ -85,17 +86,6 @@
       the request is for an intra-server copy, then the ca_src_stateid
       can be ignored.  If ca_dst_stateid is invalid, then the
       operation MUST fail.
-    </t>
-
-    <t>
-      The CURRENT_FH specifies the destination of the copy operation.
-      The CURRENT_FH MUST be a regular file and not a directory.
-      Note, the file MUST exist before the COPY operation begins.
-      It is the responsibility of the client to create the file if
-      necessary, regardless of the actual copy protocol used.  If
-      the file cannot be created in the destination file system
-      (due to file name restrictions, such as case or length), the
-      COPY operation MUST NOT be called.
     </t>
 
     <t>
@@ -195,33 +185,6 @@
       client is responsible for informing the source that the
       earlier COPY_NOTIFY is no longer valid by sending it
       an OFFLOAD_CANCEL.
-    </t>
-
-    <t>
-      The copying of any and all attributes on the source file is
-      the responsibility of both the client and the copy protocol.
-      Any attribute which is both exposed via the NFS protocol on
-      the source file and set SHOULD be copied to the destination file.
-      Any attribute supported by the destination server that is not
-      set on the source file SHOULD be left unset. If the client
-      cannot copy an attribute from the source to destination, it
-      MAY fail the copy transaction.
-    </t>
-
-    <t>
-      Metadata attributes not exposed via the NFS protocol SHOULD
-      be copied to the destination file where appropriate via the
-      copy protocol. Note that if the copy protocol is NFSv4.x, then
-      these attributes will be lost.
-    </t>
-
-    <t>
-      The destination file's named attributes are not duplicated
-      from the source file. After the copy process completes, the
-      client MAY attempt to duplicate named attributes using standard
-      NFSv4 operations. However, the destination file's named
-      attribute capabilities MAY be different from the source
-      file's named attribute capabilities.
     </t>
 
     <t>
