@@ -38,7 +38,7 @@
 
     <t>
       Both SAVED_FH and CURRENT_FH must be regular files. If neither SAVED_FH nor
-      CURRENT_FH are not regular files, the operation MUST fail and
+      CURRENT_FH are regular files, the operation MUST fail and
       return NFS4ERR_WRONG_TYPE.
     </t>
 
