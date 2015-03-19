@@ -69,7 +69,7 @@
       If a server supports the inter-server-to-server COPY feature, a
       PUTFH followed by a SAVEFH MUST NOT return NFS4ERR_STALE for
       either operation. These restrictions do not pose substantial
-      difficulties for servers. The CURRENT_FH and SAVED_FH may be
+      difficulties for servers. CURRENT_FH and SAVED_FH may be
       validated in the context of the operation referencing them
       and an NFS4ERR_STALE error returned for an invalid file handle
       at that point.
