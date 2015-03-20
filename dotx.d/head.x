@@ -580,10 +580,6 @@ const FATTR4_DIRENT_NOTIF_DELAY = 57;
 const FATTR4_DACL		= 58;
 const FATTR4_SACL		= 59;
 const FATTR4_CHANGE_POLICY	= 60;
-
-%/*
-% * new to NFSV4.2
-% */
 const FATTR4_FS_STATUS		= 61;
 const FATTR4_FS_LAYOUT_TYPES	= 62;
 const FATTR4_LAYOUT_HINT	= 63;
@@ -599,6 +595,10 @@ const FATTR4_RETENTEVT_SET	= 72;
 const FATTR4_RETENTION_HOLD	= 73;
 const FATTR4_MODE_SET_MASKED	= 74;
 const FATTR4_FS_CHARSET_CAP	= 76;
+
+%/*
+% * new to NFSV4.2
+% */
 /* 77 is currently unused */
 const FATTR4_SPACE_FREED	= 78;
 const FATTR4_CHANGE_ATTR_TYPE	= 79;
