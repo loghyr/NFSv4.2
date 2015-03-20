@@ -32,13 +32,14 @@
       The COPY operation is used for both intra-server and inter-server
       copies. In both cases, the COPY is always sent from the client
       to the destination server of the file copy. The COPY operation
-      requests that a file be copied from the location specified by the
-      SAVED_FH value to the location specified by the CURRENT_FH.
+      requests that a range in the file specified by SAVED_FH
+      is copied to a range in the file specified by CURRENT_FH.
     </t>
 
     <t>
-      The SAVED_FH must be a regular file. If SAVED_FH is not a
-      regular file, the operation MUST fail and return NFS4ERR_WRONG_TYPE.
+      Both SAVED_FH and CURRENT_FH must be regular files. If neither SAVED_FH nor
+      CURRENT_FH are regular files, the operation MUST fail and
+      return NFS4ERR_WRONG_TYPE.
     </t>
 
     <t>
@@ -68,34 +69,23 @@
       If a server supports the inter-server-to-server COPY feature, a
       PUTFH followed by a SAVEFH MUST NOT return NFS4ERR_STALE for
       either operation. These restrictions do not pose substantial
-      difficulties for servers. The CURRENT_FH and SAVED_FH may be
+      difficulties for servers. CURRENT_FH and SAVED_FH may be
       validated in the context of the operation referencing them
       and an NFS4ERR_STALE error returned for an invalid file handle
       at that point.
     </t>
 
     <t>
-      For an inter-server copy, the ca_dst_stateid MUST refer to
-      either delegation, locking, or open states provided earlier
-      by the server (see <xref target="ss:copy:lock" />). The order
-      of selection is explained in Section 8.2.5 of
-      <xref target='RFC5661' />.  And the ca_src_stateid MUST be
-      the cnr_stateid returned from the earlier COPY_NOTIFY.  If
-      either stateid is invalid, then the operation MUST fail.  If
-      the request is for an intra-server copy, then the ca_src_stateid
-      can be ignored.  If ca_dst_stateid is invalid, then the
+      The ca_dst_stateid MUST refer to either delegation, locking,
+      or open states provided earlier by the server (see
+      <xref target="ss:copy:lock" />). The order of selection is
+      explained in Section 8.2.5 of <xref target='RFC5661' />.
+      For an inter-server copy, the ca_src_stateid MUST be the
+      cnr_stateid returned from the earlier COPY_NOTIFY operation,
+      while for an intra-server copy ca_src_stateid MUST also
+      refer to either delegation, locking, or open states provided
+      earlier by the server. If either stateid is invalid, then the
       operation MUST fail.
-    </t>
-
-    <t>
-      The CURRENT_FH specifies the destination of the copy operation.
-      The CURRENT_FH MUST be a regular file and not a directory.
-      Note, the file MUST exist before the COPY operation begins.
-      It is the responsibility of the client to create the file if
-      necessary, regardless of the actual copy protocol used.  If
-      the file cannot be created in the destination file system
-      (due to file name restrictions, such as case or length), the
-      COPY operation MUST NOT be called.
     </t>
 
     <t>
@@ -198,36 +188,8 @@
     </t>
 
     <t>
-      The copying of any and all attributes on the source file is
-      the responsibility of both the client and the copy protocol.
-      Any attribute which is both exposed via the NFS protocol on
-      the source file and set SHOULD be copied to the destination file.
-      Any attribute supported by the destination server that is not
-      set on the source file SHOULD be left unset. If the client
-      cannot copy an attribute from the source to destination, it
-      MAY fail the copy transaction.
-    </t>
-
-    <t>
-      Metadata attributes not exposed via the NFS protocol SHOULD
-      be copied to the destination file where appropriate via the
-      copy protocol. Note that if the copy protocol is NFSv4.x, then
-      these attributes will be lost.
-    </t>
-
-    <t>
-      The destination file's named attributes are not duplicated
-      from the source file. After the copy process completes, the
-      client MAY attempt to duplicate named attributes using standard
-      NFSv4 operations. However, the destination file's named
-      attribute capabilities MAY be different from the source
-      file's named attribute capabilities.
-    </t>
-
-    <t>
       If the operation does not result in an immediate failure, the
-      server will return NFS4_OK, and the CURRENT_FH will remain
-      the destination's filehandle.
+      server will return NFS4_OK.
     </t>
 
     <t>
