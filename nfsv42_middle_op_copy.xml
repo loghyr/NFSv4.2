@@ -43,6 +43,12 @@
     </t>
 
     <t>
+      SAVED_FH and CURRENT_FH must be differet files.  If SAVED_FH and
+      CURRENT_FH refer to the same file, the operation will fail
+      with NFS4ERR_INVAL.
+    </t>
+
+    <t>
       In order to set SAVED_FH to the source file handle, the
       compound procedure requesting the COPY will include a
       sub-sequence of operations such as
