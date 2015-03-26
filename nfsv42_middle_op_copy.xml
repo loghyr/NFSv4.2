@@ -111,7 +111,7 @@
 
     <t>
       If the source offset or the source offset plus count is greater
-      than or equal to the size of the source file, the operation
+      than the size of the source file, the operation
       will fail with NFS4ERR_INVAL. The destination offset or
       destination offset plus count may be greater than the size
       of the destination file. This allows for the client to issue
