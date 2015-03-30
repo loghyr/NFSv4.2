@@ -7,7 +7,7 @@
       The NFS version 4 minor version 2 (NFSv4.2) protocol is the
       third minor version of the NFS version 4 (NFSv4) protocol.
       The first minor version, NFSv4.0, is described in <xref
-      target="I-D.ietf-nfsv4-rfc3530bis" /> and the second minor
+      target="RFC7530" /> and the second minor
       version, NFSv4.1, is described in <xref target="RFC5661" />.
     </t>
 

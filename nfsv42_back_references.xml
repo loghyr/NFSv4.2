@@ -192,20 +192,21 @@
       target="ftp://ftp.isi.edu/in-notes/rfc4506.txt"/>
   </reference>
 
-    <reference anchor='I-D.ietf-nfsv4-rfc3530bis'>
+    <reference anchor='RFC7530'>
       <front>
         <title>Network File System (NFS) version 4 Protocol</title>
         <author initials="T." surname="Haynes" fullname="T. Haynes">
-          <organization>NetApp</organization>
+          <organization>Primary Data, Inc.</organization>
         </author>
         <author initials="D." surname="Noveck" fullname="D. Noveck">
           <organization></organization>
         </author>
-        <date year="2014" month="November" />
+        <date year="2015" month="March" />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-rfc3530bis-35" value="(Work In Progress)"/>
+        <seriesInfo name="RFC" value="7530"/>
+        <format type="TXT" octets="724613"
+          target="ftp://ftp.isi.edu/in-notes/rfc7530.txt"/>
     </reference>
-
 
 <reference anchor='RFC2616'>
 

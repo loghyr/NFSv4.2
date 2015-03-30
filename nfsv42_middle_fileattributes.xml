@@ -134,7 +134,7 @@
 
           <t hangText="NFS4_CHANGE_TYPE_IS_TIME_METADATA:">
             The change attribute is implemented as suggested in
-            <xref target="I-D.ietf-nfsv4-rfc3530bis" /> in terms
+            <xref target="RFC7530" /> in terms
             of the time_metadata attribute.
           </t>
         </list>
