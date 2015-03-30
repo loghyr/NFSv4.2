@@ -3,6 +3,8 @@
 FORE_OPS_AS_IS1 = \
 		access_args.x \
 		access_res.x \
+		clone_args.x \
+		clone_res.x \
 		close_args.x \
 		close_res.x \
 		commit_args.x \

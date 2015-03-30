@@ -117,6 +117,7 @@
       <c>ACCESS               </c> <c> REQ </c> <c>              </c>
       <c>BACKCHANNEL_CTL      </c> <c> REQ </c> <c>              </c>
       <c>BIND_CONN_TO_SESSION </c> <c> REQ </c> <c>              </c>
+      <c>CLONE                </c> <c> OPT </c> <c>              </c>
       <c>CLOSE                </c> <c> REQ </c> <c>              </c>
       <c>COMMIT               </c> <c> REQ </c> <c>              </c>
       <c>COPY                 </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>

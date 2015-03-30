@@ -302,6 +302,8 @@ AUTOGEN =	\
 		autogen/cb_sequence_res.xml \
 		autogen/cb_wants_cancelled_args.xml \
 		autogen/cb_wants_cancelled_res.xml \
+		autogen/clone_args.xml \
+		autogen/clone_res.xml \
 		autogen/close_args.xml \
 		autogen/close_res.xml \
 		autogen/commit_args.xml \
@@ -461,6 +463,7 @@ IDXMLSRC_BASE = \
 	${DOC_PREFIX}_middle_op_read_plus.xml \
 	${DOC_PREFIX}_middle_op_seek.xml \
 	${DOC_PREFIX}_middle_op_write_same.xml \
+	${DOC_PREFIX}_middle_op_clone.xml \
 	${DOC_PREFIX}_middle_op_end.xml \
 	${DOC_PREFIX}_middle_op_cb_start.xml \
 	${DOC_PREFIX}_middle_op_cb_offload.xml \

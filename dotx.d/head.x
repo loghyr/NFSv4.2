@@ -502,6 +502,7 @@ typedef uint64_t	fattr4_space_freed;
 typedef change_attr_type4
 		fattr4_change_attr_type;
 typedef sec_label4	fattr4_sec_label<>;
+typedef uint32_t	fattr4_clone_blksize;
 
 %/*
 % * REQUIRED Attributes
@@ -599,7 +600,7 @@ const FATTR4_FS_CHARSET_CAP	= 76;
 %/*
 % * new to NFSV4.2
 % */
-/* 77 is currently unused */
+const FATTR4_CLONE_BLKSIZE	= 77;
 const FATTR4_SPACE_FREED	= 78;
 const FATTR4_CHANGE_ATTR_TYPE	= 79;
 const FATTR4_SEC_LABEL		= 80;

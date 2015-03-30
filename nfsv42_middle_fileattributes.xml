@@ -53,6 +53,7 @@
       <ttcol align="left">Data Type</ttcol>
       <ttcol align="left">Acc</ttcol>
       <ttcol align="left">Defined in</ttcol>
+      <c>clone_blksize</c>    <c>77</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:clone" /></c>
       <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
       <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
       <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
@@ -60,6 +61,12 @@
   </section>
 
   <section anchor="ss:file_attributes:AD" title="Attribute Definitions">
+    <section toc='exclude' anchor="ss:fattr:clone" title="Attribute 77: clone_blksize">
+      <t>
+        The clone_blksize attribute indicates the granularity of a CLONE operation.
+      </t>
+    </section>
+
     <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 78: space_freed">
       <t>
         space_freed gives the number of bytes freed if the file is deleted.

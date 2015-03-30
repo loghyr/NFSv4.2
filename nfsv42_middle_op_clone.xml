@@ -1,0 +1,110 @@
+<!-- Copyright (C) The IETF Trust (2011-2014) -->
+<!-- Copyright (C) The Internet Society (2011-2014) -->
+
+<section anchor="op:clone" title="Operation 71: CLONE - Clone a file">
+  <section toc='exclude' title="ARGUMENT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
+    <?rfc include='autogen/clone_args.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
+  </section>
+
+  <section toc='exclude' title="RESULT">
+    <t>
+      &lt;CODE BEGINS&gt;
+    </t>
+
+    <?rfc include='autogen/clone_res.xml'?>
+
+    <t>
+      &lt;CODE ENDS&gt;
+    </t>
+  </section>
+
+  <section toc='exclude' title="DESCRIPTION">
+    <t>
+      The CLONE operation is used to clone file content from a source
+      file specified by the SAVED_FH value into a destination file
+      specified by CURRENT_FH without actually copying the data, e.g.,
+      by using a copy on write mechanism.
+    </t>
+
+    <t>
+      Both SAVED_FH and CURRENT_FH must be regular files. If either
+      SAVED_FH or CURRENT_FH are not regular files, the operation
+      MUST fail and return NFS4ERR_WRONG_TYPE.
+    </t>
+
+    <t>
+      SAVED_FH and CURRENT_FH must be different files.  If SAVED_FH and
+      CURRENT_FH refer to the same file, the operation will fail with
+      NFS4ERR_INVAL.
+    </t>
+
+    <t>
+      In order to set SAVED_FH to the source file handle, the
+      compound procedure requesting the COPY will include a
+      sub-sequence of operations such as
+    </t>
+
+    <figure>
+      <artwork>
+   PUTFH source-fh
+   SAVEFH
+      </artwork>
+    </figure>
+
+    <t>
+      The ca_dst_stateid MUST refer to a stateid that is valid for
+      a WRITE operation and follows the rules for stateids in
+      Sections 8.2.5 and 18.32.3 of <xref target='RFC5661' />.
+      The ca_src_stateid MUST refer to a
+      stateid that is valid for a READ operations and follows the rules
+      for stateids in Sections 8.2.5 and 18.22.3 of
+      <xref target='RFC5661' />. If either stateid is invalid, then the
+      operation MUST fail.
+    </t>
+
+    <t>
+      The cl_src_offset is the offset within the source file from
+      which the data will be read, the cl_dst_offset is the offset
+      within the destination file to which the data will be written,
+      and the cl_count is the number of bytes that will be cloned.
+      An offset of 0 (zero) specifies the start of the file. A count
+      of 0 (zero) requests that all bytes from ca_src_offset through
+      EOF be cloned to the destination. Both cl_src_offset and
+      cl_dst_offset must be aligned to the clone block size
+      <xref target='ss:fattr:clone' />.  cl_count must be aligned to
+      the clone block size, unless cl_src_offset + cl_count are
+      equal to the source file size.
+    </t>
+
+    <t>
+      If the source offset or the source offset plus count is greater
+      than the size of the source file, the operation will fail with
+      NFS4ERR_INVAL. The destination offset or destination offset plus
+      count may be greater than the size of the destination file.
+    </t>
+
+    <t>
+      If the COPY wrote past the end of the file on the destination, then the
+      last byte written to will determine the new file size. The contents of
+      any block not written to and past the original size of the file will be
+      as if a normal WRITE extended the file.
+    </t>
+
+    <t>
+      The CLONE operation is atomic, that is either all changes or
+      no changes are seen by the client or other clients.
+    </t>
+
+    <t>
+      The completion status of the operation is indicated by cr_status.
+    </t>
+  </section>
+</section>
