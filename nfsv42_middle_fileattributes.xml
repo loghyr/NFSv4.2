@@ -53,14 +53,22 @@
       <ttcol align="left">Data Type</ttcol>
       <ttcol align="left">Acc</ttcol>
       <ttcol align="left">Defined in</ttcol>
-      <c>space_freed</c>      <c>77</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
-      <c>change_attr_type</c> <c>78</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
-      <c>sec_label</c>        <c>79</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
+      <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
+      <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
+      <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
     </texttable>
   </section>
 
   <section anchor="ss:file_attributes:AD" title="Attribute Definitions">
-    <section toc='exclude' anchor="ss:fattr:chattr" title="Attribute 78: change_attr_type">
+    <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 78: space_freed">
+      <t>
+        space_freed gives the number of bytes freed if the file is deleted.
+        This attribute is read only and is of type length4.  It is a per file
+        attribute.
+      </t>
+    </section>
+
+    <section toc='exclude' anchor="ss:fattr:chattr" title="Attribute 79: change_attr_type">
 
       <t>
         &lt;CODE BEGINS&gt;
@@ -163,7 +171,7 @@
       </t>
     </section>
 
-    <section toc='exclude' anchor='ss:fattr:sec' title='Attribute 79: sec_label'>
+    <section toc='exclude' anchor='ss:fattr:sec' title='Attribute 80: sec_label'>
       <t>
         &lt;CODE BEGINS&gt;
       </t>
@@ -204,14 +212,6 @@ typedef uint32_t  policy4;
         of a specific MAC model, the client will be aware of the size.
       </t>
 
-    </section>
-
-    <section toc='exclude' anchor="ss:fattr:sf" title="Attribute 77: space_freed">
-      <t>
-        space_freed gives the number of bytes freed if the file is deleted.
-        This attribute is read only and is of type length4.  It is a per file
-        attribute.
-      </t>
     </section>
   </section>
 </section>
