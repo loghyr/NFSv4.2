@@ -199,8 +199,8 @@
     </t>
 
     <t>
-      If the wr_callback_id is returned, this indicates that the
-      operation was initiated and a CB_OFFLOAD callback will deliver
+      If the wr_callback_id is returned, this indicates that an asynchronous
+      COPY operation was initiated and a CB_OFFLOAD callback will deliver
       the final results of the operation. The wr_callback_id stateid
       is termed a copy stateid in this context. The server is given
       the option of returning the results in a callback because the
