@@ -43,7 +43,7 @@
     </t>
 
     <t>
-      SAVED_FH and CURRENT_FH must be differet files.  If SAVED_FH and
+      SAVED_FH and CURRENT_FH must be different files.  If SAVED_FH and
       CURRENT_FH refer to the same file, the operation will fail
       with NFS4ERR_INVAL.
     </t>
