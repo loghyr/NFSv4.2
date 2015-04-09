@@ -1445,7 +1445,8 @@
         NFS4ERR_STALE,
         NFS4ERR_SYMLINK,
         NFS4ERR_TOO_MANY_OPS,
-        NFS4ERR_WRONG_TYPE
+        NFS4ERR_WRONG_TYPE,
+        NFS4ERR_XDEV
       </c>
 
       <c>CLOSE</c>
