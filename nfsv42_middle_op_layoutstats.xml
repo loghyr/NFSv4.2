@@ -54,8 +54,10 @@
     </t>
 
     <t>
-      The client MUST reset the statistics after getting a
-      successfully reply from the metadata server.  The first
+      The statistics are cummulative, i.e., multiple LAYOUTSTATS
+      updates can be in flight at the same time. The metadata
+      server can examine the packet's timestamp to order the
+      different calls.  The first
       LAYOUTSTATS sent by the client SHOULD be from the opening
       of the file.  The choice of how often to update the metadata
       server is made by the client.
