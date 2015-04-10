@@ -69,6 +69,7 @@ clean:
 	rm -rf draft-tmp.xml
 	cd dotx.d ; VERS=$(VERS) $(MAKE) clean
 	cd dotx-id.d ; SPECVERS=$(VERS) $(MAKE) clean
+	git clean -f -x -d
 
 # Parallel All
 pall:
