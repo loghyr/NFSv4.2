@@ -48,7 +48,7 @@
 
     <t>
       In order to set SAVED_FH to the source file handle, the
-      compound procedure requesting the COPY will include a
+      compound procedure requesting the CLONE will include a
       sub-sequence of operations such as
     </t>
 
@@ -92,7 +92,7 @@
     </t>
 
     <t>
-      If the COPY wrote past the end of the file on the destination, then the
+      If the CLONE wrote past the end of the file on the destination, then the
       last byte written to will determine the new file size. The contents of
       any block not written to and past the original size of the file will be
       as if a normal WRITE extended the file.
