@@ -1,7 +1,8 @@
 <!-- Copyright (C) The IETF Trust (2011-2014) -->
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
-<section anchor="op:clone" title="Operation 71: CLONE - Clone a file">
+<section anchor="op:clone"
+	 title="Operation 71: CLONE - Clone a range of file into another file">
   <section toc='exclude' title="ARGUMENT">
     <t>
       &lt;CODE BEGINS&gt;
@@ -31,33 +32,20 @@
       The CLONE operation is used to clone file content from a source
       file specified by the SAVED_FH value into a destination file
       specified by CURRENT_FH without actually copying the data, e.g.,
-      by using a copy on write mechanism.
+      by using a copy-on-write mechanism.
     </t>
 
     <t>
       Both SAVED_FH and CURRENT_FH must be regular files. If either
-      SAVED_FH or CURRENT_FH are not regular files, the operation
+      SAVED_FH or CURRENT_FH is not a regular file, the operation
       MUST fail and return NFS4ERR_WRONG_TYPE.
     </t>
 
     <t>
       SAVED_FH and CURRENT_FH must be different files.  If SAVED_FH and
-      CURRENT_FH refer to the same file, the operation will fail with
+      CURRENT_FH refer to the same file, the operation MUST fail with
       NFS4ERR_INVAL.
     </t>
-
-    <t>
-      In order to set SAVED_FH to the source file handle, the
-      compound procedure requesting the CLONE will include a
-      sub-sequence of operations such as
-    </t>
-
-    <figure>
-      <artwork>
-   PUTFH source-fh
-   SAVEFH
-      </artwork>
-    </figure>
 
     <t>
       The ca_dst_stateid MUST refer to a stateid that is valid for
@@ -71,36 +59,49 @@
     </t>
 
     <t>
-      The cl_src_offset is the offset within the source file from
-      which the data will be read, the cl_dst_offset is the offset
-      within the destination file to which the data will be written,
-      and the cl_count is the number of bytes that will be cloned.
-      An offset of 0 (zero) specifies the start of the file. A count
-      of 0 (zero) requests that all bytes from ca_src_offset through
-      EOF be cloned to the destination. Both cl_src_offset and
-      cl_dst_offset must be aligned to the clone block size
-      <xref target='ss:fattr:clone' />.  cl_count must be aligned to
-      the clone block size, unless cl_src_offset + cl_count are
-      equal to the source file size.
+      The cl_src_offset is the starting offset within the source file from which
+      the data to be cloned will be obtained and the cl_dst_offset is the
+      starting offset of the target region into which the cloned data will be
+      placed. An offset of 0 (zero) indicates the start of the respective file.
+      The number of bytes to be cloned is obtained from cl_count, except that a
+      cl_count of 0 (zero) indicates that the number of bytes to be cloned is the
+      count of bytes between cl_src_offset and the EOF of the source file. Both
+      cl_src_offset and cl_dst_offset must be aligned to the clone block size
+      <xref target='ss:fattr:clone' />. The number of bytes to be cloned must be a
+      multiple of the clone block size, except in the case in which cl_src_offset
+      plus the number of bytes to be cloned is equal to the source file size.
     </t>
 
     <t>
       If the source offset or the source offset plus count is greater
-      than the size of the source file, the operation will fail with
+      than the size of the source file, the operation MUST fail with
       NFS4ERR_INVAL. The destination offset or destination offset plus
       count may be greater than the size of the destination file.
     </t>
 
     <t>
-      If the CLONE wrote past the end of the file on the destination, then the
-      last byte written to will determine the new file size. The contents of
-      any block not written to and past the original size of the file will be
-      as if a normal WRITE extended the file.
+      If the target area of the clone operation ends beyond the end of the
+      destination file, the offset at the end of the target area will determine
+      the new size of the destination file.  The contents of any block not part
+      of the target area will be the same as if the file size were extended by a
+      WRITE.
     </t>
 
     <t>
-      The CLONE operation is atomic, that is either all changes or
-      no changes are seen by the client or other clients.
+      If the area to be cloned is not a multiple of the clone block size and the
+      size of the destination file is past the end of the target area, the area
+      between the end of the target area and the next multiple o the clone block
+      size wlll be zeroed.
+    </t>
+
+    <t>
+      The CLONE operation is atomic in that other operations may not see see any
+      intermediate states between the state of the two files before the operation
+      and that after the operation. READs of the destination file will never
+      see some blocks of the target area cloned without all of them being
+      cloned.  WRITEs of the source area will either have no effect on the data
+      of the target file or be fully reflected in the target area of the
+      destination file.
     </t>
 
     <t>
