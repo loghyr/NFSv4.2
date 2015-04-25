@@ -38,28 +38,15 @@
 
     <t>
       Both SAVED_FH and CURRENT_FH must be regular files. If either
-      SAVED_FH or CURRENT_FH are not regular files, the operation
+      SAVED_FH or CURRENT_FH is not a regular file, the operation
       MUST fail and return NFS4ERR_WRONG_TYPE.
     </t>
 
     <t>
       SAVED_FH and CURRENT_FH must be different files.  If SAVED_FH and
-      CURRENT_FH refer to the same file, the operation will fail
+      CURRENT_FH refer to the same file, the operation MUST fail
       with NFS4ERR_INVAL.
     </t>
-
-    <t>
-      In order to set SAVED_FH to the source file handle, the
-      compound procedure requesting the COPY will include a
-      sub-sequence of operations such as
-    </t>
-
-    <figure>
-      <artwork>
-   PUTFH source-fh
-   SAVEFH
-      </artwork>
-    </figure>
 
     <t>
       If the request is for an inter-server-to-server copy, the source-fh
@@ -118,7 +105,7 @@
     <t>
       If the source offset or the source offset plus count is greater
       than the size of the source file, the operation
-      will fail with NFS4ERR_INVAL. The destination offset or
+      MUST fail with NFS4ERR_INVAL. The destination offset or
       destination offset plus count may be greater than the size
       of the destination file. This allows for the client to issue
       parallel copies to implement operations such as
