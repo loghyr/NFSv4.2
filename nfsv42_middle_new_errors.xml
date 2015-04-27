@@ -168,6 +168,7 @@
         NFS4ERR_DEADSESSION,
         NFS4ERR_DELAY,
         NFS4ERR_DELEG_REVOKED,
+        NFS4ERR_DQUOT,
         NFS4ERR_EXPIRED,
         NFS4ERR_FBIG,
         NFS4ERR_FHEXPIRED,
@@ -191,7 +192,8 @@
         NFS4ERR_STALE,
         NFS4ERR_SYMLINK,
         NFS4ERR_TOO_MANY_OPS,
-        NFS4ERR_WRONG_TYPE
+        NFS4ERR_WRONG_TYPE,
+        NFS4ERR_XDEV
       </c>
 
       <c>COPY</c>
