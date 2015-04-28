@@ -36,7 +36,18 @@
       operation will have no effect for the region that already is in unreserved
       state.
       All further reads from the region passed to DEALLOCATE MUST return zeros
-      until overwritten.  The filehandle specified must be that of a regular file.
+      until overwritten.
+    </t>
+
+    <t>
+      CURRENT_FH must be a regular file. If CURRENT_FH is not a regular file,
+      the operation MUST fail and return NFS4ERR_WRONG_TYPE.
+    </t>
+
+    <t>
+      The da_stateid MUST refer to a stateid that is valid for a WRITE
+      operation and follows the rules for stateids in Sections 8.2.5 and
+      18.32.3 of <xref target='RFC5661' />.
     </t>
 
     <t>

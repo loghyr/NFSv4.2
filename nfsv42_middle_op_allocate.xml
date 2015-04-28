@@ -35,6 +35,17 @@
     </t>
 
     <t>
+      CURRENT_FH must be a regular file. If CURRENT_FH is not a regular file,
+      the operation MUST fail and return NFS4ERR_WRONG_TYPE.
+    </t>
+
+    <t>
+      The aa_stateid MUST refer to a stateid that is valid for a WRITE
+      operation and follows the rules for stateids in Sections 8.2.5 and
+      18.32.3 of <xref target='RFC5661' />.
+    </t>
+
+    <t>
       The server will ensure that backing blocks are reserved to the region
       specified by aa_offset and aa_length, and that no future writes into
       this region will return NFS4ERR_NOSPC. If the region lies partially or
