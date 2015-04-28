@@ -6,8 +6,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=36
-VERS=37
+PREVVERS=37
+VERS=38
 VPATH=dotx.d
 
 XML2RFC=xml2rfc
