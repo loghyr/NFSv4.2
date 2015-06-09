@@ -1242,7 +1242,7 @@ union nfs_resop4 switch (nfs_opnum4 resop) {
  case OP_DEALLOCATE:	DEALLOCATE4res opdeallocate;
  case OP_IO_ADVISE:	IO_ADVISE4res opio_advise;
  case OP_LAYOUTERROR: LAYOUTERROR4res oplayouterror;
- case OP_LAYOUTSTATS: LAYOUTSTATS4res oplayputstats;
+ case OP_LAYOUTSTATS: LAYOUTSTATS4res oplayoutstats;
  case OP_OFFLOAD_CANCEL: OFFLOAD_CANCEL4res opoffload_cancel;
  case OP_OFFLOAD_STATUS: OFFLOAD_STATUS4res opoffload_status;
  case OP_READ_PLUS:	READ_PLUS4res opread_plus;
