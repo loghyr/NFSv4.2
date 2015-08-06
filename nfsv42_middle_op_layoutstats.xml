@@ -54,7 +54,7 @@
     </t>
 
     <t>
-      The statistics are cummulative, i.e., multiple LAYOUTSTATS
+      The statistics are cumulative, i.e., multiple LAYOUTSTATS
       updates can be in flight at the same time. The metadata
       server can examine the packet's timestamp to order the
       different calls.  The first
