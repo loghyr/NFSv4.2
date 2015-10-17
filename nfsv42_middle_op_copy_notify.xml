@@ -88,7 +88,7 @@
       is tied to the current filehandle and if the same stateid is
       presented by two different clients, it may refer to different
       state. As the source does not know which netloc4 network
-      location the destinaton might use to establish the copy operation,
+      location the destination might use to establish the copy operation,
       it can use the cnr_stateid to identify that the destination
       is operating on behalf of the client. Thus the source server
       MUST construct copy stateids such that they are distinct from
