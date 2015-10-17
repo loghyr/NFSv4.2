@@ -90,7 +90,7 @@
     <t>
       If the area to be cloned is not a multiple of the clone block size and the
       size of the destination file is past the end of the target area, the area
-      between the end of the target area and the next multiple o the clone block
+      between the end of the target area and the next multiple of the clone block
       size wlll be zeroed.
     </t>
 
