@@ -1076,7 +1076,7 @@
           not contact the source server from the same network address
           specified by the client in the COPY_NOTIFY.
           The cnr_stateid returned from the COPY_NOTIFY can
-          be used to uiniquely identify the destination server to the
+          be used to uniquely identify the destination server to the
           source server.  The use of cnr_stateid
           provides initial authentication of the destination server,
           but cannot defend against man-in-the-middle attacks after
