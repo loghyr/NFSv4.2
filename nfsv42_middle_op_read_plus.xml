@@ -84,7 +84,7 @@
       If the client specifies an rpa_offset and rpa_count value
       that is entirely contained within a hole of the file, then
       the di_offset and di_length returned MAY be for the entire
-      hole.  If the the owner has a locked byte range covering
+      hole.  If the owner has a locked byte range covering
       rpa_offset and rpa_count entirely the di_offset and di_length
       MUST NOT be extended outside the locked byte range.  This
       result is considered valid until the file is changed (detected
