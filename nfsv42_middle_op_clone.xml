@@ -95,7 +95,7 @@
     </t>
 
     <t>
-      The CLONE operation is atomic in that other operations may not see see any
+      The CLONE operation is atomic in that other operations may not see any
       intermediate states between the state of the two files before the operation
       and that after the operation. READs of the destination file will never
       see some blocks of the target area cloned without all of them being
