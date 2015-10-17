@@ -58,6 +58,10 @@
     Christoph Hellwig provided the update to GETDEVICELIST.
   </t>
   <t>
+    Jorge Mora provided a very detailed review and caught some important
+    issues with the tables.
+  </t>
+  <t>
     During the review process, Talia Reyes-Ortiz helped the sessions
     run smoothly. While many people contributed here and there, the
     core reviewers were Andy Adamson, Pranoop Erasani, Bruce Fields, Chuck Lever,
