@@ -108,7 +108,7 @@
     </list>
   </t>
 
-  <texttable>
+  <texttable anchor='tbl:ops'>
     <preamble>Operations</preamble>
     <ttcol align='left'>Operation</ttcol>
     <ttcol align='left'>EOL, REQ, REC, OPT, or MNI</ttcol>
@@ -136,6 +136,7 @@
       <c>GETDEVICELIST        </c> <c> MNI </c> <c> pNFS (MNI)   </c>
       <c>GETFH                </c> <c> REQ </c> <c>              </c>
       <c>GET_DIR_DELEGATION   </c> <c> OPT </c> <c> DDELG (REQ)  </c>
+      <c>IO_ADVISE            </c> <c> OPT </c> <c>              </c>
       <c>LAYOUTCOMMIT         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>LAYOUTGET            </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>LAYOUTRETURN         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
@@ -183,7 +184,7 @@
       <c>WRITE_SAME           </c> <c> OPT </c> <c> ADB (REQ)    </c>
   </texttable>
 
-  <texttable>
+  <texttable anchor='tbl:callback_ops'>
     <preamble>Callback Operations</preamble>
     <ttcol align='left'>Operation</ttcol>
     <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
