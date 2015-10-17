@@ -93,7 +93,7 @@
       </t>
 
       <t hangText="DEALLOCATE">
-        This operation delallocates the blocks backing a
+        This operation deallocates the blocks backing a
         region of the file.
       </t>
     </list>
