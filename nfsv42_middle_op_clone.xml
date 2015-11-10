@@ -42,12 +42,6 @@
     </t>
 
     <t>
-      SAVED_FH and CURRENT_FH must be different files.  If SAVED_FH and
-      CURRENT_FH refer to the same file, the operation MUST fail with
-      NFS4ERR_INVAL.
-    </t>
-
-    <t>
       The ca_dst_stateid MUST refer to a stateid that is valid for
       a WRITE operation and follows the rules for stateids in
       Sections 8.2.5 and 18.32.3 of <xref target='RFC5661' />.
@@ -77,6 +71,11 @@
       than the size of the source file, the operation MUST fail with
       NFS4ERR_INVAL. The destination offset or destination offset plus
       count may be greater than the size of the destination file.
+    </t>
+
+    <t>
+      If SAVED_FH and CURRENT_FH refer to the same file and the source and
+      target ranges overlap, the operation MUST fail with NFS4ERR_INVAL.
     </t>
 
     <t>
