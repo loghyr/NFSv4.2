@@ -655,6 +655,12 @@
       COPY_NOTIFY requests that use only AUTH_SYS.
     </t>
 
+    <t>
+      If a server requires the use of RPCSEC_GSSv3 copy_to_auth,
+      copy_from_auth, or copy_confirm_auth and it is not used,
+      the server will reject the request with NFS4ERR_PARTNER_NO_AUTH.
+    </t>
+
     <section title="Inter-Server Copy Security" anchor="sec:SSC-sec">
       <section title="Inter-Server Copy via ONC RPC with RPCSEC_GSSv3"  anchor="sec:SSC-rpc-with-gss">
         <t>
@@ -951,8 +957,14 @@
 
               <t>
                 If the source server fails to verify the copy_from_auth
-                privilege the COPY operation will be rejected with
-                NFS4ERR_PARTNER_NO_AUTH, causing in turn the client to
+                privilege the COPY_NOTIFY operation will be rejected with
+                NFS4ERR_PARTNER_NO_AUTH.
+              </t>
+
+              <t>
+                If the destination server fails to verify the copy_to_auth
+                or copy_confirm_auth privilege, the COPY will be rejeced with
+                NFS4ERR_PARTNER_NO_AUTH, causing the client to
                 destroy the associated copy_from_auth and copy_to_auth
                 RPCSEC_GSSv3 structured privilege assertion handles.
               </t>

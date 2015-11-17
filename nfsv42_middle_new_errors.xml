@@ -77,6 +77,12 @@
           offload request after the copy lease time expired, or for some
           other permission problem.
         </t>
+        <t>
+          The destination server does not authorize a server-to-server copy
+          offload operation. This may be due to an inter-server COPY
+          request where the destination server requires RPCSEC_GSSv3 and
+          it is not used, or some other permissions problem.
+        </t>
       </section>
 
       <section title="NFS4ERR_PARTNER_NOTSUPP (Error Code 10088)" anchor="err_PARTNER_NOTSUPP">
