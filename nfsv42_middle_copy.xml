@@ -4,13 +4,13 @@
 <section anchor="sec:copy" title="Server Side Copy">
   <section title="Introduction">
     <t>
-      The server-side copy feature provides a mechanism for the NFS client
-      to perform a file copy on a server or between two servers without
-      the data being transmitted back and forth over the network through
-      the NFS client.  Without this feature, an NFS client copies data
-      from one location to another by reading the data from the source
-      server over the network, and then writing the data back over the
-      network to the destination server.
+      The server-side copy features provide mechanisms which allow an
+      NFS client to copy file data on a server or between two servers
+      without the data being transmitted back and forth over the network
+      through the NFS client.  Without these features, an NFS client
+      would copy data from one location to another by reading the data
+      from the source server over the network, and then writing the data
+      back over the network to the destination server.
     </t>
 
     <t>
@@ -32,6 +32,13 @@
     </t>
 
     <t>
+      In addition, the CLONE operation provides copy-like functionality
+      in the intra-sever case which is both synchronous and atomic,
+      in that other operations may not see the target file in any state
+      between that before the clone operation and after it.
+    </t>
+
+    <t>
       Throughout the rest of this document, we refer to the NFS server
       containing the source file as the "source server" and the NFS
       server to which the file is transferred as the "destination
@@ -42,12 +49,14 @@
     </t>
 
     <t>
-      The new operations are designed to copy files. Other
-      file system objects can be copied by building on these operations
-      or using other techniques. For example, if the user wishes to copy
-      a directory, the client can synthesize a directory copy by first
-      creating the destination directory and then copying the source
-      directory's files to the new destination directory.
+      The new operations are designed to copy files or regions within
+      them.  Other file system objects can be copied by building on
+      these operations or using other techniques.  For example, if a user
+      wishes to copy a directory, the client can synthesize a directory
+      copy operation by first creating the destination directory and the
+      individual (empty) files within it, and then copying the contents
+      of the source directory's files to files in the new destination
+      directory.
     </t>
 
     <t>
@@ -60,6 +69,11 @@
     <section anchor='ss:cp:over' title="Copy Operations">
       <t>
         <list style="hanging">
+          <t hangText="CLONE:">
+            Used by the client to request an synchronous atomic
+            copy-like operation.  (<xref target="op:clone" />)
+          </t>
+
           <t hangText="COPY_NOTIFY:">
             Used by the client to notify the source server of a
             future file copy from a given destination server for
@@ -93,43 +107,53 @@
 
     <section title="Requirements for Operations" anchor="ss:copy:ops">
       <t>
-        The implementation of server-side copy is OPTIONAL by the
-        client and the server. However, in order to successfully copy
-        a file, some operations MUST be supported by the client and/or
-        server.
+        Three OPTIONAL features are provided relative to server-side
+        copy. A server may choose independently to implement any of them.
+        A server implementing any of these features may be REQUIRED to
+        implement certain operations.  Other operations are OPTIONAL in
+        the context of a particular feature
+        <xref target='sec:operations:mandlist' />, but may become
+        REQUIRED depending on server behavior.  Clients need to use
+        these operations to successfully copy a file.
       </t>
 
       <t>
-        If a client desires an intra-server file copy, then it MUST
-        support the COPY and CB_OFFLOAD operations. If COPY returns
-        a stateid, then the client MAY use the OFFLOAD_CANCEL and
-        OFFLOAD_STATUS operations.
+        For a client to do an intra-server file copy, it needs to use
+        either the COPY or the CLONE operation.  If COPY is used the
+        client MUST support the CB_OFFLOAD operation.  If COPY is used and
+        it returns a stateid, then the client MAY use the OFFLOAD_CANCEL
+        and OFFLOAD_STATUS operations.
       </t>
 
       <t>
-        If a client desires an inter-server file copy, then it MUST
-        support the COPY, COPY_NOTIFY, and CB_OFFLOAD operations, and
-        MAY use the OFFLOAD_CANCEL operation. If COPY returns a stateid,
-        then the client MAY use the OFFLOAD_CANCEL and OFFLOAD_STATUS
-        operations.
+        For a client to do an inter-server file copy, then it needs to
+        use the COPY and COPY_NOTIFY operations and MUST support the
+        CB_OFFLOAD operation. If COPY returns a stateid, then the client
+        MAY use the OFFLOAD_CANCEL and OFFLOAD_STATUS operations.
       </t>
 
       <t>
-        If a server supports intra-server copy, then the server MUST
-        support the COPY operation. If a server’s COPY operation
+        If a server supports intra-server copy feature, then the server
+        MUST support the COPY operation.  If a server's COPY operation
         returns a stateid, then the server MUST also support these
         operations: CB_OFFLOAD, OFFLOAD_CANCEL, and OFFLOAD_STATUS.
       </t>
 
       <t>
-        If a source server supports inter-server copy, then the source
-        server MUST support all these operations: COPY_NOTIFY and
-        OFFLOAD_CANCEL. If a destination server supports inter-server
-        copy, then the destination server MUST support the COPY
-        operation. If a destination server’s COPY operation returns
-        a stateid, then the destination server MUST also support these
-        operations: CB_OFFLOAD, OFFLOAD_CANCEL, COPY_NOTIFY,
-        and OFFLOAD_STATUS.
+        If a server supports the clone feature, then it MUST support
+        the CLONE operations and the clone_blksize attribute on any
+        filesystem on which CLONE is supported (as either source or
+        destination file).
+      </t>
+
+      <t>
+        If a source server supports inter-server copy feature, then it
+        MUST support the operations COPY_NOTIFY and OFFLOAD_CANCEL. If
+        a destination server supports inter-server copy feature, then
+        it MUST support the COPY operation.  If a destination server's
+        COPY operation returns a stateid, then the destination server
+        MUST also support these operations: CB_OFFLOAD, OFFLOAD_CANCEL,
+        COPY_NOTIFY, and OFFLOAD_STATUS.
       </t>
 
       <t>

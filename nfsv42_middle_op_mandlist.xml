@@ -149,8 +149,8 @@
       <c>LOOKUP               </c> <c> REQ </c> <c>              </c>
       <c>LOOKUPP              </c> <c> REQ </c> <c>              </c>
       <c>NVERIFY              </c> <c> REQ </c> <c>              </c>
-      <c>OFFLOAD_CANCEL       </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
-      <c>OFFLOAD_STATUS       </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
+      <c>OFFLOAD_CANCEL       </c> <c> OPT </c> <c> COPYer (OPT), COPYra (OPT) </c>
+      <c>OFFLOAD_STATUS       </c> <c> OPT </c> <c> COPYer (OPT), COPYra (OPT) </c>
       <c>OPEN                 </c> <c> REQ </c> <c>              </c>
       <c>OPENATTR             </c> <c> OPT </c> <c>              </c>
       <c>OPEN_CONFIRM         </c> <c> MNI </c> <c>              </c>
