@@ -801,7 +801,7 @@ EOF
 	type_nfs_cb_argop4.x )
 
 cat << EOF > $i
-union nfs_cb_argop4 switch (unsigned argop) {
+union nfs_cb_argop4 switch (nfs_cb_opnum4 argop) {
  case OP_CB_GETATTR:
       CB_GETATTR4args           opcbgetattr;
 
@@ -853,7 +853,7 @@ EOF
 	type_nfs_cb_resop4.x )
 
 cat << EOF > $i
-union nfs_cb_resop4 switch (unsigned resop) {
+union nfs_cb_resop4 switch (nfs_cb_opnum4 resop) {
  case OP_CB_GETATTR:	CB_GETATTR4res	opcbgetattr;
  case OP_CB_RECALL:	CB_RECALL4res	opcbrecall;
 
