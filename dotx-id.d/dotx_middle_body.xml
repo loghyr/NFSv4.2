@@ -20,7 +20,7 @@
     </artwork>
   </figure>
 
-  </t>
+  <t>
      This effectively fully reconverges the NFSv4.0
      (<xref target="RFC7531" />) and NFSv4.1 (<xref target="RFC5662" />)
      strands of the XDR.
