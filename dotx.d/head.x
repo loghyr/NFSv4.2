@@ -461,7 +461,7 @@ typedef uint64_t	fattr4_quota_avail_soft;
 typedef uint64_t	fattr4_quota_used;
 typedef specdata4	fattr4_rawdev;
 typedef uint64_t	fattr4_space_avail;
-typedef uint64_t	fattr4_space_free;
+typedef length4		fattr4_space_free;
 typedef uint64_t	fattr4_space_total;
 typedef uint64_t	fattr4_space_used;
 typedef bool		fattr4_system;
