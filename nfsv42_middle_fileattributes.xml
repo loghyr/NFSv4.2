@@ -53,7 +53,7 @@
       <ttcol align="left">Data Type</ttcol>
       <ttcol align="left">Acc</ttcol>
       <ttcol align="left">Defined in</ttcol>
-      <c>clone_blksize</c>    <c>77</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:clone" /></c>
+      <c>clone_blksize</c>    <c>77</c> <c>uint32_t</c>           <c>R  </c> <c><xref target="ss:fattr:clone" /></c>
       <c>space_freed</c>      <c>78</c> <c>length4</c>            <c>R  </c> <c><xref target="ss:fattr:sf" /></c>
       <c>change_attr_type</c> <c>79</c> <c>change_attr_type4</c>  <c>R  </c> <c><xref target="ss:fattr:chattr" /></c>
       <c>sec_label</c>        <c>80</c> <c>sec_label4</c>         <c>R W</c> <c><xref target="ss:fattr:sec" /></c>
