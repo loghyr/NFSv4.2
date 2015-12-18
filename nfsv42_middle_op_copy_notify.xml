@@ -62,7 +62,11 @@
           before the cnr_lease_time expires. If the cnr_lease_time
           expires while the destination server is still reading
           the source file, the destination server is allowed to
-          finish reading the file.
+          finish reading the file. If the cnr_lease_time
+          expires before the destination server uses READ or READ_PLUS
+          to begin the transfer, the source server can use
+          NFS4ERR_PARTNER_NO_AUTH to inform the destination server
+          that the cnr_lease_time has expired.
         </t>
 
         <t>
