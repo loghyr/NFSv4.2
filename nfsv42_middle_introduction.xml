@@ -35,8 +35,8 @@
         </t>
 
         <t>
-          clarify the NFSv4.0 or NFSv4.1 protocols. I.e., any clarifications made
-          here apply to NFSv4.2 and neither of the prior protocols
+          clarify the NFSv4.0 or NFSv4.1 protocols, that is any clarifications made
+          here apply only to NFSv4.2 and neither of the prior protocols
         </t>
       </list>
     </t>
