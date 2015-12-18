@@ -34,8 +34,9 @@
         describing the protocol extensions made from NFS
         version 4 minor version 1. Major extensions
         introduced in NFS version 4 minor version two include:
-        Server Side Copy, Application I/O Advise, Space Reservations,
-        Sparse Files, Application Data Blocks, and Labeled NFS.
+        Server Side Copy, Application Input/Output (I/O) Advise,
+        Space Reservations, Sparse Files, Application Data Blocks,
+        and Labeled NFS.
       </t>
     </abstract>
 
