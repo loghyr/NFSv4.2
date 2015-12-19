@@ -111,7 +111,7 @@
   <texttable anchor='tbl:ops'>
     <preamble>Operations</preamble>
     <ttcol align='left'>Operation</ttcol>
-    <ttcol align='left'>EOL, REQ, REC, OPT, or MNI</ttcol>
+    <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
     <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
       <c>ALLOCATE             </c> <c> OPT </c> <c>              </c>
       <c>ACCESS               </c> <c> REQ </c> <c>              </c>
@@ -136,6 +136,7 @@
       <c>GETDEVICELIST        </c> <c> MNI </c> <c> pNFS (MNI)   </c>
       <c>GETFH                </c> <c> REQ </c> <c>              </c>
       <c>GET_DIR_DELEGATION   </c> <c> OPT </c> <c> DDELG (REQ)  </c>
+      <c>ILLEGAL              </c> <c> REQ </c> <c>              </c>
       <c>IO_ADVISE            </c> <c> OPT </c> <c>              </c>
       <c>LAYOUTCOMMIT         </c> <c> OPT </c> <c> pNFS (REQ)   </c>
       <c>LAYOUTGET            </c> <c> OPT </c> <c> pNFS (REQ)   </c>
@@ -189,12 +190,13 @@
     <ttcol align='left'>Operation</ttcol>
     <ttcol align='left'>REQ, REC, OPT, or MNI</ttcol>
     <ttcol align='left'>Feature (REQ, REC, or OPT)</ttcol>
-      <c>CB_OFFLOAD              </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
       <c>CB_GETATTR              </c> <c> OPT </c> <c> FDELG (REQ) </c>
+      <c>CB_ILLEGAL              </c> <c> REQ </c> <c>             </c>
       <c>CB_LAYOUTRECALL         </c> <c> OPT </c> <c> pNFS (REQ)  </c>
       <c>CB_NOTIFY               </c> <c> OPT </c> <c> DDELG (REQ) </c>
       <c>CB_NOTIFY_DEVICEID      </c> <c> OPT </c> <c> pNFS (OPT)  </c>
       <c>CB_NOTIFY_LOCK          </c> <c> OPT </c> <c>             </c>
+      <c>CB_OFFLOAD              </c> <c> OPT </c> <c> COPYer (REQ), COPYra (REQ) </c>
       <c>CB_PUSH_DELEG           </c> <c> OPT </c> <c> FDELG (OPT) </c>
       <c>CB_RECALL               </c> <c> OPT </c> <c> FDELG, DDELG, pNFS (REQ) </c>
       <c>CB_RECALL_ANY           </c> <c> OPT </c> <c> FDELG, DDELG, pNFS (REQ) </c>
