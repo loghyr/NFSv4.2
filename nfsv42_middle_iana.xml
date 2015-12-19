@@ -4,6 +4,6 @@
 <section anchor="sec:iana" title="IANA Considerations">
   <t>
     The IANA Considerations for Labeled NFS are addressed
-    in <xref target='Quigley14' />.
+    in <xref target='RFC7569' />.
   </t>
 </section>

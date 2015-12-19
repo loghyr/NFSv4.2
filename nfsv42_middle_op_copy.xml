@@ -159,7 +159,7 @@
       If both are set by the client, then the destination SHOULD
       try to determine if it can respond to both requirements
       at the same time. If it cannot make that determination,
-      it must set to false the one it can and set to true the
+      it must set to true the one it can and set to false the
       other. The client, upon getting an NFS4ERR_OFFLOAD_NO_REQS
       error, has to examine both cr_consecutive and cr_synchronous
       against the respective values of ca_consecutive and

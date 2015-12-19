@@ -203,7 +203,7 @@ typedef uint32_t  policy4;
         an LFS may optionally choose to include a Policy Identifier
         field to allow for complex policy deployments.  The LFS
         and Label Format Registry are described in detail in
-        <xref target='Quigley14' />.
+        <xref target='RFC7569' />.
         The translation used to interpret the security
         attribute is not specified as part of the protocol as it may depend
         on various factors.  The second component is an opaque section which

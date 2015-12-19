@@ -63,7 +63,7 @@
         </t>
 
         <t hangText='Label Format Registry:'>
-          is the IANA registry (see <xref target='Quigley14' />) containing
+          is the IANA registry (see <xref target='RFC7569' />) containing
           all registered LFSes along with references to the documents
           that describe the syntactic format and semantics of the
           security label.
@@ -145,7 +145,7 @@
       These attributes have a fixed format and semantics, which
       conflicts with the flexible nature of the security attribute.  To
       resolve this the security attribute consists of two components.  The
-      first component is a LFS as defined in <xref target='Quigley14' />
+      first component is a LFS as defined in <xref target='RFC7569' />
       to allow for interoperability between MAC
       mechanisms.  The second component is an opaque field which is the actual
       security attribute data.  To allow for various MAC models, NFSv4

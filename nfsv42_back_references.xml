@@ -107,6 +107,18 @@
 	      target="ftp://ftp.isi.edu/in-notes/rfc5662.txt"/>
     </reference>
 
+    <reference anchor="RFC7569">
+      <front>
+        <title>Registry Specification for Mandatory Access Control (MAC) Security Label Formats</title>
+        <author initials="D." surname="Quigley" />
+        <author initials="J." surname="Lu" />
+        <author initials="T." surname="Haynes" />
+        <date year="2015" month="July" />
+      </front>
+  <seriesInfo name='RFC' value='7569' />
+  <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc7569.txt' />
+    </reference>
+
     <reference anchor='NFSv42xdr'>
       <front>
 	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
@@ -302,17 +314,6 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
     </front>
     <seriesInfo name='Technical Report M74-244,' value='The MITRE Corporation, Bedford, MA' />
   </reference>
-
-    <reference anchor="Quigley14">
-      <front>
-        <title>Registry Specification for Mandatory Access Control (MAC) Security Label Formats</title>
-        <author initials="D." surname="Quigley" />
-        <author initials="J." surname="Lu" />
-        <author initials="T." surname="Haynes" />
-        <date year="2014" month="September" />
-      </front>
-      <seriesInfo name="draft-ietf-nfsv4-lfs-registry-01" value="(work in progress)"/>
-    </reference>
 
   <reference anchor='RFC1108'>
   <front>
