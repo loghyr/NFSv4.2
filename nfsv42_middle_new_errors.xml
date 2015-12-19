@@ -121,7 +121,7 @@
       in Section 15.2 of <xref target="RFC5661" />.
     </t>
 
-    <texttable anchor='tbl:op_error_returns'>
+    <texttable anchor='tbl:op_error_returns' style='all'>
       <preamble>Valid Error Returns for Each New Protocol Operation</preamble>
       <ttcol align="left">Operation</ttcol>
       <ttcol align="left">Errors</ttcol>
