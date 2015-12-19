@@ -1,7 +1,7 @@
 <!-- Copyright (C) The IETF Trust (2011-2012) -->
 <!-- Copyright (C) The Internet Society (2011-2012) -->
 
-<section anchor='sec:ioadvise' title='Support for Application IO Hints'>
+<section anchor='sec:ioadvise' title='Support for Application I/O Hints'>
   <t>
     Applications can issue client I/O hints via
     posix_fadvise() <xref target="posix_fadvise" /> to the NFS client.
