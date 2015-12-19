@@ -191,13 +191,14 @@
   <section toc='exclude' title="pNFS File Layout Data Type Considerations">
     <t>
       The IO_ADVISE considerations for pNFS are very similar to the COMMIT
-      considerations for pNFS. That is, as with COMMIT, some NFS server
+      considerations for pNFS (see Section 13.7 of <xref target='RFC5661' />).
+      That is, as with COMMIT, some NFS server
       implementations prefer IO_ADVISE be done on the storage device, and some prefer
       it be done on the metadata server.
     </t>
 
     <t>
-      For the file's layout type, it is proposed that NFSv4.2 include
+      For the file's layout type, NFSv4.2 includes
       an additional hint NFL42_CARE_IO_ADVISE_THRU_MDS which is
       valid only on metadata servers running NFSv4.2 or higher.
       Any file's layout obtained from a NFSv4.1 metadata server
@@ -228,13 +229,14 @@
 
     <t>
       The server is not required to support different advice for different
-      DS's with the same open file reference.
+      storage devices with the same open file reference.
     </t>
 
     <section toc='exclude' title="Dense and Sparse Packing Considerations">
       <t>
         The IO_ADVISE operation MUST use the iar_offset and byte range as
-        dictated by the presence or absence of NFL4_UFLG_DENSE.
+        dictated by the presence or absence of NFL4_UFLG_DENSE (see Section 13.4.4
+        of <xref target='RFC5661' />).
       </t>
 
       <t>
