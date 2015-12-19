@@ -2,57 +2,55 @@
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:lnfs" title="Labeled NFS">
-  <section anchor="ss:lnfs:intro" title="Introduction">
-    <t>
-      Access control models such as Unix permissions or Access Control
-      Lists are commonly referred to as Discretionary Access Control (DAC)
-      models.  These systems base their access decisions on user identity
-      and resource ownership.  In contrast Mandatory Access Control (MAC)
-      models base their access control decisions on the label on the
-      subject (usually a process) and the object it wishes to access
-      <xref target='RFC7204' />.  These labels may contain user
-      identity information but usually contain additional information.
-      In DAC systems users are free to specify the access rules for
-      resources that they own.  MAC models base their security decisions
-      on a system wide policy established by an administrator or
-      organization which the users do not have the ability to override.
-      In this section, we add a MAC model to NFSv4.2.
-    </t>
+  <t>
+    Access control models such as Unix permissions or Access Control
+    Lists are commonly referred to as Discretionary Access Control (DAC)
+    models.  These systems base their access decisions on user identity
+    and resource ownership.  In contrast Mandatory Access Control (MAC)
+    models base their access control decisions on the label on the
+    subject (usually a process) and the object it wishes to access
+    <xref target='RFC7204' />.  These labels may contain user
+    identity information but usually contain additional information.
+    In DAC systems users are free to specify the access rules for
+    resources that they own.  MAC models base their security decisions
+    on a system wide policy established by an administrator or
+    organization which the users do not have the ability to override.
+    In this section, we add a MAC model to NFSv4.2.
+  </t>
 
-    <t>
-      First we provide a method for transporting
-      and storing security label data on NFSv4 file objects.  Security
-      labels have several semantics that are met by NFSv4 recommended
-      attributes such as the ability to set the label value upon
-      object creation.  Access control on these attributes are done
-      through a combination of two mechanisms.  As with other
-      recommended attributes on file objects the usual DAC checks
-      (ACLs and permission bits) will be performed to ensure that
-      proper file ownership is enforced.  In addition a MAC system
-      MAY be employed on the client, server, or both to enforce
-      additional policy on what subjects may modify security label
-      information.
-    </t>
+  <t>
+    First we provide a method for transporting
+    and storing security label data on NFSv4 file objects.  Security
+    labels have several semantics that are met by NFSv4 recommended
+    attributes such as the ability to set the label value upon
+    object creation.  Access control on these attributes are done
+    through a combination of two mechanisms.  As with other
+    recommended attributes on file objects the usual DAC checks,
+    Access Control Lists (ACLs) and permission bits, will be performed to ensure that
+    proper file ownership is enforced.  In addition a MAC system
+    MAY be employed on the client, server, or both to enforce
+    additional policy on what subjects may modify security label
+    information.
+  </t>
 
-    <t>
-      Second, we describe a method for the client to
-      determine if an NFSv4 file object security label has changed.
-      A client which
-      needs to know if a label on a file or set of files is going to change
-      SHOULD request a delegation on each labeled file. In order to change such
-      a security label, the server will have to recall delegations on
-      any file affected by the label change, so informing clients of
-      the label change.
-    </t>
+  <t>
+    Second, we describe a method for the client to
+    determine if an NFSv4 file object security label has changed.
+    A client which
+    needs to know if a label on a file or set of files is going to change
+    SHOULD request a delegation on each labeled file. In order to change such
+    a security label, the server will have to recall delegations on
+    any file affected by the label change, so informing clients of
+    the label change.
+  </t>
 
-    <t>
-      An additional useful feature would be modification to the RPC layer
-      used by NFSv4 to allow RPC calls to carry security labels and enable
-      full mode enforcement as described in <xref target= 'ss:modes:full' />.
-      Such modifications are outside the scope of this document
-      (see <xref target='rpcsec_gssv3' />).
-    </t>
-  </section>
+  <t>
+    An additional useful feature would be modification to the RPC layer
+    used by NFSv4 to allow RPC calls to carry security labels and enable
+    full mode enforcement as described in <xref target= 'ss:modes:full' />.
+    Such modifications are outside the scope of this document
+    (see <xref target='rpcsec_gssv3' />).
+  </t>
 
   <section anchor='ss:lnfs:defs' title='Definitions'>
     <t>
