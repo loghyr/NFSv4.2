@@ -9,7 +9,7 @@
     and resource ownership.  In contrast Mandatory Access Control (MAC)
     models base their access control decisions on the label on the
     subject (usually a process) and the object it wishes to access
-    <xref target='RFC7204' />.  These labels may contain user
+    <xref target='RFC4949' />.  These labels may contain user
     identity information but usually contain additional information.
     In DAC systems users are free to specify the access rules for
     resources that they own.  MAC models base their security decisions

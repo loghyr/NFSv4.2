@@ -369,6 +369,18 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
   <format type='XML' octets='167135' target='http://xml.resource.org/public/rfc/xml/rfc2401.xml' />
   </reference>
 
+    <reference anchor='RFC4949'>
+      <front>
+        <title>Internet Security Glossary, Version 2</title>
+        <author initials="R." surname="Shirey" fullname="R. Shirey">
+        </author>
+        <date year="2007" month="August" />
+      </front>
+        <seriesInfo name="RFC" value="4949"/>
+        <format type="TXT"
+          target="ftp://ftp.isi.edu/in-notes/rfc4949.txt"/>
+    </reference>
+
     <reference anchor='RFC5663'>
       <front>
 	<title>Parallel NFS (pNFS) Block/Volume Layout</title>
