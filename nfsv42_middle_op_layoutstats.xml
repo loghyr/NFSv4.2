@@ -31,7 +31,8 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       The client can use LAYOUTSTATS to inform the metadata server
-      about its interaction with the layout represented by the
+      about its interaction with the layout (see Section 12
+      of <xref target='RFC5661' />) represented by the
       current filehandle, client ID (derived from the session ID
       in the preceding SEQUENCE operation), byte-range (lsa_offset
       and lsa_length), and lsa_stateid. lsa_read and lsa_write allow

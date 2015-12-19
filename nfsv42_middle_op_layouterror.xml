@@ -30,7 +30,8 @@
   <section toc='exclude' title="DESCRIPTION">
     <t>
       The client can use LAYOUTERROR to inform the metadata server
-      about errors in its interaction with the layout represented by the
+      about errors in its interaction with the layout (see Section 12
+      of <xref target='RFC5661' />) represented by the
       current filehandle, client ID (derived from the session ID
       in the preceding SEQUENCE operation), byte-range (lea_offset
       + lea_length), and lea_stateid.
@@ -39,7 +40,8 @@
     <t>
       Each individual device_error4 describes a single error
       associated with a storage device, which is identified via
-      de_deviceid.  If the Layout Type supports NFSv4 operations,
+      de_deviceid.  If the Layout Type (see Section 12.2.7 of
+      <xref target='RFC5661' />) supports NFSv4 operations,
       then the operation which returned the error is identified via
       de_opnum. If the Layout Type does not support NFSv4 operations,
       then it MAY chose to either map the operation onto one of the
