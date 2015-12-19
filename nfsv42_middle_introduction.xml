@@ -174,7 +174,7 @@
         of <xref target='RFC5661' />), the client cannot communicate
         back to the metadata server any errors or performance characteristics
         with the storage devices. NFSv4.2 provides two new operations to
-        do so respectivel: LAYOUTERROR (see <xref target='op:layouterror' />)
+        do so respectively: LAYOUTERROR (see <xref target='op:layouterror' />)
         and LAYOUTSTATS (see <xref target='op:layoutstats' />).
       </t>
     </section>
