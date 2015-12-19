@@ -75,9 +75,9 @@
           </t>
 
           <t hangText="COPY_NOTIFY:">
-            Used by the client to notify the source server of a
-            future file copy from a given destination server for
-            the given user.  (<xref target="op:copy_notify" />)
+            Used by the client to request the source server to authorize a
+            future file copy that will be made by a given destination
+            server on behalf of the given user. (<xref target="op:copy_notify" />)
           </t>
 
           <t hangText="COPY:">
@@ -176,7 +176,7 @@
 
   <section title="Requirements for Inter-Server Copy">
     <t>
-      Inter-server copy is driven by several requirements:
+      The specification of inter-server copy is driven by several requirements:
     </t>
 
     <t>
@@ -228,7 +228,7 @@
         not the destination.  As such, there might already be an
         outstanding stateid, issued to the destination as client
         of the source, with the same value as that provided for the
-        lock stateid. The source MUST equate the lock stateid as
+        lock stateid. The source MUST interpret the lock stateid as
         that of the client, i.e., when the destination presents it
         in the context of a inter-server copy, it is on behalf of
         the client.
@@ -408,14 +408,14 @@
   Client                Source         Destination
      +                    +                 +
      |                    |                 |
-     |--- OPEN        --->|                 | Returns os1
-     |<------------------/|                 |
+     |--- OPEN        --->|                 | Returns
+     |<------------------/|                 | open state os1
      |                    |                 |
      |--- COPY_NOTIFY --->|                 |
      |<------------------/|                 |
      |                    |                 |
-     |--- OPEN ---------------------------->| Returns os2
-     |<------------------------------------/|
+     |--- OPEN ---------------------------->| Returns
+     |<------------------------------------/| open state os2
      |                    |                 |
      |--- COPY ---------------------------->|
      |                    |                 |
@@ -431,10 +431,10 @@
      |<------------------------------------/| Destination replies
      |                    |                 | to COPY
      |                    |                 |
-     |--- CLOSE --------------------------->| Release open state
+     |--- CLOSE --------------------------->| Release os2
      |<------------------------------------/|
      |                    |                 |
-     |--- CLOSE       --->|                 | Release open state
+     |--- CLOSE       --->|                 | Release os1
      |<------------------/|                 |
       ]]></artwork>
     </figure>
@@ -444,8 +444,8 @@
   Client                Source         Destination
     +                    +                 +
     |                    |                 |
-    |--- OPEN        --->|                 | Returns os1
-    |<------------------/|                 |
+    |--- OPEN        --->|                 | Returns
+    |<------------------/|                 | open state os1
     |                    |                 |
     |--- LOCK        --->|                 | Optional, could be done
     |<------------------/|                 | with a share lock
@@ -455,8 +455,8 @@
     |                    |                 |
     |                    |                 |
     |                    |                 |
-    |--- OPEN ---------------------------->| Returns os2
-    |<------------------------------------/|
+    |--- OPEN ---------------------------->| Returns
+    |<------------------------------------/| open state os2
     |                    |                 |
     |--- LOCK ---------------------------->| Optional ...
     |<------------------------------------/|
@@ -488,13 +488,13 @@
     |--- LOCKU --------------------------->| Only if LOCK was done
     |<------------------------------------/|
     |                    |                 |
-    |--- CLOSE --------------------------->| Release open state
+    |--- CLOSE --------------------------->| Release os2
     |<------------------------------------/|
     |                    |                 |
     |--- LOCKU       --->|                 | Only if LOCK was done
     |<------------------/|                 |
     |                    |                 |
-    |--- CLOSE       --->|                 | Release open state
+    |--- CLOSE       --->|                 | Release os1
     |<------------------/|                 |
     |                    |                 |
       ]]></artwork>
@@ -531,7 +531,7 @@
         can use the source filehandle and ca_src_stateid provided in the
         COPY request with standard NFSv4.x operations to read data
         from the source server. Note that the ca_src_stateid MUST be
-        the cnr_stateid returned from the source via the COPY_NOTIFY.
+        the cnr_stateid returned from the source via the COPY_NOTIFY (<xref target='op:copy_notify' />).
       </t>
     </section>
 
@@ -557,7 +557,7 @@
 
       <t>
         In a heterogeneous environment, using a protocol other
-        than NFSv4.x (e.g., HTTP <xref target="RFC2616" /> or FTP
+        than NFSv4.x (e.g., HTTP <xref target="RFC7230" /> or FTP
         <xref target="RFC959" />) presents some challenges. In
         particular, the destination server is presented with the
         challenge of accessing the source file given only an
@@ -615,7 +615,8 @@
     <t>
       If the netloc4 is of type NL4_NAME, the nl_name field MUST be
       specified as a UTF-8 string. The nl_name is expected to be
-      resolved to a network address via DNS, LDAP, NIS, /etc/hosts,
+      resolved to a network address via DNS, Lightweight Directory
+      Access Protocol (LDAP), Network Information Service (NIS), /etc/hosts,
       or some other means. If the netloc4 is of type NL4_URL, a
       server URL <xref target="RFC3986" /> appropriate for the
       server-to-server copy operation is specified as a UTF-8 string.
@@ -1134,7 +1135,7 @@
         <t>
           The same techniques as <xref target="sec:SSC-rpc-no-gss" />,
           using unique URLs for each destination server, can be used for other
-          protocols (e.g., HTTP <xref target="RFC2616" /> and
+          protocols (e.g., HTTP <xref target="RFC7230" /> and
           FTP <xref target="RFC959" />) as well.
         </t>
       </section>
