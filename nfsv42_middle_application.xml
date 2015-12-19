@@ -31,13 +31,12 @@
       </t>
 
       <t>
-        Fields to describe the state of the ADB and a means to
-        detect block corruption.  For both pieces of data, a useful
-        property is that allowed values be unique in that if passed
-        across the network, corruption due to translation between
-        big and little endian architectures are detectable.  For
-        example, 0xF0DEDEF0 has the same bit pattern in both
-        architectures.
+        Fields to describe the state of the ADB and a means to detect
+        block corruption.  For both pieces of data, a useful property would be
+        that the allowed values are specially selected so that if passed across the
+        network, corruption due to translation between big and little
+        endian architectures is detectable.  For example, 0xF0DEDEF0 has
+        the same (32 wide) bit pattern in both architectures, making it inappropriate.
       </t>
     </list>
   </t>

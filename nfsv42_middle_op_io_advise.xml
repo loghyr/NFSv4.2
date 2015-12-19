@@ -192,8 +192,8 @@
     <t>
       The IO_ADVISE considerations for pNFS are very similar to the COMMIT
       considerations for pNFS. That is, as with COMMIT, some NFS server
-      implementations prefer IO_ADVISE be done on the DS, and some prefer
-      it be done on the MDS.
+      implementations prefer IO_ADVISE be done on the storage device, and some prefer
+      it be done on the metadata server.
     </t>
 
     <t>
@@ -210,19 +210,19 @@
 
     <t>
       If NFL42_UFLG_IO_ADVISE_THRU_MDS is set, the client MUST send
-      the IO_ADVISE operation to the MDS in order for it to be
-      honored by the DS.  Once the MDS receives the IO_ADVISE
-      operation, it will communicate the advice to each DS.
+      the IO_ADVISE operation to the metadata server in order for it to be
+      honored by the storage device.  Once the metadata server receives the IO_ADVISE
+      operation, it will communicate the advice to each storage device.
     </t>
 
     <t>
       If NFL42_UFLG_IO_ADVISE_THRU_MDS is not set, then the client
-      SHOULD send an IO_ADVISE operation to the appropriate DS for
+      SHOULD send an IO_ADVISE operation to the appropriate storage device for
       the specified byte range.  While the client MAY always send
-      IO_ADVISE to the MDS, if the server has not set
+      IO_ADVISE to the metadata server, if the server has not set
       NFL42_UFLG_IO_ADVISE_THRU_MDS, the client should expect that
       such an IO_ADVISE is futile. Note that a client SHOULD use
-      the same set of arguments on each IO_ADVISE sent to a DS for
+      the same set of arguments on each IO_ADVISE sent to a storage device for
       the same open file reference.
     </t>
 
@@ -238,25 +238,25 @@
       </t>
 
       <t>
-        E.g., if NFL4_UFLG_DENSE is present, and a READ or WRITE to the DS
+        E.g., if NFL4_UFLG_DENSE is present, and a READ or WRITE to the storage device
         for iaa_offset 0 really means iaa_offset 10000 in the logical file, then
         an IO_ADVISE for iaa_offset 0 means iaa_offset 10000.
       </t>
 
       <t>
-        E.g., if NFL4_UFLG_DENSE is absent, then a READ or WRITE to the DS
+        E.g., if NFL4_UFLG_DENSE is absent, then a READ or WRITE to the storage device
         for iaa_offset 0 really means iaa_offset 0 in the logical file, then an
         IO_ADVISE for iaa_offset 0 means iaa_offset 0 in the logical file.
       </t>
 
       <t>
         E.g., if NFL4_UFLG_DENSE is present, the stripe unit is 1000 bytes and
-        the stripe count is 10, and the dense DS file is serving iar_offset 0.
-        A  READ or WRITE to the DS for iaa_offsets 0, 1000, 2000, and 3000,
+        the stripe count is 10, and the dense storage device file is serving iar_offset 0.
+        A  READ or WRITE to the storage device for iaa_offsets 0, 1000, 2000, and 3000,
         really mean iaa_offsets 10000, 20000, 30000, and 40000 (implying a stripe
         count of 10 and a stripe unit of 1000), then an IO_ADVISE sent to the
-        same DS with an iaa_offset of 500, and an iaa_count of 3000 means that the
-        IO_ADVISE applies to these byte ranges of the dense DS file:
+        same storage device with an iaa_offset of 500, and an iaa_count of 3000 means that the
+        IO_ADVISE applies to these byte ranges of the dense storage device file:
       </t>
 
       <figure>
@@ -288,14 +288,14 @@
 
       <t>
         E.g., if NFL4_UFLG_DENSE is absent, the stripe unit is 250 bytes, the
-        stripe count is 4, and the sparse DS file is serving iaa_offset 0.
-        Then a READ or WRITE to the DS for iaa_offsets 0, 1000, 2000, and
+        stripe count is 4, and the sparse storage device file is serving iaa_offset 0.
+        Then a READ or WRITE to the storage device for iaa_offsets 0, 1000, 2000, and
         3000, really means iaa_offsets 0, 1000, 2000, and 3000 in the logical
-        file, keeping in mind that on the DS file, byte ranges 250 to 999,
+        file, keeping in mind that on the storage device file, byte ranges 250 to 999,
         1250 to 1999, 2250 to 2999, and 3250 to 3999 are not accessible. Then
-        an IO_ADVISE sent to the same DS with an iaa_offset of 500, and a iaa_count
+        an IO_ADVISE sent to the same storage device with an iaa_offset of 500, and a iaa_count
         of 3000 means that the IO_ADVISE applies to these byte ranges of the
-        logical file and the sparse DS file:
+        logical file and the sparse storage device file:
       </t>
 
       <figure>
