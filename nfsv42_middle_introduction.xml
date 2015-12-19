@@ -74,7 +74,7 @@
   </section>
 
   <section title="Overview of NFSv4.2 Features">
-    <section title="Server Side Copy">
+    <section title="Server Side Clone and Copy">
       <t>
         A traditional file copy of a remotely accessed file, whether from one server
         to another or between locations in the same server, results in the
@@ -83,6 +83,11 @@
         unnecessary traffic to be eliminated:
 
         <list style='symbols'>
+          <t>
+             The intra-server clone feature allows the client to request
+             a synchronous cloning, perhaps by copy-on-write semantics.
+          </t>
+
           <t>
              The intra-server copy feature allows the client to request the
              server to perform the copy internally, avoiding unnecessary network
