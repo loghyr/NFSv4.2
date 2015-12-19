@@ -9,7 +9,7 @@
   </t>
 
   <t>
-    One example is the posix_fallocate (<xref target='posix_fallocate' />)
+    One example is the posix_fallocate operation (<xref target='posix_fallocate' />)
     which allows applications to ask for space reservations from the
     operating system, usually to provide a better file layout and reduce
     overhead for random or slow growing file appending workloads.
@@ -89,7 +89,7 @@
   <t>
     <list style="hanging">
       <t hangText="space_freed">
-        This attribute specifies the space freed when a file is
+        This attribute reports the space that would be freed when a file is
         deleted, taking block sharing into consideration.
       </t>
 
