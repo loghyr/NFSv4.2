@@ -76,16 +76,16 @@
   <section title="Overview of NFSv4.2 Features">
     <section title="Server Side Copy">
       <t>
-        A traditional file copy of a remotely accessed, whether from one server
-        to another or between location in the same server, results in the
+        A traditional file copy of a remotely accessed file, whether from one server
+        to another or between locations in the same server, results in the
         data being put on the network twice - source to client and then
         client to destination.  New operations are introduced to allow
         unnecessary traffic to be eliminated:
 
-        <list>
+        <list style='symbols'>
           <t>
-            The intra-server copy feature allows the client to request the
-            server to perform the copy internally, avoiding unnecessary network
+             The intra-server copy feature allows the client to request the
+             server to perform the copy internally, avoiding unnecessary network
              traffic.
           </t>
 
@@ -101,7 +101,7 @@
       </t>
     </section>
 
-    <section title="Application I/O Advise">
+    <section title="Application Input/Output (I/O) Advise">
       <t>
         Applications and clients want to advise the server as to
         expected I/O behavior.  Using IO_ADVISE (see <xref target='op:io_advise' />)
@@ -109,7 +109,7 @@
         accessed sequentially or randomly, and whether a file will or will
         not be accessed in the near future, allows servers to  optimize future I/O
         requests for a file by, for example, prefetching or evicting data.
-	This operation can be used to support the posix_fadvise
+	This operation can be used to support the posix_fadvise <xref target="posix_fadvise" />
 	function.  In addition, it may be helpful to applications
 	such as databases and video editors.
       </t>
@@ -119,7 +119,7 @@
       <t>
         Sparse files are ones which have unallocated or uninitialized data
         blocks as holes in the file. Such holes are typically transferred
-        as 0s during I/O. READ_PLUS (see <xref target='op:read_plus' />)
+        as 0s when read from the file. READ_PLUS (see <xref target='op:read_plus' />)
         allows a server to send back to the client metadata describing
         the hole and DEALLOCATE (see <xref target='op:deallocate' />)
         allows the client to punch holes into a file. In addition,
@@ -167,7 +167,8 @@
   <section title="Enhancements to Minor Versioning Model">
     <t>
       In NFSv4.1, the only way to introduce new variants of an
-      operation was to introduce a new operation. I.e., READ becomes
+      operation was to introduce a new operation. For instance, READ
+      would have to be replaced or supplemented by, say,
       either READ2 or READ_PLUS.  With the use of discriminated
       unions as parameters to such functions in NFSv4.2, it is
       possible to add a new arm in a subsequent minor version. And
