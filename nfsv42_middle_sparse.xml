@@ -20,7 +20,7 @@
     them on disk, but will return zeros until data is written to them.  Such
     functionality is already present in the data model of the pNFS
     Block/Volume Layout (see <xref target="RFC5663" />).  Uninitialized
-    blocks can thought as holes inside a space reservation window.
+    blocks can be thought of as holes inside a space reservation window.
   </t>
 
   <t>
@@ -36,7 +36,7 @@
     A sparse file is typically created by initializing the file to
     be all zeros - nothing is written to the data in the file, instead
     the hole is recorded in the metadata for the file. So a 8G disk
-    image might be represented initially by a couple hundred bits
+    image might be represented initially by a few hundred bits
     in the metadata (on UNIX file systems, the inode)
     and nothing on the disk. If the VM then writes
     100M to a file in the middle of the image, there would now be
@@ -56,7 +56,7 @@
   <t>
     Two new operations DEALLOCATE (<xref target="op:deallocate" />)
     and READ_PLUS (<xref target="op:read_plus" />) are
-    introduced.  DEALLOCATE allows for the hole punching.  I.e.,
+    introduced.  DEALLOCATE allows for the hole punching, where
     an application might want to reset the allocation and reservation
     status of a range of the file.
     READ_PLUS supports all the features of READ but includes
