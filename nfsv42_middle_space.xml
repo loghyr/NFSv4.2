@@ -64,7 +64,8 @@
     While these attributes are sufficient for space accounting in
     traditional file systems, they prove to be inadequate in modern
     file systems that support block sharing.  In such file systems,
-    multiple inodes can point to a single block with a block reference
+    multiple inodes (the metadata portion of the file system object)
+    can point to a single block with a block reference
     count to guard against premature freeing.  Having a way to tell the
     number of blocks that would be freed if the file was deleted would be
     useful to applications that wish to migrate files when a volume is

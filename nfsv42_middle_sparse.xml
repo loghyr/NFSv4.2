@@ -2,71 +2,70 @@
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:sparse" title="Sparse Files">
-  <section anchor="ss:sparse:intro" title="Introduction">
-    <t>
-      A sparse file is a common way of representing a large file without
-      having to utilize all of the disk space for it.  Consequently, a
-      sparse file uses less physical space than its size indicates.  This
-      means the file contains 'holes', byte ranges within the file that
-      contain no data.  Most modern file systems support sparse files,
-      including most UNIX file systems and NTFS, but notably not Apple's
-      HFS+.  Common examples of sparse files include Virtual Machine (VM)
-      OS/disk images, database files, log files, and even checkpoint
-      recovery files most commonly used by the HPC community.
-    </t>
+   <t>
+     A sparse file is a common way of representing a large file without
+     having to utilize all of the disk space for it.  Consequently, a
+     sparse file uses less physical space than its size indicates.  This
+     means the file contains 'holes', byte ranges within the file that
+     contain no data.  Most modern file systems support sparse files,
+     including most UNIX file systems and NTFS, but notably not Apple's
+     HFS+.  Common examples of sparse files include Virtual Machine (VM)
+     OS/disk images, database files, log files, and even checkpoint
+     recovery files most commonly used by the HPC community.
+   </t>
 
-    <t>
-      In addition many modern file systems support the concept of 'unwritten'
-      or 'uninitialized' blocks, which have uninitialized space allocated to
-      them on disk, but will return zeros until data is written to them.  Such
-      functionality is already present in the data model of the pNFS
-      Block/Volume Layout (see <xref target="RFC5663" />).  Uninitialized
-      blocks can thought as holes inside a space reservation window.
-    </t>
+  <t>
+    In addition many modern file systems support the concept of 'unwritten'
+    or 'uninitialized' blocks, which have uninitialized space allocated to
+    them on disk, but will return zeros until data is written to them.  Such
+    functionality is already present in the data model of the pNFS
+    Block/Volume Layout (see <xref target="RFC5663" />).  Uninitialized
+    blocks can thought as holes inside a space reservation window.
+  </t>
 
-    <t>
-      If an application reads a hole in a sparse file, the file system must
-      return all zeros to the application.   For local data access there
-      is little penalty, but with NFS these zeroes must be transferred back
-      to the client.  If an application uses the NFS client to read data
-      into memory, this wastes time and bandwidth as the application waits
-      for the zeroes to be transferred.
-    </t>
+  <t>
+    If an application reads a hole in a sparse file, the file system must
+    return all zeros to the application.   For local data access there
+    is little penalty, but with NFS these zeroes must be transferred back
+    to the client.  If an application uses the NFS client to read data
+    into memory, this wastes time and bandwidth as the application waits
+    for the zeroes to be transferred.
+  </t>
 
-    <t>
-      A sparse file is typically created by initializing the file to
-      be all zeros - nothing is written to the data in the file, instead
-      the hole is recorded in the metadata for the file. So a 8G disk
-      image might be represented initially by a couple hundred bits
-      in the inode and nothing on the disk. If the VM then writes
-      100M to a file in the middle of the image, there would now be
-      two holes represented in the metadata and 100M in the data.
-    </t>
+  <t>
+    A sparse file is typically created by initializing the file to
+    be all zeros - nothing is written to the data in the file, instead
+    the hole is recorded in the metadata for the file. So a 8G disk
+    image might be represented initially by a couple hundred bits
+    in the metadata (on UNIX file systems, the inode)
+    and nothing on the disk. If the VM then writes
+    100M to a file in the middle of the image, there would now be
+    two holes represented in the metadata and 100M in the data.
+  </t>
 
-    <t>
-      No new operation is needed to allow the creation of a sparsely
-      populated file, when a file is created and a write occurs past
-      the current size of the file, the non-allocated region will either
-      be a hole or filled with zeros.  The choice of behavior is dictated
-      by the underlying file system and is transparent to the application.
-      What is needed are the abilities to read sparse files and to punch
-      holes to reinitialize the contents of a file.
-    </t>
+  <t>
+    No new operation is needed to allow the creation of a sparsely
+    populated file, when a file is created and a write occurs past
+    the current size of the file, the non-allocated region will either
+    be a hole or filled with zeros.  The choice of behavior is dictated
+    by the underlying file system and is transparent to the application.
+    What is needed are the abilities to read sparse files and to punch
+    holes to reinitialize the contents of a file.
+  </t>
 
-    <t>
-      Two new operations DEALLOCATE (<xref target="op:deallocate" />)
-      and READ_PLUS (<xref target="op:read_plus" />) are
-      introduced.  DEALLOCATE allows for the hole punching.  I.e.,
-      an application might want to reset the allocation and reservation
-      status of a range of the file.
-      READ_PLUS supports all the features of READ but includes
-      an extension to support sparse files.  READ_PLUS is guaranteed
-      to perform no worse than READ, and can dramatically improve
-      performance with sparse files.  READ_PLUS does not depend on
-      pNFS protocol features, but can be used by pNFS to support
-      sparse files.
-    </t>
-  </section>
+  <t>
+    Two new operations DEALLOCATE (<xref target="op:deallocate" />)
+    and READ_PLUS (<xref target="op:read_plus" />) are
+    introduced.  DEALLOCATE allows for the hole punching.  I.e.,
+    an application might want to reset the allocation and reservation
+    status of a range of the file.
+    READ_PLUS supports all the features of READ but includes
+    an extension to support sparse files.  READ_PLUS is guaranteed
+    to perform no worse than READ, and can dramatically improve
+    performance with sparse files.  READ_PLUS does not depend on
+    pNFS protocol features, but can be used by pNFS to support
+    sparse files.
+  </t>
 
   <section anchor="ss:sparse:terms" title="Terminology">
     <t>
