@@ -80,9 +80,9 @@
           <organization abbrev='Primary Data' />
         </author>
 
-        <date month='December' year='2014' />
+        <date month='December' year='2015' />
       </front>
-      <seriesInfo name="draft-ietf-nfsv4-minorversion2-29" value="(Work In Progress)"/>
+      <seriesInfo name="draft-ietf-nfsv4-minorversion2-40" value="(Work In Progress)"/>
     </reference>
 
 </references>

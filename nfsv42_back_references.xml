@@ -113,10 +113,10 @@
 	<author initials="T." surname="Haynes" fullname="T. Haynes">
 	  <organization>Primary Data</organization>
 	</author>
-	<date year="2014" month="December"/>
+	<date year="2015" month="December"/>
       </front>
       <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-29" />
+	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-40" />
     </reference>
 
     <reference anchor='rpcsec_gssv3'>
