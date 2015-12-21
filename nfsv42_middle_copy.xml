@@ -835,7 +835,7 @@
                 the appropriate privilege data types, copy_from_auth_priv
                 and copy_to_auth_priv.  Because of this shared_secret the
                 RPCSEC_GSS3_CREATE control messages for copy_from_auth
-                and copy_to_auth MUST use a QOP of rpc_gss_svc_privacy.
+                and copy_to_auth MUST use a Quality of Protection (QOP) of rpc_gss_svc_privacy.
               </t>
 
               <t>
