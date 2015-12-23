@@ -46,7 +46,8 @@
 
   <t>
     An additional useful feature would be modification to the RPC layer
-    used by NFSv4 to allow RPC calls to carry security labels and enable
+    used by NFSv4 to allow RPC calls to assert client process subject
+    security labels and enable
     full mode enforcement as described in <xref target= 'ss:modes:full' />.
     Such modifications are outside the scope of this document
     (see <xref target='rpcsec_gssv3' />).
@@ -109,7 +110,8 @@
   <section anchor="ss:lnfs:macsec" title="MAC Security Attribute">
     <t>
       MAC models base access decisions on security attributes bound to
-      subjects and objects.  This information can range from a user
+      subjects (usually processes) and objects (for NFS, file objects).
+      This information can range from a user
       identity for an identity based MAC model, sensitivity levels for
       Multi-level security, or a type for Type Enforcement.  These models
       base their decisions on different criteria but the semantics of the
@@ -303,8 +305,9 @@
       <t>
         Fully MAC-Functional NFSv4 servers are not possible in the
         absence of RPCSEC_GSSv3 <xref target='rpcsec_gssv3' /> support
-        for subject label transport.  However, servers may make decisions
-        based on the RPC credential information available.
+        for client process subject label assertion.  However,
+        servers may make decisions based on the RPC credential information
+        available.
       </t>
 
       <section anchor='ss:modes:fm_ilt' title='Initial Labeling and Translation'>
