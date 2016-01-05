@@ -158,7 +158,7 @@
 
       <t>
         Each operation is performed in the context of the user
-        identified by the ONC RPC credential of its containing COMPOUND
+        identified by the Open Network Computing (ONC) RPC credential of its containing COMPOUND
         or CB_COMPOUND request. For example, an OFFLOAD_CANCEL operation
         issued by a given user indicates that a specified COPY operation
         initiated by the same user be canceled. Therefore an OFFLOAD_CANCEL
