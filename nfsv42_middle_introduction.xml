@@ -42,6 +42,13 @@
     </t>
 
     <t>
+      NFSv4.2 is a superset of NFSv4.1, with all of the new features being
+      optional. As such, NFSv4.2 maintains the same compatibility that NFSv4.1
+      had with NFSv4.0. Any interactions of a new feature with NFSv4.1 semantics,
+      is described in the relevant text.
+    </t>
+
+    <t>
       The full External Data Representation (XDR) <xref target='RFC4506' />
       for NFSv4.2 is presented in <xref target='NFSv42xdr' />.
     </t>
