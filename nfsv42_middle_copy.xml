@@ -757,7 +757,7 @@
               &lt;CODE ENDS&gt;
               <vspace blankLines="1" />
 
-              cfp_shared_secret is an automatically generated random number
+              cfap_shared_secret is an automatically generated random number
               secret value.
             </t>
 
