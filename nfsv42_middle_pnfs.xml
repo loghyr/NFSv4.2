@@ -29,9 +29,11 @@
       or to a storage device that implements additions from NFSv4.2, in which
       case the rules in <xref target='ss:pnfs:ops' /> apply. As the File
       Layout Type does not provide a means for informing the client as
-      to which minor version a particular storage device is providing, it will have
-      to negotiate this via the normal RPC semantics of major and minor
-      version discovery.
+      to which minor version a particular storage device is providing, the client will have
+      to negotiate this with the storage device via the normal RPC semantics of major and minor
+      version discovery. E.g., as per Section 16.2.3 of <xref target='RFC5661' />, the
+      client could try a COMPOUND with a minorversion of 2 and if it gets
+      NFS4ERR_MINOR_VERS_MISMATCH, drop back to 1.
     </t>
 
     <section anchor="ss:pnfs:ops" title="Operations Sent to NFSv4.2 Data Servers">
