@@ -61,7 +61,7 @@
 
     <t>
       For the inter-server copy, the operations are defined to be
-      compatible with the traditional copy authentication approach.
+      compatible with the traditional copy authorization approach.
       The client and user are authorized at the source for reading. Then
       they are authorized at the destination for writing.
     </t>
