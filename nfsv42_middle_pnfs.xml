@@ -30,7 +30,7 @@
       case the rules in <xref target='ss:pnfs:ops' /> apply. As the File
       Layout Type does not provide a means for informing the client as
       to which minor version a particular storage device is providing, the client will have
-      to negotiate this with the storage device via the normal RPC semantics of major and minor
+      to negotiate this with the storage device via the normal iRemote Procedure Call (RPC) semantics of major and minor
       version discovery. E.g., as per Section 16.2.3 of <xref target='RFC5661' />, the
       client could try a COMPOUND with a minorversion of 2 and if it gets
       NFS4ERR_MINOR_VERS_MISMATCH, drop back to 1.
