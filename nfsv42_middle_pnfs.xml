@@ -2,6 +2,13 @@
 <!-- Copyright (C) The Internet Society (2014) -->
 
 <section anchor="ss:pnfs" title="pNFS considerations for New Operations">
+  <t>
+    The interactions of the new operations with non-pNFS functionality is
+    straight forward and covered in the relevant sections. However, the
+    interactions of the new operations with pNFS is more complicated and
+    this section provides an overview.
+  </t>
+
   <section anchor="ss:pnfs:atom" title="Atomicity for ALLOCATE and DEALLOCATE">
     <t>
       Both ALLOCATE (see <xref target='op:allocate' />) and
@@ -30,7 +37,7 @@
       case the rules in <xref target='ss:pnfs:ops' /> apply. As the File
       Layout Type does not provide a means for informing the client as
       to which minor version a particular storage device is providing, the client will have
-      to negotiate this with the storage device via the normal iRemote Procedure Call (RPC) semantics of major and minor
+      to negotiate this with the storage device via the normal Remote Procedure Call (RPC) semantics of major and minor
       version discovery. E.g., as per Section 16.2.3 of <xref target='RFC5661' />, the
       client could try a COMPOUND with a minorversion of 2 and if it gets
       NFS4ERR_MINOR_VERS_MISMATCH, drop back to 1.
