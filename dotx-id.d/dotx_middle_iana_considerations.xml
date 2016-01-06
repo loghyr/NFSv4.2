@@ -3,6 +3,6 @@
 <section anchor="ianaconsider" title="IANA Considerations">
     <t>
       See the IANA Considerations section of
-      <xref target="NFSv42" />.
+      <xref target="I-D.ietf-nfsv4-minorversion2" />.
     </t>
 </section>

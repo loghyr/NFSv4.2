@@ -3,6 +3,6 @@
 <section anchor="securityconsider" title="Security Considerations">
   <t>
     See the Security Considerations section of
-    <xref target="NFSv42" />.
+    <xref target="I-D.ietf-nfsv4-minorversion2" />.
   </t>
 </section>

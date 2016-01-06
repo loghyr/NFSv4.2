@@ -72,17 +72,23 @@
           target="ftp://ftp.isi.edu/in-notes/rfc7531.txt"/>
     </reference>
 
-    <reference anchor='NFSv42'>
-      <front>
-        <title>NFS Version 4 Minor Version 2</title>
+<reference anchor='I-D.ietf-nfsv4-minorversion2'>
+<front>
+<title>NFS Version 4 Minor Version 2</title>
 
-        <author initials='T' surname='Haynes' fullname='Thomas Haynes'>
-          <organization abbrev='Primary Data' />
-        </author>
+<author initials='T' surname='Haynes' fullname='Tom Haynes'>
+    <organization />
+</author>
 
-        <date month='December' year='2015' />
-      </front>
-      <seriesInfo name="draft-ietf-nfsv4-minorversion2-40" value="(Work In Progress)"/>
-    </reference>
+<date month='January' day='7' year='2016' />
+
+<abstract><t>This Internet-Draft describes NFS version 4 minor version two, describing the protocol extensions made from NFS version 4 minor version 1.  Major extensions introduced in NFS version 4 minor version two include: Server Side Copy, Application I/O Advise, Space Reservations, Sparse Files, Application Data Blocks, and Labeled NFS.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-ietf-nfsv4-minorversion2-40 (Work In Progress)' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-minorversion2-40.txt' />
+</reference>
 
 </references>
