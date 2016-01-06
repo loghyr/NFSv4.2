@@ -12,7 +12,8 @@ include(type_CB_COMPOUND4res.x)
 /*
  * Program number is in the transient range since the client
  * will assign the exact transient program number and provide
- * that to the server via the SETCLIENTID operation.
+ * that to the server via the CREATE_SESSION or
+ * BACKCHANNEL_CTL operations.
  */
 program NFS4_CALLBACK {
 	version NFS_CB {
