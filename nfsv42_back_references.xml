@@ -119,17 +119,24 @@
   <format type='TXT' target='http://www.rfc-editor.org/rfc/rfc7569.txt' />
     </reference>
 
-    <reference anchor='NFSv42xdr'>
-      <front>
-	<title>Network File System (NFS) Version 4 Minor Version 2 External Data Representation Standard (XDR) Description</title>
-	<author initials="T." surname="Haynes" fullname="T. Haynes">
-	  <organization>Primary Data</organization>
-	</author>
-	<date year="2015" month="December"/>
-      </front>
-      <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-minorversion2-dot-x-40" />
-    </reference>
+<reference anchor='I-D.ietf-nfsv4-minorversion2-dot-x'>
+<front>
+<title>NFSv4 Minor Version 2 Protocol External Data Representation Standard (XDR) Description</title>
+
+<author initials='T' surname='Haynes' fullname='Tom Haynes'>
+    <organization />
+</author>
+
+<date month='January' day='7' year='2016' />
+
+<abstract><t>This Internet-Draft provides the XDR description for NFSv4 minor version two.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-ietf-nfsv4-minorversion2-dot-x-40' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-minorversion2-dot-x-40.txt' />
+</reference>
 
     <reference anchor='rpcsec_gssv3'>
       <front>

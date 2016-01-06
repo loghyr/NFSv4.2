@@ -77,7 +77,7 @@
   </t>
   <t>
     [RFC Editor: prior to publishing this document as an RFC,
-    please replace all occurrences of NFSv42xdr
+    please replace all occurrences of I-D.ietf-nfsv4-minorversion2-dot-x
     with RFCxxxx where xxxx is the RFC number of the companion XDR document]
   </t>
 </section>

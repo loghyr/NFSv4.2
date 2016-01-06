@@ -50,7 +50,7 @@
 
     <t>
       The full External Data Representation (XDR) <xref target='RFC4506' />
-      for NFSv4.2 is presented in <xref target='NFSv42xdr' />.
+      for NFSv4.2 is presented in <xref target='I-D.ietf-nfsv4-minorversion2-dot-x' />.
     </t>
   </section>
 
