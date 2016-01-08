@@ -2,24 +2,22 @@
 <!-- Copyright (C) The Internet Society (2011-2014) -->
 
 <section anchor="sec:copy" title="Server Side Copy">
-  <section title="Introduction">
-    <t>
-      The server-side copy features provide mechanisms which allow an
-      NFS client to copy file data on a server or between two servers
-      without the data being transmitted back and forth over the network
-      through the NFS client.  Without these features, an NFS client
-      would copy data from one location to another by reading the data
-      from the source server over the network, and then writing the data
-      back over the network to the destination server.
-    </t>
+  <t>
+    The server-side copy features provide mechanisms which allow an
+    NFS client to copy file data on a server or between two servers
+    without the data being transmitted back and forth over the network
+    through the NFS client.  Without these features, an NFS client
+    would copy data from one location to another by reading the data
+    from the source server over the network, and then writing the data
+    back over the network to the destination server.
+  </t>
 
-    <t>
-      If the source object and destination object are on different file
-      servers, the file servers will communicate with one another to
-      perform the copy operation. The server-to-server protocol by which
-      this is accomplished is not defined in this document.
-    </t>
-  </section>
+  <t>
+    If the source object and destination object are on different file
+    servers, the file servers will communicate with one another to
+    perform the copy operation. The server-to-server protocol by which
+    this is accomplished is not defined in this document.
+  </t>
 
   <section title="Protocol Overview">
     <t>
@@ -33,7 +31,7 @@
 
     <t>
       In addition, the CLONE operation provides copy-like functionality
-      in the intra-sever case which is both synchronous and atomic,
+      in the intra-server case which is both synchronous and atomic,
       in that other operations may not see the target file in any state
       between that before the clone operation and after it.
     </t>
@@ -112,7 +110,7 @@
         A server implementing any of these features may be REQUIRED to
         implement certain operations.  Other operations are OPTIONAL in
         the context of a particular feature
-        <xref target='sec:operations:mandlist' />, but may become
+        (see <xref target='sec:operations:mandlist' />), but may become
         REQUIRED depending on server behavior.  Clients need to use
         these operations to successfully copy a file.
       </t>
