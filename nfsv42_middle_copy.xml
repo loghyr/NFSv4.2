@@ -663,10 +663,15 @@
     </t>
 
     <t>
-      A copy offload stateid's seqid MUST NOT be zero.  In the context of a
-      copy offload operation, it is ambiguous to indicate the most recent
-      copy offload operation using a stateid with seqid of zero.  Therefore a
-      copy offload stateid with seqid of zero MUST be considered invalid.
+      A copy offload stateid's seqid MUST NOT be zero.  In the context
+      of a copy offload operation, it is inappropriate to indicate "the
+      most recent copy offload operation" using a stateid with seqid
+      of zero (see Section 8.2.2 of <xref target='RFC5661' />).  It is
+      inappropriate because the stateid refers to internal state in the
+      server and there may be several asynchronous copy operations being
+      performed in parallel on the same file by the server.  Therefore
+      a copy offload stateid with seqid of zero MUST be considered
+      invalid.
     </t>
   </section>
 
@@ -693,8 +698,8 @@
     </t>
 
     <t>
-      If a server requires the use of RPCSEC_GSSv3 copy_to_auth,
-      copy_from_auth, or copy_confirm_auth and it is not used,
+      If a server requires the use of an RPCSEC_GSSv3 copy_to_auth,
+      copy_from_auth, or copy_confirm_auth privilege and it is not used,
       the server will reject the request with NFS4ERR_PARTNER_NO_AUTH.
     </t>
 
