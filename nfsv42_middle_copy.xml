@@ -19,6 +19,20 @@
     this is accomplished is not defined in this document.
   </t>
 
+  <t>
+    The copy feature allows the server to perform the copying either
+    synchronously or asynchronously.  The client can request synchronous
+    copying but the server may not be able to honor this request.  If
+    the server intends to perform asynchronous copying, it supplies the
+    client with a request identifier that  the client can use to monitor
+    the progress of the copying and, if appropriate, cancel a request
+    in progress.   The request identifier is a stateid representing the
+    internal state held by the server while the copying is performed.
+    Multiple asynchronous copies of all or part of a file may be in
+    progress in parallel on a server; the stateid request identifier
+    allows monitoring and canceling to be applied to the correct request.
+  </t>
+
   <section title="Protocol Overview">
     <t>
       The server-side copy offload operations support both intra-server
