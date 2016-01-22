@@ -49,7 +49,7 @@
 	As regards the potential cross-minor-version transfer of
 	stateids, Parallel NFS (pNFS) (see Section 12 of <xref target="RFC5661" />)
         implementations of the file mapping type may
-	support of use of an NFSv4.2 metadata sever (see Sections 1.7.2.2
+	support of use of an NFSv4.2 metadata server (see Sections 1.7.2.2
         and 12.2.2 of <xref target="RFC5661" />) with NFSv4.1
 	data servers.  In this context, a stateid returned by an
 	NFSv4.2 COMPOUND will be used in an NFSv4.1 COMPOUND directed
