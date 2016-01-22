@@ -5,8 +5,8 @@
 YEAR=`date +%Y`
 MONTH=`date +%B`
 DAY=`date +%d`
-PREVVERS=39
-VERS=40
+PREVVERS=40
+VERS=41
 VPATH = ../../dotx.d
 
 DRAFT_BASE=draft-ietf-nfsv4-minorversion2-dot-x

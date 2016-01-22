@@ -260,7 +260,7 @@ AUTOGEN =	hand_edit_warning.x \
 
 PARENT_BASE=draft-ietf-nfsv4-minorversion2
 DRAFT_BASE=draft-ietf-nfsv4-minorversion2-dot-x
-VERS=40
+VERS=41
 DATE=`date`
 
 all:	nfsv42.x filelist
