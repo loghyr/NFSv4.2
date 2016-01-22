@@ -38,7 +38,7 @@
       Layout Type does not provide a means for informing the client as
       to which minor version a particular storage device is providing, the client will have
       to negotiate this with the storage device via the normal Remote Procedure Call (RPC) semantics of major and minor
-      version discovery. E.g., as per Section 16.2.3 of <xref target='RFC5661' />, the
+      version discovery. For example, as per Section 16.2.3 of <xref target='RFC5661' />, the
       client could try a COMPOUND with a minorversion of 2 and if it gets
       NFS4ERR_MINOR_VERS_MISMATCH, drop back to 1.
     </t>
