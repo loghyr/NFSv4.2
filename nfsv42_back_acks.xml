@@ -67,6 +67,12 @@
     core reviewers were Andy Adamson, Pranoop Erasani, Bruce Fields, Chuck Lever,
     Trond Myklebust, David Noveck, Peter Staubach, and Mike Kupfer.
   </t>
+  <t>
+    Elwyn Davies was the General Area Reviewer for this document and
+    her insights as to the relationship of this document and
+    both <xref target='RFC5661' /> and <xref target='RFC7530' />
+    were very much appreciated!
+  </t>
 </section>
 
 <section title="RFC Editor Notes">
