@@ -1005,7 +1005,7 @@
 
               <t>
                 If the destination server fails to verify the copy_to_auth
-                or copy_confirm_auth privilege, the COPY will be rejeced with
+                or copy_confirm_auth privilege, the COPY will be rejected with
                 NFS4ERR_PARTNER_NO_AUTH, causing the client to
                 destroy the associated copy_from_auth and copy_to_auth
                 RPCSEC_GSSv3 structured privilege assertion handles.
