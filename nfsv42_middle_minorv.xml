@@ -12,7 +12,7 @@
     versioning process and follows the rules set out in
     <xref target="RFC5661" /> or in standard-track documents updating
     that document (e.g., in an RFC based on
-    <xref target="NFSv4-Versioning" />).
+    <xref target="I-D.ietf-nfsv4-versioning" />).
   </t>
 
   <t>

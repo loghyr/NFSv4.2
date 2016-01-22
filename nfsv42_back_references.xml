@@ -440,19 +440,25 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
          target="ftp://www.t10.org/t10/document.05/05-344r0.pdf"/>
      </reference>
 
-    <reference anchor='NFSv4-Versioning'>
-      <front>
-	<title>NFSv4 Version Management</title>
-	<author initials="T." surname="Haynes" fullname="T. Haynes">
-	  <organization>Primary Data</organization>
-	</author>
-	<author initials="D." surname="Noveck" fullname="D. Noveck">
-	  <organization>Dell</organization>
-	</author>
-	<date year="2014" month="November"/>
-      </front>
-      <format type="TXT"
-	      target="https://datatracker.ietf.org/doc/draft-ietf-nfsv4-versioning-00" />
-    </reference>
+<reference anchor='I-D.ietf-nfsv4-versioning'>
+<front>
+<title>NFSv4 Version Management</title>
+
+<author initials='D' surname='Noveck' fullname='David Noveck'>
+    <organization />
+</author>
+
+<date month='January' day='15' year='2016' />
+
+<abstract><t>This document describes the management of versioning within the NFSv4 family of protocols.  It covers the creation of minor versions, the addition of optional features to existing minor versions, and the correction of flaws in features already published as Proposed Standards.  The rules relating to the construction of minor versions and the interaction of minor version implementations that appear in this document supersede the minor versioning rules in RFC5661.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-ietf-nfsv4-versioning-03' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-versioning-03.txt' />
+<format type='PDF'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-versioning-03.pdf' />
+</reference>
 
 </references>
