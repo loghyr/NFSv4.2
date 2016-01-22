@@ -155,9 +155,8 @@
     <section title="Application Data Block (ADB) Support">
       <t>
         Some applications treat a file as if it were a disk and as such
-        want to initialize (or format) the file image. We
-        introduce WRITE_SAME (see <xref target='op:write_same' />)
-        to send this metadata to the server to allow it to write
+        want to initialize (or format) the file image. The WRITE_SAME (see <xref target='op:write_same' />)
+        is introduced to send this metadata to the server to allow it to write
         the block contents.
       </t>
     </section>

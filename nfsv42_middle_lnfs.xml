@@ -15,11 +15,11 @@
     resources that they own.  MAC models base their security decisions
     on a system wide policy established by an administrator or
     organization which the users do not have the ability to override.
-    In this section, we add a MAC model to NFSv4.2.
+    In this section, a MAC model is added to NFSv4.2.
   </t>
 
   <t>
-    First we provide a method for transporting
+    First, a method is provided for transporting
     and storing security label data on NFSv4 file objects.  Security
     labels have several semantics that are met by NFSv4 recommended
     attributes such as the ability to set the label value upon
@@ -34,7 +34,7 @@
   </t>
 
   <t>
-    Second, we describe a method for the client to
+    Second, a method is described for the client to
     determine if an NFSv4 file object security label has changed.
     A client which
     needs to know if a label on a file or set of files is going to change
@@ -77,8 +77,8 @@
         </t>
 
         <t hangText='Object:'>
-          is a passive resource within the system that we
-          wish to be protected.  Objects can be entities such as files,
+          is a passive resource within the system that is
+          to be protected.  Objects can be entities such as files,
           directories, pipes, sockets, and many other system resources relevant
           to the protection of the system state.
         </t>

@@ -343,7 +343,7 @@
     <section toc='exclude' anchor="ss:error_values:CSE" title="Compound Structure Errors">
       <t>
         This section deals with errors that relate to the overall structure
-        of a Compound request (by which we mean to include both COMPOUND and
+        of a Compound request (which includes both COMPOUND and
         CB_COMPOUND), rather than to particular operations.
       </t>
 

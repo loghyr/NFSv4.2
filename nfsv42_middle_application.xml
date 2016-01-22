@@ -5,7 +5,7 @@
   <t>
     At the OS level, files are contained on disk
     blocks.  Applications are also free to impose structure on the
-    data contained in a file and we can define an Application Data
+    data contained in a file and thus can define an Application Data
     Block (ADB) to be such a structure. From the application's
     viewpoint, it only wants to handle ADBs and not raw bytes (see
     <xref target='Strohm11' />). An ADB is typically
@@ -53,16 +53,16 @@
   </t>
 
   <t>
-    In this section, we define a framework for transferring the ADB
+    This section defines a framework for transferring the ADB
     from client to server and present one approach to detecting
     corruption in a given ADB implementation.
   </t>
 
   <section anchor='ss:adb:framework' title='Generic Framework'>
     <t>
-      We want the representation of the ADB to be flexible enough
+      The representation of the ADB needs to be flexible enough
       to support many different applications. The most basic approach
-      is no imposition of a block at all, which means we are working
+      is no imposition of a block at all, which entails working
       with the raw bytes. Such an approach would be useful for
       storing holes, punching holes, etc.  In more complex deployments,
       a server might be supporting multiple applications, each with
@@ -82,8 +82,8 @@
     </t>
 
     <t>
-      We need to be able to represent the starting
-      offset of the block and the size of the block. Note that
+      Both the starting offset of the block and the size of
+      the block need to be represented. Note that
       nothing prevents the application from defining different
       sized blocks in a file.
     </t>
@@ -102,8 +102,8 @@
       <t>
         The app_data_block4 structure captures the abstraction presented
         for the ADB. The additional fields present are to allow
-        the transmission of adb_block_count ADBs at one time.  We
-        also use adb_block_num to convey the ADBN of the first block
+        the transmission of adb_block_count ADBs at one time.  The
+        adb_block_num is used to convey the ADBN of the first block
         in the sequence.  Each ADB will contain the same adb_pattern
         string.
       </t>
@@ -119,7 +119,7 @@
 
   <section anchor='ss:adb:corrupt' title='An Example of Detecting Corruption'>
     <t>
-      In this section, we define an ADB format in which
+      In this section, an example ADB format is defined in which
       corruption can be detected. Note that this is just
       one possible format and means to detect corruption.
     </t>
@@ -223,7 +223,7 @@
       checksum. But also, the application can detect corruption
       based on the state and the contents of the ADB.
       This last point is important in validating the minimum
-      amount of data we incorporated into our generic
+      amount of data incorporated into the generic
       framework. I.e., the guard pattern is sufficient
       in allowing applications to design their own
       corruption detection.
@@ -258,7 +258,7 @@
     <t>
       Further, assume the application writes a single
       ADB at 16k, changing the guard pattern to 0xcafedead,
-      we would then have in memory:
+      then there would be in memory:
     </t>
 
     <figure>

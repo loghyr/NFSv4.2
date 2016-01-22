@@ -51,8 +51,8 @@
     </t>
 
     <t>
-      Throughout the rest of this document, we refer to the NFS server
-      containing the source file as the "source server" and the NFS
+      Throughout the rest of this document, the NFS server
+      containing the source file is referred to as  the "source server" and the NFS
       server to which the file is transferred as the "destination
       server". In the case of an intra-server copy, the source server and
       destination server are the same server.  Therefore in the context
@@ -749,8 +749,8 @@
         </t>
 
         <t>
-          We define three RPCSEC_GSSv3 structured privilege assertions
-          that work in tandem to authorize the copy:
+          Three RPCSEC_GSSv3 structured privilege assertions
+          are defined that work in tandem to authorize the copy:
         </t>
 
         <t>
