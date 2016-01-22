@@ -124,7 +124,7 @@
         A server implementing any of these features may be REQUIRED to
         implement certain operations.  Other operations are OPTIONAL in
         the context of a particular feature
-        (see <xref target='sec:operations:mandlist' />), but may become
+        (see <xref target='tbl:ops' /> in <xref target='sec:operations:mandlist' />), but may become
         REQUIRED depending on server behavior.  Clients need to use
         these operations to successfully copy a file.
       </t>
@@ -738,7 +738,7 @@
           Instead, a feature of the RPCSEC_GSSv3
           <xref target="rpcsec_gssv3" /> protocol can be used:
           RPC application defined structured privilege assertion.
-          This features allow the
+          This feature allow the
           destination server to authenticate to the source server
           as acting on behalf of the user principal, and to authorize
           the destination server to perform READs of the file to
@@ -749,8 +749,21 @@
         </t>
 
         <t>
-          Three RPCSEC_GSSv3 structured privilege assertions
-          are defined that work in tandem to authorize the copy:
+          For each structured privilege assertion defined by a RPC application
+          RPCSEC_GSSv3 requires the application to define a name string and
+          a data structure that will be encoded and passed between client
+          and server as opaque data.  For NFSv4 the data structures specified
+          below MUST be serialized using XDR.
+        </t>
+
+        <t>
+          Three RPCSEC_GSSv3 structured privilege assertions that work
+          together to authorize the copy are defined here.  For each of the
+          assertions the description starts with the name string passed in
+          the rp_name field of the rgss3_privs structure defined in Section
+          2.7.1.4 of <xref target="rpcsec_gssv3" /> and specifies the XDR encoding of the
+          associated structured data passed via the rp_privilege field of
+          the structure.
         </t>
 
         <t>
