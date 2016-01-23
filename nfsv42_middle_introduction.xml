@@ -193,7 +193,8 @@
       would have to be replaced or supplemented by, say,
       either READ2 or READ_PLUS.  With the use of discriminated
       unions as parameters to such functions in NFSv4.2, it is
-      possible to add a new arm in a subsequent minor version. And
+      possible to add a new arm (i.e., a new entry in the union and
+      a corresponding new field in the structure) in a subsequent minor version. And
       it is also possible to move such an operation from
       OPTIONAL/RECOMMENDED to REQUIRED. Forcing an implementation
       to adopt each arm of a discriminated union at such a time
