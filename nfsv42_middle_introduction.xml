@@ -20,8 +20,17 @@
 
   <section title="Scope of This Document">
     <t>
-      This document describes the NFSv4.2 protocol.  With respect to
-      NFSv4.0 and NFSv4.1, this document does not:
+      This document describes the NFSv4.2 protocol as a set of
+      extensions to the specification for NFSv4.1. That specification
+      remains current and forms the basis for the additions defined
+      herein.  In addition, the specfication for NFSv4.0 remains
+      current as well.
+    </t>
+
+    <t>
+      It is necessary to implement all the REQUIRED features of
+      NFSv4.1 before adding NFSv4.2 features to the implementation.
+      With respect to NFSv4.0 and NFSv4.1, this document does not:
     </t>
 
     <t>

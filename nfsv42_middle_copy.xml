@@ -860,7 +860,9 @@
 
               <t>
                 A random number is generated to use as a secret to be shared
-                between the two servers.  This shared secret will be placed
+                between the two servers.  Note that the random number SHOULD
+		not be reused between establishing different security contexts.
+		The resulting shared secret will be placed
                 in the cfap_shared_secret and ctap_shared_secret fields of
                 the appropriate privilege data types, copy_from_auth_priv
                 and copy_to_auth_priv.  Because of this shared_secret the
