@@ -79,7 +79,7 @@
         </t>
 
         <t hangText="Hole:">
-          A byte range within a Sparse file that contains regions of
+          A byte range within a Sparse file that contains
           all zeroes.  A hole might or might not have space allocated
           or reserved to it.
         </t>
