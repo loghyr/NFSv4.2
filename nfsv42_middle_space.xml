@@ -77,7 +77,7 @@
     virtual disk can be viewed as a file system within a file.  Since not
     all blocks within a file system are in use, there is an opportunity to
     reclaim blocks that are no longer in use.  A call to deallocate
-    blocks could result in better space efficiency.  Lesser space MAY be
+    blocks could result in better space efficiency.  Lesser space might be
     consumed for backups after block deallocation.
   </t>
 
