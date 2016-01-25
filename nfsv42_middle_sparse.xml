@@ -90,22 +90,23 @@
   <section anchor="ss:sparse:new_ops" title="New Operations">
     <section anchor="ss:sparse:read_plus" title="READ_PLUS">
       <t>
-       READ_PLUS is a new variant of the NFSv4.1 READ operation
-       <xref target="RFC5661" />.  Besides being able to support all of
-       the data semantics of the READ operation, it can also be used by
-       the client and server to efficiently transfer holes.  Note that as
-       the client has no a priori knowledge of whether a hole is present
-       or not, if the client supports READ_PLUS and so does the server,
-       then it should always use the READ_PLUS operation in preference
-       to the READ operation.
+        READ_PLUS is a new variant of the NFSv4.1 READ operation
+        <xref target="RFC5661" />.  Besides being able to support
+        all of the data semantics of the READ operation, it can also
+        be used by the client and server to efficiently transfer
+        holes. Because the client does not know in advance whether
+        a hole is present or not, if the client supports READ_PLUS
+        and so does the server, then it should always use the READ_PLUS
+        operation in preference to the READ operation.
       </t>
 
       <t>
-       READ_PLUS extends the response with a new arm representing holes to
-       avoid returning data for portions of the file which are initialized
-       to zero and may or may not contain a backing store. Returning data
-       blocks of uninitialized data wastes computational and network
-       resources, thus reducing performance.
+	READ_PLUS extends the response with a new arm representing
+	holes to avoid returning data for portions of the file which
+	are initialized to zero and may or may not contain a backing
+	store.  Returning actual data blocks corresponding to holes
+	wastes computational and network resources, thus reducing
+	performance.
       </t>
 
       <t>
@@ -117,7 +118,7 @@
 	server can only send back bytes starting from that offset.
 	By contrast, if a READ_PLUS occurs in the middle of a hole,
 	the server can send back a range which starts before the
-	offset and extends past the range.
+	offset and extends past the requested length.
       </t>
     </section>
 
