@@ -124,9 +124,11 @@
 
     <section anchor="ss:sparse:deallocate" title="DEALLOCATE">
       <t>
-        DEALLOCATE can be used to hole punch, which allows the
+        The client can use the DEALLOCATE operation on a range
+        of a file as a hole punch, which allows the
         client to avoid the transfer of a repetitive pattern of zeros
-        across the network.
+        across the network. This hole punch is a result of the
+        unreserved space returning all zeros until overwritten.
       </t>
     </section>
   </section>
