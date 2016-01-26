@@ -738,7 +738,7 @@
           Instead, a feature of the RPCSEC_GSSv3
           <xref target="rpcsec_gssv3" /> protocol can be used:
           RPC application defined structured privilege assertion.
-          This feature allow the
+          This feature allows the
           destination server to authenticate to the source server
           as acting on behalf of the user principal, and to authorize
           the destination server to perform READs of the file to

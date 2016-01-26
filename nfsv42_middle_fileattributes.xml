@@ -17,7 +17,7 @@
         <t hangText='Id:'>
           The number assigned to the attribute.  In the event of
           conflicts between the assigned number and <xref target="I-D.ietf-nfsv4-minorversion2-dot-x" />, the latter is
-          likely authoritative, but should be resolved with Errata to this
+          authoritative, but in such an event, it should be resolved with Errata to this
           document and/or <xref target="I-D.ietf-nfsv4-minorversion2-dot-x" />.  See <xref target="IESG08" /> for the Errata process.
         </t>
 
