@@ -100,8 +100,8 @@
         <t hangText='Multi-Level Security (MLS):'>
           is a traditional model where objects are given a sensitivity
           level (Unclassified, Secret, Top Secret,  etc) and a category set
-          (see <xref target='BL73' />, <xref target='RFC1108' />,
-          and <xref target='RFC2401' />).
+          (see <xref target='LB96' />, <xref target='RFC1108' />,
+          and <xref target='RFC2401' />, <xref target='RFC4949' />).
         </t>
       </list>
     </t>

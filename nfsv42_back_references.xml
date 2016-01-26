@@ -312,14 +312,14 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
   <format type='HTML' target='http://www.usenix.org/events/fast08/tech/full_papers/bairavasundaram/bairavasundaram.pdf' />
 </reference>
 
-  <reference anchor='BL73'>
+  <reference anchor='LB96'>
     <front>
-      <title>Secure Computer Systems: Mathematical Foundations and Model</title>
-      <author initials='D.E.' surname='Bell' fullname='D.E. Bell'> <organization /></author>
+      <title>MITRE technical report 2547, volume II</title>
       <author initials='L.J.' surname='LaPadula' fullname='L.J. LaPadula'> <organization /></author>
-      <date month='May' year='1973' />
+      <author initials='D.E.' surname='Bell' fullname='D.E. Bell'> <organization /></author>
+      <date month='January' year='1996' />
     </front>
-    <seriesInfo name='Technical Report M74-244,' value='The MITRE Corporation, Bedford, MA' />
+    <seriesInfo name='Journal of Computer Security, Volume 4, Issue 2-3, 249,263' value='IOS Press, Amsterdam, The Netherlands, The Netherlands' />
   </reference>
 
   <reference anchor='RFC1108'>
