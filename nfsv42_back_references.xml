@@ -161,7 +161,7 @@
    <front>
      <title>IESG Processing of RFC Errata for the IETF Stream</title>
      <author>
-       <organization>ISEG</organization>
+       <organization>IESG</organization>
      </author>
      <date year="2008" />
    </front>
@@ -319,7 +319,7 @@ The Hypertext Transfer Protocol (HTTP) is a stateless application-level protocol
       <author initials='D.E.' surname='Bell' fullname='D.E. Bell'> <organization /></author>
       <date month='January' year='1996' />
     </front>
-    <seriesInfo name='Journal of Computer Security, Volume 4, Issue 2-3, 249,263' value='IOS Press, Amsterdam, The Netherlands, The Netherlands' />
+    <seriesInfo name='Journal of Computer Security, Volume 4, Issue 2-3, 249-263' value='IOS Press, Amsterdam, The Netherlands' />
   </reference>
 
   <reference anchor='RFC1108'>
