@@ -50,7 +50,7 @@
     security labels and enable
     full mode enforcement as described in <xref target= 'ss:modes:full' />.
     Such modifications are outside the scope of this document
-    (see <xref target='rpcsec_gssv3' />).
+    (see <xref target='I-D.ietf-nfsv4-rpcsec-gssv3' />).
   </t>
 
   <section anchor='ss:lnfs:defs' title='Definitions'>
@@ -304,7 +304,7 @@
 
       <t>
         Fully MAC-Functional NFSv4 servers are not possible in the
-        absence of RPCSEC_GSSv3 <xref target='rpcsec_gssv3' /> support
+        absence of RPCSEC_GSSv3 <xref target='I-D.ietf-nfsv4-rpcsec-gssv3' /> support
         for client process subject label assertion.  However,
         servers may make decisions based on the RPC credential information
         available.

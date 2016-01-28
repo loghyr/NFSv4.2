@@ -138,20 +138,28 @@
         target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-minorversion2-dot-x-40.txt' />
 </reference>
 
-    <reference anchor='rpcsec_gssv3'>
-      <front>
-        <title>Remote Procedure Call (RPC) Security Version 3</title>
-        <author initials="W." surname="Adamson" fullname="W. Adamson">
-          <organization>NetApp</organization>
-        </author>
-        <author initials="N." surname="Williams" fullname="N. Williams">
-          <organization>Cryptonector</organization>
-        </author>
-        <date year="2014" month="December"/>
-      </front>
-      <format type="TXT"
-              target="http://tools.ietf.org/id/draft-ietf-nfsv4-rpcsec-gssv3-10.txt"/>
-    </reference>
+<reference anchor='I-D.ietf-nfsv4-rpcsec-gssv3'>
+<front>
+<title>Remote Procedure Call (RPC) Security Version 3</title>
+
+<author initials='A' surname='Adamson' fullname='Andy Adamson'>
+    <organization />
+</author>
+
+<author initials='N' surname='Williams' fullname='Nicolas Williams'>
+    <organization />
+</author>
+
+<date month='January' day='28' year='2016' />
+
+<abstract><t>This document specifies version 3 of the Remote Procedure Call (RPC) security protocol (RPCSEC_GSS).  This protocol provides support for multi-principal authentication of client hosts and user principals to a server (constructed by generic composition), security label assertions for multi-level and type enforcement, structured privilege assertions, and channel bindings.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-ietf-nfsv4-rpcsec-gssv3-17' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-ietf-nfsv4-rpcsec-gssv3-17.txt' />
+</reference>
 
   </references>
 

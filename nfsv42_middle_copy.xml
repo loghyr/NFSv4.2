@@ -690,7 +690,7 @@
       and to support rejecting COPY_NOTIFY requests that do not use
       RPCSEC_GSS with privacy.  If the server-to-server copy protocol
       is ONC RPC based, the servers are also REQUIRED to implement <xref
-      target="rpcsec_gssv3" /> including the RPCSEC_GSSv3 copy_to_auth,
+      target="I-D.ietf-nfsv4-rpcsec-gssv3" /> including the RPCSEC_GSSv3 copy_to_auth,
       copy_from_auth, and copy_confirm_auth structured privileges.
       This requirement to implement is not a requirement to use;
       for example, a server may depending on configuration also allow
@@ -736,7 +736,7 @@
 
         <t>
           Instead, a feature of the RPCSEC_GSSv3
-          <xref target="rpcsec_gssv3" /> protocol can be used:
+          <xref target="I-D.ietf-nfsv4-rpcsec-gssv3" /> protocol can be used:
           RPC application defined structured privilege assertion.
           This feature allows the
           destination server to authenticate to the source server
@@ -761,7 +761,7 @@
           together to authorize the copy are defined here.  For each of the
           assertions the description starts with the name string passed in
           the rp_name field of the rgss3_privs structure defined in Section
-          2.7.1.4 of <xref target="rpcsec_gssv3" /> and specifies the XDR encoding of the
+          2.7.1.4 of <xref target="I-D.ietf-nfsv4-rpcsec-gssv3" /> and specifies the XDR encoding of the
           associated structured data passed via the rp_privilege field of
           the structure.
         </t>
@@ -845,7 +845,7 @@
           <t>
             <list style="symbols">
               <t>
-                As noted in <xref target="rpcsec_gssv3" /> the client uses
+                As noted in <xref target="I-D.ietf-nfsv4-rpcsec-gssv3" /> the client uses
                 an existing RPCSEC_GSSv3 context termed the "parent"
                 handle to establish and protect RPCSEC_GSSv3 structured
                 privilege assertion exchanges.
@@ -911,7 +911,7 @@
           </t>
 
           <t>
-            As noted in <xref target="rpcsec_gssv3" /> Section 2.3.1 "Create
+            As noted in <xref target="I-D.ietf-nfsv4-rpcsec-gssv3" /> Section 2.3.1 "Create
             Request", both the client and the source server should associate
             the RPCSEC_GSSv3 "child" handle with the parent RPCSEC_GSSv3
             handle used to create the RPCSEC_GSSv3 child handle.
